@@ -1,7 +1,7 @@
 const vercelProductionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 const fallbackSiteUrl = vercelProductionHost
   ? `https://${vercelProductionHost}`
-  : "http://localhost:3000";
+  : "https://kingxford-agency.vercel.app";
 
 export const SITE = {
   name: "KINGXFORD",
