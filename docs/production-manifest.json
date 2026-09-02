@@ -7,7 +7,7 @@
     "objective": "Launch a highly legible, distinctive agency platform that turns qualified Canadian organizations into project conversations.",
     "audience": "Decision-makers in Newfoundland and Labrador first, then Atlantic and national Canadian markets, viewing on desktop and mobile.",
     "governing_idea": "From fog to focus: a precise cobalt signal travels through every screen and turns complex growth problems into clear action.",
-    "status": "approved"
+    "status": "delivered"
   },
   "creative_system": {
     "visual_thesis": "North Atlantic realism meets a disciplined signal-house interface: graphite fields, cold cobalt atmosphere, warm practical light and one restrained copper accent.",
@@ -143,7 +143,7 @@
         "frame_rate": 24
       },
       "dependencies": [],
-      "status": "approved"
+      "status": "delivered"
     }
   ],
   "screens": [
@@ -170,7 +170,7 @@
       "alt_text": "KINGXFORD agency website with cinematic opening, visual services, sector pages and guided project brief.",
       "variant_of": "",
       "version": 1,
-      "status": "approved"
+      "status": "delivered"
     },
     {
       "id": "del-hero-16x9",
@@ -188,7 +188,7 @@
       "alt_text": "Atmospheric journey from the North Atlantic into an integrated creative studio and toward a clear harbour horizon.",
       "variant_of": "",
       "version": 1,
-      "status": "approved"
+      "status": "delivered"
     },
     {
       "id": "del-hero-mobile",
@@ -206,7 +206,7 @@
       "alt_text": "Responsive atmospheric journey from the North Atlantic into an integrated creative studio and toward a clear harbour horizon.",
       "variant_of": "del-hero-16x9",
       "version": 1,
-      "status": "approved"
+      "status": "delivered"
     }
   ],
   "rights_and_claims": [
@@ -233,6 +233,7 @@
       "Production build generated 49 routes successfully on Next.js 16.3.4.",
       "Lint, strict type checking and 14 automated tests pass.",
       "Cinematic masters were visually reviewed and re-encoded for browser-safe H.264 scroll seeking.",
+      "Production deployment dpl_BHkpRkJ5Q5DxSV4U57SMfHZ9qQEn reached READY at https://kingxford-agency.vercel.app.",
       "Online inquiry delivery remains intentionally disabled until a verified Resend or CRM destination is configured."
     ]
   },
@@ -243,7 +244,7 @@
     {"id": "gate-system", "name": "Production system", "status": "approved", "evidence": ["Next.js component system"]},
     {"id": "gate-rough", "name": "Coherent rough", "status": "passed", "evidence": ["All primary routes and conversion journeys reviewed in the integrated Next.js build"]},
     {"id": "gate-finish", "name": "Finish", "status": "passed", "evidence": ["Sitewide typography, contrast, reduced motion, responsive navigation, literal alternative text and synthetic-media disclosures audited"]},
-    {"id": "gate-delivery", "name": "Delivery", "status": "approved", "evidence": ["Lint, typecheck, 14 automated tests, production build and HTTP smoke checks completed"]}
+    {"id": "gate-delivery", "name": "Delivery", "status": "delivered", "evidence": ["Vercel production deployment dpl_BHkpRkJ5Q5DxSV4U57SMfHZ9qQEn is READY at https://kingxford-agency.vercel.app", "Lint, typecheck, 14 automated tests, production build and HTTP smoke checks completed"]}
   ],
   "assumptions": [
     "English launch first; French expansion pathway is documented but no unsupported bilingual claim is made.",
