@@ -76,7 +76,7 @@
       "role": "hero",
       "rights_status": "cleared",
       "description": "A silent scroll-controlled journey from North Atlantic fog into a creative studio and clear horizon.",
-      "notes": "Higgsfield Seedance 2.5 source; browser delivery master is H.264/yuv420p at 1920x1080 and 24fps, with a 0.5-second keyframe interval for responsive scroll seeking. Audio disabled."
+      "notes": "Higgsfield Seedance 2.5 source; browser delivery master is H.264/yuv420p at 1280x720 and 24fps, with a 0.5-second keyframe interval for responsive scroll seeking. Audio disabled."
     },
     {
       "id": "ast-hero-video-mobile",
@@ -84,7 +84,7 @@
       "source": "public/media/kingxford-cinematic-hero-mobile.mp4",
       "role": "hero-mobile",
       "rights_status": "cleared",
-      "description": "Responsive 1280x720 H.264 variant of the silent cinematic opening.",
+      "description": "Responsive 960x540 H.264 variant of the silent cinematic opening.",
       "notes": "Uses the same approved source and narrative as the 1080p master, with the same 0.5-second keyframe interval."
     }
   ],
@@ -179,7 +179,7 @@
       "channel": "web",
       "source_ids": ["sh-001"],
       "aspect_ratio": "16:9",
-      "dimensions": "1920x1080",
+      "dimensions": "1280x720",
       "duration_s": 10,
       "frame_rate": 24,
       "format": "mp4",
@@ -197,7 +197,7 @@
       "channel": "web",
       "source_ids": ["sh-001"],
       "aspect_ratio": "16:9",
-      "dimensions": "1280x720",
+      "dimensions": "960x540",
       "duration_s": 10,
       "frame_rate": 24,
       "format": "mp4",
