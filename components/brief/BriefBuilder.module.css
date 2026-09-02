@@ -1,0 +1,375 @@
+.shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
+  min-height: 760px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 241, 233, 0.14);
+  border-radius: 1.5rem;
+  background: #0d1015;
+  box-shadow: 0 38px 110px rgba(0, 0, 0, 0.3);
+}
+
+.rail {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-right: 1px solid rgba(244, 241, 233, 0.12);
+  background: linear-gradient(155deg, #10141b, #0a0c10);
+}
+
+.railTitle {
+  margin: 0 0 2.25rem;
+  font-size: 1.05rem;
+  font-weight: 720;
+}
+
+.progress {
+  width: 100%;
+  height: 0.35rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  color: #3f75ff;
+  background: rgba(244, 241, 233, 0.12);
+}
+
+.progress::-webkit-progress-bar {
+  background: rgba(244, 241, 233, 0.12);
+}
+
+.progress::-webkit-progress-value {
+  background: #3f75ff;
+}
+
+.progress::-moz-progress-bar {
+  background: #3f75ff;
+}
+
+.steps {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 3.2rem;
+  color: rgba(244, 241, 233, 0.74);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.stepNumber {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid rgba(244, 241, 233, 0.15);
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.stepActive {
+  color: #f4f1e9;
+}
+
+.stepActive .stepNumber {
+  border-color: #5d8aff;
+  background: #1b5bff;
+}
+
+.saveNote {
+  margin: 3rem 0 0;
+  color: rgba(244, 241, 233, 0.74);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.form {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1.5rem, 5vw, 4.5rem);
+}
+
+.panel {
+  flex: 1;
+}
+
+.kicker {
+  margin: 0 0 0.7rem;
+  color: #85a8ff;
+  font-size: 1rem;
+  font-weight: 740;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.heading {
+  max-width: 16ch;
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 760;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 650px;
+  margin: 0 0 2.5rem;
+  color: rgba(244, 241, 233, 0.66);
+  font-size: 1.06rem;
+  line-height: 1.65;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.3rem;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.field label,
+.legend {
+  color: #f4f1e9;
+  font-size: 1rem;
+  font-weight: 680;
+}
+
+.optional {
+  color: rgba(244, 241, 233, 0.74);
+  font-size: 1rem;
+  font-weight: 520;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: 1px solid rgba(244, 241, 233, 0.42);
+  border-radius: 0.8rem;
+  outline: 0;
+  background: #05070a;
+  color: #f4f1e9;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.input,
+.select {
+  min-height: 3.45rem;
+  padding: 0.8rem 0.95rem;
+}
+
+.textarea {
+  min-height: 8.6rem;
+  resize: vertical;
+  padding: 0.95rem;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #5d8aff;
+  box-shadow: 0 0 0 4px rgba(63, 117, 255, 0.16);
+}
+
+.help,
+.error {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.help {
+  color: rgba(244, 241, 233, 0.74);
+}
+
+.error {
+  color: #ff9f91;
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.75rem;
+}
+
+.checkCard,
+.consent {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  border: 1px solid rgba(244, 241, 233, 0.32);
+  border-radius: 0.8rem;
+  color: rgba(244, 241, 233, 0.84);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.checkCard {
+  min-height: 4.6rem;
+  padding: 1rem;
+}
+
+.checkCard:has(input:checked) {
+  border-color: #5d8aff;
+  background: rgba(63, 117, 255, 0.1);
+}
+
+.checkCard input,
+.consent input {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  margin-top: 0.15rem;
+  accent-color: #3f75ff;
+}
+
+.consent {
+  padding: 1rem;
+  cursor: default;
+}
+
+.honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(244, 241, 233, 0.12);
+}
+
+.actionGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 3.2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 720;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:disabled {
+  transform: none;
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 3px solid #85a8ff;
+  outline-offset: 3px;
+}
+
+.primary {
+  background: #f4f1e9;
+  color: #080a0d;
+}
+
+.secondary {
+  border-color: rgba(244, 241, 233, 0.2);
+  background: transparent;
+  color: #f4f1e9;
+}
+
+.status {
+  margin: 1.5rem 0 0;
+  border-left: 3px solid #5d8aff;
+  padding: 0.9rem 1rem;
+  background: rgba(63, 117, 255, 0.09);
+  color: rgba(244, 241, 233, 0.82);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.success {
+  border-left-color: #78d9b0;
+  background: rgba(120, 217, 176, 0.08);
+}
+
+@media (max-width: 800px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .rail {
+    border-right: 0;
+    border-bottom: 1px solid rgba(244, 241, 233, 0.12);
+  }
+
+  .steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .step {
+    display: block;
+    min-height: auto;
+    font-size: 1rem;
+  }
+
+  .stepNumber {
+    margin-bottom: 0.45rem;
+  }
+
+  .saveNote {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid,
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .actionGroup,
+  .button {
+    width: 100%;
+  }
+}

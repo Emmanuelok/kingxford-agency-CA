@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">KINGXFORD signal mark</title>
+  <rect width="64" height="64" rx="14" fill="#080a0d"/>
+  <path d="M15 14v36h8V35l17 15h11L30 31l19-17H38L23 28V14z" fill="#f4f1ea"/>
+  <circle cx="50" cy="14" r="5" fill="#316cff"/>
+</svg>
