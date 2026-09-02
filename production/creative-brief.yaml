@@ -1,0 +1,30 @@
+project: KINGXFORD North Atlantic Momentum
+status: production
+objective: Establish a differentiated full-service agency in St. John's and create a platform that can expand across Canadian markets.
+audience:
+  primary: Growth-minded founders, executives, public-sector leaders, and marketing teams in Newfoundland and Labrador.
+  secondary: Canadian organizations seeking an integrated strategy, creative, production, media, social, and digital partner.
+audience_job: Find one accountable agency capable of taking a commercial problem from research to measurable execution.
+tension: Most agencies sell a channel or hand work between disconnected specialists.
+proposition: One commercial objective; every discipline it takes; one connected team.
+desired_response: Start a project brief with the business outcome.
+primary_cta: Start with the outcome
+campaign_platform: North Atlantic Momentum
+verbal_device: From the edge. Move the market.
+visual_mechanism: A single coral signal leaves a harbour-side studio and resolves into a connected market network.
+palette:
+  ink: "#071012"
+  paper: "#ECEEE7"
+  coral: "#FF553D"
+  acid: "#D7FF4F"
+anti_goals:
+  - Generic agency dashboard graphics
+  - Unsubstantiated client results or testimonials
+  - Scroll hijacking
+  - Generated typography inside imagery
+  - Motion without a reduced-motion alternative
+success_evidence:
+  - Scroll is reversible and directly maps to the film
+  - Primary CTA is available in the first viewport
+  - The proposition is understandable without the film
+  - Mobile and reduced-motion experiences preserve the message and action

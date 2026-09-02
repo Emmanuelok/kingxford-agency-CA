@@ -1,0 +1,29 @@
+{
+  "project": "KINGXFORD North Atlantic Momentum",
+  "version": "v001",
+  "hero": {
+    "source_model": "Higgsfield / Seedance 2.5",
+    "source_duration_seconds": 9.041667,
+    "source_dimensions": "1920x1080",
+    "interaction": "native scroll mapped to deterministic canvas frames",
+    "desktop": {
+      "path": "/sequences/home-hero-v1/desktop",
+      "dimensions": "1600x900",
+      "frame_count": 109,
+      "frame_rate_source": 12,
+      "format": "webp"
+    },
+    "mobile": {
+      "path": "/sequences/home-hero-v1/mobile",
+      "dimensions": "720x1280",
+      "frame_count": 72,
+      "frame_rate_source": 8,
+      "format": "webp",
+      "crop": "portrait, art-directed at 70% horizontal source position"
+    },
+    "fallback": "/images/hero-harbour.webp"
+  },
+  "routes_preserved": [
+    "/about", "/accessibility", "/industries", "/platform", "/pricing", "/privacy", "/responsible-advertising", "/services", "/solutions", "/start", "/studio", "/tools"
+  ]
+}

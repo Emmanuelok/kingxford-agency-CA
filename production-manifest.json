@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "kingxford-one-take",
+    "name": "KINGXFORD campaign-first website",
+    "mode": "frontend-campaign",
+    "objective": "Establish a new St. John's advertising agency as credible, distinctive, and ready to win serious launch and growth briefs across Canada.",
+    "audience": "Canadian founders, marketing leaders, public-interest teams, tourism and hospitality operators, and technology companies evaluating an agency partner on desktop or mobile.",
+    "governing_idea": "Show one commercial idea becoming a complete campaign in one continuous take.",
+    "status": "in-production"
+  },
+  "creative_system": {
+    "visual_thesis": "A tactile campaign room moves from evidence to image to distribution; Atlantic character is expressed through material, light, and decisiveness rather than nautical symbolism.",
+    "anti_goals": [
+      "giant typography used as a substitute for proof",
+      "generic glass, neon, or glowing-network aesthetics",
+      "fabricated client work, testimonials, or results",
+      "long scroll spectacle before the visitor understands the offer"
+    ],
+    "palette": {
+      "dominant": ["basalt black", "weathered cream"],
+      "accent": ["safety red", "electric chartreuse", "cold Atlantic blue"],
+      "contrast": "dark cinematic opening followed by high-contrast editorial campaign rooms"
+    },
+    "composition": "One clear focal point per viewport, asymmetric editorial grids, useful negative space, and immediate work proof.",
+    "camera": "A grounded forward move from studio to market with no scroll interception.",
+    "lighting": "North Atlantic blue ambient light balanced by warm practical sources and truthful material response.",
+    "typography": "Readable editorial display type with compact monospaced production labels and restrained uppercase use.",
+    "motion": "A finite 190svh desktop and 165svh mobile scroll scrub with opening and closing holds, freeze control, skip path, and static fallback.",
+    "sound": "Silent by design for immediate, non-disruptive web use.",
+    "interface": "Keyboard-accessible controls, visible focus, touch-ready study selection, responsive reflow, reduced-motion parity, and semantic HTML copy.",
+    "invariants": [
+      "Every campaign study is explicitly disclosed as independent concept work.",
+      "The primary offer and calls to action are visible on the first film frame.",
+      "Mobile receives purpose-cropped frames and a shorter composition rather than a scaled desktop page."
+    ],
+    "permitted_variations": [
+      "Study accent colours and image crops may change while disclosure, information hierarchy, and interaction remain consistent."
+    ]
+  },
+  "assets": [
+    {
+      "id": "ast-one-take-sequence",
+      "type": "image-sequence",
+      "source": "public/sequences/home-hero-v1",
+      "role": "hero-film",
+      "rights_status": "original-generated",
+      "description": "Higgsfield-generated desktop and mobile frame sequences moving from a St. John's studio to a connected market view.",
+      "notes": "Publicly disclosed in the interface as synthetic campaign film."
+    },
+    {
+      "id": "ast-after-weather",
+      "type": "image",
+      "source": "public/images/campaign-after-weather.webp",
+      "role": "campaign-study",
+      "rights_status": "original-generated",
+      "description": "Original synthetic place-campaign study showing a rain-washed St. John's street.",
+      "notes": "No real client, endorsement, or performance claim."
+    },
+    {
+      "id": "ast-deep-current",
+      "type": "image",
+      "source": "public/images/campaign-deep-current.webp",
+      "role": "campaign-study",
+      "rights_status": "original-generated",
+      "description": "Original synthetic ocean-technology campaign study showing an unbranded instrument.",
+      "notes": "No real product specifications or performance claim."
+    },
+    {
+      "id": "ast-open-table",
+      "type": "image",
+      "source": "public/images/campaign-open-table.webp",
+      "role": "campaign-study",
+      "rights_status": "original-generated",
+      "description": "Original synthetic hospitality campaign study showing a restaurant before service.",
+      "notes": "No real venue, endorsement, or performance claim."
+    }
+  ],
+  "elements": [],
+  "scenes": [],
+  "shots": [],
+  "screens": [
+    {
+      "id": "screen-home",
+      "route": "/",
+      "purpose": "Turn agency interest into confident campaign-study exploration and a qualified project brief.",
+      "states": ["opening-film", "closing-film", "three-study-tabs", "reduced-motion", "mobile"]
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "del-homepage",
+      "type": "frontend",
+      "title": "KINGXFORD campaign-first homepage",
+      "channel": "web",
+      "source_ids": ["screen-home", "ast-one-take-sequence", "ast-after-weather", "ast-deep-current", "ast-open-table"],
+      "aspect_ratio": "responsive",
+      "dimensions": "responsive",
+      "duration_s": 0,
+      "frame_rate": 0,
+      "format": "React/CSS/WebP",
+      "language": "en-CA",
+      "captions": false,
+      "alt_text": "Semantic copy and useful alt text are implemented in the interface.",
+      "variant_of": "",
+      "version": 4,
+      "status": "in-production"
+    }
+  ],
+  "rights_and_claims": [
+    {
+      "id": "right-generated-assets",
+      "category": "source-media",
+      "description": "Generated imagery is original to this production and synthetic context is disclosed where confusion is plausible.",
+      "evidence": "Asset generation record and visual inspection notes from 2026-08-30.",
+      "status": "resolved"
+    },
+    {
+      "id": "claim-concept-work",
+      "category": "advertising-truth",
+      "description": "Campaign studies do not imply clients, results, testimonials, or endorsements.",
+      "evidence": "Persistent on-screen disclosure and concept-only copy in components/campaign-studies.tsx.",
+      "status": "resolved"
+    }
+  ],
+  "qa": {
+    "required_gates": ["gate-brief", "gate-direction", "gate-look", "gate-system", "gate-rough", "gate-finish", "gate-delivery"],
+    "acceptance_threshold": 85,
+    "critical_failures": [],
+    "review_notes": []
+  },
+  "gates": [
+    {"id": "gate-brief", "name": "Brief", "status": "complete", "evidence": ["User requirements and prior design critique"]},
+    {"id": "gate-direction", "name": "Direction", "status": "complete", "evidence": ["One Take creative thesis and anti-goals"]},
+    {"id": "gate-look", "name": "Representative look", "status": "complete", "evidence": ["Inspected campaign-study assets"]},
+    {"id": "gate-system", "name": "Production system", "status": "complete", "evidence": ["Responsive, motion, disclosure, and visual rules"]},
+    {"id": "gate-rough", "name": "Coherent rough", "status": "complete", "evidence": ["Implemented homepage source"]},
+    {"id": "gate-finish", "name": "Finish", "status": "pending", "evidence": []},
+    {"id": "gate-delivery", "name": "Delivery", "status": "pending", "evidence": []}
+  ],
+  "assumptions": [
+    "KINGXFORD is pre-launch and does not yet have approved client case studies.",
+    "hello@kingxford.co remains the intended public agency contact from the existing site."
+  ],
+  "open_questions": [],
+  "risks": [
+    "A future public launch should confirm trademark, legal, privacy, and sector-specific advertising review."
+  ]
+}

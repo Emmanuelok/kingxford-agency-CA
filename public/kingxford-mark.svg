@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title description">
-  <title id="title">KINGXFORD signal mark</title>
-  <desc id="description">An angular letter K with a cobalt signal point.</desc>
-  <rect width="160" height="160" rx="32" fill="#080a0d"/>
-  <path d="M35 32v96h21V88l46 40h28L73 78l51-46H95L56 70V32z" fill="#f4f1ea"/>
-  <circle cx="126" cy="34" r="12" fill="#316cff"/>
-</svg>

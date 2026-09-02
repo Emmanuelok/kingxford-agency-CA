@@ -1,81 +1,22 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import { ArrowUpRight, Aperture, AudioLines, Box, Camera, Clapperboard, Mic2, Plane, RadioTower } from "lucide-react";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
+import { PageHero } from "@/components/page-hero";
 
-export const metadata: Metadata = {
-  title: "Production studio | KINGXFORD",
-  description: "Cinematic film, photography, motion and modular content production planned as an accessible, rights-cleared operating system.",
-};
-
-export default function StudioPage() {
-  const disciplines = ["Creative development", "Directing + cinematography", "Photography", "Editorial + colour", "Sound design", "Motion + VFX", "Social adaptation", "Asset operations"];
-  return (
-    <main>
-      <header className="page-hero">
-        <div className="shell stack">
-          <p className="eyebrow">KINGXFORD Studio / production without the disconnect</p>
-          <h1 className="display">Make one defining story. Build every useful frame around it.</h1>
-          <p className="lede">A connected production model for hero film, photography, motion and platform-native content—from first treatment to final rights record.</p>
-          <Link className="button button--primary" href="/start-a-project">Brief the studio</Link>
-        </div>
-      </header>
-
-      <section className="section">
-        <div className="shell stack">
-          <figure className="media-frame">
-            <Image
-              alt="An overhead cinematic studio environment with camera equipment, editing controls, campaign plans and a digital prototype"
-              fill
-              priority
-              sizes="(max-width: 900px) 100vw, 92vw"
-              src="/media/kingxford-production-system.webp"
-            />
-            <div className="media-frame__wash" aria-hidden="true" />
-            <figcaption><span>AI-assisted conceptual artwork</span><strong>Capture, craft and content operations designed together.</strong></figcaption>
-          </figure>
-          <div className="split">
-          <div className="media-frame stack">
-            <p className="eyebrow">The production equation</p>
-            <h2 className="section-title">One idea × planned capture × modular craft.</h2>
-            <p className="lede">The answer is not maximum volume. It is the right set of coherent assets, captured efficiently and finished for the contexts where people will actually experience them.</p>
-          </div>
-          <div className="page-grid">
-            {disciplines.map((discipline, index) => <div className="card" key={discipline}><span className="card__number">{String(index + 1).padStart(2, "0")}</span><h3>{discipline}</h3></div>)}
-          </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--compact">
-        <div className="shell stack">
-          <p className="eyebrow">One shoot, many stories</p>
-          <h2 className="section-title">Plan the full asset map before call time.</h2>
-          <div className="page-grid">
-            <article className="card stack"><span className="tag">Hero</span><h3>The defining expression</h3><p>A flagship film or image series with the space, craft and pacing to create memory.</p></article>
-            <article className="card stack"><span className="tag">Native</span><h3>Designed for the platform</h3><p>Vertical stories, quiet loops, interviews, demonstrations and cut-downs conceived in their own formats.</p></article>
-            <article className="card stack"><span className="tag">Utility</span><h3>Built for everyday use</h3><p>Stills, product views, recruitment moments, web backgrounds, thumbnails and internal communications.</p></article>
-            <article className="card stack"><span className="tag">Control</span><h3>Ready to use responsibly</h3><p>Captions, alt text, source records, releases, music and talent rights, expiry dates and approved masters.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="shell split">
-          <div className="stack"><p className="eyebrow">Field-ready</p><h2 className="section-title">Made for real weather, real work and real people.</h2></div>
-          <div className="rich-copy">
-            <p>Newfoundland and Labrador offers extraordinary environments—and demands serious preparation. We plan around access, safety, weather alternatives, consent, technical realities and the dignity of the people represented.</p>
-            <p>When a project requires specialist crews, aerial work, marine operations, remote logistics, union talent or regulated environments, qualified partners are scoped before production begins.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--compact">
-        <div className="shell stack">
-          <p className="eyebrow">Production brief</p>
-          <h2 className="section-title">Tell us what the audience must feel, understand or do.</h2>
-          <div className="cluster"><Link className="button button--primary" href="/start-a-project">Start a production</Link><Link className="button button--outline" href="/services/film-content-production">See the full practice</Link></div>
-        </div>
-      </section>
-    </main>
-  );
-}
+export const metadata: Metadata = { title:"Production Studio", description:"Campaign film, photography, motion, 3D, audio, live and high-volume content production—connected directly to strategy and media." };
+const production=[
+  [Clapperboard,"Commercial film","TV, CTV, brand films, documentaries, testimonials and campaign video."],
+  [Camera,"Photography","Product, food, fashion, hospitality, property, portraits and campaign stills."],
+  [Aperture,"Post-production","Editing, colour, retouching, sound design, versioning and localization."],
+  [Box,"Motion, CGI & 3D","Animation, explainers, product visualization, VFX and virtual environments."],
+  [Mic2,"Audio & voice","Radio, podcast, voiceover, sonic identity, music supervision and mixing."],
+  [Plane,"Aerial & location","Drone through qualified operators, field units and province-wide production planning."],
+  [RadioTower,"Live & experiential","Livestreams, event coverage, screens, launches, activations and hybrid production."],
+  [AudioLines,"Content supply","One-day shoots, high-volume social assets, creator direction and channel adaptations."],
+];
+export default function StudioPage(){return <main className="site-shell"><SiteNav/><PageHero index="04" eyebrow="KINGXFORD PRODUCTION HOUSE" title="Put the idea" accent="in motion." description="Strategy and production should not live in different rooms. We develop the idea with the people who must eventually shoot, edit, adapt and distribute it."/>
+  <section className="cinema-frame"><img src="/images/commercial-production.webp" alt="Commercial production crew shaping light and product detail on set"/><div className="cinema-label"><span>KX / STUDIO / 001</span><b>Made to stop the scroll.<br/>Built to survive every format.</b></div></section>
+  <section className="production-grid content-section">{production.map(([Icon,title,desc],i)=>{const I=Icon as typeof Camera;return <article key={String(title)}><span>0{i+1}</span><I strokeWidth={1}/><h2>{String(title)}</h2><p>{String(desc)}</p></article>})}</section>
+  <section className="production-process content-section coral-block"><div className="section-kicker"><span>05</span> FROM BRIEF TO MASTER</div><h2>No mystery<br/>between idea and output.</h2><div className="process-steps dark-text">{["Treatment","Pre-production","Capture","Post","Adapt","Deliver"].map((x,i)=><div key={x}><span>0{i+1}</span><b>{x}</b></div>)}</div><a className="button button-dark" href="/start">Scope a production <ArrowUpRight/></a></section>
+  <SiteFooter/></main>}
