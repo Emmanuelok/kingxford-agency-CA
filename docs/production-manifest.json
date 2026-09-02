@@ -233,7 +233,7 @@
       "Production build generated 49 routes successfully on Next.js 16.3.4.",
       "Lint, strict type checking and 14 automated tests pass.",
       "Cinematic masters were visually reviewed and re-encoded for browser-safe H.264 scroll seeking.",
-      "Production deployment dpl_BHkpRkJ5Q5DxSV4U57SMfHZ9qQEn reached READY at https://kingxford-agency.vercel.app.",
+      "Production deployment dpl_7AS8gN5CFSjDNZyTSCkVvR5Figun reached READY at https://kingxford-agency.vercel.app.",
       "Online inquiry delivery remains intentionally disabled until a verified Resend or CRM destination is configured."
     ]
   },
@@ -244,7 +244,7 @@
     {"id": "gate-system", "name": "Production system", "status": "approved", "evidence": ["Next.js component system"]},
     {"id": "gate-rough", "name": "Coherent rough", "status": "passed", "evidence": ["All primary routes and conversion journeys reviewed in the integrated Next.js build"]},
     {"id": "gate-finish", "name": "Finish", "status": "passed", "evidence": ["Sitewide typography, contrast, reduced motion, responsive navigation, literal alternative text and synthetic-media disclosures audited"]},
-    {"id": "gate-delivery", "name": "Delivery", "status": "delivered", "evidence": ["Vercel production deployment dpl_BHkpRkJ5Q5DxSV4U57SMfHZ9qQEn is READY at https://kingxford-agency.vercel.app", "Lint, typecheck, 14 automated tests, production build and HTTP smoke checks completed"]}
+    {"id": "gate-delivery", "name": "Delivery", "status": "delivered", "evidence": ["Vercel production deployment dpl_7AS8gN5CFSjDNZyTSCkVvR5Figun is READY at https://kingxford-agency.vercel.app", "Lint, typecheck, 14 automated tests, production build and HTTP smoke checks completed"]}
   ],
   "assumptions": [
     "English launch first; French expansion pathway is documented but no unsupported bilingual claim is made.",
