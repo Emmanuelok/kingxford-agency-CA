@@ -4,7 +4,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
 import { AboutVisual } from "@/components/editorial-figures";
-export const metadata: Metadata={title:"About",description:"The strategy, principles and Newfoundland-to-Canada ambition behind KINGXFORD Agency."};
+export const metadata: Metadata={ alternates: { canonical: "/about" },title:"About",description:"The strategy, principles and Newfoundland-to-Canada ambition behind KINGXFORD Agency."};
 export default function AboutPage(){return <main className="site-shell"><SiteNav/><PageHero index="08" eyebrow="NEWFOUNDLAND-BORN · CANADA-READY" title="Built at the edge." accent="Made to lead." description="KINGXFORD is being built for organizations that want the strategic depth of a serious agency, the craft of a production house and the operating clarity of a modern product company."/>
  <section className="about-belief content-section"><div className="section-kicker"><span>01</span> OUR BELIEF</div><div className="split-statement"><h2>Attention without action<br/><em>is noise.</em></h2><div><p className="large-copy">We connect what the market sees with what the business needs people to do next.</p><p>That means creative and performance are one job. Content carries a strategy. Technology removes friction. Data improves judgment. AI accelerates the workflow, while people remain responsible for the work.</p></div></div></section>
  <AboutVisual />

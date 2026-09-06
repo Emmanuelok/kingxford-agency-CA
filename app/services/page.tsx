@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
 import { ServicesVisual } from "@/components/editorial-figures";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = { alternates: { canonical: "/services" },
   title: "Services",
   description: "Strategy, brand, advertising, production, media, social, web, commerce, PR, data and responsible AI—connected around one commercial objective.",
 };
@@ -40,7 +40,7 @@ export default function ServicesPage() {
       <ServicesVisual />
       <section className="service-catalog">
         {services.map((service,index)=>(
-          <article className="service-family" key={service.name}>
+          <article className="service-family" id={["strategy","brand","campaigns","content","media","search","digital","commerce","production","pr","data","ai"][index]} key={service.name}>
             <header><span>{String(index+1).padStart(2,"0")}</span><div><h2>{service.name}</h2><p>{service.line}</p></div><ArrowUpRight/></header>
             <div className="service-tags">{service.items.map(item=><span key={item}>{item}</span>)}</div>
           </article>

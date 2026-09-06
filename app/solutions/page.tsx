@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
 import { SolutionsVisual } from "@/components/editorial-figures";
 
-export const metadata: Metadata = { title:"Solutions", description:"Start with the business result: launch, leads, local demand, online sales, content or market expansion." };
+export const metadata: Metadata = { alternates: { canonical: "/solutions" }, title:"Solutions", description:"Start with the business result: launch, leads, local demand, online sales, content or market expansion." };
 
 const outcomes = [
   {n:"01",title:"Launch something new",desc:"Build the strategy, identity, story, experience and first wave of demand around a new venture, product, location or service.",path:"Research → Positioning → Brand → Digital → Campaign → Launch",engagement:"Brand & Digital Launch"},

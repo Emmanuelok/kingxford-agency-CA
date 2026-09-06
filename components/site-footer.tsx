@@ -4,7 +4,7 @@ import { BrandLockup } from "@/components/site-nav";
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" role="contentinfo">
       <div className="footer-pitch">
         <div><span>KX / THE DISPATCH</span><h2>Bring us the thing that will not move.</h2></div>
         <a href="/start">Start the brief <ArrowUpRight /></a>

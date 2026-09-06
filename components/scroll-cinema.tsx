@@ -1,11 +1,10 @@
 "use client";
+import Image from "next/image";
 
 import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const mediaRoot =
-  process.env.NEXT_PUBLIC_KINGXFORD_MEDIA_ROOT ??
-  "https://raw.githubusercontent.com/Emmanuelok/kingxford-agency-CA/main/public/video";
+const mediaRoot = process.env.NEXT_PUBLIC_KINGXFORD_MEDIA_ROOT ?? "/video";
 
 const films = {
   desktop: `${mediaRoot}/kingxford-original-hero.mp4`,
@@ -53,18 +52,14 @@ export function ScrollCinema() {
     );
     const connection = (
       navigator as Navigator & {
-        connection?: { saveData?: boolean; effectiveType?: string };
+        connection?: { saveData?: boolean; effectiveType?: string; addEventListener?: (type: "change", listener: () => void) => void; removeEventListener?: (type: "change", listener: () => void) => void };
       }
     ).connection;
 
-    if (
+    const staticRequested = () =>
       reduceQuery.matches ||
-      connection?.saveData ||
-      connection?.effectiveType?.includes("2g")
-    ) {
-      section.dataset.static = "true";
-      return;
-    }
+      !!connection?.saveData ||
+      !!connection?.effectiveType?.includes("2g");
 
     let sectionStart = 0;
     let travel = 1;
@@ -74,9 +69,13 @@ export function ScrollCinema() {
     let selectedFilm = "";
 
     const selectFilm = () => {
+      section.dataset.static = String(staticRequested() || section.dataset.loadError === "true");
+      if (staticRequested()) { video.pause(); return; }
       const nextFilm = mobileQuery.matches ? films.mobile : films.desktop;
       if (nextFilm === selectedFilm) return;
       selectedFilm = nextFilm;
+      section.dataset.loadError = "false";
+      section.dataset.static = "false";
       video.dataset.ready = "false";
       video.src = nextFilm;
       video.load();
@@ -107,7 +106,7 @@ export function ScrollCinema() {
 
     const render = () => {
       raf = 0;
-      if (!visible || reduceQuery.matches || frozenRef.current) return;
+      if (!visible || staticRequested() || section.dataset.loadError === "true" || frozenRef.current) return;
       progress = Math.min(
         1,
         Math.max(0, (window.scrollY - sectionStart) / travel),
@@ -122,20 +121,25 @@ export function ScrollCinema() {
     };
 
     const resize = () => {
-      measure();
       selectFilm();
+      measure();
       schedule();
     };
 
     const ready = () => {
+      section.dataset.loadError = "false";
+      section.dataset.static = String(staticRequested());
       video.dataset.ready = "true";
       video.pause();
-      seek();
+      measure();
+      schedule();
     };
 
     const failed = () => {
       section.dataset.loadError = "true";
+      section.dataset.static = "true";
       video.dataset.ready = "false";
+      measure();
     };
 
     const observer = new IntersectionObserver(
@@ -149,18 +153,22 @@ export function ScrollCinema() {
     video.addEventListener("loadeddata", ready);
     video.addEventListener("error", failed);
     observer.observe(section);
-    measure();
     selectFilm();
+    measure();
     render();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", resize, { passive: true });
     mobileQuery.addEventListener("change", resize);
+    reduceQuery.addEventListener("change", resize);
+    connection?.addEventListener?.("change", resize);
 
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", resize);
       mobileQuery.removeEventListener("change", resize);
+      reduceQuery.removeEventListener("change", resize);
+      connection?.removeEventListener?.("change", resize);
       video.removeEventListener("loadeddata", ready);
       video.removeEventListener("error", failed);
       if (raf) window.cancelAnimationFrame(raf);
@@ -182,7 +190,11 @@ export function ScrollCinema() {
         experience and measurement.
       </p>
       <div className="kx5-cinema-sticky" ref={stickyRef}>
-        <img
+        <Image
+          width={1600}
+          height={900}
+          sizes="100vw"
+          preload
           className="kx5-cinema-poster"
           src="/images/hero-research-wall.webp"
           alt=""
@@ -260,11 +272,7 @@ export function ScrollCinema() {
 
         <div className="kx5-cinema-controls">
           <span>Scroll to operate the film</span>
-          <button
-            type="button"
-            onClick={toggleFrozen}
-            aria-pressed={frozen}
-          >
+          <button type="button" onClick={toggleFrozen} aria-pressed={frozen}>
             {frozen ? <Play /> : <Pause />} {frozen ? "Resume" : "Hold"}
           </button>
           <i aria-hidden="true">

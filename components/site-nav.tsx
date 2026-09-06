@@ -34,12 +34,12 @@ export function SiteNav() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <header className="nav-shell">
+      <header className="nav-shell" role="banner">
         <BrandLockup />
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
         </nav>
-        <a className="nav-cta desktop-project" href="/start">Start a project <ArrowUpRight size={15} /></a>
+        <a className="nav-cta desktop-project" href="/platform">Open workspace <ArrowUpRight size={15} /></a>
         <Sheet>
           <SheetTrigger asChild>
             <button className="mobile-menu" aria-label="Open menu"><Menu /></button>

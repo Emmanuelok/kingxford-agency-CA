@@ -2,6 +2,101 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
-import { TrustMap } from "@/components/editorial-figures";
-export const metadata: Metadata={title:"Privacy & Data",description:"How KINGXFORD Agency approaches personal information, consent, inquiries, analytics and client data."};
-export default function PrivacyPage(){return <main className="site-shell"><SiteNav/><PageHero index="P1" eyebrow="TRUST CENTRE" title="Privacy should" accent="be understandable." description="This launch notice explains the current website experience. It will be expanded before any analytics, advertising, portal or persistent lead-capture capability is activated."/><TrustMap eyebrow="DATA WITH PURPOSE" title="Collect less. Explain more." items={[["Purpose","Know why information is needed before collecting it.","check"],["Control","Keep meaningful choices separate and understandable.","shield"],["Stewardship","Set access, retention and deletion responsibilities.","spark"]]}/><article className="policy-page content-section"><p className="policy-updated">Launch notice · 28 August 2026</p><h2>Current website behaviour</h2><p>The interactive growth tools and project-brief builder run in your browser. In this launch version, answers are not sent to KINGXFORD or stored by the website. Information leaves your browser only when you deliberately open and send the prepared email.</p><p>The site does not intentionally activate non-essential advertising pixels, session replay or behavioural profiling. Essential hosting and security infrastructure may process technical request information needed to deliver and protect the site.</p><h2>Project inquiries</h2><p>If you email us, we use the information to understand and respond to your request, assess fit, prepare a proposal and maintain necessary business records. A project inquiry does not automatically subscribe you to marketing. Any marketing choice must remain separate and optional.</p><h2>Client and campaign data</h2><p>Before a client platform launches, KINGXFORD will publish fuller details covering purposes, categories, service providers, processing locations, retention, access and correction, withdrawal, security and incident response. Client data will not be reused to train general AI systems without distinct, informed authorization.</p><h2>Your choices</h2><p>You may ask about, correct or request deletion of personal information subject to legal and contractual requirements. Contact the privacy lead at <a href="mailto:hello@kingxford.co?subject=Privacy%20request">hello@kingxford.co</a>.</p><h2>Canadian scope</h2><p>Our operating approach is designed around meaningful consent, accountability and data minimization. Formal policies and agreements will be reviewed for the applicable Canadian jurisdiction and service before collection begins.</p></article><SiteFooter/></main>}
+export const metadata: Metadata = {
+  title: "Privacy & Data",
+  description:
+    "How KINGXFORD handles device-local campaign drafts, optional cloud snapshots, AI requests and project inquiries.",
+  alternates: { canonical: "/privacy" },
+};
+export default function PrivacyPage() {
+  return (
+    <div className="site-shell">
+      <SiteNav />
+      <main>
+        <PageHero
+          index="P1"
+          eyebrow="TRUST CENTRE"
+          title="Your work."
+          accent="Your choices."
+          description="Know what stays on your device, what you choose to send, and which connections are active."
+        />
+        <article className="policy-page content-section">
+          <p className="policy-updated">Workspace notice · 6 September 2026</p>
+          <h2>Device-local workspace</h2>
+          <p>
+            The campaign workspace saves briefs, draft content, planning
+            outputs, tasks, evidence records and decision history in this
+            browser’s local storage. This is device-local storage, not a team
+            account or encrypted vault. Anyone with access to this browser
+            profile may be able to read it. Avoid sensitive personal
+            information, credentials and confidential third-party data. Export
+            backups regularly. Deleting browser site data removes the device
+            copy.
+          </p>
+          <h2>Optional cloud snapshots</h2>
+          <p>
+            When an agency-provisioned cloud connection is active, signed-in
+            users may explicitly save a private snapshot to the configured
+            Supabase service. It is associated with the account ID and protected
+            by account-ownership policies. Cloud saves are manual snapshots, not
+            continuous collaboration. Deleting a device campaign does not delete
+            its cloud snapshot. Contact KINGXFORD for cloud deletion, access or
+            correction requests.
+          </p>
+          <h2>Optional AI drafts</h2>
+          <p>
+            Planning engines execute in your browser and do not require an AI
+            provider. Selecting “Send brief for AI draft” sends your brief,
+            selected evidence and relevant planning context to KINGXFORD’s
+            server and configured model through Vercel AI Gateway. Do not
+            include secrets or unnecessary personal information. Provider
+            processing and usage charges may apply. Outputs are unverified
+            drafts, not independently researched facts. No request automatically
+            publishes content, sends messages, changes advertising accounts or
+            spends a campaign budget.
+          </p>
+          <h2>Accounts and service activation</h2>
+          <p>
+            Cloud and AI features are unavailable until configured by the owner.
+            Before inviting clients, the owner must confirm processing
+            locations, subprocessors, retention periods, support and deletion
+            procedures, provider data-use settings, contractual safeguards and
+            the applicable privacy requirements. Do not treat this
+            implementation notice as a completed legal or privacy assessment.
+          </p>
+          <h2>Project inquiries</h2>
+          <p>
+            The inquiry builder prepares an email for you to review and send
+            using your own mail application; opening that application does not
+            send the email. Copy and download alternatives are available. The
+            workspace handoff stores organization, objective and challenge—not
+            contact details. An inquiry does not subscribe you to marketing;
+            that choice is separate and optional.
+          </p>
+          <h2>Technical information</h2>
+          <p>
+            Hosting and security services may process request information
+            necessary to deliver and protect the platform. The site does not
+            intentionally activate non-essential advertising pixels or session
+            replay. Authentication uses essential session cookies when cloud
+            accounts are active. Application error logs are designed not to
+            include submitted briefs, passwords, tokens or AI prompt bodies.
+          </p>
+          <h2>Your choices</h2>
+          <p>
+            Use Storage & connections to export data, sign out or delete the
+            active device campaign. Device copies remain after sign-out, so
+            remove them on shared devices. For questions, access, correction or
+            cloud deletion, contact{" "}
+            <a href="mailto:hello@kingxford.co?subject=Privacy%20request">
+              hello@kingxford.co
+            </a>
+            . Retention and legal obligations may affect deletion of business
+            records.
+          </p>
+        </article>
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}

@@ -4,7 +4,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
 import { InvestmentFigure } from "@/components/editorial-figures";
-export const metadata: Metadata={title:"Engagements & Planning Ranges",description:"Transparent Canadian-dollar planning ranges for diagnostics, launches, campaigns, content and integrated growth partnerships."};
+export const metadata: Metadata={ alternates: { canonical: "/pricing" },title:"Engagements & Planning Ranges",description:"Transparent Canadian-dollar planning ranges for diagnostics, launches, campaigns, content and integrated growth partnerships."};
 const offers=[
  ["Growth diagnostic","$2.5K–$5K","Audit, research, priorities and a practical 90-day roadmap.",["Current-state audit","Priority research","Working session","Action roadmap"]],
  ["Local market launch","$7.5K–$15K","A focused market-entry or local-demand system.",["Positioning refresh","Conversion landing experience","Local discovery","Launch creative and tracking"]],
