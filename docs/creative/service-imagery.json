@@ -1,0 +1,533 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "avalon-service-imagery-2026-09",
+    "name": "Avalon service photography",
+    "mode": "image-production",
+    "objective": "Give each service discipline a distinct realistic visual and connect the Services page to the homepage studio explorer.",
+    "audience": "Prospective creative and marketing clients",
+    "governing_idea": "The real materials, people and places behind connected creative work.",
+    "status": "generated"
+  },
+  "creative_system": {
+    "visual_thesis": "Contemporary editorial photography with believable human work, tactile materials and a shared forest, ivory, coral and cobalt palette.",
+    "anti_goals": [
+      "generic futuristic AI graphics",
+      "fabricated client evidence",
+      "repeated stock scenes"
+    ],
+    "palette": {
+      "dominant": [
+        "forest green",
+        "warm ivory"
+      ],
+      "accent": [
+        "coral",
+        "cobalt",
+        "amber"
+      ],
+      "contrast": "natural daylight and warm practical lighting"
+    },
+    "composition": "Distinct scene for each service, composed for responsive crops.",
+    "camera": "Grounded 28–50mm perspectives and natural depth.",
+    "lighting": "Natural window light or motivated practical lamps.",
+    "typography": "Live HTML; no required copy inside images.",
+    "motion": "Subtle hover zoom only with reduced-motion parity.",
+    "invariants": [
+      "Photorealistic illustrative scenes",
+      "No real client endorsements or identifiable real people"
+    ]
+  },
+  "assets": [
+    {
+      "id": "ast-strategy",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212458_025495c3-26ef-4853-8b38-60c3f6e3ae84.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A candid wide editorial photograph inside a beautiful independent creative agency in a converted coastal Canadian warehouse. Four adult strategists in natural contemporary clothes collaborating around an expansive oak table scattered with research photographs, swatches and oversized blank briefing sheets. One woman stands at a wall of neatly arranged printed photographs and coral sticky notes. Tall industrial windows, diffuse morning daylight, forest-green velvet chairs, warm ivory walls, tactile paper. The people are absorbed in real work, never posing for camera. Shot from a corner at table height, 35mm lens, layered depth. A genuinely believable creative studio, no legible text. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "025495c3-26ef-4853-8b38-60c3f6e3ae84",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/strategy.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-brand",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212607_d4a4c79f-4d4e-442f-bd2c-960275242af3.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Premium editorial product photograph of a complete invented boutique hospitality brand identity laid out on an ivory stone table: beautifully constructed coral and deep-plum packaging, embossed unlettered stationery, a folded textured paper menu, heavy business cards with a simple abstract circular mark, matching paper shopping bag and ceramic vessel. A graphic designer's hand holds a color swatch in one corner. Close three-quarter overhead composition, sculptural diagonal sunlight, rich paper grain and ink texture, meticulous art direction. Everything is tangible and photographed, not floating. No readable words or real brand logos. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "d4a4c79f-4d4e-442f-bd2c-960275242af3",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/brand.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-campaigns",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212607_662f6097-4e3c-46d7-bf5c-f2d4d27179f9.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "An exceptionally cinematic but entirely believable street photograph at blue hour in a Canadian downtown. A huge striking coral-red and violet abstract campaign poster occupies a brick building wall, with one elegant oversized circular graphic and no words. Two smaller matching street advertising panels establish how one campaign travels through a city. Wet pavement reflects sunset amber and cobalt sky. A few adults cross naturally in foreground, a streetcar recedes softly into the distance. Ground-level 28mm lens, architectural precision, authentic urban detail, compelling real-world advertising scale. No readable signs or brand names. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "662f6097-4e3c-46d7-bf5c-f2d4d27179f9",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/campaigns.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-media",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212607_c8474928-d778-4fb0-a365-27ed3126fb2b.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "An atmospheric documentary photograph inside a premium media planning studio at dusk. Two adult planners sit at a wide workbench reviewing a wall of three ordinary large screens with elegant abstract blocks representing placements, a timeline and clean charts without legible numbers. Across the windows, a real city lights up in the evening. Forest-green room, a coral desk lamp, oak surfaces, restrained amber practical light balanced with blue twilight. A printed channel plan rests in foreground. Wide 35mm lens, authentic equipment, human conversation, no holograms, no science-fiction effects or readable text. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "c8474928-d778-4fb0-a365-27ed3126fb2b",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/media.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-search",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212608_3afff297-ef6b-4798-9232-0c5bd41bf839.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A striking editorial photograph capturing local discovery: the warmly lit entrance of an independent design bookstore on a charming Canadian city street in soft early autumn light. In foreground, a person holds a smartphone showing a simple generic map with three coral location markers and no readable text, the real store visible beyond. Window displays contain carefully arranged art books, small plant, cream signage with only a simple geometric circle. Shallow but credible depth of field, 50mm lens, tactile brick, beautiful soft shadows, olive and terracotta accents. No real app logos or brand names. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "3afff297-ef6b-4798-9232-0c5bd41bf839",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/search.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-digital",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212607_17eb58e1-333a-4c46-82fc-048ab71bdfc8.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Photorealistic editorial photograph of an adult product designer at a refined oak workstation in a bright architectural studio. A large desktop monitor and tablet show an elegant invented digital commerce interface using cream, dark green and coral image blocks with minimal abstract line placeholders, absolutely no readable copy. On the desk are physical wireframe sketches, a trackpad and a violet glass cup. The designer is partly seen in side profile focused on the screen, tall window light from left, concrete and warm wood, considered practical details. Three-quarter composition, 35mm lens, crisp credible hardware, no floating UI. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "17eb58e1-333a-4c46-82fc-048ab71bdfc8",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/digital.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-commerce",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212628_9c079718-bcce-4d4c-8767-90c2880346b0.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Premium documentary photograph of a small design-led online store preparing beautiful customer orders. An adult store owner at a pale stone counter folds coral tissue paper into a cream box; cobalt ceramic objects and carefully arranged unbranded packaging surround the work. A tablet on a stand shows a simple invented storefront with image tiles and no readable words. Open shelving, warm daylight, dark-green apron, natural hand anatomy, luxury editorial styling with believable packing materials. Shot at counter height with a 50mm lens, rich tactile details, uncluttered but real workspace. No logos. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "9c079718-bcce-4d4c-8767-90c2880346b0",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/commerce.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-production",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212628_de9ea9b7-64c9-4b19-8856-578941b311f0.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A spectacular photorealistic behind-the-scenes commercial film production photograph. A professional cinema camera with matte box and follow focus dominates the near foreground; beyond it an amber sculptural chair and draped coral fabric are being lit on an expansive deep-green cyclorama. Two adult crew members adjust a large diffusion frame and a cinema lamp at a safe distance. Warm beams through slight believable studio haze, black flags, practical stands and cables carefully arranged, authentic production craft. Wide 28mm composition with dramatic depth, luxury campaign production, precise realistic equipment. No text, no logos. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "de9ea9b7-64c9-4b19-8856-578941b311f0",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/production.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-pr",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212628_e7a7a2ab-7ebc-4fab-a4e6-e8e5a7b229cf.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A beautiful high-end editorial photograph of an intimate design exhibition opening in a contemporary Canadian gallery at dusk. A diverse group of about twelve adults in smart relaxed clothing engage in natural conversation around a coral abstract sculptural installation. Tall warm-lit stone walls, one large forest-green panel with a simple geometric mark and no writing, photographers discreetly working near the edge. Elegant amber lighting, real human gestures and faces, a sense of carefully orchestrated public experience. Architectural wide 35mm framing, cinematic depth, credible event atmosphere. No real brand, no legible text. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "e7a7a2ab-7ebc-4fab-a4e6-e8e5a7b229cf",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/pr.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-data",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212628_ff659f44-82b1-4d82-9beb-e60999a469c4.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A meticulous editorial photograph of a real campaign measurement working session in a bright modern studio. Three printed analytic sheets with simple clean multicolor line and bar charts lie on an oak table beside a laptop displaying abstract charts without readable labels. An analyst's hand marks a point on one paper with a coral pencil while a colleague holds a translucent ruler. Glass of water, one forest-green notebook, ivory surfaces, soft directional daylight, tactile paper, precise natural shadows. Close angled overhead composition with beautiful graphic rhythm and real material detail. No artificial futuristic graphics, no legible numbers or claims. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "ff659f44-82b1-4d82-9beb-e60999a469c4",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/data.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-ai",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212628_ca5025aa-9f26-4916-a21e-ad0b8d3c0b44.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A compelling photorealistic editorial portrait of an adult automation specialist building a workflow at an architectural studio workstation after hours. Two ordinary monitors show clean connected coral and ivory process blocks against deep green with no readable text; a compact real equipment cabinet and organized cables sit at the side. Warm table lamp, soft cool window light, brushed aluminum keyboard, notebook with abstract diagrams, a small plant. The specialist in thoughtful side profile, real skin and natural posture. 35mm lens, rich cinematic contrast, calm craft and human oversight. No robots, brains, holograms, neon sci-fi or readable logos. Commissioned original illustrative image for Avalon Creative Group's services website. Ultra-real photographic craftsmanship, believable optics and natural imperfections, sophisticated contemporary editorial advertising art direction, luminous skin, accurately rendered anatomy, natural material texture. Harmonize deep forest green, warm ivory, coral, selective cobalt and amber accents. Not a collage, not 3D render, not illustration. No watermarks, no embedded captions, no fake client logos.",
+      "job_id": "ca5025aa-9f26-4916-a21e-ad0b8d3c0b44",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/ai.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    },
+    {
+      "id": "ast-content",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260907_212817_aea197ad-78f3-4cb0-a6b6-9029f4edcef0.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Photorealistic editorial photograph of a beautifully art-directed content creator's tabletop photography setup in a sunlit studio. A small black camera on a compact tripod points at a still life of blood oranges, a cobalt ceramic vase and coral linen cloth. Smartphone on a small stand, a cream unlettered sketchbook, paper backdrop and edge of a softbox. Warm ivory plaster, dramatic soft sunlight from left, tactile materials, authentic equipment, refined colors and natural imperfections. No people, no readable text, no logos, no watermarks. Shot at table height with a 50mm lens, stunning real commercial photography, not a 3D render.",
+      "job_id": "aea197ad-78f3-4cb0-a6b6-9029f4edcef0",
+      "requested_model": "nano_banana_pro",
+      "reported_model": "nano_banana_2",
+      "parameters": {
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "local_path": "public/images/services/content.webp",
+      "derivative": {
+        "max_width": 1600,
+        "format": "webp",
+        "quality": 82
+      },
+      "status": "generated"
+    }
+  ],
+  "elements": [],
+  "scenes": [],
+  "shots": [],
+  "screens": [
+    {
+      "id": "scr-services",
+      "route": "/services",
+      "description": "Photographic service directory with all 12 disciplines and 144 capabilities."
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "del-strategy",
+      "type": "image",
+      "title": "strategy service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-strategy"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-brand",
+      "type": "image",
+      "title": "brand service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-brand"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-campaigns",
+      "type": "image",
+      "title": "campaigns service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-campaigns"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-media",
+      "type": "image",
+      "title": "media service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-media"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-search",
+      "type": "image",
+      "title": "search service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-search"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-digital",
+      "type": "image",
+      "title": "digital service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-digital"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-commerce",
+      "type": "image",
+      "title": "commerce service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-commerce"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-production",
+      "type": "image",
+      "title": "production service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-production"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-pr",
+      "type": "image",
+      "title": "pr service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-pr"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-data",
+      "type": "image",
+      "title": "data service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-data"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-ai",
+      "type": "image",
+      "title": "ai service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-ai"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    },
+    {
+      "id": "del-content",
+      "type": "image",
+      "title": "content service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-content"
+      ],
+      "aspect_ratio": "3:2",
+      "format": "webp",
+      "version": 1,
+      "status": "generated"
+    }
+  ],
+  "rights_and_claims": [
+    {
+      "id": "right-generated-scenes",
+      "category": "synthetic-media",
+      "description": "User explicitly requested Higgsfield-created service imagery. Text-to-image generation without third-party reference media or real-person likenesses. Website discloses illustrative AI-generated scenes.",
+      "evidence": "User request in current task and generation records above.",
+      "status": "documented"
+    }
+  ],
+  "qa": {
+    "required_gates": [
+      "gate-look",
+      "gate-finish",
+      "gate-delivery"
+    ],
+    "acceptance_threshold": 85,
+    "critical_failures": [],
+    "review_notes": [
+      "All 12 completed images visually inspected; one failed content generation replaced with a distinct tabletop scene."
+    ]
+  },
+  "gates": [
+    {
+      "id": "gate-look",
+      "name": "Representative look",
+      "status": "approved",
+      "evidence": [
+        "Strategy image inspected before scaling"
+      ]
+    },
+    {
+      "id": "gate-finish",
+      "name": "Finish",
+      "status": "approved",
+      "evidence": [
+        "Twelve unique scenes visually inspected and optimized for web"
+      ]
+    },
+    {
+      "id": "gate-delivery",
+      "name": "Delivery",
+      "status": "pending",
+      "evidence": []
+    }
+  ],
+  "generation_notes": {
+    "quoted_credits_per_attempt": 2,
+    "attempts": 13,
+    "successful_outputs": 12,
+    "failed_job": "e55ed620-d69c-4821-b9a7-18b57b01cd8e",
+    "replacement_job": "aea197ad-78f3-4cb0-a6b6-9029f4edcef0",
+    "provider_routing": "Higgsfield accepted nano_banana_pro and reported nano_banana_2 for completed jobs."
+  },
+  "assumptions": [
+    "Scenes illustrate services; they are not photographs of actual Avalon employees, offices or clients."
+  ],
+  "open_questions": [],
+  "risks": []
+}

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight, Check, MoveRight } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { PageHero } from "@/components/page-hero";
-import { ServicesVisual } from "@/components/editorial-figures";
+import styles from "./services.module.css";
 
 export const metadata: Metadata = { alternates: { canonical: "/services" },
   title: "Services",
@@ -24,41 +25,103 @@ const services = [
   { name:"Data & optimization", line:"Measure what moved. Improve what happens next.", items:["Measurement strategy","GA4 and tag architecture","KPI design","Executive dashboards","Attribution planning","Campaign lift analysis","Brand tracking","First-party data strategy","Creative performance analysis","Conversion optimization","Experimentation","Pipeline and revenue reporting"] },
   { name:"AI, automation & MarTech", line:"Faster operations. Human responsibility.", items:["AI-readiness assessment","Use-case and ROI roadmap","Brand knowledge assistants","Workflow automation","Content supply chains","Creative QA systems","Hyper-personalization","Predictive media support","Conversational agents","MarTech selection","Governance and provenance","Team training and adoption"] },
 ];
-const serviceRoutes = ["brief", "agents", "workflows", "content", "media", "search", "search", "agents", "production", "agents", "performance", "workflows"];
+const serviceDetails = [
+  { id: "strategy", label: "Strategy", route: "brief", description: "Make confident decisions about your audience, your offer and your next market. We turn the questions behind your business into a clear direction for the work.", alt: "Four people collaborating at an oak table beside a research pinboard in a sunlit loft" },
+  { id: "brand", label: "Brand", route: "agents", description: "Create a distinctive identity that holds together everywhere your business appears. From the first impression to the smallest detail, make the brand unmistakably yours.", alt: "Coral and plum brand stationery and packaging on a cream table, arranged by a designer" },
+  { id: "campaigns", label: "Campaigns", route: "workflows", description: "Build a campaign around an idea with enough strength to live across formats. Connect the message, the visual direction and the channel plan from the beginning.", alt: "Oversized red and violet circular campaign artwork on a city brick wall at blue hour" },
+  { id: "content", label: "Content", route: "content", description: "Give your audience a reason to pay attention and a reason to return. Plan, produce and adapt useful content around a consistent editorial direction.", alt: "A tabletop camera setup photographing oranges, a cobalt vase and coral fabric" },
+  { id: "media", label: "Media", route: "media", description: "Match your investment to the people, places and moments that matter. Keep creative, audience decisions, budget pacing and performance in the same conversation.", alt: "Two media planners reviewing three screens in a dark green studio at dusk" },
+  { id: "search", label: "Search", route: "search", description: "Make your business easier to find, understand and trust. Connect technical foundations, useful content and local visibility to the way your customers actually search.", alt: "A hand holding a phone with a map in front of a warmly lit bookstore" },
+  { id: "digital", label: "Digital", route: "search", description: "Design useful digital experiences around the people who use them. Join thoughtful interfaces with reliable engineering, accessible interactions and a clear path to action.", alt: "A designer reviewing ivory, forest green and coral interfaces on a monitor and tablet" },
+  { id: "commerce", label: "Commerce", route: "agents", description: "Connect the store, the customer journey and the relationship after purchase. Make each handoff between marketing, sales and service feel considered.", alt: "A store owner packing ceramics in a cream box with coral tissue paper" },
+  { id: "production", label: "Production", route: "production", description: "Bring the idea into the real world with craft you can see and hear. Build the shot list, the production plan and the delivery formats around the story you need to tell.", alt: "Cinema camera and two crew members filming an amber chair and coral fabric on a green studio set" },
+  { id: "pr", label: "PR & experience", route: "agents", description: "Develop the stories, relationships and experiences that earn attention. Plan the message and the response with the same care as the moment itself.", alt: "Guests mingling beside a coral sculpture at a contemporary gallery event" },
+  { id: "data", label: "Data", route: "performance", description: "Separate useful signals from noise. Agree what success means, establish trustworthy measurement and turn the evidence into the next decision.", alt: "Printed line and bar charts on an oak desk, reviewed with a coral pencil" },
+  { id: "ai", label: "AI & automation", route: "workflows", description: "Put automation to work where it can make a practical difference. Connect tools and workflows with clear responsibilities, traceable inputs and human review.", alt: "A specialist reviewing workflow monitors in a technology studio lit by a warm desk lamp" },
+];
 
 export default function ServicesPage() {
   return (
-    <main className="site-shell">
+    <main className={`site-shell ${styles.page}`}>
       <SiteNav />
-      <PageHero index="01" eyebrow="THE CONNECTED AGENCY" title="Every capability." accent="One objective." description="The market never experiences your brand, content, media, website and sales journey as separate departments. Neither do we." />
-      <section className="service-intro content-section">
-        <div className="section-kicker"><span>01</span> THE OPERATING MODEL</div>
-        <div className="split-statement">
-          <h2>Research.<br />Make.<br /><em>Move.</em></h2>
-          <div><p className="large-copy">Choose a capability, or bring us the entire growth problem.</p><p>Every engagement begins with a commercial objective and a measurement plan. We then assemble only the disciplines the work needs—delivered through a senior core, qualified specialists and transparent production partners.</p><a className="rule-link" href="/start">Tell us what must move <ArrowUpRight size={17}/></a></div>
+      <section className={styles.hero} id="main-content" aria-labelledby="services-title">
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}><span aria-hidden="true" /> AVALON / OUR CAPABILITIES</p>
+          <h1 id="services-title">Every capability.<br /><em>One objective.</em></h1>
+          <p className={styles.heroDescription}>Strategy with a point of view. Creative with something to say. Digital experiences that move your business forward.</p>
+          <div className={styles.heroActions}>
+            <Link className={styles.primaryAction} href="/start">Tell us what must move <ArrowUpRight size={20} /></Link>
+            <a className={styles.lightLink} href="#capabilities">Explore our services <ArrowDown size={19} /></a>
+          </div>
+          <div className={styles.heroNote}><span>12 disciplines</span><span>One connected creative group</span></div>
         </div>
+        <figure className={styles.heroImage}>
+          <Image src="/images/services/strategy.webp" alt={serviceDetails[0].alt} fill sizes="(max-width: 900px) 100vw, 50vw" priority />
+          <figcaption><span>THE WAY WE WORK</span><p>Good questions.<br /><em>Extraordinary possibilities.</em></p></figcaption>
+          <div className={styles.heroImageCorner} aria-hidden="true"><ArrowUpRight /></div>
+        </figure>
       </section>
-      <ServicesVisual />
-      <section className="avalon-service-entry" aria-label="Start in the workspace"><div><span className="avalon-eyebrow">FROM CAPABILITY TO ACTION</span><h2>Put the right tools behind your next move.</h2><p>Build a brief, develop a plan and connect the work across specialist studios.</p></div><a className="button button-dark" href="/platform?view=brief">Create your shared brief <ArrowUpRight/></a></section>
-      <section className="service-catalog">
-        {services.map((service,index)=>(
-          <article className="service-family" id={["strategy","brand","campaigns","content","media","search","digital","commerce","production","pr","data","ai"][index]} key={service.name}>
-            <header><span>{String(index+1).padStart(2,"0")}</span><div><h2>{service.name}</h2><p>{service.line}</p></div><ArrowUpRight/></header>
-            <div className="service-tags">{service.items.map(item=><span key={item}>{item}</span>)}</div>
-            <div className="avalon-service-actions"><a href={`/platform?view=${serviceRoutes[index]}`}>Explore the workspace tools <ArrowUpRight size={17}/></a><a href="/start">Discuss an engagement <ArrowUpRight size={17}/></a></div>
-          </article>
-        ))}
+
+      <section className={styles.introduction} aria-labelledby="intro-title">
+        <div><p className={styles.eyebrow}>INDEPENDENT THINKING. CONNECTED DELIVERY.</p><h2 id="intro-title">Bring the ambition.<br />We’ll bring <em>the disciplines.</em></h2></div>
+        <div className={styles.introductionCopy}><p>Your customers experience one business. Your brand, content, media and digital experience should feel like one, too.</p><p>Choose a specific capability or bring us the entire growth problem. We assemble the work around a commercial objective, with a senior core, qualified specialists and transparent production partners.</p><Link className={styles.underlinedLink} href="/platform?view=brief">Create your shared brief <ArrowUpRight size={20} /></Link></div>
       </section>
-      <section className="cross-cutting content-section dark-block">
-        <div className="section-kicker inverse"><span>∞</span> BUILT THROUGH EVERYTHING</div>
-        <div className="feature-quad">
-          <div><b>ACCESSIBLE</b><p>WCAG-aligned experiences, inclusive content and usable production formats from the beginning.</p></div>
-          <div><b>LOCALIZABLE</b><p>English-first architecture ready for French, regional and multicultural adaptation as the work expands.</p></div>
-          <div><b>RESPONSIBLE</b><p>Consent, claims evidence, creator disclosure, rights, provenance and human review built into delivery.</p></div>
-          <div><b>MEASURABLE</b><p>Business KPIs, source ownership, instrumentation and reporting agreed before launch—not added after.</p></div>
+
+      <nav className={styles.directory} id="capabilities" aria-label="Service categories">
+        <a href="#services-list" className={styles.directoryTitle}>Find your next move <ArrowDown size={18} /></a>
+        <div className={styles.directoryLinks}>
+          {serviceDetails.map((service, index) => <a href={`#${service.id}`} key={service.id}><span>{String(index + 1).padStart(2, "0")}</span>{service.label}</a>)}
         </div>
+      </nav>
+
+      <div id="services-list" className={styles.catalog}>
+        {services.map((service, index) => {
+          const detail = serviceDetails[index];
+          return (
+            <article className={styles.service} id={detail.id} key={detail.id} aria-labelledby={`${detail.id}-title`}>
+              <div className={styles.serviceInner}>
+                <figure className={styles.serviceImage}>
+                  <Image src={`/images/services/${detail.id}.webp`} alt={detail.alt} fill sizes="(max-width: 900px) 100vw, 48vw" />
+                  <figcaption><span>AVALON / {detail.label}</span><span>{String(index + 1).padStart(2, "0")}</span></figcaption>
+                </figure>
+                <div className={styles.serviceCopy}>
+                  <p className={styles.eyebrow}>DISCIPLINE {String(index + 1).padStart(2, "0")} / 12</p>
+                  <h2 id={`${detail.id}-title`}>{service.name}</h2>
+                  <p className={styles.serviceLine}>{service.line}</p>
+                  <p className={styles.serviceDescription}>{detail.description}</p>
+                  <div className={styles.capabilitiesHeading}><h3>What we can help with</h3><span>12 capabilities</span></div>
+                  <ul className={styles.capabilityList}>{service.items.map(item => <li key={item}><Check size={14} aria-hidden="true" /><span>{item}</span></li>)}</ul>
+                  <div className={styles.serviceActions}>
+                    <Link href="/start">Discuss an engagement <ArrowUpRight size={18} /></Link>
+                    <Link href={`/platform?view=${detail.route}`}>Explore the workspace tools <MoveRight size={18} /></Link>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <p className={styles.imageryCredit}>AI-generated service imagery. Scenes illustrate our capabilities.</p>
+
+      <section className={styles.connectedWork} aria-labelledby="connected-title">
+        <div className={styles.connectedHeader}><p className={styles.eyebrow}>FROM CAPABILITY TO ACTION</p><h2 id="connected-title">Built to work<br /><em>together.</em></h2><p>A shared brief gives every discipline the same starting point. Connected studios keep the plan, the production and the learning in view.</p><Link className={styles.primaryAction} href="/platform?view=brief">Open your workspace <ArrowUpRight size={20} /></Link></div>
+        <ol className={styles.steps}>
+          <li><span>01</span><div><h3>Set the direction.</h3><p>Capture your audience, offer, objective and evidence in one shared brief.</p></div><ArrowUpRight aria-hidden="true" /></li>
+          <li><span>02</span><div><h3>Connect the work.</h3><p>Develop the plan with specialist tools for creative, content, production and growth.</p></div><ArrowUpRight aria-hidden="true" /></li>
+          <li><span>03</span><div><h3>Learn. Then move.</h3><p>Bring campaign results back into the workspace and use the evidence to plan the next test.</p></div><ArrowUpRight aria-hidden="true" /></li>
+        </ol>
       </section>
-      <section className="next-cta coral-block"><span>Not sure what to buy?</span><h2>Start with the outcome.</h2><a className="button button-dark" href="/tools">Build my growth plan <ArrowUpRight/></a></section>
+      <section className={styles.standards} aria-label="Standards across our services">
+        <div><h2>Accessible</h2><p>Inclusive content, usable production formats and WCAG-aligned experiences considered from the beginning.</p></div>
+        <div><h2>Localizable</h2><p>English-first architecture ready for French, regional and multicultural adaptation as the work expands.</p></div>
+        <div><h2>Responsible</h2><p>Consent, claims evidence, creator disclosure, rights, provenance and human review built into delivery.</p></div>
+        <div><h2>Measurable</h2><p>Business KPIs, source ownership, instrumentation and reporting agreed before launch.</p></div>
+      </section>
+      <section className={styles.closing}>
+        <p className={styles.eyebrow}>NOT SURE WHERE TO START?</p>
+        <h2>Start with<br /><em>the outcome.</em></h2>
+        <div><p>You don’t need a shopping list of services. Tell us where you want to go.</p><Link href="/tools" className={styles.darkAction}>Build my growth plan <ArrowUpRight size={22} /></Link></div>
+      </section>
       <SiteFooter />
     </main>
   );
