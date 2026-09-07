@@ -1,0 +1,32 @@
+.plan, .packageList { list-style: none; padding: 0; margin: 24px 0; }
+.plan li, .packageList li { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid #e2e7df; font-size: .95rem; }
+.plan time { font-size: .85rem; white-space: nowrap; color: #4c625a; font-variant-numeric: tabular-nums; }
+.packageList b { white-space: nowrap; font-size: .9rem; }
+.releaseStatus { display: flex; align-items: flex-start; gap: 15px; padding: 20px; margin: 24px 0; border: 1px solid #d0ddd3; border-radius: 8px; background: #eef4ec; }
+.releaseStatus > svg { flex-shrink: 0; margin-top: 3px; color: #28523c; }
+.releaseStatus strong { font-size: 1rem; }
+.releaseStatus p { font-size: .9rem; margin: 8px 0 0; }
+.preview { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 560px; overflow: auto; font-size: .9rem; line-height: 1.7; padding: 22px; background: #f2f5ef; border-radius: 8px; }
+.addTask { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(160px, .8fr) auto; gap: 16px; align-items: end; padding-bottom: 26px; border-bottom: 1px solid #d8e0d7; }
+.addTask label, .filters label, .taskFields label { margin: 0; }
+.filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.filters label > span { display: flex; align-items: center; gap: 6px; }
+.resultSummary { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin: 20px 0; font-size: .9rem; color: #52615f; }
+.restore { display: flex; gap: 16px; justify-content: space-between; align-items: center; padding: 16px; margin-bottom: 18px; background: #edf3e8; border-radius: 6px; }
+.restore span { overflow-wrap: anywhere; }
+.tasks { display: grid; gap: 18px; }
+.task { padding: 22px; border: 1px solid #d6ded4; border-radius: 9px; background: #fafbf8; }
+.taskTop { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.completion { display: flex; align-items: flex-start; gap: 12px; min-width: 0; font-weight: 700; }
+.completion > button { margin-top: 5px; flex-shrink: 0; }
+.completion > span { overflow-wrap: anywhere; }
+.finished { text-decoration: line-through; color: #617367; }
+.status { font-size: .8rem; font-weight: 700; border-radius: 5px; padding: 4px 9px; background: #e7eee3; color: #30553c; white-space: nowrap; }
+.overdue { color: #9c352c; background: #fce9e3; }
+.taskFields { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(165px, .8fr); gap: 15px; }
+.taskFoot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 16px; }
+.taskFoot > span { font-size: .85rem; color: #52615f; }
+.empty { text-align: center; padding: 40px 20px; background: #f3f6ef; border-radius: 8px; }
+.empty > svg { margin: 0 auto 14px; color: #506d53; width: 32px; height: 32px; }
+@media (max-width: 1200px) { .addTask { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } .taskFields { grid-template-columns: repeat(2, minmax(0, 1fr)); } .taskFields > label:first-child { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .plan li { display: grid; gap: 4px; } .task { padding: 16px; } .taskTop, .taskFoot, .restore { flex-direction: column; align-items: stretch; } .status { align-self: flex-start; } .addTask, .taskFields, .filters { grid-template-columns: minmax(0, 1fr); } .resultSummary { align-items: flex-start; flex-direction: column; } .preview { padding: 14px; } }

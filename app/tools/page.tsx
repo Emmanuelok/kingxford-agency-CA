@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { CampaignWorkspace } from "@/components/campaign-workspace";
 export const metadata: Metadata = {
-  title: "Growth Tools & Media Lab",
+  title: "Growth Tools & Performance Studios",
   description:
-    "Transparent campaign economics, conversion experiments, search-copy checks and production planning, connected to your shared campaign brief.",
+    "Plan campaign economics, import actual results, inspect attribution and run connected specialist workflows with AVALON Creative Group.",
   alternates: { canonical: "/tools" },
 };
 export default function ToolsPage() {

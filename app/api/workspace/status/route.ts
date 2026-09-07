@@ -1,25 +1,62 @@
 import {
-  aiConfigured,
-  cloudConfigured,
   db,
+  hasWorkspaceAccess,
+  integrationConfig,
   json,
 } from "@/lib/server/workspace";
 export const dynamic = "force-dynamic";
 export async function GET() {
+  const config = integrationConfig();
   let email: string | null = null,
     userId: string | null = null;
-  if (cloudConfigured())
+  let cloudState = config.cloud ? "sign-in-required" : "not-configured";
+  let cloudMessage = config.cloud
+    ? "Sign in to verify private cloud storage."
+    : config.cloudSupplied
+      ? "Cloud configuration needs review. Device planning remains available."
+      : "Cloud storage is not connected. Work is saved on this device.";
+  if (config.cloud)
     try {
       const client = await db();
-      const { data } = await client.auth.getUser();
-      if (
-        data.user &&
-        !data.user.is_anonymous &&
-        data.user.app_metadata?.kingxford_access === true
-      ) {
+      const { data, error } = await client.auth.getUser();
+      if (error && error.name !== "AuthSessionMissingError") {
+        cloudState = "unavailable";
+        cloudMessage = "The account connection could not be verified. Sign in again or retry shortly.";
+      }
+      if (data.user && hasWorkspaceAccess(data.user)) {
         email = data.user.email ?? null;
         userId = data.user.id;
+        // A read-only probe does not overwrite snapshots or consume model quota.
+        const { error: storageError } = await client
+          .from("kingxford_workspaces")
+          .select("revision")
+          .eq("owner_id", data.user.id)
+          .maybeSingle();
+        cloudState = storageError ? "unavailable" : "connected";
+        cloudMessage = storageError
+          ? "Signed in, but cloud storage did not respond. Keep a device backup and ask the owner to verify storage setup."
+          : "Private cloud storage responded. Save and load are manual.";
       }
-    } catch {}
-  return json({ cloud: cloudConfigured(), ai: aiConfigured(), email, userId });
+    } catch {
+      cloudState = "unavailable";
+      cloudMessage = "Cloud verification is temporarily unavailable. Device planning remains available.";
+    }
+  return json({
+    cloud: config.cloud,
+    ai: config.ai,
+    email,
+    userId,
+    release: "3.0.0",
+    checkedAt: new Date().toISOString(),
+    capabilities: {
+      cloud: { state: cloudState, message: cloudMessage },
+      ai: {
+        state: config.ai ? "configured" : "not-configured",
+        message: config.ai
+          ? "AI drafting is configured. Provider availability and account quota are checked when you request a draft."
+          : "AI drafting is not connected. Planning engines are available on this device.",
+      },
+      publishing: { state: "not-connected", message: "No advertising or social account is connected. Nothing is published automatically." },
+    },
+  });
 }

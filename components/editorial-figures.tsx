@@ -39,7 +39,7 @@ export function ServicesVisual() {
         />
         <div className="editorial-image-grade" aria-hidden="true" />
         <div className="editorial-image-copy">
-          <span>KX / CONNECTED CAPABILITIES / CONCEPT VISUAL</span>
+          <span>AV / CONNECTED CAPABILITIES / CONCEPT VISUAL</span>
           <h2 id="services-system-title">
             Twelve disciplines.
             <br />
@@ -110,7 +110,7 @@ export function SolutionsVisual() {
         />
         <div className="editorial-image-grade" aria-hidden="true" />
         <div className="editorial-image-copy">
-          <span>KX / FROM SIGNAL TO RESULT / CONCEPT VISUAL</span>
+          <span>AV / FROM SIGNAL TO RESULT / CONCEPT VISUAL</span>
           <h2 id="solutions-route-title">
             Do not buy activity.
             <br />
@@ -152,7 +152,7 @@ export function AboutVisual() {
       />
       <div className="editorial-image-grade" aria-hidden="true" />
       <figcaption>
-        <span>KX / PLACE SHAPES PERSPECTIVE / CONCEPT VISUAL</span>
+        <span>AV / PLACE SHAPES PERSPECTIVE / CONCEPT VISUAL</span>
         <strong>
           47.5615° N<br />
           52.7126° W

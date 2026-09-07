@@ -1,4 +1,6 @@
--- Reviewed setup proposal for a dedicated KINGXFORD Supabase project.
+-- Reviewed setup proposal for a dedicated Avalon Supabase project.
+-- Existing KINGXFORD table, RPC, schema and entitlement names are intentionally
+-- retained so that a visual rebrand does not orphan data or revoke accounts.
 -- Not applied automatically. Run once on the selected project, then verify RLS
 -- using two separate invited accounts before enabling cloud or AI in production.
 begin;

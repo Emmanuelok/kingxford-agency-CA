@@ -1,6 +1,6 @@
 {
-  "name": "kingxford-agency",
-  "version": "2.0.0",
+  "name": "avalon-creative-group",
+  "version": "3.0.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -52,5 +52,5 @@
     "typescript": "5.9.3"
   },
   "type": "module",
-  "displayName": "KINGXFORD Agency"
+  "displayName": "AVALON Creative Group"
 }

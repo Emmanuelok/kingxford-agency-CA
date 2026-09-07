@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Menu } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sheet,
   SheetClose,
@@ -13,33 +14,33 @@ import {
 } from "@/components/ui/sheet";
 
 const links = [
-  ["Work", "/#work"],
   ["Services", "/services"],
+  ["Solutions", "/solutions"],
+  ["Work", "/#work"],
   ["Studio", "/studio"],
-  ["Platform", "/platform"],
-  ["Markets", "/industries"],
-  ["Agency", "/about"],
+  ["About", "/about"],
 ];
 
 export function BrandLockup({ footer = false }: { footer?: boolean }) {
   return (
-    <Link className={`brand-lockup${footer ? " footer-brand" : ""}`} href="/" aria-label="KINGXFORD Agency home">
-      <span className="brand-mark" aria-hidden="true"><i>K</i></span>
-      <span>KINGXFORD<small>AGENCY</small></span>
+    <Link className={`brand-lockup${footer ? " footer-brand" : ""}`} href="/" aria-label="AVALON Creative Group home">
+      <span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M7 31 20 7l13 24H7Z" stroke="currentColor" strokeWidth="2.4"/><path d="m13.5 26 6.5-12 6.5 12h-13Z" fill="currentColor"/><path d="M20 27v8" stroke="currentColor" strokeWidth="2.4"/></svg></span>
+      <span>AVALON<small>CREATIVE GROUP</small></span>
     </Link>
   );
 }
 
 export function SiteNav() {
+  const pathname = usePathname();
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <header className="nav-shell" role="banner">
+      <header className="nav-shell avalon-nav" role="banner">
         <BrandLockup />
         <nav className="desktop-nav" aria-label="Main navigation">
-          {links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+          {links.map(([label, href]) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
         </nav>
-        <a className="nav-cta desktop-project" href="/platform">Open workspace <ArrowUpRight size={15} /></a>
+        <Link className="nav-cta desktop-project" href="/platform">The workspace <ArrowUpRight size={17} /></Link>
         <Sheet>
           <SheetTrigger asChild>
             <button className="mobile-menu" aria-label="Open menu"><Menu /></button>
@@ -47,7 +48,7 @@ export function SiteNav() {
           <SheetContent className="mobile-sheet" aria-describedby="mobile-menu-description">
             <SheetHeader className="mobile-sheet-head">
               <SheetTitle><BrandLockup /></SheetTitle>
-              <SheetDescription id="mobile-menu-description">Explore KINGXFORD Agency</SheetDescription>
+              <SheetDescription id="mobile-menu-description">Explore AVALON Creative Group</SheetDescription>
             </SheetHeader>
             <nav className="mobile-links" aria-label="Mobile navigation">
               {links.map(([label, href], index) => (
@@ -56,7 +57,8 @@ export function SiteNav() {
             </nav>
             <div className="mobile-sheet-foot">
               <a className="button button-coral" href="/start">Start with the outcome <ArrowUpRight /></a>
-              <span>St. John&apos;s · Newfoundland & Labrador · Canada</span>
+              <a className="mobile-workspace-link" href="/platform">Open your workspace <ArrowUpRight size={18} /></a>
+              <span>Independent thinking. Connected delivery. Canada.</span>
             </div>
           </SheetContent>
         </Sheet>

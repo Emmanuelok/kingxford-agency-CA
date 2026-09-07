@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { CampaignWorkspace } from "@/components/campaign-workspace";
 export const metadata: Metadata = {
-  title: "Production Workbench",
+  title: "Creative Production Workbench",
   description:
-    "Turn the shared campaign brief into a shot plan, delivery matrix and owned production checklist.",
+    "Connect your campaign brief, content, production tasks, rights review and delivery handoff in the AVALON Creative Group workspace.",
   alternates: { canonical: "/studio/workbench" },
 };
 export default function ProductionWorkbench() {

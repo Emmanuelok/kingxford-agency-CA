@@ -73,8 +73,8 @@ try {
     assert.equal(r.status, 200, route);
     if (route === "/") {
       const html = await r.text();
-      assert.ok(html.includes("Move the thing"));
-      assert.ok(html.includes("Open workspace"));
+      assert.ok(html.includes("AVALON"), "Avalon identity is rendered");
+      assert.ok(html.includes("/platform?view=workflows"), "Workflow entry is rendered");
     }
     console.log("PASS", route);
   }

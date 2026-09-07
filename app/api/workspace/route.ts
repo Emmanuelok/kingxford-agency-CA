@@ -5,6 +5,7 @@ import {
   apiFailure,
   authenticated,
   json,
+  ownerHeader,
   readJson,
   sameOrigin,
 } from "@/lib/server/workspace";
@@ -12,14 +13,14 @@ export const dynamic = "force-dynamic";
 const inputSchema = z
   .object({
     workspace: workspaceSchema,
-    revision: z.number().int().min(1).nullable(),
+    revision: z.number().int().min(1).max(2147483646).nullable(),
     expectedOwnerId: z.string().uuid(),
   })
   .strict();
 export async function GET(request: Request) {
   try {
     const { client, user } = await authenticated();
-    if (request.headers.get("x-kingxford-owner") !== user.id)
+    if (ownerHeader(request) !== user.id)
       throw new ApiError(
         409,
         "The signed-in account changed. Reload the workspace before accessing cloud data.",
@@ -34,8 +35,11 @@ export async function GET(request: Request) {
         503,
         "Workspace storage is not ready. Ask the owner to verify the database setup.",
       );
+    const stored = data ? workspaceSchema.safeParse(data.payload) : null;
+    if (data && (!stored?.success || !Number.isInteger(data.revision) || data.revision < 1))
+      throw new ApiError(422, "The cloud snapshot needs review before it can be loaded. Your device copy has not changed.");
     return json({
-      workspace: data?.payload ?? null,
+      workspace: stored?.success ? stored.data : null,
       revision: data?.revision ?? null,
       ownerId: user.id,
     });

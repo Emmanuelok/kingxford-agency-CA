@@ -24,6 +24,7 @@ const services = [
   { name:"Data & optimization", line:"Measure what moved. Improve what happens next.", items:["Measurement strategy","GA4 and tag architecture","KPI design","Executive dashboards","Attribution planning","Campaign lift analysis","Brand tracking","First-party data strategy","Creative performance analysis","Conversion optimization","Experimentation","Pipeline and revenue reporting"] },
   { name:"AI, automation & MarTech", line:"Faster operations. Human responsibility.", items:["AI-readiness assessment","Use-case and ROI roadmap","Brand knowledge assistants","Workflow automation","Content supply chains","Creative QA systems","Hyper-personalization","Predictive media support","Conversational agents","MarTech selection","Governance and provenance","Team training and adoption"] },
 ];
+const serviceRoutes = ["brief", "agents", "workflows", "content", "media", "search", "search", "agents", "production", "agents", "performance", "workflows"];
 
 export default function ServicesPage() {
   return (
@@ -38,11 +39,13 @@ export default function ServicesPage() {
         </div>
       </section>
       <ServicesVisual />
+      <section className="avalon-service-entry" aria-label="Start in the workspace"><div><span className="avalon-eyebrow">FROM CAPABILITY TO ACTION</span><h2>Put the right tools behind your next move.</h2><p>Build a brief, develop a plan and connect the work across specialist studios.</p></div><a className="button button-dark" href="/platform?view=brief">Create your shared brief <ArrowUpRight/></a></section>
       <section className="service-catalog">
         {services.map((service,index)=>(
           <article className="service-family" id={["strategy","brand","campaigns","content","media","search","digital","commerce","production","pr","data","ai"][index]} key={service.name}>
             <header><span>{String(index+1).padStart(2,"0")}</span><div><h2>{service.name}</h2><p>{service.line}</p></div><ArrowUpRight/></header>
             <div className="service-tags">{service.items.map(item=><span key={item}>{item}</span>)}</div>
+            <div className="avalon-service-actions"><a href={`/platform?view=${serviceRoutes[index]}`}>Explore the workspace tools <ArrowUpRight size={17}/></a><a href="/start">Discuss an engagement <ArrowUpRight size={17}/></a></div>
           </article>
         ))}
       </section>

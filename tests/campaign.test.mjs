@@ -199,10 +199,10 @@ test("maximum brief fields never overflow generated copy", () => {
   assert.ok(campaignSchema.safeParse(c).success);
   assert.ok(c.content.every((x) => x.copy.length <= 5000));
 });
-test("all nine specialist outputs are valid and explicitly labelled", () => {
+test("all registered specialist outputs are valid and explicitly labelled", () => {
   const c = createCampaign(true);
   c.runs = AGENTS.map((a) => runAgent(c, a.id));
-  assert.equal(c.runs.length, 9);
+  assert.equal(c.runs.length, AGENTS.length);
   assert.ok(campaignSchema.safeParse(c).success);
   assert.ok(
     c.runs.every(

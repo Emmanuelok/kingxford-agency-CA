@@ -1,4 +1,4 @@
-name: KINGXFORD quality gates
+name: AVALON quality gates
 on:
   push:
     branches: [main]

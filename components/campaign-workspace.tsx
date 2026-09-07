@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
@@ -9,6 +10,12 @@ import {
   Check,
   CheckCheck,
   ChevronRight,
+  Copy,
+  GitBranch,
+  Gauge,
+  Activity,
+  Clock3,
+  CircleCheck,
   Clapperboard,
   Clipboard,
   Download,
@@ -52,6 +59,9 @@ import {
   CHECKS,
   SHOTS,
   auditWeb,
+  isRunCurrent,
+  approveRun,
+  latestAgentRuns,
   buildUtm,
   changed,
   contentCalendar,
@@ -73,16 +83,25 @@ import {
   type Workspace,
 } from "@/lib/campaign";
 
+const studioLoading = () => <div className="ws-loading" role="status"><Loader2 className="ws-spin" /><p>Opening your studio…</p></div>;
+const WorkflowStudio = dynamic(() => import("@/components/workflow-studio").then((module) => module.WorkflowStudio), { loading: studioLoading });
+const DeliveryStudio = dynamic(() => import("@/components/delivery-studio").then((module) => module.DeliveryStudio), { loading: studioLoading });
+const PerformanceStudio = dynamic(() => import("@/components/performance-studio").then((module) => module.PerformanceStudio), { loading: studioLoading });
+import { qualityChecks } from "@/lib/orchestration";
+
 const STORAGE = "kingxford-workspace-v2";
 const views = [
   ["overview", "Overview", LayoutDashboard],
   ["brief", "Shared brief", FileText],
+  ["workflows", "Workflows", GitBranch],
   ["agents", "Specialists", Sparkles],
   ["content", "Content studio", BookOpen],
   ["production", "Production", Clapperboard],
   ["media", "Media lab", Megaphone],
   ["search", "Search & web", Search],
   ["experiments", "Experiments", FlaskConical],
+  ["performance", "Performance", Gauge],
+  ["delivery", "Delivery", CheckCheck],
   ["proof", "Proof & launch", ShieldCheck],
   ["library", "Output library", Layers3],
 ] as const;
@@ -261,6 +280,7 @@ export function CampaignWorkspace({
     [warning, setWarning] = useState(""),
     [settings, setSettings] = useState(false),
     [confirmDelete, setConfirmDelete] = useState(false),
+    [duplicateOpen, setDuplicateOpen] = useState(false),
     [search, setSearch] = useState("");
   const importRef = useRef<HTMLInputElement>(null),
     latestStorage = useRef<string | null>(null),
@@ -271,6 +291,8 @@ export function CampaignWorkspace({
     ai: false,
     email: null as string | null,
     userId: null as string | null,
+    cloudState: "checking", cloudMessage: "Checking cloud availability…",
+    aiState: "checking", aiMessage: "Checking drafting availability…",
   });
   const [cloudRevision, setCloudRevision] = useState<number | null>(null),
     [cloudBusy, setCloudBusy] = useState(false),
@@ -283,7 +305,6 @@ export function CampaignWorkspace({
       latestStorage.current = raw;
       if (raw) {
         const parsed = workspaceSchema.safeParse(JSON.parse(raw));
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         if (parsed.success) setState(parsed.data);
         else {
           storageBlocked.current = true;
@@ -310,9 +331,13 @@ export function CampaignWorkspace({
           ai: !!d.ai,
           email: d.email ?? null,
           userId: d.userId ?? null,
+          cloudState: d.capabilities?.cloud?.state ?? (d.cloud ? "sign-in-required" : "not-configured"),
+          cloudMessage: d.capabilities?.cloud?.message ?? "Cloud availability has not been verified.",
+          aiState: d.capabilities?.ai?.state ?? (d.ai ? "configured" : "not-configured"),
+          aiMessage: d.capabilities?.ai?.message ?? "AI availability has not been verified.",
         }),
       )
-      .catch(() => {});
+      .catch(() => setCapabilities((current) => ({ ...current, cloudState: "unavailable", cloudMessage: "Cloud status could not be checked. Device planning remains available.", aiState: "unavailable", aiMessage: "AI status could not be checked. Planning engines remain available." })));
     const onStorage = (e: StorageEvent) => {
       if (e.key === STORAGE && e.newValue !== latestStorage.current) {
         storageBlocked.current = true;
@@ -330,7 +355,6 @@ export function CampaignWorkspace({
     if (!state || storageBlocked.current) return;
     const parsed = workspaceSchema.safeParse(state);
     if (!parsed.success) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWarning(
         "A field is invalid. Correct it before leaving this page; the last valid device backup has been preserved.",
       );
@@ -399,13 +423,39 @@ export function CampaignWorkspace({
         : "New campaign created. Start with your shared brief.",
     );
   }
+  function duplicate(keepWork: boolean) {
+    if (!state) return;
+    if (state.campaigns.length >= 12) {
+      notify("Your device holds 12 campaigns. Export a campaign before removing it to make room.");
+      return;
+    }
+    const source = state.campaigns.find((x) => x.id === state.activeId)!;
+    const base = keepWork ? structuredClone(source) : {
+      ...createCampaign(), brief: { ...source.brief }, media: source.media.map((x) => ({ ...x })),
+      web: { ...source.web },
+    };
+    const runIdMap = new Map(base.runs.map((run) => [run.id, uid()]));
+    const duplicate: Campaign = {
+      ...base, id: uid(), name: `${source.name} · ${keepWork ? "copy" : "new edition"}`.slice(0, 120),
+      checks: {}, updatedAt: new Date().toISOString(),
+      runs: base.runs.map((run) => ({ ...run, id: runIdMap.get(run.id)!, approved: false, ...(run.inputRunIds ? { inputRunIds: run.inputRunIds.map((id) => runIdMap.get(id) ?? id) } : {}) })),
+      content: base.content.map((item) => ({ ...item, id: uid(), status: "Draft" })),
+      tasks: base.tasks.map((task) => ({ ...task, id: uid(), done: false })),
+      evidence: base.evidence.map((item) => ({ ...item, id: uid(), verified: false })),
+      activity: [{ id: uid(), at: new Date().toISOString(), action: `Created ${keepWork ? "working copy" : "fresh edition"} from ${source.name}`.slice(0, 300) }],
+    };
+    setState({ ...state, activeId: duplicate.id, campaigns: [...state.campaigns, duplicate] });
+    setDuplicateOpen(false);
+    go("brief");
+    notify("Campaign copied. The original is preserved; approvals and completed tasks are reset in the new edition.");
+  }
   async function importBackup(file: File) {
     try {
       if (file.size > 50000000)
         throw new Error("Backup must be smaller than 50 MB.");
       const value = workspaceSchema.safeParse(JSON.parse(await file.text()));
       if (!value.success)
-        throw new Error("This file is not a valid KINGXFORD v2 backup.");
+        throw new Error("This file is not a valid AVALON / legacy KINGXFORD v2 backup.");
       const current = stateRef.current;
       if (!current) return;
       const incoming = value.data.campaigns.map((c) => ({
@@ -499,7 +549,7 @@ export function CampaignWorkspace({
         if (d.workspace) {
           const parsed = workspaceSchema.parse(d.workspace);
           saveFile(
-            "kingxford-before-cloud-load.json",
+            "avalon-before-cloud-load.json",
             JSON.stringify(stateRef.current, null, 2),
             "application/json",
           );
@@ -514,6 +564,15 @@ export function CampaignWorkspace({
             "No cloud snapshot yet. Save your current workspace to create one.",
           );
         }
+      }
+      try {
+        const statusResponse = await fetch("/api/workspace/status");
+        if (statusResponse.ok) {
+          const status = await statusResponse.json();
+          setCapabilities((current) => ({ ...current, cloudState: status.capabilities?.cloud?.state ?? current.cloudState, cloudMessage: status.capabilities?.cloud?.message ?? current.cloudMessage, aiState: status.capabilities?.ai?.state ?? current.aiState, aiMessage: status.capabilities?.ai?.message ?? current.aiMessage }));
+        }
+      } catch {
+        // A verification refresh must not misreport a completed save or load as failed.
       }
     } catch (e) {
       notify(e instanceof Error ? e.message : "Cloud request failed.");
@@ -536,18 +595,19 @@ export function CampaignWorkspace({
     <section
       className="ws"
       id="main-content"
-      aria-label="KINGXFORD campaign workspace"
+      aria-label="AVALON Creative Group campaign workspace"
     >
       <Tabs
+        orientation="vertical"
         value={view}
         onValueChange={(v) => go(v as View)}
         className="ws-layout"
       >
         <aside className="ws-sidebar">
           <a href="/platform" className="ws-wordmark">
-            <span>KX</span>
+            <span>A.</span>
             <div>
-              WORKSPACE<small>One brief. Every discipline.</small>
+              AVALON<small>One brief. Every discipline.</small>
             </div>
           </a>
           <div className="ws-campaign-pick">
@@ -561,9 +621,10 @@ export function CampaignWorkspace({
               }))}
               onChange={(id) => setState({ ...state, activeId: id })}
             />
-            <Button variant="outline" onClick={() => add()}>
-              <Plus /> New campaign
-            </Button>
+            <div className="ws-campaign-actions">
+              <Button variant="outline" onClick={() => add()}><Plus /> New</Button>
+              <Button variant="outline" onClick={() => setDuplicateOpen(true)}><Copy /> Duplicate</Button>
+            </div>
           </div>
           <div className="ws-nav-search">
             <Search />
@@ -574,6 +635,7 @@ export function CampaignWorkspace({
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+          <div className="ws-mobile-studio-pick"><Pick label="Open a campaign studio" value={view} options={views.map(([value, label]) => ({ value, label }))} onChange={(value) => go(value as View)} /></div>
           <TabsList className="ws-nav" aria-label="Campaign studios">
             {views
               .filter(([, label]) =>
@@ -610,16 +672,17 @@ export function CampaignWorkspace({
         <div className="ws-main">
           <header className="ws-topbar">
             <div>
-              <span>KINGXFORD / {views.find(([id]) => id === view)?.[1]}</span>
+              <span>AVALON CREATIVE GROUP / {views.find(([id]) => id === view)?.[1]}</span>
               <b>{c.brief.brand || "Your next campaign"}</b>
             </div>
             <div className="ws-top-actions">
+              <span className="ws-save-state"><i className={warning ? "attention" : ""} />{warning ? "Save needs attention" : "Saved on device"}</span>
               <span className="ws-revision">Brief v{c.revision}</span>
               <Button
                 variant="outline"
                 onClick={() =>
                   saveFile(
-                    "kingxford-workspace.json",
+                    "avalon-workspace.json",
                     JSON.stringify(state, null, 2),
                     "application/json",
                   )
@@ -640,7 +703,7 @@ export function CampaignWorkspace({
                 variant="outline"
                 onClick={() =>
                   saveFile(
-                    "kingxford-recovery.json",
+                    "avalon-recovery.json",
                     latestStorage.current || JSON.stringify(state),
                     "application/json",
                   )
@@ -662,13 +725,16 @@ export function CampaignWorkspace({
               </button>
             </div>
           )}
-          <div className="ws-body">
+          <div className="ws-body" key={c.id}>
             <TabsContent value="overview">
               <Overview {...actions} />
             </TabsContent>
             <TabsContent value="brief">
               <BriefEditor {...actions} />
             </TabsContent>
+            <TabsContent value="workflows"><WorkflowStudio {...actions} /></TabsContent>
+            <TabsContent value="performance"><PerformanceStudio {...actions} /></TabsContent>
+            <TabsContent value="delivery"><DeliveryStudio {...actions} /></TabsContent>
             <TabsContent value="agents">
               <Agents
                 {...actions}
@@ -727,7 +793,7 @@ export function CampaignWorkspace({
                   variant="outline"
                   onClick={() =>
                     saveFile(
-                      "kingxford-workspace.json",
+                      "avalon-workspace.json",
                       JSON.stringify(state, null, 2),
                       "application/json",
                     )
@@ -741,9 +807,8 @@ export function CampaignWorkspace({
                 >
                   <Upload /> Import backup
                 </Button>
-                <Button variant="outline" onClick={() => add(true)}>
-                  Add example
-                </Button>
+                <Button variant="outline" onClick={() => add(true)}>Add example</Button>
+                <Button variant="outline" onClick={() => { setSettings(false); setDuplicateOpen(true); }}><Copy /> Duplicate campaign</Button>
               </div>
               <input
                 ref={importRef}
@@ -760,9 +825,10 @@ export function CampaignWorkspace({
               <b>Private cloud snapshot</b>
               <span>
                 {capabilities.cloud
-                  ? capabilities.email || "Sign-in required"
-                  : "Not configured"}
+                  ? capabilities.email ? `${capabilities.email} · ${capabilities.cloudState === "connected" ? "Storage verified" : "Verification needed"}` : "Sign-in required"
+                  : capabilities.cloudState === "checking" ? "Checking availability" : "Not connected"}
               </span>
+              <p>{capabilities.cloudMessage}</p>
               {capabilities.cloud ? (
                 capabilities.email ? (
                   <>
@@ -824,7 +890,7 @@ export function CampaignWorkspace({
                       in
                     </Button>
                     <p>
-                      Use an invited KINGXFORD account. Contact the agency to
+                      Use an invited AVALON account. Contact the agency to
                       obtain or recover access.
                     </p>
                   </form>
@@ -841,9 +907,10 @@ export function CampaignWorkspace({
               <b>AI specialists</b>
               <span>
                 {capabilities.ai
-                  ? "Gateway configured · account required"
-                  : "Awaiting protected AI configuration"}
+                  ? `Configured · ${capabilities.email ? "Account signed in" : "Sign-in required"}`
+                  : capabilities.aiState === "checking" ? "Checking availability" : "Not connected"}
               </span>
+              <p>{capabilities.aiMessage}</p>
               <p>
                 AI drafts use your brief, selected evidence and the relevant
                 planning context only when requested. Provider processing and
@@ -860,12 +927,24 @@ export function CampaignWorkspace({
           </div>
         </DialogContent>
       </Dialog>
+      <Dialog open={duplicateOpen} onOpenChange={setDuplicateOpen}>
+        <DialogContent className="ws-dialog">
+          <DialogHeader>
+            <DialogTitle>A new edition, with a head start.</DialogTitle>
+            <DialogDescription>Choose what to carry from “{c.name}”. Your original campaign stays intact. Every new edition starts with fresh approvals.</DialogDescription>
+          </DialogHeader>
+          <div className="ws-duplicate-options">
+            <button onClick={() => duplicate(false)}><FileText /><b>Start from the brief</b><span>Keep the brief, media assumptions and page copy. Begin with empty outputs, content, production and evidence.</span><ArrowRight /></button>
+            <button onClick={() => duplicate(true)}><Copy /><b>Copy the entire campaign</b><span>Bring all working material into a separate campaign. Reset approvals, evidence verification and completed tasks for review.</span><ArrowRight /></button>
+          </div>
+        </DialogContent>
+      </Dialog>
       <Dialog open={confirmDelete} onOpenChange={setConfirmDelete}>
         <DialogContent className="ws-dialog">
           <DialogHeader>
             <DialogTitle>Delete this device campaign?</DialogTitle>
             <DialogDescription>
-              This removes “{c.name}” from this browser. Export a backup first.
+              This removes “{c.name}” from this browser. A full backup will download before removal.
               Cloud snapshots are not deleted.
             </DialogDescription>
           </DialogHeader>
@@ -876,6 +955,7 @@ export function CampaignWorkspace({
             <Button
               variant="destructive"
               onClick={() => {
+                saveFile("avalon-before-campaign-delete.json", JSON.stringify(state, null, 2), "application/json");
                 const campaigns = state.campaigns.filter((x) => x.id !== c.id);
                 if (!campaigns.length) campaigns.push(createCampaign());
                 setState({ ...state, activeId: campaigns[0].id, campaigns });
@@ -883,11 +963,11 @@ export function CampaignWorkspace({
                 notify(
                   storageBlocked.current
                     ? "Removed from memory only: device storage is blocked. Reload or clear browser site data to remove the saved copy."
-                    : "Device campaign deleted. It can be restored only from an exported or cloud backup.",
+                    : "Device campaign removed. A backup was downloaded before removal.",
                 );
               }}
             >
-              Delete device copy
+              Download backup & delete
             </Button>
           </div>
         </DialogContent>
@@ -896,179 +976,137 @@ export function CampaignWorkspace({
   );
 }
 
-function Overview({ c, go }: Actions) {
-  const f = forecast(c),
-    r = readiness(c),
-    approved = c.runs.filter(
-      (x) => x.approved && x.revision === c.revision,
-    ).length;
-  return (
-    <>
-      <div className="ws-hero">
-        <div>
-          <span className="ws-eyebrow">THE CONNECTED CAMPAIGN</span>
-          <h1>
-            Make the whole
-            <br />
-            agency move together.
-          </h1>
-          <p>
-            One shared brief. Nine specialist planning engines. Every draft,
-            decision and next action connected.
-          </p>
-          <div className="ws-actions">
-            <Button onClick={() => go(c.brief.brand ? "agents" : "brief")}>
-              {c.brief.brand
-                ? "Run your specialists"
-                : "Build your shared brief"}
-              <ArrowRight />
-            </Button>
-            <button className="ws-text-button" onClick={() => go("library")}>
-              Open your outputs <ArrowUpRight />
-            </button>
-          </div>
+const roomDescriptions: Record<View, string> = {
+  overview: "Your campaign, at a glance", brief: "The context behind every decision",
+  workflows: "Sequence specialists with shared context", agents: "Accountable expertise, on demand",
+  content: "Draft, adapt and schedule", production: "Plan the capture and delivery",
+  media: "Model economics and scenarios", search: "Improve copy and campaign tracking",
+  experiments: "Size a test and interpret results", performance: "Import actuals and find the next move",
+  delivery: "Turn the plan into accountable delivery",
+  proof: "Connect every claim to evidence", library: "Review, approve and export your work",
+};
+function campaignReport(c: Campaign) {
+  const f = forecast(c), r = readiness(c);
+  return `# AVALON Creative Group · Campaign review
+
+## ${c.name}
+Prepared ${new Date().toISOString()} · Brief v${c.revision}
+
+## Campaign brief
+Brand: ${c.brief.brand || "Not supplied"}
+Objective: ${c.brief.objective}
+Audience: ${c.brief.audience || "Not supplied"}
+Market: ${c.brief.market || "Not supplied"}
+Offer: ${c.brief.offer || "Not supplied"}
+Voice: ${c.brief.voice}
+Website: ${c.brief.website || "Not supplied"}
+Launch: ${c.brief.launchDate || "Not scheduled"} · ${c.brief.weeks} weeks
+
+## Economics · working assumptions in CAD
+Investment: ${money(c.brief.budget)}
+Agency: ${money(c.brief.agencyFee)} · Production: ${money(c.brief.productionCost)}
+Modelled media: ${money(f.spend)} · Customers: ${num(f.customers, 1)}
+Modelled revenue: ${money(f.revenue)} · All-in CAC: ${money(f.fullyLoadedCac)}
+These are planning scenarios, not observed results or guaranteed returns.
+
+## Launch review
+Self-reported checklist: ${r.score}%
+${r.blockers.length ? r.blockers.map((x) => `- ${x}`).join("\n") : "No current checklist blockers. Final authorization and publication are separate actions."}
+
+## Evidence ledger
+${c.evidence.length ? c.evidence.map((x) => `- ${x.claim || "Untitled claim"}\n  Source: ${x.source || "Missing"} · Owner: ${x.owner || "Missing"} · ${x.verified ? "Owner reviewed" : "Needs review"}`).join("\n") : "No evidence recorded."}
+
+## Content calendar
+${c.content.length ? c.content.map((x) => `### ${x.title}\n${x.date || "Unscheduled"} · ${x.channel} · ${x.status} · Brief v${x.revision}${x.revision !== c.revision ? " (older brief)" : ""}\n\n${x.copy}`).join("\n\n") : "No content planned."}
+
+## Production tasks
+${c.tasks.length ? c.tasks.map((x) => `- [${x.done ? "x" : " "}] ${x.title} · ${x.owner || "Unassigned"} · ${x.due || "No due date"}`).join("\n") : "No tasks recorded."}
+
+## Specialist outputs
+${c.runs.length ? c.runs.map((x) => `### ${x.title}\n${x.mode} · ${x.createdAt} · Brief v${x.revision} · ${!isRunCurrent(c, x) ? "Superseded context / review again" : x.approved ? "Approved by user" : "Draft / needs review"}\n\n${x.text}`).join("\n\n---\n\n") : "No outputs saved."}
+
+## Observed performance · supplied records
+${c.performance?.rows.length ? `${c.performance.rows.length} daily channel records. These results were supplied by the user and have not been independently verified.\nTotal reported spend: ${money(c.performance.rows.reduce((sum, row) => sum + row.spend, 0))} · Reported revenue: ${money(c.performance.rows.reduce((sum, row) => sum + row.revenue, 0))}\n\n${c.performance.rows.map((row) => `- ${row.date} · ${row.channel} · Spend ${money(row.spend)} · Impressions ${num(row.impressions)} · Clicks ${num(row.clicks)} · Leads ${num(row.leads)} · Customers ${num(row.customers)} · Revenue ${money(row.revenue)}\n  Source: ${row.source}`).join("\n")}` : "No observed results supplied. Modelled economics above are planning assumptions only."}
+
+## Decision history
+${c.activity.map((x) => `- ${x.at} · ${x.action}`).join("\n")}
+
+Prepared from user-supplied inputs. Planning engines use explicit rules. AI drafts require human verification. No export publishes content, sends communications or authorizes spend.
+`;
+}
+function Overview({ c, go, notify }: Actions) {
+  const f = forecast(c), r = readiness(c);
+  const current = latestAgentRuns(c).filter((x) => isRunCurrent(c, x));
+  const approved = current.filter((x) => x.approved).length;
+  const checks = qualityChecks(c);
+  const contextFields = [c.brief.brand, c.brief.audience, c.brief.offer, c.brief.proof, c.brief.website, c.brief.launchDate];
+  const contextScore = Math.round(contextFields.filter((x) => x.trim()).length / contextFields.length * 100);
+  const next: { view: View; title: string; description: string; tag: string }[] = [];
+  if (!c.brief.brand.trim() || !c.brief.audience.trim() || !c.brief.offer.trim()) next.push({ view: "brief", title: "Give the campaign a clear starting point", description: "Define the brand, audience and offer so every specialist works from the same context.", tag: "Start here" });
+  if (f.invalidBudget) next.push({ view: "media", title: "Resolve the investment shortfall", description: "Production and agency fees exceed the campaign budget. Rebalance before planning media.", tag: "Budget" });
+  if (!current.length) next.push({ view: "workflows", title: "Build a connected campaign plan", description: "Preview a specialist workflow, check its prerequisites and create the working outputs.", tag: "Create" });
+  if (r.stale) next.push({ view: "library", title: `Review ${r.stale} outputs from an older brief`, description: "Preserve the history, then refresh work against the latest campaign revision.", tag: "Refresh" });
+  if (current.some((x) => !x.approved)) next.push({ view: "library", title: "Review your current specialist drafts", description: "Read the assumptions and approve the outputs that are ready to guide production.", tag: "Review" });
+  if (!c.content.length) next.push({ view: "content", title: "Turn the plan into a publishing calendar", description: "Create editable channel drafts, assign dates and track review status.", tag: "Content" });
+  if (r.blockers.length) next.push({ view: "proof", title: `Resolve ${r.blockers.length} launch blockers`, description: "Confirm the destination, evidence, permissions and accountable owners.", tag: "Launch" });
+  if (!next.length) next.push({ view: "performance", title: "Close the loop with actual results", description: "Bring in campaign observations and use them to guide the next decision.", tag: "Measure" });
+  const stages: { name: string; note: string; percent: number; view: View }[] = [
+    { name: "Direction", note: "Brief completeness", percent: contextScore, view: "brief" },
+    { name: "Development", note: "Specialist coverage", percent: Math.round(new Set(current.map((x) => x.agent)).size / AGENTS.length * 100), view: "workflows" },
+    { name: "Review", note: "Current outputs approved", percent: current.length ? Math.round(approved / current.length * 100) : 0, view: "library" },
+    { name: "Release", note: "Self-reported checklist", percent: r.score, view: "proof" },
+  ];
+  return <>
+    <div className="ws-hero ws-mission-hero">
+      <div>
+        <span className="ws-eyebrow"><span className="ws-live-dot" /> YOUR CONNECTED CREATIVE WORKSPACE</span>
+        <h1>Every discipline.<br /><em>One direction.</em></h1>
+        <p>Give your best ideas the whole agency. Strategy, creative, production and performance share one brief, one library and a clear next move.</p>
+        <div className="ws-actions">
+          <Button onClick={() => go(next[0].view)}>{next[0].view === "brief" ? "Shape your campaign" : "Make your next move"}<ArrowRight /></Button>
+          <button className="ws-text-button" onClick={() => go("workflows")}>Explore workflows <ArrowUpRight /></button>
         </div>
-        <div className="ws-orbit" aria-label="Campaign workflow">
-          <span>01 / STRATEGY</span>
-          <b>{c.brief.brand || "YOUR BRIEF"}</b>
-          <div>
-            <span>02 / CREATE</span>
-            <ChevronRight />
-            <span>03 / ACTIVATE</span>
-          </div>
-          <small>04 / MEASURE & IMPROVE</small>
-        </div>
+        <div className="ws-hero-caption"><span>{AGENTS.length} specialist engines</span><i /><span>{views.length} connected studios</span><i /><span>Your review, every step</span></div>
       </div>
-      <div className="ws-metrics">
-        <Metric
-          label="Campaign investment"
-          value={money(c.brief.budget)}
-          note="Working assumption · excludes tax"
-        />
-        <Metric
-          label="Available media"
-          value={money(f.spend)}
-          note={
-            f.invalidBudget
-              ? "Costs exceed budget"
-              : "After agency and production"
-          }
-        />
-        <Metric
-          label="Current approved outputs"
-          value={String(approved)}
-          note={`${c.runs.length} saved specialist outputs`}
-        />
-        <Metric
-          label="Launch checklist"
-          value={`${r.score}%`}
-          note={`${r.blockers.length} blockers to resolve`}
-        />
+      <div className="ws-mission-card">
+        <div className="ws-mission-card-top"><span>ACTIVE CAMPAIGN</span><Activity /></div>
+        <h2>{c.brief.brand || "Your next great idea."}</h2>
+        <p>{c.brief.offer || "Start with the opportunity. Build the brief. Bring every discipline into the same conversation."}</p>
+        <div className="ws-mission-detail"><span>Market</span><b>{c.brief.market || "To be defined"}</b></div>
+        <div className="ws-mission-detail"><span>Launch window</span><b>{c.brief.launchDate || "Set your date"} · {c.brief.weeks} weeks</b></div>
+        <div className="ws-mission-bottom"><span className="ws-status">BRIEF V{c.revision}</span><button onClick={() => go("brief")}>Refine brief <ArrowUpRight /></button></div>
       </div>
-      <div className="ws-two">
-        <section className="ws-card">
-          <h3>The next useful decisions</h3>
-          {!c.brief.brand ? (
-            <button className="ws-decision" onClick={() => go("brief")}>
-              <span>01</span>
-              <div>
-                <b>Complete the campaign context</b>
-                <p>Brand, audience, offer and economics power every studio.</p>
-              </div>
-              <ArrowUpRight />
-            </button>
-          ) : null}
-          <button className="ws-decision" onClick={() => go("agents")}>
-            <span>02</span>
-            <div>
-              <b>
-                {c.runs.length
-                  ? "Review the specialists' work"
-                  : "Build your first connected plan"}
-              </b>
-              <p>
-                Save strategy, creative, production and measurement outputs.
-              </p>
-            </div>
-            <ArrowUpRight />
-          </button>
-          <button className="ws-decision" onClick={() => go("proof")}>
-            <span>03</span>
-            <div>
-              <b>
-                {r.stale
-                  ? `Refresh ${r.stale} outdated outputs`
-                  : `Resolve ${r.blockers.length} launch blockers`}
-              </b>
-              <p>Brief changes invalidate prior approval assumptions.</p>
-            </div>
-            <ArrowUpRight />
-          </button>
-        </section>
-        <section className="ws-card ws-dark">
-          <span className="ws-eyebrow">ONE CONTEXT, EVERY ROOM</span>
-          <h3>{c.brief.offer || "Start with the thing that must change."}</h3>
-          <dl>
-            <dt>Audience</dt>
-            <dd>{c.brief.audience || "Not defined yet"}</dd>
-            <dt>Market</dt>
-            <dd>{c.brief.market}</dd>
-            <dt>Campaign window</dt>
-            <dd>
-              {c.brief.weeks} weeks · brief revision {c.revision}
-            </dd>
-          </dl>
-          <button className="ws-text-button" onClick={() => go("brief")}>
-            Refine the shared brief <ArrowRight />
-          </button>
-        </section>
-      </div>
-      <PanelHead
-        eyebrow="WORKING DISCIPLINES"
-        title="Your agency, connected."
-        description="Move directly into a specialist room. They all work from this campaign."
-      />
-      <div className="ws-room-grid">
-        {views.slice(2, 9).map(([id, label, Icon]) => (
-          <button key={id} onClick={() => go(id)}>
-            <Icon />
-            <h3>{label}</h3>
-            <span>
-              {id === "agents"
-                ? "Nine accountable specialists"
-                : id === "content"
-                  ? "Draft, adapt and schedule"
-                  : id === "production"
-                    ? "Plan the capture and delivery"
-                    : id === "media"
-                      ? "Model economics and scenarios"
-                      : id === "search"
-                        ? "Inspect copy and build tracking"
-                        : id === "experiments"
-                          ? "Size a test and read results"
-                          : "Evidence before activation"}
-            </span>
-            <ArrowUpRight />
-          </button>
-        ))}
-      </div>
-      <section className="ws-card ws-activity">
-        <h3>Decision history</h3>
-        {c.activity.length ? (
-          c.activity.slice(0, 8).map((a) => (
-            <div key={a.id}>
-              <span>{new Date(a.at).toLocaleString("en-CA")}</span>
-              <b>{a.action}</b>
-            </div>
-          ))
-        ) : (
-          <p>
-            Your campaign history begins when you edit the brief or create work.
-          </p>
-        )}
+    </div>
+    <div className="ws-metrics">
+      <Metric label="Campaign investment" value={money(c.brief.budget)} note="Working budget · CAD, before tax" />
+      <Metric label="Available media" value={money(f.spend)} note={f.invalidBudget ? "Costs exceed the campaign budget" : "After agency and production"} />
+      <Metric label="Approved current outputs" value={`${approved} / ${current.length}`} note={`${c.runs.length} outputs retained with brief lineage`} />
+      <Metric label="Launch review" value={`${r.score}%`} note={`${r.blockers.length} blockers · self-reported checklist`} />
+    </div>
+    <section className="ws-journey" aria-label="Campaign progress">
+      {stages.map((stage, i) => <button key={stage.name} onClick={() => go(stage.view)}><span className="ws-stage-number">0{i + 1}</span><div><h3>{stage.name}<b>{stage.percent}%</b></h3><p>{stage.note}</p><div className="ws-progress"><span style={{ width: `${stage.percent}%` }} /></div></div><ChevronRight /></button>)}
+    </section>
+    <div className="ws-two ws-action-grid">
+      <section className="ws-card">
+        <div className="ws-section-label"><span className="ws-eyebrow">YOUR NEXT MOVES</span><span className="ws-status">{next.length} actions</span></div>
+        <h3>A useful next step. Always.</h3>
+        {next.slice(0, 4).map((item, i) => <button key={item.title} className="ws-decision" onClick={() => go(item.view)}><span>0{i + 1}</span><div><small>{item.tag}</small><b>{item.title}</b><p>{item.description}</p></div><ArrowUpRight /></button>)}
       </section>
-    </>
-  );
+      <section className="ws-card ws-campaign-health">
+        <div className="ws-section-label"><span className="ws-eyebrow">CAMPAIGN QUALITY</span><ShieldCheck /></div>
+        <h3>See what needs your attention.</h3>
+        <p>Live checks use your supplied campaign data. Open the workflow studio to inspect every check and its implications.</p>
+        <div className="ws-health-stat"><strong>{checks.filter((x) => x.passed).length}<span>/{checks.length}</span></strong><div>Checks satisfied<small>Rules and supplied evidence</small></div></div>
+        <div className="ws-health-summary"><span><b>{c.evidence.filter((x) => x.verified).length}</b> reviewed evidence records</span><span><b>{c.tasks.filter((x) => !x.done).length}</b> production tasks open</span><span><b>{c.content.filter((x) => x.status === "Approved" && x.revision === c.revision).length}</b> current content approvals</span></div>
+        <div className="ws-actions"><Button onClick={() => go("workflows")}>Inspect campaign health <ArrowRight /></Button><Button variant="outline" onClick={() => { saveFile("avalon-campaign-review.md", campaignReport(c), "text/markdown"); notify("Campaign review exported with the brief, economics, evidence, content, outputs and decision history."); }}><Download /> Campaign report</Button></div>
+      </section>
+    </div>
+    <PanelHead eyebrow="EVERYTHING WORKS TOGETHER" title="Go where the work takes you." description="Every studio opens with this campaign's context. Changes flow through revisions, connected outputs and your review queue." />
+    <div className="ws-room-grid">
+      {views.filter(([id]) => !["overview", "brief"].includes(id)).map(([id, label, Icon]) => <button key={id} onClick={() => go(id)}><Icon /><h3>{label}</h3><span>{roomDescriptions[id]}</span><ArrowUpRight /></button>)}
+    </div>
+    <section className="ws-card ws-activity"><div className="ws-section-label"><h3>Decision history</h3><Clock3 /></div>{c.activity.length ? c.activity.slice(0, 8).map((a) => <div key={a.id}><span>{new Date(a.at).toLocaleString("en-CA")}</span><b>{a.action}</b></div>) : <p>Your campaign history begins when you edit the brief or create work.</p>}</section>
+  </>;
 }
 function Metric({
   label,
@@ -1314,7 +1352,16 @@ function Agents({
   ownerId,
 }: Actions & { ai: boolean; ownerId: string | null }) {
   const [busy, setBusy] = useState<AgentId | null>(null),
-    [selected, setSelected] = useState<Run | null>(null);
+    [selected, setSelected] = useState<Run | null>(null),
+    [agentSearch, setAgentSearch] = useState(""),
+    [agentFilter, setAgentFilter] = useState("All specialists");
+  const latest = latestAgentRuns(c);
+  const currentIds = new Set(latest.filter((run) => isRunCurrent(c, run)).map((run) => run.id));
+  const filteredAgents = AGENTS.filter((agent) => {
+    const previous = latest.find((run) => run.agent === agent.id);
+    const matchesStatus = agentFilter === "All specialists" || (agentFilter === "Not started" && !previous) || (agentFilter === "Needs review" && previous && (!previous.approved || !currentIds.has(previous.id))) || (agentFilter === "Approved" && previous?.approved && currentIds.has(previous.id));
+    return matchesStatus && `${agent.name} ${agent.role} ${agent.room}`.toLowerCase().includes(agentSearch.toLowerCase());
+  });
   function run(id: AgentId) {
     if (
       !c.brief.brand.trim() ||
@@ -1369,28 +1416,11 @@ function Agents({
     <>
       <PanelHead
         eyebrow="02 / SPECIALIST WORKFLOW"
-        title="Nine perspectives. One brief."
+        title={`${AGENTS.length} perspectives. One shared ambition.`}
         description="Run transparent planning engines instantly. Configured AI specialists can deepen a draft, but never publish, spend, or approve on your behalf."
       >
-        <Button
-          disabled={!!busy}
-          onClick={() => {
-            if (!c.brief.brand || !c.brief.audience || !c.brief.offer) {
-              notify("Complete the brand, audience and offer first.");
-              go("brief");
-              return;
-            }
-            const runs = AGENTS.map((a) => runAgent(c, a.id));
-            update(
-              { runs: [...runs, ...c.runs].slice(0, 100) },
-              "Built connected nine-specialist campaign plan",
-            );
-            notify(
-              "Nine specialist outputs saved to your library, all linked to the current brief.",
-            );
-          }}
-        >
-          Build connected plan <Sparkles />
+        <Button disabled={!!busy} onClick={() => go("workflows")}>
+          Build connected workflow <GitBranch />
         </Button>
       </PanelHead>
       <div className="ws-mode-note">
@@ -1401,24 +1431,29 @@ function Agents({
           Neither is independently verified research.
         </p>
       </div>
+      <div className="ws-toolbar ws-agent-toolbar">
+        <div className="ws-search-field"><Search /><Input aria-label="Find a specialist" placeholder="Find a specialist by expertise…" value={agentSearch} onChange={(e) => setAgentSearch(e.target.value)} /></div>
+        <Pick label="Filter specialists" value={agentFilter} options={["All specialists", "Not started", "Needs review", "Approved"]} onChange={setAgentFilter} />
+        <span className="ws-result-count">{filteredAgents.length} specialists</span>
+      </div>
+      {!filteredAgents.length && <Empty title="No specialists match this view." description="Try another expertise or change the status filter." action={<Button variant="outline" onClick={() => { setAgentSearch(""); setAgentFilter("All specialists"); }}>Reset filters</Button>} />}
       <div className="ws-agent-grid">
-        {AGENTS.map((a, i) => {
-          const previous = c.runs.find((r) => r.agent === a.id);
+        {filteredAgents.map((a) => {
+          const previous = latest.find((r) => r.agent === a.id);
           return (
             <article className="ws-card" key={a.id}>
               <header>
                 <span>
-                  0{i + 1} / {a.room}
+                  {String(AGENTS.findIndex((x) => x.id === a.id) + 1).padStart(2, "0")} / {a.room}
                 </span>
                 <Sparkles />
               </header>
               <h3>{a.name}</h3>
               <p>{a.role}.</p>
-              <small>
-                {previous
-                  ? `Last output: brief v${previous.revision}${previous.revision !== c.revision ? " · refresh needed" : ""}`
-                  : "Uses your current brief"}
+              <small className={`ws-agent-state ${previous && !currentIds.has(previous.id) ? "needs-review" : ""}`}>
+                {previous ? !currentIds.has(previous.id) ? "Campaign context changed · refresh needed" : previous.approved ? "Current output · approved" : "Current draft · awaiting review" : "Ready for your shared brief"}
               </small>
+              {previous && <Button variant="outline" onClick={() => setSelected(previous)}>Read latest output <ArrowUpRight /></Button>}
               <Button onClick={() => run(a.id)} disabled={!!busy}>
                 Run planning engine <ArrowRight />
               </Button>
@@ -1476,7 +1511,7 @@ function OutputDialog({
           <Button
             onClick={() =>
               run &&
-              saveFile(`kingxford-${run.agent}.md`, run.text, "text/markdown")
+              saveFile(`avalon-${run.agent}.md`, run.text, "text/markdown")
             }
           >
             <Download /> Download Markdown
@@ -1532,7 +1567,7 @@ function ContentStudio({ c, update, notify }: Actions) {
           disabled={!c.content.length}
           onClick={() =>
             saveFile(
-              "kingxford-content-calendar.csv",
+              "avalon-content-calendar.csv",
               csv([
                 [
                   "Date",
@@ -1771,7 +1806,7 @@ function Production({ c, update, notify }: Actions) {
             variant="outline"
             onClick={() =>
               saveFile(
-                "kingxford-shot-list.csv",
+                "avalon-shot-list.csv",
                 csv([
                   ["Shot", "Seconds", "Direction", "Deliverables"],
                   ...SHOTS.map((s) => [
@@ -1983,7 +2018,7 @@ function MediaLab({ c, update }: Actions) {
           disabled={f.invalidBudget}
           onClick={() =>
             saveFile(
-              "kingxford-media-plan.csv",
+              "avalon-media-plan.csv",
               csv([
                 ["Scenario", scenario],
                 ["Total campaign investment CAD", c.brief.budget],
@@ -2527,7 +2562,7 @@ function Proof({ c, update, notify }: Actions) {
             variant="outline"
             onClick={() => {
               saveFile(
-                "kingxford-launch-review.md",
+                "avalon-launch-review.md",
                 runAgent(c, "review").text,
                 "text/markdown",
               );
@@ -2672,104 +2707,35 @@ function Proof({ c, update, notify }: Actions) {
   );
 }
 
-function Library({ c, update, notify }: Actions) {
-  const [selected, setSelected] = useState<Run | null>(null),
-    [filter, setFilter] = useState("");
-  const runs = c.runs.filter((r) =>
-    (r.title + " " + r.text).toLowerCase().includes(filter.toLowerCase()),
-  );
-  return (
-    <>
-      <PanelHead
-        eyebrow="09 / OUTPUTS WITH LINEAGE"
-        title="Keep the work. Keep the reasoning."
-        description="Every specialist output records its mode, time and source brief. Older outputs remain visible but cannot be approved until refreshed."
-      />
-      <div className="ws-toolbar">
-        <Input
-          aria-label="Search saved outputs"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          placeholder="Search outputs…"
-        />
-        <Button
-          variant="outline"
-          disabled={!c.runs.length}
-          onClick={() =>
-            saveFile(
-              "kingxford-campaign-playbook.md",
-              `# ${c.name}\n\n${c.runs.map((r) => `${r.text}\n\nApproval: ${r.approved && r.revision === c.revision ? "Approved" : "Draft / needs review"}`).join("\n\n---\n\n")}`,
-              "text/markdown",
-            )
-          }
-        >
-          <Download /> Export playbook
-        </Button>
-      </div>
-      {!runs.length ? (
-        <Empty
-          title="Your work has a home."
-          description="Run a specialist to create your first output, or change your search."
-        />
-      ) : (
-        <div className="ws-library-list">
-          {runs.map((r) => (
-            <article className="ws-card" key={r.id}>
-              <div>
-                <span className="ws-eyebrow">
-                  {r.mode} · {new Date(r.createdAt).toLocaleDateString("en-CA")}
-                </span>
-                <h3>{r.title}</h3>
-                <p>
-                  Brief v{r.revision}
-                  {r.revision !== c.revision
-                    ? " · stale: regenerate from current brief"
-                    : r.approved
-                      ? " · approved"
-                      : " · awaiting review"}
-                  {r.model ? ` · ${r.model}` : ""}
-                </p>
-              </div>
-              <div className="ws-actions">
-                <Button variant="outline" onClick={() => setSelected(r)}>
-                  Read output <ArrowUpRight />
-                </Button>
-                <Button
-                  disabled={r.revision !== c.revision}
-                  variant={r.approved ? "outline" : "default"}
-                  onClick={() =>
-                    update(
-                      {
-                        runs: c.runs.map((x) =>
-                          x.id === r.id ? { ...x, approved: !x.approved } : x,
-                        ),
-                      },
-                      `${r.approved ? "Reopened" : "Approved"} ${r.title}`,
-                    )
-                  }
-                >
-                  <CheckCheck />
-                  {r.approved ? "Reopen" : "Approve draft"}
-                </Button>
-                <RemoveRecord
-                  label="specialist output"
-                  onRemove={() =>
-                    update(
-                      { runs: c.runs.filter((x) => x.id !== r.id) },
-                      "Removed specialist output",
-                    )
-                  }
-                />
-              </div>
-            </article>
-          ))}
-        </div>
-      )}
-      <OutputDialog
-        run={selected}
-        close={() => setSelected(null)}
-        notify={notify}
-      />
-    </>
-  );
+function Library({ c, update, notify, go }: Actions) {
+  const [selectedId, setSelectedId] = useState<string | null>(null),
+    [filter, setFilter] = useState(""),
+    [status, setStatus] = useState("All statuses"),
+    [specialist, setSpecialist] = useState("all"),
+    [latestOnly, setLatestOnly] = useState(true);
+  const latest = latestAgentRuns(c);
+  const latestIds = new Set(latest.map((run) => run.id));
+  const currentIds = new Set(latest.filter((run) => isRunCurrent(c, run)).map((run) => run.id));
+  const selected = c.runs.find((run) => run.id === selectedId) || null;
+  const runs = c.runs.filter((run) => {
+    const isCurrent = currentIds.has(run.id);
+    return (!latestOnly || latestIds.has(run.id)) && (specialist === "all" || run.agent === specialist) && `${run.title} ${run.text}`.toLowerCase().includes(filter.toLowerCase()) && (status === "All statuses" || status === "Approved" && isCurrent && run.approved || status === "Needs review" && isCurrent && !run.approved || status === "Needs refresh" && !isCurrent);
+  }).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const groups = [
+    { title: "Current drafts to review", note: "Read, refine and approve the work that will guide the campaign.", runs: runs.filter((run) => currentIds.has(run.id) && !run.approved) },
+    { title: "Approved at this brief", note: "Human-reviewed outputs for the current campaign revision.", runs: runs.filter((run) => currentIds.has(run.id) && run.approved) },
+    { title: "Earlier or superseded campaign context", note: "Retained for reference. Refresh against the current brief and upstream handoffs before approval.", runs: runs.filter((run) => !currentIds.has(run.id)) },
+  ];
+  return <>
+    <PanelHead eyebrow="OUTPUTS WITH LINEAGE" title="Good work deserves a clear trail." description="Find every specialist output, inspect its source brief and keep review decisions close to the work. The latest edition of each specialist is shown first.">
+      <Button variant="outline" onClick={() => { saveFile("avalon-campaign-review.md", campaignReport(c), "text/markdown"); notify("Full campaign report exported, including the original brief, outputs, evidence and decisions."); }}><Download /> Campaign report</Button>
+    </PanelHead>
+    <div className="ws-library-summary"><span><b>{c.runs.length}</b> saved outputs</span><span><b>{c.runs.filter((run) => latestIds.has(run.id)).length}</b> latest editions</span><span><b>{c.runs.filter((run) => latestIds.has(run.id) && run.approved && currentIds.has(run.id)).length}</b> current approvals</span><button onClick={() => go("workflows")}>Create more work <ArrowRight /></button></div>
+    <section className="ws-card ws-library-controls">
+      <div className="ws-toolbar"><div className="ws-search-field"><Search /><Input aria-label="Search saved outputs" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Search titles and output content…" /></div><Pick label="Filter output status" value={status} options={["All statuses", "Needs review", "Approved", "Needs refresh"]} onChange={setStatus} /><Pick label="Filter output specialist" value={specialist} options={[{ value: "all", label: "All specialists" }, ...AGENTS.map((agent) => ({ value: agent.id, label: agent.name }))]} onChange={setSpecialist} /></div>
+      <div className="ws-library-options"><label className="ws-inline-check"><Checkbox checked={latestOnly} onCheckedChange={(v) => setLatestOnly(v === true)} />Latest edition of each specialist only</label><span>{runs.length} matching outputs</span><Button variant="outline" disabled={!runs.length} onClick={() => saveFile("avalon-selected-playbook.md", `# ${c.name} · Selected outputs\n\n${runs.map((run) => `${run.text}\n\nReview status: ${!currentIds.has(run.id) ? "Needs refresh" : run.approved ? "Approved by user" : "Draft"}`).join("\n\n---\n\n")}`, "text/markdown")}><Download /> Export this view</Button></div>
+    </section>
+    {!runs.length ? <Empty title={c.runs.length ? "No outputs match these filters." : "Your next good idea belongs here."} description={c.runs.length ? "Reset the filters, or include previous editions to inspect the full history." : "Run a connected workflow or individual specialist to create your first reviewable output."} action={<Button onClick={() => { if (!c.runs.length) go("workflows"); else { setFilter(""); setStatus("All statuses"); setSpecialist("all"); setLatestOnly(false); } }}>{c.runs.length ? "Reset filters" : "Open workflows"}<ArrowRight /></Button>} /> : groups.filter((group) => group.runs.length).map((group) => <section key={group.title} className="ws-library-group"><div className="ws-library-group-head"><h3>{group.title}<span>{group.runs.length}</span></h3><p>{group.note}</p></div><div className="ws-library-list">{group.runs.map((run) => <article className="ws-card" key={run.id}><div className="ws-output-icon">{run.approved && currentIds.has(run.id) ? <CircleCheck /> : <FileText />}</div><div className="ws-output-description"><span className="ws-eyebrow">{run.mode} · {new Date(run.createdAt).toLocaleString("en-CA", { dateStyle: "medium", timeStyle: "short" })}</span><h3>{run.title}</h3><p>Brief v{run.revision} · {AGENTS.find((agent) => agent.id === run.agent)?.room}{run.model ? ` · ${run.model}` : ""}</p></div><div className="ws-actions"><Button variant="outline" onClick={() => setSelectedId(run.id)}>Read output <ArrowUpRight /></Button><Button disabled={!currentIds.has(run.id)} variant={run.approved ? "outline" : "default"} onClick={() => { try { const reviewed = approveRun(c, run.id, !run.approved); update({ runs: reviewed.runs }, `${run.approved ? "Reopened" : "Approved"} ${run.title}`); notify(run.approved ? "Output reopened for review." : "Approval recorded for this output and its campaign context."); } catch (error) { notify(error instanceof Error ? error.message : "Refresh the current output before approval."); } }}><CheckCheck />{run.approved && currentIds.has(run.id) ? "Reopen" : "Approve draft"}</Button><RemoveRecord label="specialist output" onRemove={() => update({ runs: c.runs.filter((item) => item.id !== run.id) }, "Removed specialist output")} /></div></article>)}</div></section>)}
+    <OutputDialog run={selected} close={() => setSelectedId(null)} notify={notify} />
+  </>;
 }

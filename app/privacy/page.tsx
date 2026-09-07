@@ -5,7 +5,7 @@ import { PageHero } from "@/components/page-hero";
 export const metadata: Metadata = {
   title: "Privacy & Data",
   description:
-    "How KINGXFORD handles device-local campaign drafts, optional cloud snapshots, AI requests and project inquiries.",
+    "How AVALON handles device-local campaign drafts, optional cloud snapshots, AI requests and project inquiries.",
   alternates: { canonical: "/privacy" },
 };
 export default function PrivacyPage() {
@@ -21,11 +21,12 @@ export default function PrivacyPage() {
           description="Know what stays on your device, what you choose to send, and which connections are active."
         />
         <article className="policy-page content-section">
-          <p className="policy-updated">Workspace notice · 6 September 2026</p>
+          <p className="policy-updated">Workspace notice · 7 September 2026</p>
           <h2>Device-local workspace</h2>
           <p>
             The campaign workspace saves briefs, draft content, planning
-            outputs, tasks, evidence records and decision history in this
+            outputs, tasks, imported performance records, delivery plans,
+            estimates, evidence records and decision history in this
             browser’s local storage. This is device-local storage, not a team
             account or encrypted vault. Anyone with access to this browser
             profile may be able to read it. Avoid sensitive personal
@@ -40,14 +41,14 @@ export default function PrivacyPage() {
             Supabase service. It is associated with the account ID and protected
             by account-ownership policies. Cloud saves are manual snapshots, not
             continuous collaboration. Deleting a device campaign does not delete
-            its cloud snapshot. Contact KINGXFORD for cloud deletion, access or
+            its cloud snapshot. Contact AVALON for cloud deletion, access or
             correction requests.
           </p>
           <h2>Optional AI drafts</h2>
           <p>
             Planning engines execute in your browser and do not require an AI
             provider. Selecting “Send brief for AI draft” sends your brief,
-            selected evidence and relevant planning context to KINGXFORD’s
+            selected evidence and relevant planning context to AVALON’s
             server and configured model through Vercel AI Gateway. Do not
             include secrets or unnecessary personal information. Provider
             processing and usage charges may apply. Outputs are unverified
