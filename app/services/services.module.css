@@ -6,7 +6,7 @@
   background: #f5f2eb;
 }
 
-.page > :not(footer) :is(h1, h2, h3, p, figure) { margin: 0; }
+.page > :where(:not(footer)) :where(h1, h2, h3, p, figure) { margin: 0; }
 .page :is(h1, h2, h3) { text-wrap: balance; }
 .page :is(a, button) { -webkit-tap-highlight-color: transparent; }
 .page > :not(footer) a:focus-visible { outline: 3px solid #b94935; outline-offset: 5px; }
