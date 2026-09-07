@@ -165,6 +165,7 @@
   background: transparent !important;
 }
 .ws-nav [role="tab"] {
+  height: auto;
   min-height: 46px;
   padding: 11px 12px;
   border: 0 !important;
@@ -1497,7 +1498,11 @@
 .ws-wordmark small { font-size: .8rem; }
 .ws [data-slot="button"] { font-size: .94rem; }
 .ws-nav [role="tab"] { font-size: .94rem; min-height: 46px; }
-.ws-campaign-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ws-campaign-pick { min-width: 0; }
+.ws-campaign-pick [data-slot="select-trigger"] { width: 100%; min-width: 0; max-width: 100%; }
+.ws-campaign-pick [data-slot="select-value"] { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ws-campaign-actions { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; }
+.ws-campaign-actions [data-slot="button"] { min-width: 0; }
 .ws-campaign-actions [data-slot="button"] { font-size: .8rem; padding: 10px 8px; gap: 6px; }
 .ws-campaign-actions svg { width: 16px; height: 16px; }
 .ws-campaign-pick [data-slot="select-trigger"] { background: #2c342c; border-color: #53604f; }
