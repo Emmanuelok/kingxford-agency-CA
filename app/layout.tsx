@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "./workspace.css";
+import "./performance.css";
 
 const geistSans = localFont({
   src: "../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
@@ -17,17 +18,16 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kingxford-agency.vercel.app";
+const siteUrl = "https://kingxford-agency-ca.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "KINGXFORD — Integrated Advertising Agency in St. John's",
-    template: "%s | KINGXFORD Agency",
+    default: "AVALON Creative Group — Ideas with vision. Work with impact.",
+    template: "%s | AVALON Creative Group",
   },
   description:
-    "KINGXFORD brings strategy, identity, campaigns, film, social, media and digital into one accountable advertising agency—from St. John's to markets across Canada.",
+    "Independent strategy, brand design, film, digital experiences and growth. Avalon Creative Group connects your brief, creative studios, campaign planning and results in one workspace.",
   keywords: [
     "advertising agency St. John's",
     "marketing agency Newfoundland",
@@ -38,16 +38,16 @@ export const metadata: Metadata = {
     "media buying Canada",
   ],
   openGraph: {
-    title: "KINGXFORD — Move the thing that matters.",
-    description: "Strategy, identity, campaigns, production, media and digital. Six rooms, one brief, one accountable agency.",
+    title: "AVALON Creative Group — Ideas with vision. Work with impact.",
+    description: "Strategy, design, production, digital and growth. One creative group. One connected workspace.",
     type: "website",
     locale: "en_CA",
-    images: [{ url: "/images/hero-research-wall.webp", width: 1600, height: 900, alt: "The opening research wall in KINGXFORD's cinematic agency film" }],
+    images: [{ url: "/images/hero-research-wall.webp", width: 1600, height: 900, alt: "The opening research wall in AVALON's cinematic agency film" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "KINGXFORD — Move the thing that matters.",
-    description: "Strategy, identity, campaigns, production, media and digital. Six rooms, one accountable agency.",
+    title: "AVALON Creative Group — Ideas with vision. Work with impact.",
+    description: "Strategy, design, production, digital and growth. One creative group. One connected workspace.",
     images: ["/images/hero-research-wall.webp"],
   },
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },

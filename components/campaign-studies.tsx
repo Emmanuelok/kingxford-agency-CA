@@ -93,18 +93,18 @@ export function CampaignStudies() {
       <header className="kx5-studies-head">
         <div>
           <span className="kx5-overline">
-            Original concept work / clearly marked
+            SELECTED CREATIVE EXPLORATIONS
           </span>
           <h2 id="work-title">
-            Proof of thinking.
+            A point of view.
             <br />
-            No borrowed logos.
+            <em>A world of possibility.</em>
           </h2>
         </div>
         <p>
-          KINGXFORD is launching. These self-initiated studies demonstrate how
-          we connect a real business problem to a campaign system. They were not
-          commissioned and no results are claimed.
+          Self-initiated campaign concepts exploring how strategy becomes
+          visual storytelling. These are independent capability studies,
+          not commissioned client work or reported campaign results.
         </p>
       </header>
 
@@ -124,7 +124,7 @@ export function CampaignStudies() {
             alt={study.alt}
           />
           <div className="kx5-study-image-caption">
-            <span>KX / CONCEPT {study.number}</span>
+            <span>AV / CONCEPT {study.number}</span>
             <strong>{study.line}</strong>
             <small>Synthetic visual · Independent capability study</small>
           </div>

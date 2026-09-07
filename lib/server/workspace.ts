@@ -1,37 +1,36 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { z } from "zod";
+import { ApiError, hasWorkspaceAccess, integrationConfig } from "@/lib/server/guards";
+export { ApiError, hasWorkspaceAccess, integrationConfig, ownerHeader, readJson, sameOrigin } from "@/lib/server/guards";
 
-export class ApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-  ) {
-    super(message);
-  }
-}
 export function cloudConfigured() {
-  return !!(process.env.SUPABASE_URL && process.env.SUPABASE_PUBLISHABLE_KEY);
+  return integrationConfig().cloud;
 }
 export function aiConfigured() {
-  return (
-    cloudConfigured() &&
-    !!process.env.AI_GATEWAY_API_KEY &&
-    !!process.env.KINGXFORD_AI_MODEL &&
-    process.env.KINGXFORD_AI_ENABLED === "true"
-  );
+  return integrationConfig().ai;
 }
 export async function db() {
-  if (!cloudConfigured())
+  const config = integrationConfig();
+  if (!config.cloud)
     throw new ApiError(
       503,
       "Cloud storage is not configured. Device-local planning remains available.",
     );
   const jar = await cookies();
   return createServerClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_PUBLISHABLE_KEY!,
+    config.url,
+    config.key,
     {
+      global: {
+        fetch: (input, init) => fetch(input, {
+          ...init,
+          cache: "no-store",
+          signal: init?.signal
+            ? AbortSignal.any([init.signal, AbortSignal.timeout(12000)])
+            : AbortSignal.timeout(12000),
+        }),
+      },
       cookieOptions: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -51,61 +50,27 @@ export async function db() {
 export async function authenticated(requireAccess = true) {
   const client = await db();
   const { data, error } = await client.auth.getUser();
+  if (error?.name === "AuthRetryableFetchError" || (error?.status ?? 0) >= 500)
+    throw new ApiError(503, "The account service is temporarily unavailable. Your device copy is safe; try again shortly.");
   if (error || !data.user || data.user.is_anonymous)
     throw new ApiError(
       401,
       "Sign in with an invited agency account to continue.",
     );
-  if (requireAccess && data.user.app_metadata?.kingxford_access !== true)
+  if (requireAccess && !hasWorkspaceAccess(data.user))
     throw new ApiError(
       403,
-      "This account has not been granted KINGXFORD workspace access.",
+      "This account has not been granted Avalon workspace access.",
     );
   return { client, user: data.user };
-}
-export function sameOrigin(request: Request) {
-  const origin = request.headers.get("origin");
-  const expected = process.env.NEXT_PUBLIC_SITE_URL
-    ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin
-    : new URL(request.url).origin;
-  if (!origin || origin !== expected)
-    throw new ApiError(
-      403,
-      "This request must come from the configured KINGXFORD site.",
-    );
-  if (!request.headers.get("content-type")?.includes("application/json"))
-    throw new ApiError(415, "Send JSON content.");
-}
-export async function readJson(request: Request, limit = 2000000) {
-  const body = request.body;
-  if (!body) throw new ApiError(400, "A request body is required.");
-  const reader = body.getReader();
-  const decoder = new TextDecoder();
-  let bytes = 0,
-    result = "";
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      bytes += value.byteLength;
-      if (bytes > limit) {
-        await reader.cancel();
-        throw new ApiError(413, "The request is too large.");
-      }
-      result += decoder.decode(value, { stream: true });
-    }
-    result += decoder.decode();
-    return JSON.parse(result);
-  } catch (e) {
-    if (e instanceof ApiError) throw e;
-    throw new ApiError(400, "The request could not be read as JSON.");
-  }
 }
 export function json(data: unknown, status = 200) {
   return Response.json(data, {
     status,
     headers: {
       "Cache-Control": "private, no-store, max-age=0",
+      "CDN-Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
       Vary: "Cookie",
     },
   });
@@ -113,6 +78,8 @@ export function json(data: unknown, status = 200) {
 export function apiFailure(error: unknown) {
   if (error instanceof ApiError)
     return json({ error: error.message }, error.status);
+  if (error instanceof Error && ["TimeoutError", "AbortError"].includes(error.name))
+    return json({ error: "The connection timed out. Your device copy is safe; try again shortly." }, 504);
   if (error instanceof z.ZodError)
     return json(
       {
@@ -123,7 +90,7 @@ export function apiFailure(error: unknown) {
     );
   // Do not log requests, tokens, briefs or provider bodies.
   console.error(
-    "KINGXFORD_API_FAILURE",
+    "AVALON_API_FAILURE",
     error instanceof Error ? error.name : "UnknownError",
   );
   return json(

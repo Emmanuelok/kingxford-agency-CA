@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { CampaignWorkspace } from "@/components/campaign-workspace";
 export const metadata: Metadata = {
-  title: "Campaign Workspace",
+  title: "Connected Creative Workspace",
   description:
-    "One connected workspace for campaign strategy, content, production, media, experimentation and accountable approvals.",
+    "AVALON Creative Group: 15 specialist engines, connected campaign workflows, production delivery, actual performance analysis and accountable launch review in one workspace.",
   alternates: { canonical: "/platform" },
 };
 export default function PlatformPage() {

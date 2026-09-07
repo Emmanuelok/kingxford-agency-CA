@@ -23,12 +23,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import {
-  changed,
-  newWorkspace,
+  createCampaign,
   workspaceSchema,
   type Brief,
 } from "@/lib/campaign";
-import { inquirySchema } from "@/lib/inquiry";
+import {
+  appendInquiryCampaign,
+  INQUIRY_BUDGETS,
+  inquiryBudgetEstimate,
+  inquirySchema,
+  prepareInquiryCampaign,
+  validInquiryDate,
+} from "@/lib/inquiry";
 const goals = [
   ["launch", "Launch or rebrand"],
   ["leads", "Generate qualified leads"],
@@ -49,20 +55,13 @@ const scopesAvailable = [
   "PR or experience",
   "Not sure yet",
 ];
-const budgets = [
-  "Under $5,000",
-  "$5,000–$15,000",
-  "$15,000–$40,000",
-  "$40,000–$100,000",
-  "$100,000+",
-  "Need help setting it",
-];
 export function ProjectBrief() {
   const router = useRouter();
   const [step, setStep] = useState(1),
     [goal, setGoal] = useState<Brief["objective"]>("leads"),
     [scopes, setScopes] = useState<string[]>([]),
     [budget, setBudget] = useState(""),
+    [useBudgetEstimate, setUseBudgetEstimate] = useState(false),
     [timing, setTiming] = useState(""),
     [org, setOrg] = useState(""),
     [name, setName] = useState(""),
@@ -74,21 +73,6 @@ export function ProjectBrief() {
   const heading = useRef<HTMLHeadingElement>(null),
     initial = useRef(true);
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("kingxford-workspace-v2");
-      if (raw) {
-        const data = workspaceSchema.parse(JSON.parse(raw));
-        const c = data.campaigns.find((c) => c.id === data.activeId)!;
-        // Hydrate the externally stored brief after SSR; keep contact data in memory only.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setOrg(c.brief.brand);
-        setGoal(c.brief.objective);
-        setChallenge(c.brief.offer);
-        setTiming(c.brief.launchDate);
-      }
-    } catch {}
-  }, []);
-  useEffect(() => {
     if (initial.current) {
       initial.current = false;
       return;
@@ -97,14 +81,14 @@ export function ProjectBrief() {
   }, [step]);
   const brief = useMemo(
     () =>
-      `NEW KINGXFORD PROJECT BRIEF\n\nName: ${name}\nOrganization: ${org}\nEmail: ${email}\nPrimary objective: ${goals.find(([id]) => id === goal)?.[1]}\nCapabilities: ${scopes.join(", ") || "Recommend the right mix"}\nWorking investment: ${budget || "To discuss"}\nTiming: ${timing || "To discuss"}\n\nWhat must move:\n${challenge}\n\nMarketing updates consent: ${consent ? "Yes" : "No"}`,
+      `AVALON CREATIVE GROUP · PROJECT BRIEF\n\nName: ${name}\nOrganization: ${org}\nEmail: ${email}\nPrimary objective: ${goals.find(([id]) => id === goal)?.[1]}\nCapabilities: ${scopes.join(", ") || "Recommend the right mix"}\nWorking investment: ${budget || "To discuss"} CAD\nTarget launch: ${timing || "To discuss"}\n\nWhat must move:\n${challenge}\n\nMarketing updates consent: ${consent ? "Yes" : "No"}`,
     [name, org, email, goal, scopes, budget, timing, challenge, consent],
   );
   function download() {
     const url = URL.createObjectURL(new Blob([brief], { type: "text/plain" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = "kingxford-project-brief.txt";
+    a.download = "avalon-project-brief.txt";
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
@@ -121,6 +105,11 @@ export function ProjectBrief() {
       setMessage("Choose a working investment range.");
       return;
     }
+    if (step === 2 && !validInquiryDate(timing)) {
+      setMessage("Choose a valid target launch date between 2000 and 2099, or leave it open.");
+      document.getElementById("launch-timing")?.focus();
+      return;
+    }
     if (step === 3) {
       const parsed = inquirySchema.safeParse({ name, org, email, challenge });
       if (!parsed.success) {
@@ -134,6 +123,10 @@ export function ProjectBrief() {
           ?.focus();
         return;
       }
+      setName(parsed.data.name);
+      setOrg(parsed.data.org);
+      setEmail(parsed.data.email);
+      setChallenge(parsed.data.challenge);
     }
     setErrors({});
     setMessage("");
@@ -142,35 +135,22 @@ export function ProjectBrief() {
   function sendToWorkspace() {
     try {
       const raw = localStorage.getItem("kingxford-workspace-v2");
+      const campaign = prepareInquiryCampaign(createCampaign(), {
+        name, org, email, challenge, goal, budget, useBudgetEstimate, timing, scopes,
+      });
       const data = raw
-        ? workspaceSchema.parse(JSON.parse(raw))
-        : newWorkspace();
-      const c = data.campaigns.find((c) => c.id === data.activeId)!;
-      const updated = changed(
-        c,
-        {
-          name: org || c.name,
-          brief: {
-            ...c.brief,
-            brand: org,
-            objective: goal,
-            offer: challenge.slice(0, 2000),
-          },
-        },
-        "Transferred project inquiry context",
-        true,
-      );
+        ? appendInquiryCampaign(workspaceSchema.parse(JSON.parse(raw)), campaign)
+        : { version: 2 as const, activeId: campaign.id, campaigns: [campaign] };
       localStorage.setItem(
         "kingxford-workspace-v2",
-        JSON.stringify({
-          ...data,
-          campaigns: data.campaigns.map((p) => (p.id === c.id ? updated : p)),
-        }),
+        JSON.stringify(workspaceSchema.parse(data)),
       );
       router.push("/platform?view=brief");
-    } catch {
+    } catch (error) {
       setMessage(
-        "The workspace could not be saved. Download this brief to preserve your answers.",
+        error instanceof Error && error.message.startsWith("Your workspace already")
+          ? error.message
+          : "The workspace could not be saved. Your existing campaigns have not changed. Download this brief to preserve your answers.",
       );
     }
   }
@@ -243,7 +223,7 @@ export function ProjectBrief() {
             <div className="brief-two">
               <label>
                 <span>Working investment</span>
-                <Select value={budget} onValueChange={setBudget}>
+                <Select value={budget} onValueChange={(value) => { setBudget(value); setUseBudgetEstimate(false); }}>
                   <SelectTrigger
                     className="brief-select"
                     aria-label="Working investment"
@@ -251,7 +231,7 @@ export function ProjectBrief() {
                     <SelectValue placeholder="Choose a planning range" />
                   </SelectTrigger>
                   <SelectContent>
-                    {budgets.map((x) => (
+                    {INQUIRY_BUDGETS.map((x) => (
                       <SelectItem key={x} value={x}>
                         {x}
                       </SelectItem>
@@ -262,11 +242,14 @@ export function ProjectBrief() {
               <label>
                 <span>Ideal first launch</span>
                 <Input
-                  maxLength={120}
+                  id="launch-timing"
+                  type="date"
+                  min="2000-01-01"
+                  max="2099-12-31"
                   value={timing}
                   onChange={(e) => setTiming(e.target.value)}
-                  placeholder="Target date or timing"
                 />
+                <small>Optional. Leave open if the date is undecided.</small>
               </label>
             </div>
           </>
@@ -375,9 +358,18 @@ export function ProjectBrief() {
               </Button>
             </div>
             <p>
-              The workspace handoff copies organization, objective and challenge
-              into the active campaign. It does not store your contact details.
+              Create a separate campaign with your organization, objective,
+              challenge, target date and scope tasks. Your existing campaigns are
+              preserved. Contact details stay out of the workspace.
             </p>
+            {inquiryBudgetEstimate(budget) !== null ? (
+              <label className="consent-line">
+                <Checkbox checked={useBudgetEstimate} onCheckedChange={(value) => setUseBudgetEstimate(value === true)} />
+                <span>Use CAD {inquiryBudgetEstimate(budget)!.toLocaleString("en-CA")} as an editable midpoint planning estimate in the new campaign. This is not a quote or a committed budget. Otherwise, the campaign investment remains unset.</span>
+              </label>
+            ) : (
+              <p>Your budget range is saved as a task to confirm. No financial amount is assumed.</p>
+            )}
           </div>
         )}
       </section>

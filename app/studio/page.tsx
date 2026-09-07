@@ -14,6 +14,7 @@ import {
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
+import { WorkspaceLaunchpad } from "@/components/agency-interface";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/studio" },
@@ -69,7 +70,7 @@ export default function StudioPage() {
       <SiteNav />
       <PageHero
         index="04"
-        eyebrow="KINGXFORD PRODUCTION HOUSE"
+        eyebrow="AVALON STUDIO / PRODUCTION & CRAFT"
         title="Put the idea"
         accent="in motion."
         description="Strategy and production should not live in different rooms. We develop the idea with the people who must eventually shoot, edit, adapt and distribute it."
@@ -92,10 +93,10 @@ export default function StudioPage() {
           height={900}
           sizes="(max-width: 800px) 100vw, 60vw"
           src="/images/commercial-production.webp"
-          alt="Commercial production crew shaping light and product detail on set"
+          alt="Concept image of a commercial production crew shaping light and product detail on set"
         />
         <div className="cinema-label">
-          <span>KX / STUDIO / 001</span>
+          <span>AV / STUDIO / 001</span>
           <b>
             Made to stop the scroll.
             <br />
@@ -116,6 +117,7 @@ export default function StudioPage() {
           );
         })}
       </section>
+      <WorkspaceLaunchpad compact />
       <section className="production-process content-section coral-block">
         <div className="section-kicker">
           <span>05</span> FROM BRIEF TO MASTER

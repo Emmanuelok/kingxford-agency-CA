@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const mediaRoot = process.env.NEXT_PUBLIC_KINGXFORD_MEDIA_ROOT ?? "/video";
+const mediaRoot = process.env.NEXT_PUBLIC_AVALON_MEDIA_ROOT ?? process.env.NEXT_PUBLIC_KINGXFORD_MEDIA_ROOT ?? "/video";
 
 const films = {
   desktop: `${mediaRoot}/kingxford-original-hero.mp4`,
@@ -213,28 +213,28 @@ export function ScrollCinema() {
         <div className="kx5-cinema-grade" aria-hidden="true" />
 
         <div className="kx5-address">
-          <span>KINGXFORD / ST. JOHN&apos;S, NL</span>
-          <span>47.5615° N / 52.7126° W</span>
-          <span>Independent integrated agency</span>
+          <span>Independent by design. Connected by purpose.</span>
+          <span>St. John&apos;s · Canada</span>
+          <span>Strategy / Creative / Production / Growth</span>
         </div>
 
         <div className="kx5-title-beat">
-          <span className="kx5-overline">The whole agency, in motion</span>
+          <span className="kx5-overline">Introducing Avalon Creative Group</span>
           <h1>
-            Move the thing
+            Ideas with vision.
             <br />
-            that matters.
+            <em>Work with impact.</em>
           </h1>
           <p>
-            Strategy, identity, campaigns, film, social, media and digital—built
-            around one commercial outcome.
+            A creative group for brands ready to go further. Strategy, design,
+            film, digital and growth, working together from the very first brief.
           </p>
           <div className="kx5-hero-actions">
-            <a href="#building">
-              Enter the agency <ArrowDown />
+            <a href="/platform">
+              Open your workspace <ArrowUpRight />
             </a>
             <a href="/start">
-              Bring the brief <ArrowUpRight />
+              Start a project <ArrowUpRight />
             </a>
           </div>
         </div>
@@ -257,7 +257,7 @@ export function ScrollCinema() {
             lost in the handoff.
           </h2>
           <a href="#building">
-            See every room <ArrowDown />
+            Explore the group <ArrowDown />
           </a>
         </div>
 

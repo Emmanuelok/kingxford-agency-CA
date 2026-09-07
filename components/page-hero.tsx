@@ -4,7 +4,7 @@ export function PageHero({ eyebrow, title, accent, description, index }: { eyebr
   return (
     <section className="page-hero" id="main-content">
       <div className="page-hero-grid" aria-hidden="true" />
-      <div className="page-hero-meta"><span>{index}</span><span>{eyebrow}</span><span>47.5615° N · 52.7126° W</span></div>
+      <div className="page-hero-meta"><span>{index}</span><span>{eyebrow}</span><span>AVALON CREATIVE GROUP</span></div>
       <h1>{title}{accent && <><br /><em>{accent}</em></>}</h1>
       <div className="page-hero-bottom">
         <p>{description}</p>

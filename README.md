@@ -1,51 +1,58 @@
-# KINGXFORD — connected campaign platform
+# AVALON Creative Group — connected campaign platform
 
-Version 2 keeps the original KINGXFORD cinematic website and adds an operational, device-local campaign workspace. It is a Next.js application, intended for the existing Vercel project; it is not the earlier replacement design.
+Avalon brings strategy, brand, creative production, media and delivery into one shared campaign workspace. Version 3 retains existing version-2 campaign backups and the original cinematic assets, while rebranding the public experience and adding workflow orchestration, delivery management and actual performance reporting.
 
 ## Working capabilities
 
-| Entry point              | Capability                                                                                                       |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| `/`                      | Original scroll-operated film, local desktop/mobile video, accessible static fallback, connected workspace entry |
-| `/platform`              | Multi-campaign workspace, shared brief, revision history, backup/import and nine specialist planning engines     |
-| `/tools`                 | Same workspace opened in the media lab: allocation, CPC/CVR scenarios, CAC, ROAS, contribution and break-even    |
-| `/studio/workbench`      | Production treatment, shot-list export, format matrix and assigned delivery tasks                                |
-| Workspace content studio | Editable 12-item starter calendars, planning dates, status workflow and CSV export                               |
-| Workspace search/web     | Supplied-copy heuristics and a safe UTM link builder; not a live crawler                                         |
-| Workspace experiments    | Sample sizing, fixed-horizon planning and observed two-proportion confidence intervals                           |
-| Workspace proof/library  | Evidence ledger, approval checks, stale-output detection, searchable drafts and Markdown exports                 |
-| `/start`                 | Validated inquiry, review/copy/download/email preparation, campaign-context handoff                              |
+| Entry point | Capability |
+| --- | --- |
+| `/` | Avalon identity, original cinematic film with motion controls, studio launchpad and capability pages |
+| `/platform` | Multi-campaign workspace, shared brief, campaign duplication, live quality checks and decision history |
+| `/platform?view=workflows` | Four dependency-aware workflows; reusable current outputs, upstream approval gates, recorded handoffs and lineage |
+| `/platform?view=agents` | Fifteen specialist planning engines and optional authenticated model drafts |
+| `/platform?view=content` | Editable content calendar, date/status/channel management and CSV export |
+| `/studio/workbench` | Production treatment, shot lists, adaptations and assigned tasks |
+| `/platform?view=delivery` | Production task presets, owners, due dates, delivery filtering and launch dossiers |
+| `/tools` | Channel allocation, acquisition economics, scenarios, contribution and break-even modelling |
+| `/platform?view=performance` | Sourced daily actual results, CSV import preview, explicit conflict replacement, channel/date filters and spending pace |
+| `/platform?view=search` | Supplied-copy checks and safe UTM link builder |
+| `/platform?view=experiments` | Fixed-horizon experiment planning and observed two-proportion intervals |
+| `/platform?view=proof` | Evidence ledger, human launch checks, stale-output detection and approval controls |
+| `/platform?view=library` | Searchable output history, freshness/status filtering and report exports |
+| `/start` | Validated inquiry, review/copy/download/email preparation and safe new-campaign handoff |
 
-The nine specialists cover strategy, creative, editorial, production, media, search, experiments, proof and market expansion. **Planning engines are deterministic**, not model calls or independent research. Optional model-generated drafts are visibly labelled **AI draft**. Nothing automatically publishes, emails clients, purchases media or certifies compliance.
+The fifteen specialists cover strategy, brand, creative, editorial, production, conversion, lifecycle, media, search, accessibility, experiments, performance, market expansion, delivery and proof. Planning engines run deterministically on supplied data. They are not autonomous researchers or model calls. Optional model responses are labelled **AI draft** and require an invited account and configured service. Nothing publishes, emails, buys media or approves itself.
 
 ## Run and verify
 
-Node 22.13+ is required. Node 22 is used by CI.
+Node 22.13+ is required. CI uses Node 22; the existing Vercel project uses Node 24.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-For release checks:
+Release checks:
 
 ```bash
 npm run lint
 npm test
 npm run build
 npm run test:smoke
-npm audit
+npm audit --omit=dev
 ```
 
-`test:smoke` starts and stops an isolated production server and checks routes, original media, disabled integration responses, request-origin validation and response headers. It does not replace browser accessibility or connected-service testing.
+The test suite covers campaign economics, experiment assumptions, input validation, output lineage, workflow dependencies, CSV imports, actual-results calculations, intake preservation and request/security boundaries. Smoke tests start an isolated production server and verify routes, original assets, integration boundaries and response headers. Browser checks cover rendered navigation and representative studio flows.
 
-## Data and integrations
+## Storage and connected services
 
-- Browser drafts persist in `localStorage`. They are not encrypted or automatically shared. Export backups before changing devices or clearing browser data.
-- Imports validate the v2 schema and merge copies. Cross-tab changes pause autosaving; cloud snapshots use optimistic concurrency and account identity checks.
-- Cloud and AI are disabled until configured. Use `.env.example` as the configuration reference; never commit secrets.
-- A **dedicated** Supabase project and the proposed `database/setup.sql` are required. The migration is supplied, not automatically applied.
-- AI requires an invited account, owner-approved model, Vercel AI Gateway key and explicit feature flag. The database quota is 20 requests per account per UTC day, with five-second spacing; provider budget caps are still required.
-- Production uses verified Supabase identity. The obsolete, unused hosted-proxy header-auth helper has been removed.
+- Browser campaigns remain in the original `kingxford-workspace-v2` key. Existing data is not renamed or discarded by the Avalon rebrand.
+- New optional performance and output-lineage fields remain compatible with older v2 backups. Older versions of the application do not preserve these newer fields when exporting; use this release to manage them.
+- Local drafts are device-specific and not encrypted. Back up before changing devices or clearing browser data.
+- Imports validate schemas. Cross-tab conflicts pause autosaving. Cloud snapshots retain optimistic concurrency and account checks.
+- Cloud accounts and model AI were **not configured** in the inspected production environment. This release exposes that state honestly and keeps useful local work available.
+- A dedicated Supabase database and gateway model configuration are required for connected accounts and AI. The prepared SQL remains unapplied; unrelated Supabase projects are untouched.
+- New Avalon configuration names coexist with legacy environment, database, authorization and header names.
+- Real mail remains `hello@kingxford.co` until a replacement mailbox is provisioned. The production URL remains `https://kingxford-agency-ca.vercel.app`.
 
-Read [the launch and activation checklist](docs/LAUNCH.md) before connecting client accounts or promoting to production. A successful build is not a claim of completed operational, privacy or accessibility sign-off.
+Read [docs/LAUNCH.md](docs/LAUNCH.md) for the configuration, database isolation, quota and operational release checks. Passing code checks is not a claim that unconfigured cloud services have been activated or that every production business process has been certified.

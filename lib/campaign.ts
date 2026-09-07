@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { performanceSchema, performanceSummary } from "./performance.ts";
 
 export const CHANNELS = [
   "Search",
@@ -56,6 +57,42 @@ export const AGENTS = [
     name: "Proof reviewer",
     role: "Claims, consent, rights and launch blockers",
     room: "Proof",
+  },
+  {
+    id: "brand",
+    name: "Brand guardian",
+    role: "Voice, claim consistency and creative acceptance criteria",
+    room: "Brand",
+  },
+  {
+    id: "conversion",
+    name: "Conversion architect",
+    role: "Page hierarchy, offer friction and measurable conversion routes",
+    room: "Conversion",
+  },
+  {
+    id: "lifecycle",
+    name: "Lifecycle planner",
+    role: "Lead qualification, ownership, nurture and retention handoffs",
+    room: "Lifecycle",
+  },
+  {
+    id: "accessibility",
+    name: "Accessibility reviewer",
+    role: "Inclusive content and a practical manual verification protocol",
+    room: "Accessibility",
+  },
+  {
+    id: "delivery",
+    name: "Delivery coordinator",
+    role: "Dependencies, accountable owners and release handover",
+    room: "Delivery",
+  },
+  {
+    id: "performance",
+    name: "Performance analyst",
+    role: "Scenario sensitivity, contribution thresholds and experiment decisions",
+    room: "Performance",
   },
   {
     id: "expansion",
@@ -163,10 +200,16 @@ export const campaignSchema = z
           createdAt: z.string().datetime(),
           approved: z.boolean(),
           model: text(200).optional(),
+          sourceFingerprint: text(100).optional(),
+          inputRunIds: z.array(z.string().uuid()).max(15).refine(
+            (ids) => new Set(ids).size === ids.length,
+            "Duplicate handoff references are not allowed",
+          ).optional(),
         }),
       )
       .max(100),
     checks: z.record(z.boolean()),
+    performance: performanceSchema.optional(),
     experiment: z.object({
       hypothesis: text(2000),
       baseline: z.number().finite().min(0.01).max(99),
@@ -350,7 +393,8 @@ export function changed(
     !!patch.media ||
     !!patch.experiment ||
     !!patch.web ||
-    !!patch.evidence;
+    !!patch.evidence ||
+    !!patch.performance;
   const checks = contextChanged
     ? {}
     : patch.content || patch.tasks || patch.runs
@@ -368,6 +412,68 @@ export function changed(
     ].slice(0, 200),
   };
 }
+export function latestAgentRuns(c: Campaign): Run[] {
+  const ordered = [...c.runs].sort(
+    (a, b) => b.revision - a.revision || b.createdAt.localeCompare(a.createdAt),
+  );
+  return ordered.filter(
+    (r, i) => ordered.findIndex((x) => x.agent === r.agent) === i,
+  );
+}
+
+/** A compact change detector for inputs that can change without a brief revision.
+ * This is a freshness marker, not a cryptographic signature or proof of integrity.
+ */
+export function agentSourceFingerprint(c: Campaign, agent: AgentId): string | undefined {
+  if (agent !== "delivery" && agent !== "review") return undefined;
+  const source = JSON.stringify({
+    tasks: [...c.tasks].sort((a, b) => a.id.localeCompare(b.id)),
+    content: [...c.content].sort((a, b) => a.id.localeCompare(b.id)),
+    checks: agent === "review" ? CHECKS.filter(([id]) => id !== "signoff").map(([id]) => [id, !!c.checks[id]]) : undefined,
+  });
+  let first = 2166136261;
+  let second = 5381;
+  for (let index = 0; index < source.length; index++) {
+    const code = source.charCodeAt(index);
+    first = Math.imul(first ^ code, 16777619);
+    second = Math.imul(second, 33) ^ code;
+  }
+  return `${source.length.toString(16)}:${(first >>> 0).toString(16)}:${(second >>> 0).toString(16)}`;
+}
+
+/** Both the brief and every recorded upstream handoff must still be current. */
+export function isRunCurrent(c: Campaign, run: Run): boolean {
+  const latest = new Map(latestAgentRuns(c).map((item) => [item.id, item]));
+  const visiting = new Set<string>();
+  const memo = new Map<string, boolean>();
+  function current(item: Run): boolean {
+    if (memo.has(item.id)) return memo.get(item.id)!;
+    if (item.revision !== c.revision || !latest.has(item.id) || visiting.has(item.id)) return false;
+    if (item.sourceFingerprint !== undefined && item.sourceFingerprint !== agentSourceFingerprint(c, item.agent)) return false;
+    visiting.add(item.id);
+    const valid = (item.inputRunIds ?? []).every((id) => {
+      const source = latest.get(id);
+      return source ? current(source) : false;
+    });
+    visiting.delete(item.id);
+    memo.set(item.id, valid);
+    return valid;
+  }
+  return current(run);
+}
+
+/** Approvals apply to an exact output and revision, never to stale history. */
+export function approveRun(c: Campaign, runId: string, approved = true): Campaign {
+  const run = c.runs.find((item) => item.id === runId);
+  if (!run) throw new Error("The selected output no longer exists.");
+  if (approved && !isRunCurrent(c, run)) {
+    throw new Error("Regenerate and review the current specialist output before approval.");
+  }
+  return changed(c, {
+    runs: c.runs.map((item) => item.id === runId ? { ...item, approved } : item),
+  }, `${approved ? "Approved" : "Reopened"} ${run.title}`);
+}
+
 export function readiness(c: Campaign) {
   const blockers: string[] = CHECKS.filter(
     ([id, , critical]) => critical && !c.checks[id],
@@ -388,24 +494,29 @@ export function readiness(c: Campaign) {
     blockers.push(
       `${evidenceGaps.length} evidence records need source, owner or verification`,
     );
-  const ordered = [...c.runs].sort(
-    (a, b) => b.revision - a.revision || b.createdAt.localeCompare(a.createdAt),
-  );
-  const latestRuns = ordered.filter(
-    (r, i) => ordered.findIndex((x) => x.agent === r.agent) === i,
-  );
+  const latestRuns = latestAgentRuns(c);
   const stale =
-    latestRuns.filter((r) => r.revision !== c.revision).length +
+    latestRuns.filter((r) => !isRunCurrent(c, r)).length +
     c.content.filter((r) => r.revision !== c.revision).length;
   if (c.brief.website && !safeUrl(c.brief.website))
     blockers.push("The shared brief contains an invalid website URL");
-  if (stale) blockers.push(`${stale} outputs were created from an older brief`);
+  if (stale) blockers.push(`${stale} outputs need refresh after a brief or upstream handoff changed`);
   if (c.content.some((x) => x.status !== "Approved"))
     blockers.push("Content drafts still need approval");
   if (latestRuns.some((x) => !x.approved))
     blockers.push("Current specialist outputs still need approval");
   if (c.tasks.some((t) => !t.done || !t.owner.trim()))
     blockers.push("Delivery tasks need completion and accountable owners");
+  if (forecast(c).unallocated > 0)
+    blockers.push("Media budget remains unallocated; assign positive channel weights");
+  if (!c.runs.length && !c.content.length)
+    blockers.push("Create and review campaign deliverables before final release");
+  if (c.brief.proof.trim() && !c.evidence.some(
+    (e) => e.verified && e.claim.trim() && e.source.trim() && e.owner.trim(),
+  ))
+    blockers.push("The supplied proof needs at least one complete verified evidence record");
+  if (!experimentMath(c.experiment).valid)
+    blockers.push("Experiment conversions cannot exceed the observed visitor counts");
   return {
     score: Math.round(
       (CHECKS.filter(([id]) => c.checks[id]).length / CHECKS.length) * 100,
@@ -614,7 +725,7 @@ export function contentCalendar(c: Campaign): Campaign["content"] {
       validDate(b.launchDate) && b.launchDate <= "2099-12-31"
         ? new Date(`${b.launchDate}T12:00:00Z`)
         : new Date();
-  const channels = c.media.filter((r) => r.weight > 0).map((r) => r.channel);
+  const channels = [...new Set(c.media.filter((r) => r.weight > 0).map((r) => r.channel))];
   const selected = channels.length ? channels : ["Organic" as const];
   const excerpt = (v: string) =>
     v.length > 650 ? `${v.slice(0, 650)}… [See the full shared brief]` : v;
@@ -628,7 +739,8 @@ export function contentCalendar(c: Campaign): Campaign["content"] {
   ];
   return Array.from({ length: 12 }, (_, i) => {
     const date = new Date(start);
-    date.setUTCDate(start.getUTCDate() + i * 2);
+    const horizonDays = Math.min(23, b.weeks * 7);
+    date.setUTCDate(start.getUTCDate() + Math.floor(i * (horizonDays - 1) / 11));
     const title = angles[i % angles.length];
     return {
       id: uid(),
@@ -681,20 +793,33 @@ export const SHOTS = [
 export function runAgent(c: Campaign, id: AgentId): Run {
   const b = c.brief,
     f = forecast(c),
-    label = AGENTS.find((a) => a.id === id)!;
+    label = AGENTS.find((a) => a.id === id);
+  if (!label) throw new Error("Unknown specialist. Select an available planning agent.");
+  const money = (value: number | null) => value === null ? "Unavailable with these assumptions" : `CAD ${value.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const conservative = forecast(c, "conservative");
+  const upside = forecast(c, "upside");
+  const experiment = experimentMath(c.experiment);
+  const destination = safeUrl(b.website);
+  const action = b.objective === "sales" ? "Review the offer and purchase" : b.objective === "content" ? "Read the complete guide" : "Request a conversation";
+  const event = b.objective === "sales" ? "purchase" : b.objective === "content" ? "qualified_content_engagement" : "qualified_enquiry";
+  const verifiedEvidence = c.evidence.filter((e) => e.verified && e.claim.trim() && e.source.trim() && e.owner.trim());
+  const pendingTasks = c.tasks.filter((t) => !t.done || !t.owner.trim());
+  const observations = c.performance?.rows.length ? performanceSummary(c, c.performance.rows) : null;
+  const activeChannels = [...new Set(c.media.filter((row) => row.weight > 0).map((row) => row.channel))];
+  const sourceCopyChecks = auditWeb(c.web);
+  const taskSummary = c.tasks.slice(0, 12).map((task) => `- ${task.done ? "Done" : "Open"}: ${task.title.slice(0, 160)}; owner: ${task.owner.trim() || "unassigned"}; due: ${task.due || "unscheduled"}.`).join("\n");
   const context = `${b.brand || "Unnamed brand"} · ${b.market}\nAudience: ${b.audience || "Not supplied"}\nOffer: ${b.offer || "Not supplied"}\nObjective: ${b.objective}\n`;
   const sections: Record<AgentId, string> = {
-    strategy: `## Strategic decision\nMake ${b.brand || "the brand"} the useful choice for ${b.audience || "a clearly defined audience"}, through ${b.offer || "a specific offer"}.\n\n## Three horizons\n1. Weeks 1–2: validate audience interviews, competitor offers and conversion friction in ${b.market}.\n2. Weeks 3–4: test one offer, one conversion destination and three creative hooks.\n3. Remaining ${Math.max(0, b.weeks - 4)} weeks: review qualified outcomes weekly; scale only when contribution and delivery capacity support it.\n\n## Evidence to collect\n${b.proof || "Customer interviews, dated first-party analytics and permissioned proof."}\n\n## Open decision\nWho owns the commercial result and how will it be measured?`,
+    strategy: `## Strategic decision\nMake ${b.brand || "the brand"} the useful choice for ${b.audience || "a clearly defined audience"}, through ${b.offer || "a specific offer"}.\n\n## Three horizons\n1. Discovery (${Math.max(1, Math.round(b.weeks * 7 * 0.2))} planned days): validate audience interviews, competitor offers and conversion friction in ${b.market}.\n2. Controlled test (${Math.max(1, Math.round(b.weeks * 7 * 0.3))} planned days): test one offer, one conversion destination and three creative hooks.\n3. Review and iteration (${b.weeks * 7 - Math.max(1, Math.round(b.weeks * 7 * 0.2)) - Math.max(1, Math.round(b.weeks * 7 * 0.3))} planned days): review qualified outcomes; scale only when contribution and delivery capacity support it.\n\n## Evidence to collect\n${b.proof || "Customer interviews, dated first-party analytics and permissioned proof."}\n\n## Open decision\nWho owns the commercial result and how will it be measured?`,
     creative: `## Territory 1 — Show the difference\nHook: “A closer look at ${b.brand || "the offer"}.”\nExecution: a real demonstration of ${b.offer || "the product benefit"}.\n\n## Territory 2 — Start with the person\nHook: “For ${b.audience || "the people this is for"}.”\nExecution: an authentic story that connects a human need to the offer.\n\n## Territory 3 — Make the choice clearer\nHook: “Your next step in ${b.market}.”\nExecution: a transparent explanation of value, process and next action.\n\n## Creative constraints\nVoice: ${b.voice}. No fabricated reviews, results or scarcity. Test hooks while keeping audience, spend and landing page constant.`,
-    content: `## Editorial system\nPillars: customer problem, useful demonstration, human story, proof, frequently asked questions, invitation.\n\n## Channel adaptations\n${c.media
-      .filter((r) => r.weight > 0)
+    content: `## Editorial system\nPillars: customer problem, useful demonstration, human story, proof, frequently asked questions, invitation.\n\n## Channel adaptations\n${activeChannels
       .map(
-        (r) =>
-          `- ${r.channel}: one native opening, one supported point, one clear action.`,
+        (channel) =>
+          `- ${channel}: ${channel === "Search" ? "Intent-led headline, explicit offer terms and a matching conversion page" : channel === "Meta" ? "Visual opening, one customer tension, a demonstration and a short action" : channel === "LinkedIn" ? "A professional problem, practical insight and evidence-led invitation" : channel === "YouTube" ? "Spoken hook, demonstration, reviewed captions and an accessible end card" : channel === "Email" ? "A specific subject, useful answer, one primary action and permission-aware footer" : "An answer-led story, useful detail and a relevant next step"}.`,
       )
       .join(
         "\n",
-      )}\n\n## Cadence\nBuild 12 draft items over 24 days in Content Studio. Review tone, sources and rights before approval. Export the calendar for the publishing team. Nothing is automatically posted.`,
+      )}\n\n## Cadence\nBuild 12 draft items over ${Math.min(23, b.weeks * 7)} days in Content Studio. Review tone, sources and rights before approval. Export the calendar for the publishing team. Nothing is automatically posted.`,
     production: `## ${SHOTS.reduce((n, s) => n + s.seconds, 0)}-second master treatment\n${SHOTS.map((s, i) => `${i + 1}. ${s.title} (${s.seconds}s): ${s.direction}\nDeliver: ${s.deliverables}`).join("\n\n")}\n\n## Budget and dependencies\nProduction allowance: CAD ${b.productionCost.toLocaleString("en-CA")}. Obtain actual supplier quotes. Confirm location, releases, weather, safety, crew, captions, music and usage territory before capture.`,
     media: `## Base planning case — not a forecast guarantee\nAvailable media: CAD ${f.spend.toFixed(0)}\n${f.rows.map((r) => `- ${r.channel}: CAD ${r.allocation.toFixed(0)}; assumed CPC ${r.cpc.toFixed(2)}; conversion rate ${r.cvr}%.`).join("\n")}\n\nModelled conversions: ${f.conversions.toFixed(1)}\nModelled customers: ${f.customers.toFixed(1)}\nModelled revenue: CAD ${f.revenue.toFixed(0)}\nContribution after all planned campaign costs: CAD ${f.contribution.toFixed(0)}\n\n## Decision rule\nValidate CPC, conversion rate and lead quality using account evidence. Compare conservative and upside scenarios. Do not scale on ROAS alone; review gross margin and full acquisition cost.`,
     search: `## Search intent map\n1. Discovery: what problem does ${b.offer || "the offer"} solve?\n2. Comparison: how should ${b.audience || "the customer"} evaluate available choices?\n3. Local action: availability, location and next steps in ${b.market}.\n\n## Page architecture\nA specific title and H1; useful answer early; supported proof; transparent offer; FAQ sourced from real questions; one conversion route.\n\n## Technical handoff\nCheck indexing, canonicals, mobile usability, headings, keyboard access, performance and valid structured data. The workbench audits supplied copy only; it does not crawl websites or promise AI-search rankings.`,
@@ -718,6 +843,12 @@ export function runAgent(c: Campaign, id: AgentId): Run {
             : "")
         : "No evidence records supplied. Add sources for material claims."
     }\n\nThis is an operational review, not legal advice or automated compliance certification.`,
+    brand: `## Brand contract\nBrand: ${b.brand || "Define the brand"}. Audience: ${b.audience || "Define the priority audience"}.\nPromise to develop: ${b.offer || "Define a tangible offer"}.\nVoice direction: ${b.voice || "Agree a voice before content production"}.\n\n## Message hierarchy\n1. Lead with the customer's relevant problem and a concrete offer.\n2. Explain how the offer works, what is included and who it suits.\n3. Support material claims with named evidence; place limitations beside the claim.\n4. Close with one consistent action: ${action}.\n\n## Evidence boundary\n${verifiedEvidence.length} complete evidence records are marked verified by the user. ${c.evidence.length - verifiedEvidence.length} records need review.\n${verifiedEvidence.slice(0, 5).map((e) => `- Permitted review candidate: ${e.claim.slice(0, 240)}; source: ${e.source.slice(0, 180)}; owner: ${e.owner.slice(0, 80)}.`).join("\n") || "No verified evidence is available. Use process and offer facts; hold testimonials, performance claims and comparative superiority for substantiation."}\n\n## Acceptance criteria\n- Use the same brand name, offer terms and destination across every asset.\n- Check tone against the agreed voice; remove vague superlatives and invented urgency.\n- Keep an approved logo, colour palette, type scale and usage rules in the production handoff. These visual assets have not been inspected by this engine.\n- Have a human reviewer compare final copy, design and evidence side by side before approval.`,
+    conversion: `## Conversion route\nObjective: ${b.objective}; primary event: ${event}.\nDestination: ${destination || "Missing valid destination — add and test a website or booking route"}.\nProposed action: ${action}.\n\n## Page blueprint\n1. Hero: a specific statement of ${b.offer || "the offer"}, written for ${b.audience || "the priority audience"}.\n2. Fit: who the offer serves and who should choose another route.\n3. Value: inclusions, process, price or quotation terms, availability and limitations.\n4. Proof: ${verifiedEvidence.length ? "select a relevant verified claim and display its permitted source" : "collect approved proof; do not publish fabricated results"}.\n5. Friction: answer timing, eligibility, fulfilment and cancellation questions.\n6. Action: repeat the same action label and explain what happens after completion.\n\n## Form and checkout specification\nRequest only fields needed to deliver the stated purpose. Preserve entered data after validation errors, focus the first error and show an accessible completion state. Avoid duplicate submissions and confirm receipt.\n\n## Measurement handoff\nRecord landing_view → primary_action_click → form_start → ${event}. Keep personal data out of analytics events and URLs. Distinguish button clicks from completed outcomes; deduplicate conversions.\n\n## Test backlog\nTest one variable at a time: offer clarity, proof placement, then field friction. Current baseline assumption: ${c.experiment.baseline}%. Do not treat the supplied baseline as measured performance.`,
+    lifecycle: `## Qualification and routing contract\nCampaign audience: ${b.audience || "not yet defined"}. Offer: ${b.offer || "not yet defined"}.\nPipeline: new enquiry → contactable → qualified → appointment/proposal → won or lost → follow-up permitted. Define the entry and exit criteria for each stage before importing records.\n\n## Ownership and service levels\nAssign one accountable response owner and an escalation backup. Agree an acknowledgement target and a first-human-response target based on actual staffing; no response promise is confirmed here. Store the original campaign source, permission record, arrival time, owner and next action.\n\n## Draft follow-up sequence\n1. At enquiry: confirm receipt, restate the requested service and explain the next step.\n2. After owner review: answer the customer's specific question and offer a suitable next action.\n3. If unanswered: send a relevant reminder only where permission and local requirements allow; stop on opt-out, invalid contact or an agreed limit.\n4. After delivery: request feedback, address unresolved issues and offer relevant ongoing support with permission.\n\n## Commercial handoff\n${b.objective === "sales" ? "Sales forecasting uses customers directly; do not multiply completed purchases by the lead-to-sale rate again." : `Planning lead-to-sale assumption: ${b.leadToSale}%. Modelled ${f.conversions.toFixed(1)} enquiries → ${f.customers.toFixed(1)} customers. Validate with joined campaign and CRM records.`}\nTrack qualified rate, time to first response, stage conversion, loss reason and acquired-customer contribution.\n\n## Data controls\nSeparate essential service communication from optional marketing consent. Test duplicate handling, suppression, deletion, retention and access before activation. No CRM connection or message sending is performed by this engine.`,
+    accessibility: `## Review scope\nThis is a manual verification plan plus supplied-copy heuristics. It does not inspect a rendered page, video, assistive technology or certify accessibility.\n\n## Copy findings\n${sourceCopyChecks.filter((check) => ["One clear page promise", "Image alternative", "Specific next action"].includes(check.title)).map((check) => `- ${check.title}: ${check.passed ? "passes the text heuristic" : "requires review"}. ${check.note}`).join("\n")}\n\n## Interaction protocol\n1. Use the whole conversion route by keyboard: visible focus, logical order, operable menus and dialogs, no traps.\n2. Test zoom, narrow screens and text resizing; check reading order, descriptive headings and persistent form labels.\n3. Check form instructions, accessible error announcements and confirmation states with a screen reader.\n4. Measure actual text and control contrast in every state; do not infer contrast from a colour name.\n5. Respect reduced motion, supply playback controls for distracting motion and test the experience without animation.\n\n## Creative delivery protocol\nProvide reviewed captions and transcripts for spoken content. Give meaningful images informative alternatives; decorative imagery should be hidden appropriately. Do not place essential information only inside images, colour, audio or motion.\n\n## Handoff evidence\nFor every issue record the asset/URL, steps to reproduce, expected result, severity, owner and retest evidence. Block release on issues that prevent understanding or completing ${action.toLowerCase()}.`,
+    delivery: `## Delivery status\nLaunch date: ${b.launchDate || "not scheduled"}. Planned campaign duration: ${b.weeks} weeks.\n${pendingTasks.length} of ${c.tasks.length} delivery tasks need completion or an accountable owner.\n${taskSummary || "No delivery tasks are recorded. Create the workback schedule and assign real owners."}\n\n## Dependency sequence\n1. Commercial owner approves the shared brief and total investment (${money(b.budget)}).\n2. Brand and creative owners approve message, evidence and treatment.\n3. Producer confirms supplier quotes, releases and the ${money(b.productionCost)} production allowance.\n4. Content, web and lifecycle owners deliver drafts, destination and response routing.\n5. Accessibility and measurement reviewers verify the actual user journey and test events.\n6. Client release owner signs off final assets, placements, schedule and pause procedure.\n\n## Handover manifest\nFor each final asset record filename/version, channel, dimensions, duration, captions/alternative, rights territory/expiry, destination, tracking parameters and approver. Keep editable masters with approved exports.\n\n## Release and rollback\nConfirm named launch operator and backup; record activation time and first checks. Define who may pause spend, disable an incorrect asset or restore the previous destination. A workflow draft does not publish, book media or constitute client signoff.`,
+    performance: `## ${observations ? "Reported results" : "Planning scenario comparison"}\n${observations ? `${c.performance!.rows.length} user-supplied daily channel records. Reported spend: ${money(observations.spend)}; revenue: ${money(observations.revenue)}; customers: ${observations.customers}.\nReported media CAC: ${money(observations.cac)}. Media contribution: ${money(observations.mediaContribution)} using the brief's ${b.margin}% margin assumption; excludes agency fees and production. Data completeness and attribution still need validation.` : "No observed performance has been supplied. The figures below are scenarios derived from user-entered assumptions, not actual account results."}\n\n## Sensitivity analysis\n${f.invalidBudget ? "Budget is infeasible; contribution and scaling decisions are withheld until fees and production fit within total investment." : `Conservative: ${conservative.customers.toFixed(1)} modelled customers; contribution ${money(conservative.contribution)}.\nBase: ${f.customers.toFixed(1)} modelled customers; contribution ${money(f.contribution)}.\nUpside: ${upside.customers.toFixed(1)} modelled customers; contribution ${money(upside.contribution)}.\nConservative assumes 25% higher CPC and 25% lower conversion; upside assumes 20% lower CPC and 25% higher conversion, capped at 100%.`}\n\n## Commercial thresholds\nGross profit per customer before acquisition: ${money(b.revenuePerCustomer * b.margin / 100)}.\n${f.invalidBudget ? "Resolve the budget before setting acquisition thresholds." : `Fully loaded modelled CAC: ${money(f.fullyLoadedCac)}. Break-even customers across the full campaign investment: ${f.breakEvenCustomers === null ? "undefined at zero margin or customer value" : Math.ceil(f.breakEvenCustomers).toLocaleString("en-CA")}.`}\n\n## Experiment decision\n${!experiment.valid ? "Observed conversions exceed visitors. Correct the experiment records before interpreting results." : experiment.sample === null ? "The requested lift produces an impossible conversion rate. Revise the experiment target." : experiment.sufficient ? `The supplied sample meets the planned count and minimum cell-count checks. Observed absolute difference: ${((experiment.difference ?? 0) * 100).toFixed(2)} percentage points. Review the fixed-horizon interval, assignment quality and business impact; this is not an automatic winner declaration.` : `Evidence is not yet sufficient for a result decision. Planned sample: ${experiment.sample.toLocaleString("en-CA")} visitors per arm; estimated duration: ${experiment.days} days at the entered traffic assumption.`}\n\n## Weekly decision record\nRecord data range and source, qualified outcomes, contribution, delivery capacity, uncertainty, one next action and the accountable owner. Scale only after observed unit economics and fulfilment support it; no budget change is executed.`,
     expansion: `## ${b.market}: controlled entry plan\nStart with one audience, one locally relevant offer and one conversion route.\n\n## Evidence before commitment\n- Local demand, seasonal patterns and competitor offers with dates and sources.\n- Language, cultural context and appropriate accessibility review.\n- Fulfilment capacity, service radius and realistic local operating costs.\n\n## Test gate\nAllocate an explicitly approved portion of the CAD ${f.spend.toFixed(0)} media allowance. Compare contribution and qualified outcomes against the founding market before opening a new city.\n\nNo live market research is included in this planning engine.`,
   };
   const section =
@@ -733,5 +864,6 @@ export function runAgent(c: Campaign, id: AgentId): Run {
     revision: c.revision,
     createdAt: new Date().toISOString(),
     approved: false,
+    sourceFingerprint: agentSourceFingerprint(c, id),
   };
 }

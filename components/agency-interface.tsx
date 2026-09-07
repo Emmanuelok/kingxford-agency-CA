@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-import { ArrowRight, ArrowUpRight, Check, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BarChart3, Check, ChevronRight, Clapperboard, FileText, Layers3, Network, Sparkles } from "lucide-react";
 import { useState, type KeyboardEvent } from "react";
 
 function moveTab(
@@ -27,6 +27,31 @@ function moveTab(
     .closest('[role="tablist"]')
     ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
     [next]?.focus();
+}
+
+const workspacePaths = [
+  { number: "01", icon: FileText, title: "The shared brief", detail: "Put your audience, objective, offer and evidence in one place. Every studio starts here.", label: "Shape your campaign", view: "brief" },
+  { number: "02", icon: Network, title: "Campaign workflows", detail: "Preview a connected sequence of specialists, then run the work from one campaign.", label: "Build a workflow", view: "workflows" },
+  { number: "03", icon: Sparkles, title: "Specialist agents", detail: "Develop strategy, creative direction, content, media plans and review recommendations.", label: "Meet your specialists", view: "agents" },
+  { number: "04", icon: Clapperboard, title: "Creative production", detail: "Turn your brief into shot lists, channel formats, production tasks and delivery checklists.", label: "Enter the studio", view: "production" },
+  { number: "05", icon: BarChart3, title: "Performance & learning", detail: "Import campaign results, compare channels and use the evidence to plan the next test.", label: "Explore performance", view: "performance" },
+  { number: "06", icon: Layers3, title: "Your output library", detail: "Keep draft work, revisions and exports together so the next decision starts with context.", label: "Open the library", view: "library" },
+] as const;
+
+export function WorkspaceLaunchpad({ compact = false }: { compact?: boolean }) {
+  return <section className={`avalon-launchpad${compact ? " is-compact" : ""}`} id="workspace" aria-labelledby="workspace-launchpad-title">
+    <div className="avalon-launchpad-head">
+      <div><span className="avalon-eyebrow"><i aria-hidden="true" /> THE AVALON WORKSPACE</span><h2 id="workspace-launchpad-title">One place to turn<br />ambition into <em>action.</em></h2></div>
+      <div><p>Your thinking, your studios and your next decision, connected. Start with a brief and carry it through planning, production and performance.</p><a href="/platform">Open the workspace <ArrowUpRight /></a></div>
+    </div>
+    <div className="avalon-launchpad-grid">
+      {workspacePaths.filter((_, index) => !compact || [0, 3, 5].includes(index)).map(({ number, icon: Icon, title, detail, label, view }) => <a href={`/platform?view=${view}`} className="avalon-launch-card" key={view}>
+        <div className="avalon-launch-card-top"><Icon strokeWidth={1.5} /><span>{number}</span></div>
+        <h3>{title}</h3><p>{detail}</p><span className="avalon-launch-card-action">{label}<ArrowUpRight size={18}/></span>
+      </a>)}
+    </div>
+    <div className="avalon-launchpad-foot"><span>Start in your browser. Keep control of every draft.</span><a href="/platform?view=proof">Review campaign readiness <ArrowRight size={17}/></a></div>
+  </section>;
 }
 
 const problems = [
@@ -104,7 +129,7 @@ const rooms = [
     room: "The Briefing Room",
     label: "Strategy & research",
     description:
-      "Turns business pressure, audience evidence and category context into a brief clear enough to guide every decision.",
+      "Turn business priorities, audience evidence and category context into a brief clear enough to guide every decision.",
     detail:
       "Research · positioning · naming · audience · communications planning · workshops",
     href: "/services#strategy",
@@ -172,7 +197,7 @@ const osViews = [
     id: "brief",
     label: "Brief",
     eyebrow: "The agreed starting point",
-    title: "One outcome. Four facts. No theatre.",
+    title: "A clear foundation for every decision.",
     copy: "The audience, required action, proposition and proof are agreed before making begins. Assumptions stay visible until evidence replaces them.",
     status: [
       "Business outcome",
@@ -218,7 +243,7 @@ const osViews = [
     id: "readout",
     label: "Readout",
     eyebrow: "The next useful decision",
-    title: "A recommendation, not a data dump.",
+    title: "Evidence that informs your next move.",
     copy: "Performance returns to the original brief. The readout names what worked, what did not, what we learned and exactly what should happen next.",
     status: ["Attention", "Engagement", "Qualified action", "Next test"],
     note: "Decision memo ready",
@@ -233,11 +258,11 @@ export function ProblemSwitchboard() {
     <section className="kx5-switchboard" aria-labelledby="switchboard-title">
       <header>
         <span className="kx5-overline">
-          Start with the pressure, not a shopping list
+          A CLEAR STARTING POINT
         </span>
-        <h2 id="switchboard-title">What has to move?</h2>
+        <h2 id="switchboard-title">What comes next for you?</h2>
         <p>
-          The answer changes the agency we assemble. Responsibility does not.
+          Choose your objective. We connect the disciplines around it.
         </p>
       </header>
       <div className="kx5-switch-layout">
@@ -287,7 +312,7 @@ export function ProblemSwitchboard() {
             ))}
           </ol>
           <div className="kx5-switch-services">
-            <span>Likely rooms</span>
+            <span>Connected disciplines</span>
             <p>{problem.services}</p>
             <a href="/solutions">
               Build the route <ArrowRight />
@@ -311,16 +336,16 @@ export function AgencyUniverse() {
     >
       <header className="kx5-building-head">
         <div>
-          <span className="kx5-overline">The working cutaway</span>
+          <span className="kx5-overline">A creative group, working as one</span>
           <h2 id="building-title">
-            Six rooms.
+            Different disciplines.
             <br />
-            One brief.
+            Shared ambition.
           </h2>
         </div>
         <p>
-          Enter through any room. The project docket moves between them; the
-          objective and accountability stay in one place.
+          A distinctive brand. A compelling campaign. A better digital
+          experience. Explore the specialist disciplines that bring them together.
         </p>
       </header>
       <div className="kx5-building-shell">
@@ -374,12 +399,12 @@ export function AgencyUniverse() {
             <p>{current.description}</p>
             <small>{current.detail}</small>
             <a href={current.href}>
-              Enter this room <ArrowUpRight />
+              Explore this discipline <ArrowUpRight />
             </a>
           </div>
           <div className="kx5-docket" aria-hidden="true">
-            <span>KX</span>
-            <b>PROJECT / LIVE</b>
+            <span>AV</span>
+            <b>CONNECTED THINKING</b>
             <i />
           </div>
         </div>
@@ -395,7 +420,7 @@ export function ClientOperatingSystem() {
   return (
     <section className="kx5-os" aria-labelledby="os-title">
       <div className="kx5-os-copy">
-        <span className="kx5-overline">KINGXFORD client operating system</span>
+        <span className="kx5-overline">The value of working together</span>
         <h2 id="os-title">
           One brief.
           <br />
@@ -413,7 +438,7 @@ export function ClientOperatingSystem() {
       </div>
       <div className="kx5-os-interface">
         <header>
-          <b>KX / CAMPAIGN 024</b>
+          <b>AV / CAMPAIGN 024</b>
           <span>Illustrative workspace</span>
         </header>
         <nav role="tablist" aria-label="Client platform views">

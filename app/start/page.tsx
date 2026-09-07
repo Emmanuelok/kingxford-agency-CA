@@ -4,5 +4,31 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
 import { ProjectBrief } from "@/components/project-brief";
-export const metadata: Metadata={ alternates: { canonical: "/start" },title:"Start a Project",description:"Build a useful first brief for brand, advertising, production, media, web or connected growth work."};
-export default function StartPage(){return <main className="site-shell"><SiteNav/><PageHero index="09" eyebrow="START A PROJECT" title="Tell us what" accent="must move." description="Attention. Perception. Demand. Bookings. Applications. Sales. Investment. Start with the business problem; we will build the right system around it."/><section className="brief-section content-section"><div className="brief-aside"><div className="section-kicker"><span>01</span> GUIDED INTAKE</div><h2>Bring a brief.<br/>Or build one here.</h2><p>This takes about five minutes. It gives us enough context to recommend a responsible next step—not inflate a quote.</p><div className="contact-facts"><span><Clock3/>Designed for a focused first conversation</span><span><MapPin/>St. John&apos;s · Canada-wide delivery</span><span><MessageSquareText/>hello@kingxford.co</span></div></div><ProjectBrief/></section><SiteFooter/></main>}
+export const metadata: Metadata = {
+  alternates: { canonical: "/start" },
+  title: "Start a Project",
+  description: "Create your Avalon Creative Group project brief, prepare an inquiry or start a connected campaign workspace.",
+};
+export default function StartPage() {
+  return (
+    <main className="site-shell">
+      <SiteNav />
+      <PageHero index="09" eyebrow="START WITH A CONVERSATION" title="Your next chapter." accent="Let's make it matter." description="A new identity. A compelling campaign. A film worth watching. A better digital experience. Tell us what your business needs to achieve." />
+      <section className="brief-section content-section">
+        <div className="brief-aside">
+          <div className="section-kicker"><span>01</span> PROJECT INTAKE</div>
+          <h2>One clear brief.<br />A connected beginning.</h2>
+          <p>Build your brief in four steps. Download a copy, prepare an email to our team, or carry the project into your own campaign workspace.</p>
+          <div className="contact-facts">
+            <span><Clock3 />About five minutes to define the essentials</span>
+            <span><MapPin />Canada-wide creative collaboration</span>
+            <span><MessageSquareText /><a href="mailto:hello@kingxford.co">hello@kingxford.co</a></span>
+          </div>
+          <p>Your answers stay in this page until you choose an action. Preparing a brief does not book work or send a message.</p>
+        </div>
+        <ProjectBrief />
+      </section>
+      <SiteFooter />
+    </main>
+  );
+}

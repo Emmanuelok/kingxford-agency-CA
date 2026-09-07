@@ -1,0 +1,121 @@
+/** Server-only, framework-independent boundaries. Never import into client code. */
+export class ApiError extends Error {
+  status: number;
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
+type Environment = Record<string, string | undefined>;
+
+function httpOrigin(value: string, production = false) {
+  try {
+    const url = new URL(value);
+    const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+    if (
+      url.username || url.password ||
+      (url.protocol !== "https:" && !(url.protocol === "http:" && local && !production))
+    ) return null;
+    return url.origin;
+  } catch {
+    return null;
+  }
+}
+
+/** Reject a mistakenly pasted secret/service-role key before it can bypass RLS. */
+function publicDatabaseKey(key: string) {
+  if (/^sb_publishable_[A-Za-z0-9_-]+$/.test(key)) return true;
+  if (!/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(key)) return false;
+  try {
+    const payload = JSON.parse(Buffer.from(key.split(".")[1], "base64url").toString("utf8"));
+    // This is configuration validation only, never token authentication.
+    return payload?.role === "anon";
+  } catch {
+    return false;
+  }
+}
+
+export function integrationConfig(env: Environment = process.env) {
+  const url = env.SUPABASE_URL?.trim() ?? "";
+  const key = env.SUPABASE_PUBLISHABLE_KEY?.trim() ?? "";
+  const cloud = !!url && !!httpOrigin(url, env.NODE_ENV === "production") && publicDatabaseKey(key);
+  // An explicit Avalon false takes precedence over a legacy true.
+  const enabled = (env.AVALON_AI_ENABLED ?? env.KINGXFORD_AI_ENABLED)?.trim() === "true";
+  const model = (env.AVALON_AI_MODEL ?? env.KINGXFORD_AI_MODEL)?.trim() ?? "";
+  const gatewayKey = env.AI_GATEWAY_API_KEY?.trim() ?? "";
+  const validModel = model.length <= 200 && /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.:-]+$/.test(model);
+  return {
+    url, key, cloud, model, gatewayKey,
+    cloudSupplied: !!url || !!key,
+    ai: cloud && enabled && validModel && !!gatewayKey,
+    aiEnabled: enabled,
+  };
+}
+
+export function sameOrigin(request: Request, siteUrl = process.env.NEXT_PUBLIC_SITE_URL) {
+  const expected = siteUrl ? httpOrigin(siteUrl) : new URL(request.url).origin;
+  if (!expected)
+    throw new ApiError(503, "The site address is not configured correctly. Contact the workspace owner.");
+  if (!request.headers.get("origin") || request.headers.get("origin") !== expected)
+    throw new ApiError(403, "This request must come from the configured Avalon site.");
+  const contentType = request.headers.get("content-type")?.split(";")[0].trim().toLowerCase();
+  if (contentType !== "application/json") throw new ApiError(415, "Send JSON content.");
+}
+
+export async function readJson(request: Request | Response, limit = 2000000): Promise<unknown> {
+  if (!request.body) throw new ApiError(400, "A request body is required.");
+  const declared = request.headers.get("content-length");
+  if (declared && /^\d+$/.test(declared) && Number(declared) > limit) {
+    await request.body.cancel();
+    throw new ApiError(413, "The request is too large.");
+  }
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder("utf-8", { fatal: true });
+  let bytes = 0, result = "";
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > limit) {
+        await reader.cancel();
+        throw new ApiError(413, "The request is too large.");
+      }
+      result += decoder.decode(value, { stream: true });
+    }
+    result += decoder.decode();
+    return JSON.parse(result);
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    if (error instanceof Error && ["TimeoutError", "AbortError"].includes(error.name)) throw error;
+    throw new ApiError(400, "The request could not be read as JSON.");
+  } finally {
+    reader.releaseLock();
+  }
+}
+
+export function ownerHeader(request: Request) {
+  return request.headers.get("x-avalon-owner") ?? request.headers.get("x-kingxford-owner");
+}
+
+export function hasWorkspaceAccess(user: { is_anonymous?: boolean; app_metadata?: Record<string, unknown> } | null) {
+  // Preserve the existing database entitlement during the visual rebrand.
+  return !!user && !user.is_anonymous && user.app_metadata?.kingxford_access === true;
+}
+
+export function providerDraft(value: unknown) {
+  const result = value as {
+    choices?: { finish_reason?: unknown; message?: { content?: unknown; refusal?: unknown } }[];
+  } | null;
+  const choice = result?.choices?.[0];
+  if (choice?.message?.refusal || choice?.finish_reason === "content_filter")
+    throw new ApiError(422, "The provider could not draft this request. Review the brief and try a different task.");
+  if (choice?.finish_reason === "length")
+    throw new ApiError(502, "The provider stopped before finishing the draft. Shorten the brief and try again; no partial draft was saved.");
+  const output = choice?.message?.content;
+  if (choice?.finish_reason !== "stop" || typeof output !== "string" || !output.trim() || output.length > 20000)
+    throw new ApiError(502, "The provider returned an unusable response. No draft was saved.");
+  return output.trim();
+}

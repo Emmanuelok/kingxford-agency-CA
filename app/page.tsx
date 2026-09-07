@@ -3,7 +3,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Clapperboard,
-  Code2,
   Gauge,
   Megaphone,
   PenTool,
@@ -13,6 +12,7 @@ import {
   AgencyUniverse,
   ClientOperatingSystem,
   ProblemSwitchboard,
+  WorkspaceLaunchpad,
 } from "@/components/agency-interface";
 import { CampaignStudies } from "@/components/campaign-studies";
 import { ScrollCinema } from "@/components/scroll-cinema";
@@ -45,18 +45,8 @@ export default function Home() {
     <main className="site-shell kx5-home">
       <SiteNav />
       <ScrollCinema />
-      <section className="workspace-entry">
-        <div>
-          <b>One brief. Nine specialists. Every next move.</b>
-          <p>
-            Strategy, content, production and media now work from the same
-            campaign.
-          </p>
-        </div>
-        <a href="/platform">
-          Open the connected workspace <ArrowUpRight />
-        </a>
-      </section>
+      <div className="avalon-discipline-strip" aria-label="Our disciplines"><span>Strategy</span><i/><span>Brand & design</span><i/><span>Film & production</span><i/><span>Digital experiences</span><i/><span>Growth</span></div>
+      <WorkspaceLaunchpad />
       <AgencyUniverse />
       <ProblemSwitchboard />
       <CampaignStudies />
@@ -70,15 +60,15 @@ export default function Home() {
             src="/images/commercial-production.webp"
             alt="Synthetic concept of a commercial production crew shaping camera and light around a campaign set"
           />
-          <span>KX / PRODUCTION FLOOR / SYNTHETIC CONCEPT</span>
+          <span>AV / PRODUCTION FLOOR / SYNTHETIC CONCEPT</span>
         </div>
         <div className="kx5-production-copy">
-          <span className="kx5-overline">The work leaves the deck</span>
-          <h2 id="production-title">The strategist sits beside the camera.</h2>
+          <span className="kx5-overline">The craft behind the campaign</span>
+          <h2 id="production-title">Considered thinking.<br/><em>Beautifully made.</em></h2>
           <p>
-            The idea survives production because the people who found it remain
-            close to the people who make it. Senior creative, film, design,
-            development and media work from the same brief.
+            The most effective work carries the original idea into every frame,
+            format and experience. Creative direction, film, photography, design
+            and development share the same brief from the start.
           </p>
           <div className="kx5-production-ledger">
             <span>
@@ -95,7 +85,7 @@ export default function Home() {
             </span>
           </div>
           <a href="/studio">
-            Enter the production floor <ArrowUpRight />
+            Explore Avalon Studio <ArrowUpRight />
           </a>
         </div>
       </section>
@@ -179,24 +169,23 @@ export default function Home() {
       </section>
 
       <section className="kx5-close" aria-labelledby="close-title">
-        <span>KX / THE DISPATCH</span>
+        <span>YOUR NEXT CHAPTER STARTS HERE</span>
         <h2 id="close-title">
-          Bring us the thing
+          Make something
           <br />
-          that will not move.
+          <em>worth moving for.</em>
         </h2>
         <p>
-          Tell us what needs to change, who needs to act and what is standing in
-          the way. We will identify the right starting point, the right rooms
-          and the next useful decision.
+          Bring the ambition, the challenge or the idea you keep coming back to.
+          Together, we can give it a clear direction and a practical way forward.
         </p>
         <div>
           <a href="/start">
             Start the brief <ArrowUpRight />
           </a>
-          <a href="mailto:hello@kingxford.co">Talk to KINGXFORD</a>
+          <a href="mailto:hello@kingxford.co">Talk to AVALON</a>
         </div>
-        <Code2 className="kx5-close-mark" aria-hidden="true" />
+        <span className="avalon-close-monogram" aria-hidden="true">A</span>
       </section>
 
       <SiteFooter />

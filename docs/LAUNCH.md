@@ -1,53 +1,91 @@
-# KINGXFORD v2 — release and activation checklist
+# Avalon Creative Group — release and launch operations
 
-## Release scope
+## Release intent
 
-The original research-wall film, cream/red identity, marketing pages and original media remain. New work replaces disconnected demo tools with a shared campaign workspace and adds guarded server integration paths. Local functionality is usable without external accounts.
+Avalon brings strategy, creative production, content, media, measurement, and delivery into a shared campaign workspace. Browser planning works without an external account. Cloud snapshots and model-generated drafts remain separate integrations with verified-account boundaries.
 
-Source publication and live deployment are separate. Do not infer that Vercel is running a commit simply because GitHub has it. Confirm the intended project, source commit and deployment URL before promotion. Do not replace the original site with a template or proxy the old site.
+The rebrand deliberately preserves the existing Supabase table, private schema, quota RPC, and `app_metadata.kingxford_access` entitlement. Existing backups and accounts must remain compatible. A brand change is not a database migration.
 
-## Verification performed by the release scripts
+## Confirmed deployment baseline
 
-- Schema round trips, record ID integrity, positive revisions and valid output lineage.
-- Financial reconciliation, zero values, infeasible budgets and conservative/upside scenarios.
-- Experiment sample size, sparse-event guards and observed conversion-count validation.
-- Stale-output detection, approval invalidation and evidence review requirements.
-- All nine planning outputs, maximum-size brief/evidence inputs and calendar generation.
-- CSV formula escaping, UTM query preservation, URL protocol checks and inquiry validation.
-- Production routes/assets, server-rendered original headline, branded 404, no-store integration responses and security headers.
-- CI runs lint, unit tests, production build and HTTP smoke tests on pushes to main and pull requests.
+On 7 September 2026, the existing deployment at `https://kingxford-agency-ca.vercel.app/api/workspace/status` reported `cloud: false` and `ai: false`. This is evidence that private cloud and AI drafting were not configured on that deployment at the start of this upgrade. Local campaign planning remains usable. Do not describe cloud sync, live model agents, or connected publishing as active until their integration checks pass.
 
-These checks do not assert every possible bug is fixed. No paid AI call, production database migration, provider configuration change or live-browser accessibility certification is implied.
+No dedicated agency database project was identified in the connected Supabase account during this review. Existing projects belonged to other applications and were not modified. Activating cloud and model drafting therefore requires selecting or provisioning the intended agency database and supplying the project-specific server and AI gateway configuration.
 
-## Before public launch
+The public service health endpoint reports application availability and release version only. It does not certify database access, email delivery, model availability, security compliance, or production launch readiness.
 
-1. Confirm the correct Vercel project and connect `Emmanuelok/kingxford-agency-CA`, main branch, Next.js preset, repository root, `npm run build`, Node 22. Do not use static-export mode: protected APIs need the server runtime. If production promotion requires approval, obtain it first.
-2. Set `NEXT_PUBLIC_SITE_URL` to the exact canonical production origin. The same value enforces API request origins. Configure preview deployments separately; a production origin on a different preview domain will intentionally reject writes.
-3. Verify both hero videos and their poster on desktop/mobile, scroll seeking, hold/skip, reduced motion, data-saving preference and media-error fallback.
-4. Perform real browser QA at desktop/mobile widths and 200% zoom. Exercise keyboard-only navigation, tab arrow keys, focus trapping/return, form errors, dropdowns, export/import and long content. Test Chrome, Safari and Firefox. Run accessibility and performance audits; record results rather than assuming AA conformance.
-5. Create a campaign, edit context, generate all nine plans, export a calendar, assign tasks, model a budget, enter an experiment and approve deliverables. Change the brief and verify stale approval warnings. Test storage-full and two-tab recovery, malformed backups, switching campaigns during AI requests and deletion confirmations.
-6. Confirm `hello@kingxford.co` is an owned, monitored inbox and all public claims, service descriptions, example imagery, pricing assumptions and privacy/contact details are owner-approved. Inquiry email preparation does not submit a form automatically; verify delivery from the user's mail client or commission a configured transactional-email service separately.
-7. Establish support ownership, incident response, deployment rollback and customer-data deletion procedures. Configure monitoring without logging brief bodies, credentials or prompts. Keep backups and test restore.
+## Software verification
 
-## Optional private cloud activation
+Run from the repository root:
 
-Do not reuse unrelated applications' Supabase projects. Select a dedicated project and approve region, processing terms and operational costs. The source includes no service-role key and does not need one at runtime.
+```sh
+npm ci
+npm run lint
+npm test
+npm run build
+npm run test:smoke
+```
 
-1. Review `database/setup.sql`; execute once on the chosen project. Re-running its policy declarations without a migration plan is not supported.
-2. Set `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` in the server environment. Configure provider email delivery/recovery and invitation-only access. Confirm the configured Auth and API rate limits; set hosting rate limits for the login route.
-3. Provision the intended users and grant `app_metadata.kingxford_access: true` through trusted administrative tooling only. Never use editable `user_metadata` as entitlement. No self-service registration is implemented.
-4. Sign in with two separate invited accounts. Verify account A cannot select, insert, update or delete B's row through either the app or direct Data API. Verify non-members/anonymous users are denied. Verify revoked users can sign out. JWT-based database policy revocation takes effect when the token refreshes/expires; account lifecycle procedures must account for this.
-5. Save/load snapshots; simulate simultaneous writes and verify the second save returns 409. Confirm cross-account session changes cannot load or overwrite the other account's snapshot. Encrypted transport is provided by HTTPS; browser drafts remain unencrypted.
-6. Confirm backup retention, database recovery, deletion requests and processor disclosures. Cloud saves are manual per-account snapshots up to 2 MB, not real-time team collaboration or organization-level RBAC.
+Record results against the exact Git commit that is deployed. CI should run the same gates. Publishing source to GitHub does not prove Vercel is serving that source; confirm the intended project, commit, production domain, and successful deployment independently.
 
-## Optional AI activation
+The automated suite covers deterministic campaign calculations, workspace schema integrity, stale output rules, exports, and input validation. Server tests additionally exercise:
 
-1. Complete cloud/auth/quota verification first. Verify the quota RPC is callable only by entitled, non-anonymous users and limits requests atomically.
-2. Choose a model available to the account. Set `AI_GATEWAY_API_KEY`, `KINGXFORD_AI_MODEL`, and only then `KINGXFORD_AI_ENABLED=true`. Keep keys server-side and install a provider hard budget/cap. Failed requests can consume a quota reservation; this is intentional abuse protection.
-3. Confirm provider data-use settings, region and costs. Briefs, relevant evidence and planning context are sent only after the user selects the AI action. No autonomous tools are given to the model.
-4. Test a bounded request with approved non-sensitive data. Verify success, expired sessions, 429 quota responses, malformed inputs, timeouts, provider errors and model refusals. Validate output quality and labels. Model drafts always require human review.
-5. Turning the feature flag off disables further AI requests. The deterministic engines continue to work without a model.
+- Incorrect privileged Supabase keys and insecure remote URLs are rejected before database access.
+- Avalon AI settings override legacy settings; an explicit disable cannot fall through to a legacy enable.
+- Editable user metadata and anonymous accounts cannot grant workspace access.
+- Mutations require the exact site origin and the JSON media type.
+- Streamed request bodies are bounded by bytes, including multibyte text; malformed UTF-8 and JSON are rejected.
+- Owner headers support old clients and the new Avalon naming.
+- Provider refusals, truncated drafts, tool responses, empty content, and oversized output are rejected without saving a draft.
 
-## Explicitly not represented as complete
+Automated unit tests do not replace a two-account database isolation test or an authenticated provider request. Never claim those passed merely because configuration variables exist.
 
-Live advertising-account integrations, autonomous publishing, multi-user organization roles, billing/checkout, a transactional-email backend, real-time analytics ingestion, live competitive research, video generation and legal certification are not implemented or activated by this release. The corresponding workspace outputs are planning tools or guarded drafts, not fabricated live capabilities.
+## Deployment settings
+
+Use the existing Vercel project connected to `Emmanuelok/kingxford-agency-CA`, its intended production branch, the Next.js framework preset, Node 22 or newer, repository root, and `npm run build`. Static-export mode is incompatible with the protected server APIs.
+
+Set `NEXT_PUBLIC_SITE_URL` to the exact canonical site origin. Configure preview deployments separately; production-origin configuration on another preview domain intentionally rejects mutations. Do not solve an origin mismatch by adding wildcard trusted origins or reflecting an arbitrary Origin header.
+
+The AI route has a 90-second function budget, with bounded database calls and a 45-second provider deadline. Database requests and sensitive API responses bypass caches. Keep the CDN no-store behavior when adding proxies or monitoring.
+
+The release sends standard anti-framing, MIME-sniffing, referrer, transport, opener, and restricted capability headers. Its CSP is a limited baseline, not a claim of complete XSS prevention. Preserve React escaping and do not render model responses with unfiltered HTML.
+
+## Private cloud activation
+
+Use the agency's intended Supabase project; do not attach unrelated applications' data or credentials. Runtime needs a publishable key (or an existing legacy anon key), never a secret or service-role key.
+
+1. Review `database/setup.sql` on the selected project. It is an unapplied setup proposal, not proof that tables exist. Policy declarations are intended for first-time setup; use reviewed migrations for an existing database. Confirm Data API exposure/grants, RLS, and security advisors.
+2. Set server-only `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. Production database transport must use HTTPS.
+3. Configure invitation-only account provisioning, password recovery, verified delivery of invitation/recovery messages, Auth rate limits, and hosting protection for the login route. No public self-service signup is implemented.
+4. Grant `app_metadata.kingxford_access: true` through trusted administration. Keep the legacy entitlement name until a separate coordinated application-and-RLS migration is ready. Never use editable `user_metadata` for authorization.
+5. Test invited accounts A and B through both the application and direct Data API: A cannot read, create, overwrite, or delete B's workspace; anonymous and non-member accounts are denied. Database JWT entitlement changes take effect when tokens refresh/expire; revocation operations must account for that delay.
+6. Save and reload a snapshot, test two concurrent saves (the stale revision must return 409), switch signed-in accounts during pending operations, verify export/recovery paths, and confirm revoked users can sign out.
+7. Establish database backups, retention, tested restore, customer deletion, access review, and incident ownership. Browser drafts are unencrypted local data; sign-out does not erase them.
+
+`GET /api/workspace/status` retains `cloud`, `ai`, `email`, and `userId` for existing clients and adds a timestamp and capability messages. `cloud` means configuration is valid. The detailed cloud state distinguishes `not-configured`, `sign-in-required`, `connected`, and `unavailable`. For an entitled signed-in user, `connected` means a read-only query to that user's workspace storage responded successfully. It does not certify write permissions or cross-account isolation. This probe never changes snapshots or consumes AI quota.
+
+Cloud saves are manual per-account snapshots, bounded to a 2 MB request. They are not real-time organization collaboration or organization-level roles.
+
+## Model drafting activation
+
+1. Complete cloud access and quota checks first. Verify `kingxford_reserve_agent_run` only allows entitled, non-anonymous accounts and atomically enforces the daily and minimum-interval limits.
+2. Choose an available text model using the gateway's current model catalog. Set `AI_GATEWAY_API_KEY`, `AVALON_AI_MODEL` in `provider/model` format, and only then `AVALON_AI_ENABLED=true`.
+3. Existing `KINGXFORD_AI_MODEL` and `KINGXFORD_AI_ENABLED` are still read when their corresponding Avalon settings are absent. Explicit Avalon values always win, including an empty model or `false` flag. Remove obsolete settings after confirming the replacement works.
+4. Configure a project-scoped gateway key, hard spending controls, approved provider data handling, and appropriate privacy disclosures. Failed requests can consume a quota reservation; this is intentional abuse protection. Do not automatically retry a paid generation.
+5. Request a bounded draft using approved non-sensitive test content. Verify valid output, expired sessions, account changes, 429 limits, 402 budget exhaustion, timeouts, provider errors, refusals, and incomplete responses. No partial/refused output should be saved as a valid draft.
+6. Confirm the output is labelled as an unverified AI draft with source brief revision and model. Human review remains mandatory. The model receives no publishing, messaging, account modification, or payment tools.
+
+The status endpoint reports AI as `configured`, never `connected`, based only on settings. Provider availability and quota are checked on an explicit draft request. Turning the feature flag off stops further requests while local planning remains available.
+
+## Product acceptance before launch
+
+- Verify the original cinematic assets and their poster on desktop and mobile, reduced motion and data-saving preferences, error fallback, readable overlays, and intended playback controls.
+- Perform keyboard and mobile browser QA: navigation, menus, dialog focus/return, field errors, long content, 200% zoom, and the entire campaign-to-delivery workflow. Record browser and viewport results.
+- Create a campaign; edit its brief; use the planning agents and financial tools; export/import; assign tasks; move deliverables through review; change the brief and check outdated approvals. Test storage-full and two-tab recovery.
+- Verify only consented, owned, or approved imagery and claims are published. Example campaigns and performance assumptions must remain clearly illustrative.
+- Confirm the actual inquiry inbox is owned and monitored. An email prepared in a mail client is not a form submitted to a server. No delivery or CRM capture should be implied without a configured and tested destination.
+- Confirm support ownership, privacy/contact text, incident response, rollback, and data export/deletion procedures. Keep logs free of credentials, brief bodies, prompts, and provider response content.
+
+## Boundaries that still require separate integration
+
+Live advertising accounts, autonomous publishing, payment checkout, organization collaboration, transactional inquiry delivery, real-time analytics ingestion, live competitive research, and image/video generation are not established by the existing server integrations. Workspace plans and imported performance data must not be presented as those external capabilities. Select and verify each provider before describing it as connected.
