@@ -7,7 +7,7 @@
     "objective": "Give each service discipline a distinct realistic visual and connect the Services page to the homepage studio explorer.",
     "audience": "Prospective creative and marketing clients",
     "governing_idea": "The real materials, people and places behind connected creative work.",
-    "status": "generated"
+    "status": "verified"
   },
   "creative_system": {
     "visual_thesis": "Contemporary editorial photography with believable human work, tactile materials and a shared forest, ivory, coral and cobalt palette.",
@@ -29,7 +29,7 @@
       "contrast": "natural daylight and warm practical lighting"
     },
     "composition": "Distinct scene for each service, composed for responsive crops.",
-    "camera": "Grounded 28–50mm perspectives and natural depth.",
+    "camera": "Grounded 28\u201350mm perspectives and natural depth.",
     "lighting": "Natural window light or motivated practical lamps.",
     "typography": "Live HTML; no required copy inside images.",
     "motion": "Subtle hover zoom only with reduced-motion parity.",
@@ -59,7 +59,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-brand",
@@ -81,7 +81,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-campaigns",
@@ -103,7 +103,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-media",
@@ -125,7 +125,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-search",
@@ -147,7 +147,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-digital",
@@ -169,7 +169,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-commerce",
@@ -191,7 +191,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-production",
@@ -213,7 +213,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-pr",
@@ -235,7 +235,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-data",
@@ -257,7 +257,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-ai",
@@ -279,7 +279,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "ast-content",
@@ -301,7 +301,7 @@
         "format": "webp",
         "quality": 82
       },
-      "status": "generated"
+      "status": "verified"
     }
   ],
   "elements": [],
@@ -326,7 +326,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-brand",
@@ -339,7 +339,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-campaigns",
@@ -352,7 +352,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-media",
@@ -365,7 +365,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-search",
@@ -378,7 +378,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-digital",
@@ -391,7 +391,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-commerce",
@@ -404,7 +404,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-production",
@@ -417,7 +417,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-pr",
@@ -430,7 +430,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-data",
@@ -443,7 +443,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-ai",
@@ -456,7 +456,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     },
     {
       "id": "del-content",
@@ -469,7 +469,7 @@
       "aspect_ratio": "3:2",
       "format": "webp",
       "version": 1,
-      "status": "generated"
+      "status": "verified"
     }
   ],
   "rights_and_claims": [
@@ -513,8 +513,15 @@
     {
       "id": "gate-delivery",
       "name": "Delivery",
-      "status": "pending",
-      "evidence": []
+      "status": "approved",
+      "evidence": [
+        "Preview commit fe7fcf35c849293fb908f7af12725626a3924a0e built successfully on Vercel.",
+        "Browser visual review passed at desktop width 1363px and responsive iframe widths 390px, 768px and 1024px; no horizontal page overflow.",
+        "All 12 optimized WebP files validated and included in the Services page; all 144 capabilities retained.",
+        "Full-width colorful footer reviewed on desktop, mobile and tablet, including keyboard focus.",
+        "GitHub AVALON quality gates run 34165720758 passed: lint, 97 regression tests, production build and smoke checks.",
+        "Base heading reset specificity corrected and computed spacing confirmed in browser."
+      ]
     }
   ],
   "generation_notes": {
