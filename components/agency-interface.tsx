@@ -133,7 +133,7 @@ const rooms = [
     detail:
       "Research · positioning · naming · audience · communications planning · workshops",
     href: "/services#strategy",
-    image: "/images/services/strategy-v2.webp",
+    image: "/images/services/strategy-v3.webp",
   },
   {
     id: "identity",
@@ -144,7 +144,7 @@ const rooms = [
     detail:
       "Identity · verbal system · design language · toolkits · governance",
     href: "/services#brand",
-    image: "/images/services/brand-v2.webp",
+    image: "/images/services/brand-v3.webp",
   },
   {
     id: "campaign",
@@ -155,7 +155,7 @@ const rooms = [
     detail:
       "Concepts · art direction · copy · TV · OOH · audio · social · activation",
     href: "/services#campaigns",
-    image: "/images/services/campaigns-v2.webp",
+    image: "/images/services/campaigns-v3.webp",
   },
   {
     id: "production",
@@ -166,7 +166,7 @@ const rooms = [
     detail:
       "Direction · film · photography · motion · post · versioning · creator production",
     href: "/studio",
-    image: "/images/services/production-v2.webp",
+    image: "/images/services/production-v3.webp",
   },
   {
     id: "signal",
@@ -177,7 +177,7 @@ const rooms = [
     detail:
       "Web · product · social · SEO · paid media · CRM · analytics · optimization",
     href: "/services#digital",
-    image: "/images/services/digital-v2.webp",
+    image: "/images/services/digital-v3.webp",
   },
   {
     id: "dispatch",
@@ -188,7 +188,7 @@ const rooms = [
     detail:
       "Briefs · plans · reviews · approvals · finance · reporting · next actions",
     href: "/platform",
-    image: "/images/services/data-v2.webp",
+    image: "/images/services/data-v3.webp",
   },
 ] as const;
 

@@ -44,8 +44,8 @@ const servicesHtml = origin
 const serviceImages = ["strategy", "brand", "campaigns", "content", "media", "search",
   "digital", "commerce", "production", "pr", "data", "ai"];
 await Promise.all(serviceImages.map(async (id) => {
-  const pathname = `/images/services/${id}-v2.webp`;
-  assert.ok(servicesHtml.includes(`${id}-v2.webp`), `Services must render ${id} imagery`);
+  const pathname = `/images/services/${id}-v3.webp`;
+  assert.ok(servicesHtml.includes(`${id}-v3.webp`), `Services must render ${id} imagery`);
   let bytes;
   if (origin) {
     const response = await fetch(new URL(pathname, origin), { signal: AbortSignal.timeout(15000) });

@@ -5,7 +5,7 @@
     "name": "Avalon documentary service imagery",
     "mode": "image-production",
     "objective": "Replace all twelve service images after user rejected artificial staging, malformed anatomy and fabricated screens.",
-    "status": "verified"
+    "status": "superseded"
   },
   "creative_system": {
     "visual_thesis": "Candid people, real materials and ordinary working places photographed with natural light.",
@@ -542,5 +542,6 @@
       "fd0be481-6d4e-4da5-9d88-3162b43f4cbc"
     ]
   },
-  "supersedes": "docs/creative/service-imagery.json"
+  "supersedes": "docs/creative/service-imagery.json",
+  "superseded_by": "docs/creative/service-imagery-v3.json"
 }
