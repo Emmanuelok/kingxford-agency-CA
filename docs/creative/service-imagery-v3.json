@@ -1,0 +1,1584 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "avalon-services-v3",
+    "name": "Avalon services without people",
+    "mode": "image-production",
+    "objective": "Show each service through tangible outputs, equipment and empty environments without any humans.",
+    "audience": "Businesses exploring Avalon capabilities",
+    "governing_idea": "The work is the subject.",
+    "status": "review",
+    "lifecycle_status": "superseded"
+  },
+  "creative_system": {
+    "visual_thesis": "Highly realistic still-life and environment photography whose focal subject is the service itself.",
+    "anti_goals": [
+      "People or human figures anywhere in the image",
+      "Generic office portraits",
+      "Holograms, synthetic gloss, implausible equipment or invented results"
+    ],
+    "palette": {
+      "dominant": [
+        "ivory",
+        "natural wood",
+        "charcoal"
+      ],
+      "accent": [
+        "orange",
+        "forest green",
+        "cobalt blue"
+      ],
+      "contrast": "Natural material contrast with a restrained service-specific accent"
+    },
+    "composition": "One strong central subject, composed for 4:3 and near-square crops.",
+    "camera": "Grounded commercial photography using normal and short telephoto perspectives.",
+    "lighting": "Plausible window or practical studio light.",
+    "typography": "Service labels and descriptions remain live HTML. Incidental illustrative interfaces use minimal copy.",
+    "motion": "Still imagery",
+    "sound": "None",
+    "interface": "Clear hierarchy, responsive reflow, keyboard access, and reduced-motion parity.",
+    "invariants": [
+      "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+      "Synthetic illustrative scenes, not actual client deliverables or events."
+    ],
+    "permitted_variations": [
+      "Each service has a distinct physical subject, composition and material palette."
+    ]
+  },
+  "assets": [
+    {
+      "id": "ast-strategy",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_b0d2c059-e145-46f6-a999-e828fae118a6.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Campaign strategy and research",
+      "job_id": "b0d2c059-e145-46f6-a999-e828fae118a6",
+      "local_path": "public/images/services/strategy-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-brand",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101244_9ce8aa72-1787-43d0-933f-304e6b075cf2.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Brand identity and packaging",
+      "job_id": "9ce8aa72-1787-43d0-933f-304e6b075cf2",
+      "local_path": "public/images/services/brand-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-campaigns",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101515_5765c7c6-8569-4715-a4fc-ef7d553b3edf.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Outdoor advertising campaign",
+      "job_id": "5765c7c6-8569-4715-a4fc-ef7d553b3edf",
+      "local_path": "public/images/services/campaigns-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-content",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101516_9fb36203-93b7-4e1a-bbd0-9fdb852fbecf.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Product and social content",
+      "job_id": "9fb36203-93b7-4e1a-bbd0-9fdb852fbecf",
+      "local_path": "public/images/services/content-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-media",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101515_9fb951be-e977-46e2-96cd-a9aa2b95f74e.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Cross-channel media campaign",
+      "job_id": "9fb951be-e977-46e2-96cd-a9aa2b95f74e",
+      "local_path": "public/images/services/media-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-search",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_94956285-f490-4f87-9e84-648ba565ca92.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Search and website discovery",
+      "job_id": "94956285-f490-4f87-9e84-648ba565ca92",
+      "local_path": "public/images/services/search-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-digital",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_d4f05e44-469b-4369-ab7a-56a3980e2ebb.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Responsive web and digital products",
+      "job_id": "d4f05e44-469b-4369-ab7a-56a3980e2ebb",
+      "local_path": "public/images/services/digital-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-commerce",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101523_face85bf-4817-4685-b1ab-85bbb75089e6.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Ecommerce fulfilment and customer experience",
+      "job_id": "face85bf-4817-4685-b1ab-85bbb75089e6",
+      "local_path": "public/images/services/commerce-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-production",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_faafd050-b978-492a-9104-8ef73ef442f4.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Film photography and production",
+      "job_id": "faafd050-b978-492a-9104-8ef73ef442f4",
+      "local_path": "public/images/services/production-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-pr",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101523_0d56e656-03f9-4e76-98d6-b17dc50cf4b8.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Press relations and brand events",
+      "job_id": "0d56e656-03f9-4e76-98d6-b17dc50cf4b8",
+      "local_path": "public/images/services/pr-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-data",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_987ba6bc-52de-441d-9894-1f14fca37b85.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Analytics and optimization",
+      "job_id": "987ba6bc-52de-441d-9894-1f14fca37b85",
+      "local_path": "public/images/services/data-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    },
+    {
+      "id": "ast-ai",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101523_f3dbf809-9faa-429c-b081-26b2af7d9f9b.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Automation and connected technology",
+      "job_id": "f3dbf809-9faa-429c-b081-26b2af7d9f9b",
+      "local_path": "public/images/services/ai-v3.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "No humans visible; service relevance and photographic materials reviewed."
+    }
+  ],
+  "elements": [
+    {
+      "id": "elm-strategy",
+      "type": "environment",
+      "name": "Campaign strategy and research",
+      "description": "Campaign strategy and research shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-brand",
+      "type": "environment",
+      "name": "Brand identity and packaging",
+      "description": "Brand identity and packaging shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-campaigns",
+      "type": "environment",
+      "name": "Outdoor advertising campaign",
+      "description": "Outdoor advertising campaign shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-content",
+      "type": "environment",
+      "name": "Product and social content",
+      "description": "Product and social content shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-media",
+      "type": "environment",
+      "name": "Cross-channel media campaign",
+      "description": "Cross-channel media campaign shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-search",
+      "type": "environment",
+      "name": "Search and website discovery",
+      "description": "Search and website discovery shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-digital",
+      "type": "environment",
+      "name": "Responsive web and digital products",
+      "description": "Responsive web and digital products shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-commerce",
+      "type": "environment",
+      "name": "Ecommerce fulfilment and customer experience",
+      "description": "Ecommerce fulfilment and customer experience shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-production",
+      "type": "environment",
+      "name": "Film photography and production",
+      "description": "Film photography and production shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-pr",
+      "type": "environment",
+      "name": "Press relations and brand events",
+      "description": "Press relations and brand events shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-data",
+      "type": "environment",
+      "name": "Analytics and optimization",
+      "description": "Analytics and optimization shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-ai",
+      "type": "environment",
+      "name": "Automation and connected technology",
+      "description": "Automation and connected technology shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-strategy",
+      "type": "prop",
+      "name": "Campaign strategy and research objects",
+      "description": "Campaign strategy and research tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-brand",
+      "type": "prop",
+      "name": "Brand identity and packaging objects",
+      "description": "Brand identity and packaging tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-campaigns",
+      "type": "prop",
+      "name": "Outdoor advertising campaign objects",
+      "description": "Outdoor advertising campaign tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-content",
+      "type": "prop",
+      "name": "Product and social content objects",
+      "description": "Product and social content tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-media",
+      "type": "prop",
+      "name": "Cross-channel media campaign objects",
+      "description": "Cross-channel media campaign tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-search",
+      "type": "prop",
+      "name": "Search and website discovery objects",
+      "description": "Search and website discovery tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-digital",
+      "type": "prop",
+      "name": "Responsive web and digital products objects",
+      "description": "Responsive web and digital products tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-commerce",
+      "type": "prop",
+      "name": "Ecommerce fulfilment and customer experience objects",
+      "description": "Ecommerce fulfilment and customer experience tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-production",
+      "type": "prop",
+      "name": "Film photography and production objects",
+      "description": "Film photography and production tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-pr",
+      "type": "prop",
+      "name": "Press relations and brand events objects",
+      "description": "Press relations and brand events tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-data",
+      "type": "prop",
+      "name": "Analytics and optimization objects",
+      "description": "Analytics and optimization tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-ai",
+      "type": "prop",
+      "name": "Automation and connected technology objects",
+      "description": "Automation and connected technology tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scn-strategy",
+      "title": "Campaign strategy and research",
+      "summary": "Campaign strategy and research",
+      "environment_id": "elm-strategy",
+      "shot_ids": [
+        "sh-strategy"
+      ]
+    },
+    {
+      "id": "scn-brand",
+      "title": "Brand identity and packaging",
+      "summary": "Brand identity and packaging",
+      "environment_id": "elm-brand",
+      "shot_ids": [
+        "sh-brand"
+      ]
+    },
+    {
+      "id": "scn-campaigns",
+      "title": "Outdoor advertising campaign",
+      "summary": "Outdoor advertising campaign",
+      "environment_id": "elm-campaigns",
+      "shot_ids": [
+        "sh-campaigns"
+      ]
+    },
+    {
+      "id": "scn-content",
+      "title": "Product and social content",
+      "summary": "Product and social content",
+      "environment_id": "elm-content",
+      "shot_ids": [
+        "sh-content"
+      ]
+    },
+    {
+      "id": "scn-media",
+      "title": "Cross-channel media campaign",
+      "summary": "Cross-channel media campaign",
+      "environment_id": "elm-media",
+      "shot_ids": [
+        "sh-media"
+      ]
+    },
+    {
+      "id": "scn-search",
+      "title": "Search and website discovery",
+      "summary": "Search and website discovery",
+      "environment_id": "elm-search",
+      "shot_ids": [
+        "sh-search"
+      ]
+    },
+    {
+      "id": "scn-digital",
+      "title": "Responsive web and digital products",
+      "summary": "Responsive web and digital products",
+      "environment_id": "elm-digital",
+      "shot_ids": [
+        "sh-digital"
+      ]
+    },
+    {
+      "id": "scn-commerce",
+      "title": "Ecommerce fulfilment and customer experience",
+      "summary": "Ecommerce fulfilment and customer experience",
+      "environment_id": "elm-commerce",
+      "shot_ids": [
+        "sh-commerce"
+      ]
+    },
+    {
+      "id": "scn-production",
+      "title": "Film photography and production",
+      "summary": "Film photography and production",
+      "environment_id": "elm-production",
+      "shot_ids": [
+        "sh-production"
+      ]
+    },
+    {
+      "id": "scn-pr",
+      "title": "Press relations and brand events",
+      "summary": "Press relations and brand events",
+      "environment_id": "elm-pr",
+      "shot_ids": [
+        "sh-pr"
+      ]
+    },
+    {
+      "id": "scn-data",
+      "title": "Analytics and optimization",
+      "summary": "Analytics and optimization",
+      "environment_id": "elm-data",
+      "shot_ids": [
+        "sh-data"
+      ]
+    },
+    {
+      "id": "scn-ai",
+      "title": "Automation and connected technology",
+      "summary": "Automation and connected technology",
+      "environment_id": "elm-ai",
+      "shot_ids": [
+        "sh-ai"
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "id": "sh-strategy",
+      "scene_id": "scn-strategy",
+      "purpose": "Campaign strategy and research",
+      "subject_ids": [
+        "prop-strategy"
+      ],
+      "environment_id": "elm-strategy",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An overhead editorial photograph of a real campaign strategy table on pale warm-grey paper. A large folded research map anchors the centre, with a clear graphic timeline of five large muted terracotta and dark-green blocks, a few neatly grouped cream research cards, one closed report folio and a black pencil. Small binder clips physically hold two overlapping sheets. Printed content is simple blocks and lines with no readable statistics or fine text; not a precise data chart. Visible paper fibres, subtle creases and genuine ink. Asymmetric but intentional working arrangement, not a perfect generic flat lay. Broad daylight from the upper left, gentle shadows, 50mm overhead lens. The work feels substantial, carefully considered and premium.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. Three beautifully bound slim campaign report books arranged on a pale oak table, photographed from a close three-quarter angle. The cream cover has the single large exact word 'Research', the dark green cover has the single large exact word 'Strategy', and the muted orange cover has the single large exact word 'Launch'. These are the ONLY words visible in the entire image. Each has generous blank space and one small embossed circle below its title. A black pencil and three plain unmarked cream index cards beside the books. No charts, no maps, no notebook spine text, no fine print. Real cloth and uncoated paper grain, crisp corners, slight page separation, refined brand strategy presentation. Broad daylight from a studio window, shadow falloff and tangible paper. The books are large and form a tight central composition.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-strategy"
+    },
+    {
+      "id": "sh-brand",
+      "scene_id": "scn-brand",
+      "purpose": "Brand identity and packaging",
+      "subject_ids": [
+        "prop-brand"
+      ],
+      "environment_id": "elm-brand",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A beautifully photographed finished brand identity suite for an imaginary botanical product. A forest-green rigid paper box with a clean orange geometric circle mark, two cream letterpress cards carrying the same circle, an ivory envelope, and a small paper colour-swatch fan on pale limestone. Tight sophisticated arrangement focused on the box and tactile printed mark; no logos made of letters and no textual labels. Believable folded corners and lid fit, debossed paper, visible fibre, exact grounded shadows. Warm directional window light and refined studio fill, medium-format product-photography look, three-quarter angle. Bold print craft, not a plastic 3D mockup.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A beautifully photographed finished brand identity suite for an imaginary botanical product. A forest-green rigid paper box with a clean orange geometric circle mark, two cream letterpress cards carrying the same circle, an ivory envelope, and a small paper colour-swatch fan on pale limestone. Tight sophisticated arrangement focused on the box and tactile printed mark; no logos made of letters and no textual labels. Believable folded corners and lid fit, debossed paper, visible fibre, exact grounded shadows. Warm directional window light and refined studio fill, medium-format product-photography look, three-quarter angle. Bold print craft, not a plastic 3D mockup.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-brand"
+    },
+    {
+      "id": "sh-campaigns",
+      "scene_id": "scn-campaigns",
+      "purpose": "Outdoor advertising campaign",
+      "subject_ids": [
+        "prop-campaigns"
+      ],
+      "environment_id": "elm-campaigns",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. Three professionally mounted poster panels along a real textured brick wall on a completely empty city lane just after light rain. The central panel is the hero: an exquisitely lit blood orange cut in half against a rich cobalt blue field. The outer panels use coherent close-up orange peel photographs and restrained cream geometric circles. Only fruit and graphic shapes, no letters or copy. Crisp printed paper under real glazing, realistic wall anchors, subtle rain beads, reflections containing only architecture and sky. Overcast morning light with warm sunlight touching the wet paving. Straight verticals, 45mm architectural advertising photograph. No cars, pedestrians or distant human figures.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. Three professionally mounted poster panels along a real textured brick wall on a completely empty city lane just after light rain. The central panel is the hero: an exquisitely lit blood orange cut in half against a rich cobalt blue field. The outer panels use coherent close-up orange peel photographs and restrained cream geometric circles. Only fruit and graphic shapes, no letters or copy. Crisp printed paper under real glazing, realistic wall anchors, subtle rain beads, reflections containing only architecture and sky. Overcast morning light with warm sunlight touching the wet paving. Straight verticals, 45mm architectural advertising photograph. No cars, pedestrians or distant human figures.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-campaigns"
+    },
+    {
+      "id": "sh-content",
+      "scene_id": "scn-content",
+      "purpose": "Product and social content",
+      "subject_ids": [
+        "prop-content"
+      ],
+      "environment_id": "elm-content",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally beautiful finished editorial coffee product still life photographed for a brand's content campaign. A glazed ivory ceramic espresso cup with a rich coffee crema sits on a small pale travertine plinth; beside it a plain folded cocoa-brown paper coffee pouch, two scattered coffee beans and a casually folded oatmeal linen napkin. A sliver of the saucer and deep chestnut shadows add depth. No text or labels on the pouch. Low warm morning window light rakes the real ceramic glaze, tiny coffee bubbles, paper seams and natural linen fibres. The cup is the dominant subject, not production equipment. Tasteful, rich, tactile, photorealistic, 85mm product photograph.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally beautiful finished editorial coffee product still life photographed for a brand's content campaign. A glazed ivory ceramic espresso cup with a rich coffee crema sits on a small pale travertine plinth; beside it a plain folded cocoa-brown paper coffee pouch, two scattered coffee beans and a casually folded oatmeal linen napkin. A sliver of the saucer and deep chestnut shadows add depth. No text or labels on the pouch. Low warm morning window light rakes the real ceramic glaze, tiny coffee bubbles, paper seams and natural linen fibres. The cup is the dominant subject, not production equipment. Tasteful, rich, tactile, photorealistic, 85mm product photograph.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-content"
+    },
+    {
+      "id": "sh-media",
+      "scene_id": "scn-media",
+      "purpose": "Cross-channel media campaign",
+      "subject_ids": [
+        "prop-media"
+      ],
+      "environment_id": "elm-media",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A refined commercial photograph of one botanical-product campaign delivered in three real media formats on a light oak table: an open printed magazine with a full-page photograph of a single amber glass bottle on a sage background, one upright postcard-sized campaign proof with the same bottle photograph, and a smartphone resting vertically in a simple stand showing a matching full-screen bottle creative. Minimal deliberate page margins and broad geometric color blocks, no headlines, no paragraphs, no claims, no interface icons. All three placements show the same amber bottle, no people in any artwork. Real paper curl and thickness, plausible phone glass, gentle window light, 55mm three-quarter lens. Crisp focused central campaign materials, quiet natural background.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A refined commercial photograph of one botanical-product campaign delivered in three real media formats on a light oak table: an open printed magazine with a full-page photograph of a single amber glass bottle on a sage background, one upright postcard-sized campaign proof with the same bottle photograph, and a smartphone resting vertically in a simple stand showing a matching full-screen bottle creative. Minimal deliberate page margins and broad geometric color blocks, no headlines, no paragraphs, no claims, no interface icons. All three placements show the same amber bottle, no people in any artwork. Real paper curl and thickness, plausible phone glass, gentle window light, 55mm three-quarter lens. Crisp focused central campaign materials, quiet natural background.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-media"
+    },
+    {
+      "id": "sh-search",
+      "scene_id": "scn-search",
+      "purpose": "Search and website discovery",
+      "subject_ids": [
+        "prop-search"
+      ],
+      "environment_id": "elm-search",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. Close editorial photograph of a real open silver laptop on a clean pale desk, seen from a plausible slight three-quarter angle. On the screen is a very simple crisp website search page: the single large word 'Search', a wide search field with a small magnifying-glass icon, and three spacious product-result tiles showing only ceramic vessels. No other legible text, browser clutter or people. Beside the laptop lies a printed website page-plan with simple rectangular blocks and connecting lines, plus one black notebook and pencil. A physical small magnifying loupe rests on the printed plan. Premium practical workplace, daylight from one side, believable screen reflections without any person, functional keyboard geometry, understated studio photography.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A tight photograph of an entirely unbranded open charcoal laptop display on a pale studio desk. The screen has only a large exact heading 'Search', a spacious empty search field with one simple magnifier icon, and three large photographic thumbnails of ceramic bowls underneath. The rest of the display is clean white space with no navigation, labels, text or browser chrome. The screen bezel is completely blank and smooth, with no maker name or letters. The lower keyboard is almost entirely outside the bottom edge of the photograph and softly out of focus. Beside the screen, a black notebook and small magnifying loupe on an unmarked cream paper sheet. Window light, real restrained screen reflection of a rectangular window only, natural camera depth of field. Functional plausible hardware, premium understated web search service photograph.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-search"
+    },
+    {
+      "id": "sh-digital",
+      "scene_id": "scn-digital",
+      "purpose": "Responsive web and digital products",
+      "subject_ids": [
+        "prop-digital"
+      ],
+      "environment_id": "elm-digital",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A photorealistic premium digital product design presentation: one open thin silver laptop, one landscape tablet in a low stand and one upright smartphone on a warm-white studio table. All three displays show the SAME thoughtfully composed ecommerce website for ceramic vessels, adapted to their screen sizes: a large photograph of an earthy terracotta vase, generous ivory margins, a small dark rectangular action button and a single simple heading 'Ceramics'. No other legible text and no human figures. Plausible device sizes and screen aspect ratios, correct hinges, no extra screens, uncluttered composition. Soft directional window light, subtle glass reflections of window geometry only, precise industrial product photography, 50mm lens.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A premium product photograph of three entirely unbranded real devices on an ivory desk: one open silver laptop behind a low landscape tablet and one vertical phone. The laptop and tablet display a beautiful terracotta-vase still-life photograph within generous cream margins with one small solid forest-green rounded button below. The phone shows a matching closer crop of the same vase. All display layouts are image-led, with NO text, NO letters, NO navigation labels, NO icons or header bars anywhere. Device bezels and bodies are completely unmarked. Laptop keyboard softly out of focus and partly hidden behind the tablet. Physically correct screen orientation and supports. Real glass and metal, soft afternoon window light, grounded contact shadows, central composed grouping. A visually coherent responsive website art-direction presentation without any human subjects.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-digital"
+    },
+    {
+      "id": "sh-commerce",
+      "scene_id": "scn-commerce",
+      "purpose": "Ecommerce fulfilment and customer experience",
+      "subject_ids": [
+        "prop-commerce"
+      ],
+      "environment_id": "elm-commerce",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A premium ecommerce order ready for dispatch, photographed on a light maple packing bench. One open kraft corrugated mailer with realistic folded flaps holds a neatly folded pale-blue linen shirt without any body or mannequin, protected by crinkled ivory tissue. A simple cream product tag with a single small dark-green circle, a blank thank-you card and a closed spare mailer sit nearby. No shipping addresses, personal information, readable labels or hands. Detailed cardboard corrugation, tactile woven linen and accurate box construction. Soft daylight from the left, clean boutique fulfilment setting, restrained palette with beautiful blue fabric focal point. Three-quarter overhead angle, natural product photograph.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A premium ecommerce order ready for dispatch, photographed on a light maple packing bench. One open kraft corrugated mailer with realistic folded flaps holds a neatly folded pale-blue linen shirt without any body or mannequin, protected by crinkled ivory tissue. A simple cream product tag with a single small dark-green circle, a blank thank-you card and a closed spare mailer sit nearby. No shipping addresses, personal information, readable labels or hands. Detailed cardboard corrugation, tactile woven linen and accurate box construction. Soft daylight from the left, clean boutique fulfilment setting, restrained palette with beautiful blue fabric focal point. Three-quarter overhead angle, natural product photograph.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-commerce"
+    },
+    {
+      "id": "sh-production",
+      "scene_id": "scn-production",
+      "purpose": "Film photography and production",
+      "subject_ids": [
+        "prop-production"
+      ],
+      "environment_id": "elm-production",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An unoccupied professional tabletop commercial film set, photographed realistically from beside the camera. One correctly assembled black cinema camera with a normal lens and small matte box sits on a sturdy fluid-head tripod in the foreground, directed toward a single sculptural clear glass perfume bottle on a pale sand seamless paper backdrop. A large rectangular softbox illuminates the bottle from the left; a white bounce card stands on the right. Real C-stand geometry, neatly grounded power cable, believable lens direction and tripod assembly, restrained amount of equipment. No brand logos or display writing. Warm neutral studio, precise product reflections containing equipment and softboxes only, cinematic but natural working-light exposure, 40mm lens.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. An editorial equipment photograph for a film and photography production service. A professional black cinema camera body with a mounted normal lens rests securely on its flat base plate on a matte warm-grey studio equipment table. Beside it are two separate real cylindrical cinema lenses upright on their end caps, and a simple closed matte-black clapperboard with white diagonal stripes only, absolutely no writing. No tripod, no product bottle, no giant props. The camera is the clear central subject. Plausible ports, lens mounts and lens geometry, no excessive attachments, no floating equipment, no labels or logos. Soft rectangular studio light from the left creates rich metal and rubber texture and natural shadows. Background is a real out-of-focus neutral studio wall, not a pure void. Medium-format commercial photography, 75mm lens, believable professional equipment.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-production"
+    },
+    {
+      "id": "sh-pr",
+      "scene_id": "scn-pr",
+      "purpose": "Press relations and brand events",
+      "subject_ids": [
+        "prop-pr"
+      ],
+      "environment_id": "elm-pr",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A striking editorial photograph of an empty press-briefing table immediately before an event. Three professional black microphones on short real desk stands, one subtle glass water carafe and an empty clear tumbler sit on a long matte walnut table. Background is a beautifully lit warm plaster wall and a softly out-of-focus cream stage curtain, with no audience or chairs in view. Microphones are the unmistakable main subject, each mechanically plausible, discreet cables run onto the table and away. No microphone flags, labels, sponsor logos, portraits or text. Soft warm side light with natural shadows, a calm sophisticated event atmosphere, shallow but believable depth of field, 85mm editorial photograph.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A striking editorial photograph of an empty press-briefing table immediately before an event. Three professional black microphones on short real desk stands, one subtle glass water carafe and an empty clear tumbler sit on a long matte walnut table. Background is a beautifully lit warm plaster wall and a softly out-of-focus cream stage curtain, with no audience or chairs in view. Microphones are the unmistakable main subject, each mechanically plausible, discreet cables run onto the table and away. No microphone flags, labels, sponsor logos, portraits or text. Soft warm side light with natural shadows, a calm sophisticated event atmosphere, shallow but believable depth of field, 85mm editorial photograph.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-pr"
+    },
+    {
+      "id": "sh-data",
+      "scene_id": "scn-data",
+      "purpose": "Analytics and optimization",
+      "subject_ids": [
+        "prop-data"
+      ],
+      "environment_id": "elm-data",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A close overhead commercial photograph of a thoughtful measurement report on a dark walnut desktop. Three substantial ivory sheets show large clean illustrative bar charts and one clear simple line graph in muted cobalt blue, orange and charcoal, with spacious margins and only the small heading 'Overview'. No numbers, percentages, performance claims, data labels or tiny tables; these are generic illustrative graphics, not real results. One sheet has a folded corner and two restrained pencil annotation marks. A metal ruler and closed navy notebook sit beside the reports, physically plausible overlap. Bright soft daylight across paper grain and ink, elegant editorial finance-report still life, realistic rather than digital render.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A close atmospheric photograph of physical analytics work on a real walnut desk. The main sharply focused foreground object is a clear optical magnifying loupe resting beside a black fountain pen on the blank lower margin of a thick ivory report. Farther back on the same sheet, soft optical depth of field gently blurs a simple row of four cobalt-blue and orange vertical bars and one dark rising line; those printed illustrative graphic shapes remain recognizable as an analytics report but all detailed text is fully out of focus and unreadable. One closed dark-blue notebook sits behind the report. No metal ruler, no tiny chart labels, no axes numbers, no legible text, no performance claims. Paper fibres, convincing glass refraction, genuine pen metal and contact shadows, soft window light. Shallow focus commercial still life, 85mm macro lens, careful realistic photography.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-data"
+    },
+    {
+      "id": "sh-ai",
+      "scene_id": "scn-ai",
+      "purpose": "Automation and connected technology",
+      "subject_ids": [
+        "prop-ai"
+      ],
+      "environment_id": "elm-ai",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally detailed real-world photograph of a compact business automation server installation. Tight view of brushed black-metal server trays, a network switch with neatly connected short blue and grey Ethernet cables, physically plausible RJ45 connectors and fine ventilation grilles. A few restrained green status LEDs glow naturally, not neon. The cables follow clear practical routes into a tidy rack and their connectors are visibly seated; no floating connections, oversized wires or science-fiction equipment. Close side angle with shallow optical depth, central switch and connectors in sharp focus, soft daylight and neutral practical room light. Technical, elegant, believable hardware photography. No screens, words, people or robot forms.",
+      "composition": "Strong central subject, safe for responsive near-square crops.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally detailed real-world photograph of a compact business automation server installation. Tight view of brushed black-metal server trays, a network switch with neatly connected short blue and grey Ethernet cables, physically plausible RJ45 connectors and fine ventilation grilles. A few restrained green status LEDs glow naturally, not neon. The cables follow clear practical routes into a tidy rack and their connectors are visibly seated; no floating connections, oversized wires or science-fiction equipment. Close side angle with shallow optical depth, central switch and connectors in sharp focus, soft daylight and neutral practical room light. Technical, elegant, believable hardware photography. No screens, words, people or robot forms.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-ai"
+    }
+  ],
+  "screens": [],
+  "deliverables": [
+    {
+      "id": "del-strategy",
+      "type": "image",
+      "title": "Campaign strategy and research",
+      "channel": "web",
+      "source_ids": [
+        "sh-strategy"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Research and strategy report books arranged with planning cards",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/strategy-v3.webp",
+      "bytes": 283644
+    },
+    {
+      "id": "del-brand",
+      "type": "image",
+      "title": "Brand identity and packaging",
+      "channel": "web",
+      "source_ids": [
+        "sh-brand"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "An embossed stationery and packaging suite arranged on a studio surface",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/brand-v3.webp",
+      "bytes": 312506
+    },
+    {
+      "id": "del-campaigns",
+      "type": "image",
+      "title": "Outdoor advertising campaign",
+      "channel": "web",
+      "source_ids": [
+        "sh-campaigns"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A coordinated series of product campaign posters on an empty brick wall",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/campaigns-v3.webp",
+      "bytes": 477560
+    },
+    {
+      "id": "del-content",
+      "type": "image",
+      "title": "Product and social content",
+      "channel": "web",
+      "source_ids": [
+        "sh-content"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A ceramic cup and coffee arranged for an editorial still life",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/content-v3.webp",
+      "bytes": 318876
+    },
+    {
+      "id": "del-media",
+      "type": "image",
+      "title": "Cross-channel media campaign",
+      "channel": "web",
+      "source_ids": [
+        "sh-media"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A product campaign coordinated across magazine, print and mobile formats",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/media-v3.webp",
+      "bytes": 136736
+    },
+    {
+      "id": "del-search",
+      "type": "image",
+      "title": "Search and website discovery",
+      "channel": "web",
+      "source_ids": [
+        "sh-search"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A laptop showing search results beside an audit notebook",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/search-v3.webp",
+      "bytes": 84704
+    },
+    {
+      "id": "del-digital",
+      "type": "image",
+      "title": "Responsive web and digital products",
+      "channel": "web",
+      "source_ids": [
+        "sh-digital"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A product website displayed across a laptop, tablet and phone",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/digital-v3.webp",
+      "bytes": 64704
+    },
+    {
+      "id": "del-commerce",
+      "type": "image",
+      "title": "Ecommerce fulfilment and customer experience",
+      "channel": "web",
+      "source_ids": [
+        "sh-commerce"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "An open shipping mailer with linen and neatly folded tissue paper",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/commerce-v3.webp",
+      "bytes": 241436
+    },
+    {
+      "id": "del-production",
+      "type": "image",
+      "title": "Film photography and production",
+      "channel": "web",
+      "source_ids": [
+        "sh-production"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A cinema camera, lenses and clapperboard arranged on a studio equipment table",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/production-v3.webp",
+      "bytes": 88706
+    },
+    {
+      "id": "del-pr",
+      "type": "image",
+      "title": "Press relations and brand events",
+      "channel": "web",
+      "source_ids": [
+        "sh-pr"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Microphones arranged at an empty press briefing table",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/pr-v3.webp",
+      "bytes": 134362
+    },
+    {
+      "id": "del-data",
+      "type": "image",
+      "title": "Analytics and optimization",
+      "channel": "web",
+      "source_ids": [
+        "sh-data"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A magnifying loupe and pen beside an illustrative analytics report",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/data-v3.webp",
+      "bytes": 72370
+    },
+    {
+      "id": "del-ai",
+      "type": "image",
+      "title": "Automation and connected technology",
+      "channel": "web",
+      "source_ids": [
+        "sh-ai"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Connected network and server hardware in a technology workspace",
+      "version": 3,
+      "status": "ready",
+      "path": "public/images/services/ai-v3.webp",
+      "bytes": 152314
+    }
+  ],
+  "rights_and_claims": [
+    {
+      "id": "right-generated",
+      "category": "synthetic-media",
+      "description": "New service illustrations requested by the site owner; no likeness or third-party artwork reference. Existing generated-image disclosure retained.",
+      "evidence": "Explicit user request to replace service images without human beings.",
+      "status": "confirmed"
+    }
+  ],
+  "qa": {
+    "required_gates": [
+      "gate-brief",
+      "gate-direction",
+      "gate-look",
+      "gate-system",
+      "gate-rough",
+      "gate-finish",
+      "gate-delivery"
+    ],
+    "acceptance_threshold": 85,
+    "critical_failures": [],
+    "review_notes": [
+      "First attempts for strategy, search, digital and data rejected for invented small text; production rejected for implausible product scale.",
+      "The service image frames use the original 4:3 aspect ratio to preserve complete object compositions."
+    ]
+  },
+  "gates": [
+    {
+      "id": "gate-brief",
+      "name": "Brief",
+      "status": "approved",
+      "evidence": [
+        "User requests realistic service-focused images without people; all twelve service concepts and exact generation parameters defined and cost-estimated."
+      ]
+    },
+    {
+      "id": "gate-direction",
+      "name": "Direction",
+      "status": "approved",
+      "evidence": [
+        "User requests realistic service-focused images without people; all twelve service concepts and exact generation parameters defined and cost-estimated."
+      ]
+    },
+    {
+      "id": "gate-look",
+      "name": "Representative look",
+      "status": "approved",
+      "evidence": [
+        "Brand pilot 9ce8aa72-1787-43d0-933f-304e6b075cf2 inspected: tactile paper, consistent circle mark, plausible material shadows and no humans."
+      ]
+    },
+    {
+      "id": "gate-system",
+      "name": "Production system",
+      "status": "approved",
+      "evidence": [
+        "User requests realistic service-focused images without people; all twelve service concepts and exact generation parameters defined and cost-estimated."
+      ]
+    },
+    {
+      "id": "gate-rough",
+      "name": "Coherent rough",
+      "status": "approved",
+      "evidence": [
+        "All twelve selected images reviewed. No people, body parts or human figures on artwork/screens or reflections. Five targeted replacements resolve text or equipment issues.",
+        "All twelve optimized WebP assets verified as 1600x1200 and readable."
+      ]
+    },
+    {
+      "id": "gate-finish",
+      "name": "Finish",
+      "status": "approved",
+      "evidence": [
+        "All twelve selected images reviewed. No people, body parts or human figures on artwork/screens or reflections. Five targeted replacements resolve text or equipment issues.",
+        "All twelve optimized WebP assets verified as 1600x1200 and readable."
+      ]
+    },
+    {
+      "id": "gate-delivery",
+      "name": "Delivery",
+      "status": "planned",
+      "evidence": []
+    }
+  ],
+  "assumptions": [
+    "Replace all twelve images for a consistent service-focused set; update shared homepage placements."
+  ],
+  "open_questions": [],
+  "risks": [],
+  "generation_notes": {
+    "provider": "Higgsfield",
+    "model": "flux_2",
+    "variant": "max",
+    "planned_count": 12,
+    "quoted_credits_per_image": 6,
+    "planned_credits": 72,
+    "jobs": [
+      {
+        "index": 1,
+        "job_id": "9ce8aa72-1787-43d0-933f-304e6b075cf2",
+        "status": "pending"
+      },
+      {
+        "index": 0,
+        "job_id": "2d60f4bd-ae7a-44ac-9191-f4fa38a033b9",
+        "status": "pending"
+      },
+      {
+        "index": 2,
+        "job_id": "5765c7c6-8569-4715-a4fc-ef7d553b3edf",
+        "status": "pending"
+      },
+      {
+        "index": 3,
+        "job_id": "9fb36203-93b7-4e1a-bbd0-9fdb852fbecf",
+        "status": "pending"
+      },
+      {
+        "index": 4,
+        "job_id": "9fb951be-e977-46e2-96cd-a9aa2b95f74e",
+        "status": "pending"
+      },
+      {
+        "index": 5,
+        "job_id": "0c9e7264-1818-44d2-b414-ff275ea68f7f",
+        "status": "pending"
+      },
+      {
+        "index": 6,
+        "job_id": "7a145e40-a734-4000-8f1b-391c2db14f37",
+        "status": "pending"
+      },
+      {
+        "index": 7,
+        "job_id": "face85bf-4817-4685-b1ab-85bbb75089e6",
+        "status": "pending"
+      },
+      {
+        "index": 8,
+        "job_id": "a4d3d7af-8f3a-453f-b692-deab7e76b1c0",
+        "status": "pending"
+      },
+      {
+        "index": 9,
+        "job_id": "0d56e656-03f9-4e76-98d6-b17dc50cf4b8",
+        "status": "pending"
+      },
+      {
+        "index": 10,
+        "job_id": "2728a6fd-19f6-4384-88ce-634bfd6f7f56",
+        "status": "pending"
+      },
+      {
+        "index": 11,
+        "job_id": "f3dbf809-9faa-429c-b081-26b2af7d9f9b",
+        "status": "pending"
+      }
+    ],
+    "targeted_replacements": [
+      {
+        "id": "strategy",
+        "index": 12,
+        "params": {
+          "aspect_ratio": "4:3",
+          "model": "flux_2",
+          "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. Three beautifully bound slim campaign report books arranged on a pale oak table, photographed from a close three-quarter angle. The cream cover has the single large exact word 'Research', the dark green cover has the single large exact word 'Strategy', and the muted orange cover has the single large exact word 'Launch'. These are the ONLY words visible in the entire image. Each has generous blank space and one small embossed circle below its title. A black pencil and three plain unmarked cream index cards beside the books. No charts, no maps, no notebook spine text, no fine print. Real cloth and uncoated paper grain, crisp corners, slight page separation, refined brand strategy presentation. Broad daylight from a studio window, shadow falloff and tangible paper. The books are large and form a tight central composition.",
+          "resolution": "2k",
+          "variant": "max"
+        },
+        "replaces_index": 0
+      },
+      {
+        "id": "search",
+        "index": 13,
+        "params": {
+          "aspect_ratio": "4:3",
+          "model": "flux_2",
+          "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A tight photograph of an entirely unbranded open charcoal laptop display on a pale studio desk. The screen has only a large exact heading 'Search', a spacious empty search field with one simple magnifier icon, and three large photographic thumbnails of ceramic bowls underneath. The rest of the display is clean white space with no navigation, labels, text or browser chrome. The screen bezel is completely blank and smooth, with no maker name or letters. The lower keyboard is almost entirely outside the bottom edge of the photograph and softly out of focus. Beside the screen, a black notebook and small magnifying loupe on an unmarked cream paper sheet. Window light, real restrained screen reflection of a rectangular window only, natural camera depth of field. Functional plausible hardware, premium understated web search service photograph.",
+          "resolution": "2k",
+          "variant": "max"
+        },
+        "replaces_index": 5
+      },
+      {
+        "id": "digital",
+        "index": 14,
+        "params": {
+          "aspect_ratio": "4:3",
+          "model": "flux_2",
+          "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A premium product photograph of three entirely unbranded real devices on an ivory desk: one open silver laptop behind a low landscape tablet and one vertical phone. The laptop and tablet display a beautiful terracotta-vase still-life photograph within generous cream margins with one small solid forest-green rounded button below. The phone shows a matching closer crop of the same vase. All display layouts are image-led, with NO text, NO letters, NO navigation labels, NO icons or header bars anywhere. Device bezels and bodies are completely unmarked. Laptop keyboard softly out of focus and partly hidden behind the tablet. Physically correct screen orientation and supports. Real glass and metal, soft afternoon window light, grounded contact shadows, central composed grouping. A visually coherent responsive website art-direction presentation without any human subjects.",
+          "resolution": "2k",
+          "variant": "max"
+        },
+        "replaces_index": 6
+      },
+      {
+        "id": "production",
+        "index": 15,
+        "params": {
+          "aspect_ratio": "4:3",
+          "model": "flux_2",
+          "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. An editorial equipment photograph for a film and photography production service. A professional black cinema camera body with a mounted normal lens rests securely on its flat base plate on a matte warm-grey studio equipment table. Beside it are two separate real cylindrical cinema lenses upright on their end caps, and a simple closed matte-black clapperboard with white diagonal stripes only, absolutely no writing. No tripod, no product bottle, no giant props. The camera is the clear central subject. Plausible ports, lens mounts and lens geometry, no excessive attachments, no floating equipment, no labels or logos. Soft rectangular studio light from the left creates rich metal and rubber texture and natural shadows. Background is a real out-of-focus neutral studio wall, not a pure void. Medium-format commercial photography, 75mm lens, believable professional equipment.",
+          "resolution": "2k",
+          "variant": "max"
+        },
+        "replaces_index": 8
+      },
+      {
+        "id": "data",
+        "index": 16,
+        "params": {
+          "aspect_ratio": "4:3",
+          "model": "flux_2",
+          "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A close atmospheric photograph of physical analytics work on a real walnut desk. The main sharply focused foreground object is a clear optical magnifying loupe resting beside a black fountain pen on the blank lower margin of a thick ivory report. Farther back on the same sheet, soft optical depth of field gently blurs a simple row of four cobalt-blue and orange vertical bars and one dark rising line; those printed illustrative graphic shapes remain recognizable as an analytics report but all detailed text is fully out of focus and unreadable. One closed dark-blue notebook sits behind the report. No metal ruler, no tiny chart labels, no axes numbers, no legible text, no performance claims. Paper fibres, convincing glass refraction, genuine pen metal and contact shadows, soft window light. Shallow focus commercial still life, 85mm macro lens, careful realistic photography.",
+          "resolution": "2k",
+          "variant": "max"
+        },
+        "replaces_index": 10
+      }
+    ],
+    "quoted_total_credits": 102,
+    "selected_jobs": [
+      {
+        "id": "strategy",
+        "index": 12,
+        "job_id": "b0d2c059-e145-46f6-a999-e828fae118a6"
+      },
+      {
+        "id": "brand",
+        "index": 1,
+        "job_id": "9ce8aa72-1787-43d0-933f-304e6b075cf2"
+      },
+      {
+        "id": "campaigns",
+        "index": 2,
+        "job_id": "5765c7c6-8569-4715-a4fc-ef7d553b3edf"
+      },
+      {
+        "id": "content",
+        "index": 3,
+        "job_id": "9fb36203-93b7-4e1a-bbd0-9fdb852fbecf"
+      },
+      {
+        "id": "media",
+        "index": 4,
+        "job_id": "9fb951be-e977-46e2-96cd-a9aa2b95f74e"
+      },
+      {
+        "id": "search",
+        "index": 13,
+        "job_id": "94956285-f490-4f87-9e84-648ba565ca92"
+      },
+      {
+        "id": "digital",
+        "index": 14,
+        "job_id": "d4f05e44-469b-4369-ab7a-56a3980e2ebb"
+      },
+      {
+        "id": "commerce",
+        "index": 7,
+        "job_id": "face85bf-4817-4685-b1ab-85bbb75089e6"
+      },
+      {
+        "id": "production",
+        "index": 15,
+        "job_id": "faafd050-b978-492a-9104-8ef73ef442f4"
+      },
+      {
+        "id": "pr",
+        "index": 9,
+        "job_id": "0d56e656-03f9-4e76-98d6-b17dc50cf4b8"
+      },
+      {
+        "id": "data",
+        "index": 16,
+        "job_id": "987ba6bc-52de-441d-9894-1f14fca37b85"
+      },
+      {
+        "id": "ai",
+        "index": 11,
+        "job_id": "f3dbf809-9faa-429c-b081-26b2af7d9f9b"
+      }
+    ],
+    "attempts": 17,
+    "selected_outputs": 12
+  },
+  "supersedes": "docs/creative/service-imagery-revision.json",
+  "superseded_by": "docs/creative/service-imagery-v4.json",
+  "supersession_note": "The user subsequently requested mixed service imagery using supplied references. This v3 manifest remains the historical record of the earlier people-free direction and retained object-scene generation provenance."
+}
