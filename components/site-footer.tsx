@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { BrandLockup } from "@/components/site-nav";
 import { AvalonWordmark } from "@/components/avalon-wordmark";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import styles from "@/components/site-footer.module.css";
 
 export function SiteFooter() {
@@ -31,12 +32,21 @@ export function SiteFooter() {
             <Link href="/#work">Creative explorations</Link><Link href="/industries">Industries</Link>
             <Link href="/about">About Avalon</Link><Link href="/pricing">Ways to work</Link>
           </nav>
-          <nav className={styles.column} aria-label="Avalon workspace">
+          {WORKSPACE_ENABLED ? <nav className={styles.column} aria-label="Avalon workspace">
             <b>The workspace</b>
             <Link href="/platform">Campaign workspace</Link><Link href="/platform?view=workflows">Campaign workflows</Link>
             <Link href="/platform?view=agents">Specialist agents</Link><Link href="/studio">Production studio</Link>
             <Link href="/platform?view=performance">Performance & learning</Link><Link href="/platform?view=delivery">Project delivery</Link><Link href="/tools">Growth tools</Link>
-          </nav>
+          </nav> : <nav className={styles.column} aria-label="Avalon services">
+            <b>Our disciplines</b>
+            <Link href="/services#strategy">Strategy & research</Link>
+            <Link href="/services#brand">Brand & identity</Link>
+            <Link href="/services#campaigns">Campaigns & creative</Link>
+            <Link href="/services#production">Film & production</Link>
+            <Link href="/services#digital">Web & digital</Link>
+            <Link href="/services#media">Media & growth</Link>
+            <Link href="/start">Start a project</Link>
+          </nav>}
           <nav className={styles.column} aria-label="Our commitments and contact">
             <b>Our commitments</b>
             <Link href="/privacy">Privacy & data</Link><Link href="/accessibility">Accessibility</Link>

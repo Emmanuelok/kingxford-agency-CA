@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 
 const mediaRoot = process.env.NEXT_PUBLIC_AVALON_MEDIA_ROOT ?? process.env.NEXT_PUBLIC_KINGXFORD_MEDIA_ROOT ?? "/video";
 
@@ -230,8 +231,8 @@ export function ScrollCinema() {
             film, digital and growth, working together from the very first brief.
           </p>
           <div className="kx5-hero-actions">
-            <a href="/platform">
-              Open your workspace <ArrowUpRight />
+            <a href={WORKSPACE_ENABLED ? "/platform" : "/services"}>
+              {WORKSPACE_ENABLED ? "Open your workspace" : "Explore our capabilities"} <ArrowUpRight />
             </a>
             <a href="/start">
               Start a project <ArrowUpRight />

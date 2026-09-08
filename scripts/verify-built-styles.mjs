@@ -5,6 +5,7 @@ import { join } from "node:path";
 // Check the assets linked by the rendered page, not an unused chunk or source
 // file. A restored build cache previously shipped the new HTML with old CSS.
 const origin = process.argv[2];
+const workspaceEnabled = process.env.NEXT_PUBLIC_AVALON_WORKSPACE_ENABLED === "true";
 async function fetchText(pathname) {
   const response = await fetch(new URL(pathname, origin), { signal: AbortSignal.timeout(15000) });
   assert.equal(response.status, 200, `Expected deployed asset ${pathname}`);
@@ -26,7 +27,8 @@ const css = (await Promise.all(stylesheets.map((href) => {
 }))).join("\n");
 
 for (const selector of [
-  ".avalon-nav", ".avalon-discipline-strip", ".avalon-launchpad-head",
+  ".avalon-nav", ".avalon-discipline-strip",
+  ...(workspaceEnabled ? [".avalon-launchpad-head"] : []),
   ".avalon-service-entry",
   ".avalon-footer", ".avalon-footer-wordmark",
 ]) {
@@ -47,6 +49,7 @@ function journeyDeclarations(part) {
     return [...css.matchAll(new RegExp(`\\.${escaped}\\s*\\{([^{}]*)\\}`, "g"))].map((match) => match[1]);
   }).join(";");
 }
+if (workspaceEnabled) {
 const explorer = journeyDeclarations("explorer");
 assert.match(explorer, /background(?:-color)?:\s*[^;}]+/, "Journey explorer must retain its visible surface");
 assert.match(explorer, /(?:^|;)\s*color:\s*[^;}]+/, "Journey explorer must retain its foreground colour");
@@ -55,7 +58,11 @@ for (const part of ["tabs", "canvas"]) {
   assert.match(declarations, /display:\s*grid\b/, `Journey ${part} must retain grid layout`);
   assert.match(declarations, /grid-template-columns:\s*[^;}]+/, `Journey ${part} must retain responsive columns`);
 }
-console.log("PASS built homepage styles: identity, rendered journey explorer, services and footer");
+} else {
+  assert.doesNotMatch(html, /data-journey="explorer"/, "Unpublished workspace explorer must not render");
+  assert.doesNotMatch(html, /href="\/(?:platform|tools|studio)(?:[/?#"])/, "Unpublished tools must not have public entry links");
+}
+console.log(`PASS built homepage styles: identity, ${workspaceEnabled ? "rendered journey explorer" : "agency-only navigation"}, services and footer`);
 
 const servicesHtml = origin
   ? await fetchText("/services")

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { JourneyExplorer } from "@/components/journey-explorer";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 
 import { ArrowRight, ArrowUpRight, BarChart3, Check, ChevronRight, Clapperboard, FileText, Layers3, Network, Sparkles } from "lucide-react";
 import { useState, type KeyboardEvent } from "react";
@@ -40,6 +41,7 @@ const workspacePaths = [
 ] as const;
 
 export function WorkspaceLaunchpad({ compact = false }: { compact?: boolean }) {
+  if (!WORKSPACE_ENABLED) return null;
   return <section className={`avalon-launchpad${compact ? " is-compact" : ""}`} id="workspace" aria-labelledby="workspace-launchpad-title">
     <div className="avalon-launchpad-head">
       <div><span className="avalon-eyebrow"><i aria-hidden="true" /> THE AVALON WORKSPACE</span><h2 id="workspace-launchpad-title">One place to turn<br />ambition into <em>action.</em></h2></div>
@@ -167,7 +169,7 @@ const rooms = [
       "Turns the approved idea into finished film, photography, audio, motion and channel-ready content while the intent remains intact.",
     detail:
       "Direction · film · photography · motion · post · versioning · creator production",
-    href: "/studio",
+    href: WORKSPACE_ENABLED ? "/studio" : "/services#production",
     image: "/images/services/production-v4.webp",
   },
   {
@@ -184,12 +186,12 @@ const rooms = [
   {
     id: "dispatch",
     room: "The Dispatch",
-    label: "Client OS & delivery",
+    label: WORKSPACE_ENABLED ? "Client OS & delivery" : "Project direction & delivery",
     description:
-      "Keeps the objective, scope, owners, timing, approvals, spend and next decisions visible in one accountable record.",
+      "Connects the scope, schedule, budget and creative decisions through a dedicated project lead, from the first conversation to final delivery.",
     detail:
       "Briefs · plans · reviews · approvals · finance · reporting · next actions",
-    href: "/platform",
+    href: WORKSPACE_ENABLED ? "/platform" : "/start",
     image: "/images/services/data-v4.webp",
   },
 ] as const;
@@ -418,6 +420,8 @@ export function AgencyUniverse() {
 export function ClientOperatingSystem() {
   const [active, setActive] = useState(0);
   const view = osViews[active];
+
+  if (!WORKSPACE_ENABLED) return null;
 
   return (
     <section className="kx5-os" aria-labelledby="os-title">

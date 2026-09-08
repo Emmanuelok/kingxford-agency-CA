@@ -107,3 +107,11 @@ The status endpoint reports AI as `configured`, never `connected`, based only on
 ## Boundaries that still require separate integration
 
 Live advertising accounts, autonomous publishing, payment checkout, organization collaboration, transactional inquiry delivery, real-time analytics ingestion, live competitive research, and image/video generation are not established by the existing server integrations. Workspace plans and imported performance data must not be presented as those external capabilities. Select and verify each provider before describing it as connected.
+
+## Studio publication hold — 8 September 2026
+
+The owner has deferred public release of the studio, workbench and Supabase-backed workspace while development continues. `NEXT_PUBLIC_AVALON_WORKSPACE_ENABLED` defaults to false. In this mode `/studio`, `/studio/workbench`, `/platform` and `/tools` return 404; their cloud/session/agent APIs return a no-store 404 before reading credentials or contacting providers. Public navigation, homepage promotions, service CTAs and the project brief stay focused on agency inquiries. Search discovery omits the unpublished routes.
+
+Source code, database schema and existing device backups are preserved. No database has been provisioned or connected by this change. To continue development, set `NEXT_PUBLIC_AVALON_WORKSPACE_ENABLED=true` in `.env.local` or an access-protected preview environment and rebuild. Run build and smoke checks with the same flag value. This setting controls availability and is not an authentication control; do not expose an enabled preview publicly or change production until the owner approves launch.
+
+Before publishing: finish the studios and workbench, choose the dedicated Supabase organization and approve its cost, configure authentication/storage and model limits, run hosted account-isolation and recovery tests, then review the public release. A reminder to revisit this work is scheduled for 22 September 2026. It does not provision or publish anything automatically.

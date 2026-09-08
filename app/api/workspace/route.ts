@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import { workspaceSchema } from "@/lib/campaign";
 import {
   ApiError,
@@ -18,6 +19,7 @@ const inputSchema = z
   })
   .strict();
 export async function GET(request: Request) {
+  if (!WORKSPACE_ENABLED) return json({ error: "Not found" }, 404);
   try {
     const { client, user } = await authenticated();
     if (ownerHeader(request) !== user.id)
@@ -48,6 +50,7 @@ export async function GET(request: Request) {
   }
 }
 export async function PUT(request: Request) {
+  if (!WORKSPACE_ENABLED) return json({ error: "Not found" }, 404);
   try {
     sameOrigin(request);
     const { client, user } = await authenticated();

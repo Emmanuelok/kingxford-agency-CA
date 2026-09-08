@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import {
   ApiError,
   apiFailure,
@@ -17,6 +18,7 @@ const credentials = z
   })
   .strict();
 export async function POST(request: Request) {
+  if (!WORKSPACE_ENABLED) return json({ error: "Not found" }, 404);
   try {
     sameOrigin(request);
     const input = credentials.parse(await readJson(request, 2000));
@@ -44,6 +46,7 @@ export async function POST(request: Request) {
   }
 }
 export async function DELETE(request: Request) {
+  if (!WORKSPACE_ENABLED) return json({ error: "Not found" }, 404);
   try {
     sameOrigin(request);
     // Revoked members must still be able to clear their own session.

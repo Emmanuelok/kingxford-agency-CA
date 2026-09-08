@@ -19,6 +19,7 @@ import { ScrollCinema } from "@/components/scroll-cinema";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import type { Metadata } from "next";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
@@ -46,7 +47,7 @@ export default function Home() {
       <SiteNav />
       <ScrollCinema />
       <div className="avalon-discipline-strip" aria-label="Our disciplines"><span>Strategy</span><i/><span>Brand & design</span><i/><span>Film & production</span><i/><span>Digital experiences</span><i/><span>Growth</span></div>
-      <WorkspaceLaunchpad />
+      {WORKSPACE_ENABLED && <WorkspaceLaunchpad />}
       <AgencyUniverse />
       <ProblemSwitchboard />
       <CampaignStudies />
@@ -84,8 +85,8 @@ export default function Home() {
               <b>Audio</b>Radio · streaming · sonic systems · podcasts
             </span>
           </div>
-          <a href="/studio">
-            Explore Avalon Studio <ArrowUpRight />
+          <a href={WORKSPACE_ENABLED ? "/studio" : "/services#production"}>
+            {WORKSPACE_ENABLED ? "Explore Avalon Studio" : "Explore film & production"} <ArrowUpRight />
           </a>
         </div>
       </section>
@@ -102,8 +103,8 @@ export default function Home() {
           </div>
           <p>
             A senior lead owns the through-line. Specialists join where the
-            brief needs them. The client sees the work, the spend and the
-            decision record in one place.
+            brief needs them. Clear milestones, agreed budgets and considered
+            reviews keep the work moving with purpose.
           </p>
         </header>
         <div className="kx5-system-track">
@@ -122,7 +123,7 @@ export default function Home() {
         </a>
       </section>
 
-      <ClientOperatingSystem />
+      {WORKSPACE_ENABLED && <ClientOperatingSystem />}
 
       <section className="kx5-canada" aria-labelledby="canada-title">
         <div className="kx5-canada-map" aria-hidden="true">

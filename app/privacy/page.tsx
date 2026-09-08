@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 export const metadata: Metadata = {
   title: "Privacy & Data",
   description:
-    "How AVALON handles device-local campaign drafts, optional cloud snapshots, AI requests and project inquiries.",
+    "How AVALON handles project inquiries, information you choose to share and data from earlier workspace use.",
   alternates: { canonical: "/privacy" },
 };
 export default function PrivacyPage() {
@@ -21,7 +22,8 @@ export default function PrivacyPage() {
           description="Know what stays on your device, what you choose to send, and which connections are active."
         />
         <article className="policy-page content-section">
-          <p className="policy-updated">Workspace notice · 7 September 2026</p>
+          <p className="policy-updated">Privacy notice · 8 September 2026</p>
+          {WORKSPACE_ENABLED ? <>
           <h2>Device-local workspace</h2>
           <p>
             The campaign workspace saves briefs, draft content, planning
@@ -66,13 +68,32 @@ export default function PrivacyPage() {
             implementation notice as a completed legal or privacy assessment.
           </p>
           <h2>Project inquiries</h2>
+          </> : <>
+          <h2>Public website</h2>
+          <p>
+            This website presents AVALON’s services, completed projects and
+            project inquiry builder. The campaign workspace, cloud accounts and
+            AI drafting are not currently available to the public.
+          </p>
+          <h2>Existing device data</h2>
+          <p>
+            If you used an earlier version of the campaign workspace, its
+            saved drafts may remain in this browser’s local storage. Hiding the
+            workspace does not upload, migrate or delete those drafts. Anyone
+            with access to the same browser profile may be able to read them.
+            You can remove these device copies by clearing this website’s data
+            in your browser settings; doing so permanently removes the local
+            copy.
+          </p>
+          <h2>Project inquiries</h2>
+          </>}
           <p>
             The inquiry builder prepares an email for you to review and send
             using your own mail application; opening that application does not
             send the email. Copy and download alternatives are available. The
-            workspace handoff stores organization, objective and challenge—not
-            contact details. An inquiry does not subscribe you to marketing;
-            that choice is separate and optional.
+            {WORKSPACE_ENABLED ? "workspace handoff stores organization, objective and challenge—not contact details. " : "builder keeps your answers in page memory until you choose an action. It does not save them to an account or submit them to a server. "}
+            An inquiry does not subscribe you to marketing; that choice is
+            separate and optional.
           </p>
           <h2>Technical information</h2>
           <p>
@@ -85,10 +106,8 @@ export default function PrivacyPage() {
           </p>
           <h2>Your choices</h2>
           <p>
-            Use Storage & connections to export data, sign out or delete the
-            active device campaign. Device copies remain after sign-out, so
-            remove them on shared devices. For questions, access, correction or
-            cloud deletion, contact{" "}
+            {WORKSPACE_ENABLED ? "Use Storage & connections to export data, sign out or delete the active device campaign. Device copies remain after sign-out, so remove them on shared devices. " : "You can review your inquiry before sending it, download a copy, or leave the page without submitting it. "}
+            For questions, access, correction or deletion requests, contact{" "}
             <a href="mailto:hello@kingxford.co?subject=Privacy%20request">
               hello@kingxford.co
             </a>

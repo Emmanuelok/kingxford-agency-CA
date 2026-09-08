@@ -1,5 +1,7 @@
 import Image from "next/image";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import {
   ArrowUpRight,
   Aperture,
@@ -18,6 +20,7 @@ import { WorkspaceLaunchpad } from "@/components/agency-interface";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/studio" },
+  robots: { index: WORKSPACE_ENABLED, follow: WORKSPACE_ENABLED },
   title: "Production Studio",
   description:
     "Campaign film, photography, motion, 3D, audio, live and high-volume content production—connected directly to strategy and media.",
@@ -65,6 +68,7 @@ const production = [
   ],
 ];
 export default function StudioPage() {
+  if (!WORKSPACE_ENABLED) notFound();
   return (
     <main className="site-shell">
       <SiteNav />
