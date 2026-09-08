@@ -1,0 +1,1992 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "avalon-services-v4",
+    "name": "Avalon services \u2014 mixed process and object imagery",
+    "mode": "image-production",
+    "objective": "Present realistic service work through the user-selected mix of process scenes with people or hands and detailed object-led service imagery.",
+    "audience": "Businesses exploring Avalon capabilities",
+    "governing_idea": "The work and the process share the spotlight.",
+    "status": "review",
+    "phase": "production"
+  },
+  "creative_system": {
+    "visual_thesis": "Realistic commercial imagery balances selected creative-process scenes with tangible outputs, equipment and product still lifes.",
+    "anti_goals": [
+      "Generic portraits disconnected from the service",
+      "Implausible anatomy, disconnected people or equipment",
+      "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+    ],
+    "palette": {
+      "dominant": [
+        "ivory",
+        "natural wood",
+        "charcoal"
+      ],
+      "accent": [
+        "orange",
+        "forest green",
+        "cobalt blue"
+      ],
+      "contrast": "Natural material contrast with a restrained service-specific accent"
+    },
+    "composition": "Preserve native compositions: selected process references at 1600:1073 and retained object scenes at 4:3; responsive image frames follow each asset ratio.",
+    "camera": "Grounded commercial photography using normal and short telephoto perspectives.",
+    "lighting": "Plausible window or practical studio light.",
+    "typography": "Service labels and descriptions remain live HTML. Incidental illustrative interfaces use minimal copy.",
+    "motion": "Still imagery",
+    "sound": "None",
+    "interface": "Clear hierarchy, responsive reflow, keyboard access, and reduced-motion parity.",
+    "invariants": [
+      "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+      "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+      "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+      "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+    ],
+    "permitted_variations": [
+      "People or hands in strategy, brand, campaigns, search, commerce and production references.",
+      "Object-led scenes for content, media, digital, PR, data and AI.",
+      "Per-service material palette and native aspect ratio."
+    ]
+  },
+  "assets": [
+    {
+      "id": "ast-strategy",
+      "type": "image",
+      "source": "User upload: a235777a-f466-4ea2-92b3-de83acaba464.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Campaign strategy and research",
+      "local_path": "public/images/services/strategy-v4.webp",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this reference and explicitly requested a mixed selection like the attached images.",
+      "provenance": {
+        "method": "user-selected-reference-optimization",
+        "user_attachment_filename": "a235777a-f466-4ea2-92b3-de83acaba464.png",
+        "reference_asset_id": "ref-strategy",
+        "original_generation_metadata": "Not inferred from the supplied file."
+      },
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "delivered_dimensions": "1600x1073",
+      "bytes": 170688,
+      "sha256": "049b1e3bdf14417f222c4b3a5d3bedcf493038fc56faeef63b7281d49bc55aab"
+    },
+    {
+      "id": "ast-brand",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_86c8c07b-1d3b-40b6-a3b6-3c72048f8aee.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Brand identity and packaging",
+      "local_path": "public/images/services/brand-v4.webp",
+      "source_dimensions": "2528x1696",
+      "rights_evidence": "The site owner supplied this reference and explicitly requested a mixed selection like the attached images.",
+      "provenance": {
+        "method": "reference-edit",
+        "user_attachment_filename": "390dc08b-ed21-44d9-8da1-dd812ee3e374.png",
+        "reference_asset_id": "ref-brand",
+        "original_generation_metadata": "Not inferred from the supplied file.",
+        "original_reference_dimensions": "2048x1373",
+        "edit_job_id": "86c8c07b-1d3b-40b6-a3b6-3c72048f8aee",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      },
+      "qa": "Root visual review confirms tiny contact/menu copy removed while preserving the selected packaging, hand and composition.",
+      "job_id": "86c8c07b-1d3b-40b6-a3b6-3c72048f8aee",
+      "generation_status": "completed",
+      "planned_edit": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+      "delivered_dimensions": "1600x1073",
+      "bytes": 186048,
+      "requested_model": "nano_banana_pro",
+      "returned_model": "nano_banana_2",
+      "sha256": "34972ace2e0e2695080b99cd526c31f8a66e61b3369422cf57e6a8d4a3e70e4c"
+    },
+    {
+      "id": "ast-campaigns",
+      "type": "image",
+      "source": "User upload: 7f5ff91e-9de9-4430-bed4-a3b3fb101d07.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Outdoor advertising campaign",
+      "local_path": "public/images/services/campaigns-v4.webp",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this reference and explicitly requested a mixed selection like the attached images.",
+      "provenance": {
+        "method": "user-selected-reference-optimization",
+        "user_attachment_filename": "7f5ff91e-9de9-4430-bed4-a3b3fb101d07.png",
+        "reference_asset_id": "ref-campaigns",
+        "original_generation_metadata": "Not inferred from the supplied file."
+      },
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "delivered_dimensions": "1600x1073",
+      "bytes": 313606,
+      "sha256": "c513b6fcfbac4939e38e08e7e45f75e1cd43d6ced738b5ebc08aa58ebbee6f4f"
+    },
+    {
+      "id": "ast-content",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101516_9fb36203-93b7-4e1a-bbd0-9fdb852fbecf.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Product and social content",
+      "job_id": "9fb36203-93b7-4e1a-bbd0-9fdb852fbecf",
+      "local_path": "public/images/services/content-v4.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "provenance": {
+        "method": "byte-identical-reuse",
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_asset_id": "ast-content",
+        "source_deliverable_path": "public/images/services/content-v3.webp"
+      },
+      "bytes": 318876,
+      "sha256": "c4cc7f52745131784654d99acf6786bd35b546fb9870990bd738a9aeab8bc692"
+    },
+    {
+      "id": "ast-media",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101515_9fb951be-e977-46e2-96cd-a9aa2b95f74e.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Cross-channel media campaign",
+      "job_id": "9fb951be-e977-46e2-96cd-a9aa2b95f74e",
+      "local_path": "public/images/services/media-v4.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "provenance": {
+        "method": "byte-identical-reuse",
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_asset_id": "ast-media",
+        "source_deliverable_path": "public/images/services/media-v3.webp"
+      },
+      "bytes": 136736,
+      "sha256": "da04003f34111f6607f099515984cd8263b37338ec0882d01ae26ad3361c23de"
+    },
+    {
+      "id": "ast-search",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_cb9c874f-5082-4ef9-a6e5-7fbf34183765.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Search and website discovery",
+      "local_path": "public/images/services/search-v4.webp",
+      "source_dimensions": "2528x1696",
+      "rights_evidence": "The site owner supplied this reference and explicitly requested a mixed selection like the attached images.",
+      "provenance": {
+        "method": "reference-edit",
+        "user_attachment_filename": "75e1eca6-7bd3-49eb-bfbf-3002adcd95cc.png",
+        "reference_asset_id": "ref-search",
+        "original_generation_metadata": "Not inferred from the supplied file.",
+        "original_reference_dimensions": "2048x1373",
+        "edit_job_id": "cb9c874f-5082-4ef9-a6e5-7fbf34183765",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      },
+      "qa": "Root visual review confirms the window service lettering removed while preserving the selected phone, hand and storefront.",
+      "job_id": "cb9c874f-5082-4ef9-a6e5-7fbf34183765",
+      "generation_status": "completed",
+      "planned_edit": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+      "delivered_dimensions": "1600x1073",
+      "bytes": 188800,
+      "requested_model": "nano_banana_pro",
+      "returned_model": "nano_banana_2",
+      "sha256": "c8464833f21397d5b0cda58dd1310ccf3badf040727e0b573268489bd9dc45e8"
+    },
+    {
+      "id": "ast-digital",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_d4f05e44-469b-4369-ab7a-56a3980e2ebb.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Responsive web and digital products",
+      "job_id": "d4f05e44-469b-4369-ab7a-56a3980e2ebb",
+      "local_path": "public/images/services/digital-v4.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "provenance": {
+        "method": "byte-identical-reuse",
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_asset_id": "ast-digital",
+        "source_deliverable_path": "public/images/services/digital-v3.webp"
+      },
+      "bytes": 64704,
+      "sha256": "38210d280e035a3828058828b320016d6f06568a37208c5dce1b3c0830062227"
+    },
+    {
+      "id": "ast-commerce",
+      "type": "image",
+      "source": "User upload: 052f0f5c-f581-4b48-9578-9057bf503be5.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Ecommerce fulfilment and customer experience",
+      "local_path": "public/images/services/commerce-v4.webp",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this reference and explicitly requested a mixed selection like the attached images.",
+      "provenance": {
+        "method": "user-selected-reference-optimization",
+        "user_attachment_filename": "052f0f5c-f581-4b48-9578-9057bf503be5.png",
+        "reference_asset_id": "ref-commerce",
+        "original_generation_metadata": "Not inferred from the supplied file."
+      },
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "delivered_dimensions": "1600x1073",
+      "bytes": 109960,
+      "sha256": "e5d16bc5fb754957e3f9f83937a411336c4228ac378bd05343ed912532ffe628"
+    },
+    {
+      "id": "ast-production",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_977e8210-f372-4b72-b49b-84aba1c25eee.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Film photography and production",
+      "local_path": "public/images/services/production-v4.webp",
+      "source_dimensions": "2528x1696",
+      "rights_evidence": "The site owner supplied this reference and explicitly requested a mixed selection like the attached images.",
+      "provenance": {
+        "method": "reference-edit",
+        "user_attachment_filename": "a1caabe8-ef58-4800-bba7-b96160b359c8.png",
+        "reference_asset_id": "ref-production",
+        "original_generation_metadata": "Not inferred from the supplied file.",
+        "original_reference_dimensions": "2048x1373",
+        "edit_job_id": "977e8210-f372-4b72-b49b-84aba1c25eee",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      },
+      "qa": "Root visual review confirms the disconnected third figure removed; two complete crew members and production equipment remain.",
+      "job_id": "977e8210-f372-4b72-b49b-84aba1c25eee",
+      "generation_status": "completed",
+      "planned_edit": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+      "delivered_dimensions": "1600x1073",
+      "bytes": 99996,
+      "requested_model": "nano_banana_pro",
+      "returned_model": "nano_banana_2",
+      "sha256": "9ade5e834b017fb6951b251f89ff926c1d86bd5c6b1cb631ed7dca2fe5126a00"
+    },
+    {
+      "id": "ast-pr",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101523_0d56e656-03f9-4e76-98d6-b17dc50cf4b8.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Press relations and brand events",
+      "job_id": "0d56e656-03f9-4e76-98d6-b17dc50cf4b8",
+      "local_path": "public/images/services/pr-v4.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "provenance": {
+        "method": "byte-identical-reuse",
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_asset_id": "ast-pr",
+        "source_deliverable_path": "public/images/services/pr-v3.webp"
+      },
+      "bytes": 134362,
+      "sha256": "a2b88d7d59e221367a2c8b169f5654791f1980a98d855292e60471aab3b88283"
+    },
+    {
+      "id": "ast-data",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_102020_987ba6bc-52de-441d-9894-1f14fca37b85.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Analytics and optimization",
+      "job_id": "987ba6bc-52de-441d-9894-1f14fca37b85",
+      "local_path": "public/images/services/data-v4.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "provenance": {
+        "method": "byte-identical-reuse",
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_asset_id": "ast-data",
+        "source_deliverable_path": "public/images/services/data-v3.webp"
+      },
+      "bytes": 72370,
+      "sha256": "3578d7de61d480b27910d514cda4b0c7bff4f4072c876d2b3af5ed729e399f76"
+    },
+    {
+      "id": "ast-ai",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_101523_f3dbf809-9faa-429c-b081-26b2af7d9f9b.png",
+      "role": "final-service-image",
+      "rights_status": "confirmed",
+      "description": "Automation and connected technology",
+      "job_id": "f3dbf809-9faa-429c-b081-26b2af7d9f9b",
+      "local_path": "public/images/services/ai-v4.webp",
+      "source_dimensions": "1920x1440",
+      "delivered_dimensions": "1600x1200",
+      "qa": "Root and art-review agent reviewed service relevance, photographic materials and the selected composition.",
+      "provenance": {
+        "method": "byte-identical-reuse",
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_asset_id": "ast-ai",
+        "source_deliverable_path": "public/images/services/ai-v3.webp"
+      },
+      "bytes": 152314,
+      "sha256": "8fbe90457c919d411b9c46465228b70ec19e2bbbcdc62fd3d5ccd751c1421f6d"
+    },
+    {
+      "id": "ref-strategy",
+      "type": "image",
+      "source": "User upload: a235777a-f466-4ea2-92b3-de83acaba464.png",
+      "role": "user-selected-source-reference",
+      "rights_status": "confirmed",
+      "description": "A creative team reviewing research and visual references",
+      "user_attachment_filename": "a235777a-f466-4ea2-92b3-de83acaba464.png",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this image as a reference for the requested mixed service imagery."
+    },
+    {
+      "id": "ref-brand",
+      "type": "image",
+      "source": "User upload: 390dc08b-ed21-44d9-8da1-dd812ee3e374.png",
+      "role": "user-selected-source-reference",
+      "rights_status": "confirmed",
+      "description": "Branded packaging and stationery with colour swatches held in hand",
+      "user_attachment_filename": "390dc08b-ed21-44d9-8da1-dd812ee3e374.png",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this image as a reference for the requested mixed service imagery."
+    },
+    {
+      "id": "ref-campaigns",
+      "type": "image",
+      "source": "User upload: 7f5ff91e-9de9-4430-bed4-a3b3fb101d07.png",
+      "role": "user-selected-source-reference",
+      "rights_status": "confirmed",
+      "description": "A coordinated, colorful outdoor campaign on a city street",
+      "user_attachment_filename": "7f5ff91e-9de9-4430-bed4-a3b3fb101d07.png",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this image as a reference for the requested mixed service imagery."
+    },
+    {
+      "id": "ref-production",
+      "type": "image",
+      "source": "User upload: a1caabe8-ef58-4800-bba7-b96160b359c8.png",
+      "role": "user-selected-source-reference",
+      "rights_status": "confirmed",
+      "description": "A crew preparing lighting and a cinema camera on a film set",
+      "user_attachment_filename": "a1caabe8-ef58-4800-bba7-b96160b359c8.png",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this image as a reference for the requested mixed service imagery."
+    },
+    {
+      "id": "ref-search",
+      "type": "image",
+      "source": "User upload: 75e1eca6-7bd3-49eb-bfbf-3002adcd95cc.png",
+      "role": "user-selected-source-reference",
+      "rights_status": "confirmed",
+      "description": "A smartphone map beside a creative studio storefront",
+      "user_attachment_filename": "75e1eca6-7bd3-49eb-bfbf-3002adcd95cc.png",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this image as a reference for the requested mixed service imagery."
+    },
+    {
+      "id": "ref-commerce",
+      "type": "image",
+      "source": "User upload: 052f0f5c-f581-4b48-9578-9057bf503be5.png",
+      "role": "user-selected-source-reference",
+      "rights_status": "confirmed",
+      "description": "Ceramic products being packed for an online order",
+      "user_attachment_filename": "052f0f5c-f581-4b48-9578-9057bf503be5.png",
+      "source_dimensions": "2048x1373",
+      "rights_evidence": "The site owner supplied this image as a reference for the requested mixed service imagery."
+    }
+  ],
+  "elements": [
+    {
+      "id": "elm-strategy",
+      "type": "environment",
+      "name": "Campaign strategy and research",
+      "description": "A creative team reviewing research and visual references",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-strategy"
+      ]
+    },
+    {
+      "id": "elm-brand",
+      "type": "environment",
+      "name": "Brand identity and packaging",
+      "description": "Branded packaging and stationery with colour swatches held in hand",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-brand"
+      ]
+    },
+    {
+      "id": "elm-campaigns",
+      "type": "environment",
+      "name": "Outdoor advertising campaign",
+      "description": "A coordinated, colorful outdoor campaign on a city street",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-campaigns"
+      ]
+    },
+    {
+      "id": "elm-content",
+      "type": "environment",
+      "name": "Product and social content",
+      "description": "Product and social content shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-media",
+      "type": "environment",
+      "name": "Cross-channel media campaign",
+      "description": "Cross-channel media campaign shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-search",
+      "type": "environment",
+      "name": "Search and website discovery",
+      "description": "A smartphone map beside a creative studio storefront",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-search"
+      ]
+    },
+    {
+      "id": "elm-digital",
+      "type": "environment",
+      "name": "Responsive web and digital products",
+      "description": "Responsive web and digital products shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-commerce",
+      "type": "environment",
+      "name": "Ecommerce fulfilment and customer experience",
+      "description": "Ceramic products being packed for an online order",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-commerce"
+      ]
+    },
+    {
+      "id": "elm-production",
+      "type": "environment",
+      "name": "Film photography and production",
+      "description": "A crew preparing lighting and a cinema camera on a film set",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-production"
+      ]
+    },
+    {
+      "id": "elm-pr",
+      "type": "environment",
+      "name": "Press relations and brand events",
+      "description": "Press relations and brand events shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-data",
+      "type": "environment",
+      "name": "Analytics and optimization",
+      "description": "Analytics and optimization shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "elm-ai",
+      "type": "environment",
+      "name": "Automation and connected technology",
+      "description": "Automation and connected technology shown through service objects and empty locations.",
+      "anchors": [
+        "central service subject",
+        "plausible materials",
+        "no humans"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-strategy",
+      "type": "prop",
+      "name": "Campaign strategy and research objects",
+      "description": "A creative team reviewing research and visual references",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-strategy"
+      ]
+    },
+    {
+      "id": "prop-brand",
+      "type": "prop",
+      "name": "Brand identity and packaging objects",
+      "description": "Branded packaging and stationery with colour swatches held in hand",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-brand"
+      ]
+    },
+    {
+      "id": "prop-campaigns",
+      "type": "prop",
+      "name": "Outdoor advertising campaign objects",
+      "description": "A coordinated, colorful outdoor campaign on a city street",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-campaigns"
+      ]
+    },
+    {
+      "id": "prop-content",
+      "type": "prop",
+      "name": "Product and social content objects",
+      "description": "Product and social content tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-media",
+      "type": "prop",
+      "name": "Cross-channel media campaign objects",
+      "description": "Cross-channel media campaign tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-search",
+      "type": "prop",
+      "name": "Search and website discovery objects",
+      "description": "A smartphone map beside a creative studio storefront",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-search"
+      ]
+    },
+    {
+      "id": "prop-digital",
+      "type": "prop",
+      "name": "Responsive web and digital products objects",
+      "description": "Responsive web and digital products tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-commerce",
+      "type": "prop",
+      "name": "Ecommerce fulfilment and customer experience objects",
+      "description": "Ceramic products being packed for an online order",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-commerce"
+      ]
+    },
+    {
+      "id": "prop-production",
+      "type": "prop",
+      "name": "Film photography and production objects",
+      "description": "A crew preparing lighting and a cinema camera on a film set",
+      "anchors": [
+        "user-selected composition",
+        "service activity and tangible output",
+        "plausible anatomy and materials"
+      ],
+      "asset_ids": [
+        "ref-production"
+      ]
+    },
+    {
+      "id": "prop-pr",
+      "type": "prop",
+      "name": "Press relations and brand events objects",
+      "description": "Press relations and brand events tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-data",
+      "type": "prop",
+      "name": "Analytics and optimization objects",
+      "description": "Analytics and optimization tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    },
+    {
+      "id": "prop-ai",
+      "type": "prop",
+      "name": "Automation and connected technology objects",
+      "description": "Automation and connected technology tangible outputs or equipment",
+      "anchors": [
+        "no humans",
+        "plausible service objects"
+      ],
+      "asset_ids": []
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scn-strategy",
+      "title": "Campaign strategy and research",
+      "summary": "A creative team reviewing research and visual references",
+      "environment_id": "elm-strategy",
+      "shot_ids": [
+        "sh-strategy"
+      ]
+    },
+    {
+      "id": "scn-brand",
+      "title": "Brand identity and packaging",
+      "summary": "Branded packaging and stationery with colour swatches held in hand",
+      "environment_id": "elm-brand",
+      "shot_ids": [
+        "sh-brand"
+      ]
+    },
+    {
+      "id": "scn-campaigns",
+      "title": "Outdoor advertising campaign",
+      "summary": "A coordinated, colorful outdoor campaign on a city street",
+      "environment_id": "elm-campaigns",
+      "shot_ids": [
+        "sh-campaigns"
+      ]
+    },
+    {
+      "id": "scn-content",
+      "title": "Product and social content",
+      "summary": "A ceramic cup and coffee arranged for an editorial still life",
+      "environment_id": "elm-content",
+      "shot_ids": [
+        "sh-content"
+      ]
+    },
+    {
+      "id": "scn-media",
+      "title": "Cross-channel media campaign",
+      "summary": "A product campaign coordinated across magazine, print and mobile formats",
+      "environment_id": "elm-media",
+      "shot_ids": [
+        "sh-media"
+      ]
+    },
+    {
+      "id": "scn-search",
+      "title": "Search and website discovery",
+      "summary": "A smartphone map beside a creative studio storefront",
+      "environment_id": "elm-search",
+      "shot_ids": [
+        "sh-search"
+      ]
+    },
+    {
+      "id": "scn-digital",
+      "title": "Responsive web and digital products",
+      "summary": "A product website displayed across a laptop, tablet and phone",
+      "environment_id": "elm-digital",
+      "shot_ids": [
+        "sh-digital"
+      ]
+    },
+    {
+      "id": "scn-commerce",
+      "title": "Ecommerce fulfilment and customer experience",
+      "summary": "Ceramic products being packed for an online order",
+      "environment_id": "elm-commerce",
+      "shot_ids": [
+        "sh-commerce"
+      ]
+    },
+    {
+      "id": "scn-production",
+      "title": "Film photography and production",
+      "summary": "A crew preparing lighting and a cinema camera on a film set",
+      "environment_id": "elm-production",
+      "shot_ids": [
+        "sh-production"
+      ]
+    },
+    {
+      "id": "scn-pr",
+      "title": "Press relations and brand events",
+      "summary": "Microphones arranged at an empty press briefing table",
+      "environment_id": "elm-pr",
+      "shot_ids": [
+        "sh-pr"
+      ]
+    },
+    {
+      "id": "scn-data",
+      "title": "Analytics and optimization",
+      "summary": "A magnifying loupe and pen beside an illustrative analytics report",
+      "environment_id": "elm-data",
+      "shot_ids": [
+        "sh-data"
+      ]
+    },
+    {
+      "id": "scn-ai",
+      "title": "Automation and connected technology",
+      "summary": "Connected network and server hardware in a technology workspace",
+      "environment_id": "elm-ai",
+      "shot_ids": [
+        "sh-ai"
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "id": "sh-strategy",
+      "scene_id": "scn-strategy",
+      "purpose": "Campaign strategy and research",
+      "subject_ids": [
+        "prop-strategy"
+      ],
+      "environment_id": "elm-strategy",
+      "action": "Optimize the user-selected image to WebP while preserving the entire reference composition and subjects; do not regenerate the scene.",
+      "composition": "Preserve the supplied 2048x1373 reference composition; planned web derivative 1600x1073.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+        "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+        "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+        "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+      ],
+      "references": [
+        {
+          "asset_id": "ref-strategy",
+          "role": "exact selected composition and subject reference"
+        }
+      ],
+      "exclusions": [
+        "Generic portraits disconnected from the service",
+        "Implausible anatomy, disconnected people or equipment",
+        "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "1600:1073",
+        "resolution": "1600x1073"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "motion": "Still image",
+      "selected_asset_id": "ast-strategy"
+    },
+    {
+      "id": "sh-brand",
+      "scene_id": "scn-brand",
+      "purpose": "Brand identity and packaging",
+      "subject_ids": [
+        "prop-brand"
+      ],
+      "environment_id": "elm-brand",
+      "action": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+      "composition": "Preserve the supplied 2048x1373 reference composition; planned web derivative 1600x1073.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+        "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+        "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+        "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+      ],
+      "references": [
+        {
+          "asset_id": "ref-brand",
+          "role": "exact selected composition and subject reference"
+        }
+      ],
+      "exclusions": [
+        "Generic portraits disconnected from the service",
+        "Implausible anatomy, disconnected people or equipment",
+        "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "motion": "Still image",
+      "selected_asset_id": "ast-brand",
+      "generation_params": {
+        "aspect_ratio": "3:2",
+        "count": 1,
+        "medias": [
+          {
+            "role": "image",
+            "value": "7828397a-e8b6-4373-a10b-67661e19f244"
+          }
+        ],
+        "model": "nano_banana_pro",
+        "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+        "resolution": "2k"
+      },
+      "generation_job": {
+        "adjustments": {
+          "medias[0].role": {
+            "reason": "Nano Banana Pro backend expects schema-key media roles",
+            "requested": "image",
+            "used": "image_references"
+          }
+        },
+        "index": 0,
+        "job_id": "86c8c07b-1d3b-40b6-a3b6-3c72048f8aee",
+        "status": "completed",
+        "id": "brand",
+        "input": 1,
+        "model": "nano_banana_2",
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "7828397a-e8b6-4373-a10b-67661e19f244"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+          "resolution": "2k"
+        },
+        "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_86c8c07b-1d3b-40b6-a3b6-3c72048f8aee.png",
+        "type": "image",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      }
+    },
+    {
+      "id": "sh-campaigns",
+      "scene_id": "scn-campaigns",
+      "purpose": "Outdoor advertising campaign",
+      "subject_ids": [
+        "prop-campaigns"
+      ],
+      "environment_id": "elm-campaigns",
+      "action": "Optimize the user-selected image to WebP while preserving the entire reference composition and subjects; do not regenerate the scene.",
+      "composition": "Preserve the supplied 2048x1373 reference composition; planned web derivative 1600x1073.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+        "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+        "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+        "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+      ],
+      "references": [
+        {
+          "asset_id": "ref-campaigns",
+          "role": "exact selected composition and subject reference"
+        }
+      ],
+      "exclusions": [
+        "Generic portraits disconnected from the service",
+        "Implausible anatomy, disconnected people or equipment",
+        "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "1600:1073",
+        "resolution": "1600x1073"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "motion": "Still image",
+      "selected_asset_id": "ast-campaigns"
+    },
+    {
+      "id": "sh-content",
+      "scene_id": "scn-content",
+      "purpose": "Product and social content",
+      "subject_ids": [
+        "prop-content"
+      ],
+      "environment_id": "elm-content",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally beautiful finished editorial coffee product still life photographed for a brand's content campaign. A glazed ivory ceramic espresso cup with a rich coffee crema sits on a small pale travertine plinth; beside it a plain folded cocoa-brown paper coffee pouch, two scattered coffee beans and a casually folded oatmeal linen napkin. A sliver of the saucer and deep chestnut shadows add depth. No text or labels on the pouch. Low warm morning window light rakes the real ceramic glaze, tiny coffee bubbles, paper seams and natural linen fibres. The cup is the dominant subject, not production equipment. Tasteful, rich, tactile, photorealistic, 85mm product photograph.",
+      "composition": "Preserve the complete 4:3 object-scene composition in responsive image frames.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally beautiful finished editorial coffee product still life photographed for a brand's content campaign. A glazed ivory ceramic espresso cup with a rich coffee crema sits on a small pale travertine plinth; beside it a plain folded cocoa-brown paper coffee pouch, two scattered coffee beans and a casually folded oatmeal linen napkin. A sliver of the saucer and deep chestnut shadows add depth. No text or labels on the pouch. Low warm morning window light rakes the real ceramic glaze, tiny coffee bubbles, paper seams and natural linen fibres. The cup is the dominant subject, not production equipment. Tasteful, rich, tactile, photorealistic, 85mm product photograph.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-content",
+      "provenance": {
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_shot_id": "sh-content",
+        "reuse": "Existing approved generated output; no new generation."
+      }
+    },
+    {
+      "id": "sh-media",
+      "scene_id": "scn-media",
+      "purpose": "Cross-channel media campaign",
+      "subject_ids": [
+        "prop-media"
+      ],
+      "environment_id": "elm-media",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A refined commercial photograph of one botanical-product campaign delivered in three real media formats on a light oak table: an open printed magazine with a full-page photograph of a single amber glass bottle on a sage background, one upright postcard-sized campaign proof with the same bottle photograph, and a smartphone resting vertically in a simple stand showing a matching full-screen bottle creative. Minimal deliberate page margins and broad geometric color blocks, no headlines, no paragraphs, no claims, no interface icons. All three placements show the same amber bottle, no people in any artwork. Real paper curl and thickness, plausible phone glass, gentle window light, 55mm three-quarter lens. Crisp focused central campaign materials, quiet natural background.",
+      "composition": "Preserve the complete 4:3 object-scene composition in responsive image frames.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A refined commercial photograph of one botanical-product campaign delivered in three real media formats on a light oak table: an open printed magazine with a full-page photograph of a single amber glass bottle on a sage background, one upright postcard-sized campaign proof with the same bottle photograph, and a smartphone resting vertically in a simple stand showing a matching full-screen bottle creative. Minimal deliberate page margins and broad geometric color blocks, no headlines, no paragraphs, no claims, no interface icons. All three placements show the same amber bottle, no people in any artwork. Real paper curl and thickness, plausible phone glass, gentle window light, 55mm three-quarter lens. Crisp focused central campaign materials, quiet natural background.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-media",
+      "provenance": {
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_shot_id": "sh-media",
+        "reuse": "Existing approved generated output; no new generation."
+      }
+    },
+    {
+      "id": "sh-search",
+      "scene_id": "scn-search",
+      "purpose": "Search and website discovery",
+      "subject_ids": [
+        "prop-search"
+      ],
+      "environment_id": "elm-search",
+      "action": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+      "composition": "Preserve the supplied 2048x1373 reference composition; planned web derivative 1600x1073.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+        "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+        "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+        "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+      ],
+      "references": [
+        {
+          "asset_id": "ref-search",
+          "role": "exact selected composition and subject reference"
+        }
+      ],
+      "exclusions": [
+        "Generic portraits disconnected from the service",
+        "Implausible anatomy, disconnected people or equipment",
+        "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "motion": "Still image",
+      "selected_asset_id": "ast-search",
+      "generation_params": {
+        "aspect_ratio": "3:2",
+        "count": 1,
+        "medias": [
+          {
+            "role": "image",
+            "value": "4f2d7e66-9b3d-452e-9465-b4d2e2c897e3"
+          }
+        ],
+        "model": "nano_banana_pro",
+        "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+        "resolution": "2k"
+      },
+      "generation_job": {
+        "adjustments": {
+          "medias[0].role": {
+            "reason": "Nano Banana Pro backend expects schema-key media roles",
+            "requested": "image",
+            "used": "image_references"
+          }
+        },
+        "index": 2,
+        "job_id": "cb9c874f-5082-4ef9-a6e5-7fbf34183765",
+        "status": "completed",
+        "id": "search",
+        "input": 3,
+        "model": "nano_banana_2",
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "4f2d7e66-9b3d-452e-9465-b4d2e2c897e3"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+          "resolution": "2k"
+        },
+        "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_cb9c874f-5082-4ef9-a6e5-7fbf34183765.png",
+        "type": "image",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      }
+    },
+    {
+      "id": "sh-digital",
+      "scene_id": "scn-digital",
+      "purpose": "Responsive web and digital products",
+      "subject_ids": [
+        "prop-digital"
+      ],
+      "environment_id": "elm-digital",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A photorealistic premium digital product design presentation: one open thin silver laptop, one landscape tablet in a low stand and one upright smartphone on a warm-white studio table. All three displays show the SAME thoughtfully composed ecommerce website for ceramic vessels, adapted to their screen sizes: a large photograph of an earthy terracotta vase, generous ivory margins, a small dark rectangular action button and a single simple heading 'Ceramics'. No other legible text and no human figures. Plausible device sizes and screen aspect ratios, correct hinges, no extra screens, uncluttered composition. Soft directional window light, subtle glass reflections of window geometry only, precise industrial product photography, 50mm lens.",
+      "composition": "Preserve the complete 4:3 object-scene composition in responsive image frames.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A premium product photograph of three entirely unbranded real devices on an ivory desk: one open silver laptop behind a low landscape tablet and one vertical phone. The laptop and tablet display a beautiful terracotta-vase still-life photograph within generous cream margins with one small solid forest-green rounded button below. The phone shows a matching closer crop of the same vase. All display layouts are image-led, with NO text, NO letters, NO navigation labels, NO icons or header bars anywhere. Device bezels and bodies are completely unmarked. Laptop keyboard softly out of focus and partly hidden behind the tablet. Physically correct screen orientation and supports. Real glass and metal, soft afternoon window light, grounded contact shadows, central composed grouping. A visually coherent responsive website art-direction presentation without any human subjects.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-digital",
+      "provenance": {
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_shot_id": "sh-digital",
+        "reuse": "Existing approved generated output; no new generation."
+      }
+    },
+    {
+      "id": "sh-commerce",
+      "scene_id": "scn-commerce",
+      "purpose": "Ecommerce fulfilment and customer experience",
+      "subject_ids": [
+        "prop-commerce"
+      ],
+      "environment_id": "elm-commerce",
+      "action": "Optimize the user-selected image to WebP while preserving the entire reference composition and subjects; do not regenerate the scene.",
+      "composition": "Preserve the supplied 2048x1373 reference composition; planned web derivative 1600x1073.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+        "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+        "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+        "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+      ],
+      "references": [
+        {
+          "asset_id": "ref-commerce",
+          "role": "exact selected composition and subject reference"
+        }
+      ],
+      "exclusions": [
+        "Generic portraits disconnected from the service",
+        "Implausible anatomy, disconnected people or equipment",
+        "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "1600:1073",
+        "resolution": "1600x1073"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "motion": "Still image",
+      "selected_asset_id": "ast-commerce"
+    },
+    {
+      "id": "sh-production",
+      "scene_id": "scn-production",
+      "purpose": "Film photography and production",
+      "subject_ids": [
+        "prop-production"
+      ],
+      "environment_id": "elm-production",
+      "action": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+      "composition": "Preserve the supplied 2048x1373 reference composition; planned web derivative 1600x1073.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "Use the user-selected mixed direction: six process/reference scenes that may include people or hands, and six object-led scenes.",
+        "Keep service outputs and activity visually central; people are permitted in the selected process scenes.",
+        "Illustrative imagery does not represent verified client work, actual Avalon staff or a real endorsement.",
+        "Preserve the supplied reference compositions and retain the six approved v3 object assets byte-for-byte."
+      ],
+      "references": [
+        {
+          "asset_id": "ref-production",
+          "role": "exact selected composition and subject reference"
+        }
+      ],
+      "exclusions": [
+        "Generic portraits disconnected from the service",
+        "Implausible anatomy, disconnected people or equipment",
+        "Invented microcopy, fake endorsements, performance claims or synthetic gloss"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "3:2",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "motion": "Still image",
+      "selected_asset_id": "ast-production",
+      "generation_params": {
+        "aspect_ratio": "3:2",
+        "count": 1,
+        "medias": [
+          {
+            "role": "image",
+            "value": "651f47ef-2ce2-4e46-a12f-a5fb4931e26e"
+          }
+        ],
+        "model": "nano_banana_pro",
+        "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+        "resolution": "2k"
+      },
+      "generation_job": {
+        "adjustments": {
+          "medias[0].role": {
+            "reason": "Nano Banana Pro backend expects schema-key media roles",
+            "requested": "image",
+            "used": "image_references"
+          }
+        },
+        "index": 1,
+        "job_id": "977e8210-f372-4b72-b49b-84aba1c25eee",
+        "status": "completed",
+        "id": "production",
+        "input": 2,
+        "model": "nano_banana_2",
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "651f47ef-2ce2-4e46-a12f-a5fb4931e26e"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+          "resolution": "2k"
+        },
+        "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_977e8210-f372-4b72-b49b-84aba1c25eee.png",
+        "type": "image",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      }
+    },
+    {
+      "id": "sh-pr",
+      "scene_id": "scn-pr",
+      "purpose": "Press relations and brand events",
+      "subject_ids": [
+        "prop-pr"
+      ],
+      "environment_id": "elm-pr",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A striking editorial photograph of an empty press-briefing table immediately before an event. Three professional black microphones on short real desk stands, one subtle glass water carafe and an empty clear tumbler sit on a long matte walnut table. Background is a beautifully lit warm plaster wall and a softly out-of-focus cream stage curtain, with no audience or chairs in view. Microphones are the unmistakable main subject, each mechanically plausible, discreet cables run onto the table and away. No microphone flags, labels, sponsor logos, portraits or text. Soft warm side light with natural shadows, a calm sophisticated event atmosphere, shallow but believable depth of field, 85mm editorial photograph.",
+      "composition": "Preserve the complete 4:3 object-scene composition in responsive image frames.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A striking editorial photograph of an empty press-briefing table immediately before an event. Three professional black microphones on short real desk stands, one subtle glass water carafe and an empty clear tumbler sit on a long matte walnut table. Background is a beautifully lit warm plaster wall and a softly out-of-focus cream stage curtain, with no audience or chairs in view. Microphones are the unmistakable main subject, each mechanically plausible, discreet cables run onto the table and away. No microphone flags, labels, sponsor logos, portraits or text. Soft warm side light with natural shadows, a calm sophisticated event atmosphere, shallow but believable depth of field, 85mm editorial photograph.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-pr",
+      "provenance": {
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_shot_id": "sh-pr",
+        "reuse": "Existing approved generated output; no new generation."
+      }
+    },
+    {
+      "id": "sh-data",
+      "scene_id": "scn-data",
+      "purpose": "Analytics and optimization",
+      "subject_ids": [
+        "prop-data"
+      ],
+      "environment_id": "elm-data",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. A close overhead commercial photograph of a thoughtful measurement report on a dark walnut desktop. Three substantial ivory sheets show large clean illustrative bar charts and one clear simple line graph in muted cobalt blue, orange and charcoal, with spacious margins and only the small heading 'Overview'. No numbers, percentages, performance claims, data labels or tiny tables; these are generic illustrative graphics, not real results. One sheet has a folded corner and two restrained pencil annotation marks. A metal ruler and closed navy notebook sit beside the reports, physically plausible overlap. Bright soft daylight across paper grain and ink, elegant editorial finance-report still life, realistic rather than digital render.",
+      "composition": "Preserve the complete 4:3 object-scene composition in responsive image frames.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Photorealistic editorial commercial photograph. Absolutely no people, hands, faces, body parts, silhouettes, human reflections, portraits, mannequins or figures anywhere. No watermark, no fictional device branding, no holograms or CGI gloss. Real materials, restrained natural light, physically grounded objects. A close atmospheric photograph of physical analytics work on a real walnut desk. The main sharply focused foreground object is a clear optical magnifying loupe resting beside a black fountain pen on the blank lower margin of a thick ivory report. Farther back on the same sheet, soft optical depth of field gently blurs a simple row of four cobalt-blue and orange vertical bars and one dark rising line; those printed illustrative graphic shapes remain recognizable as an analytics report but all detailed text is fully out of focus and unreadable. One closed dark-blue notebook sits behind the report. No metal ruler, no tiny chart labels, no axes numbers, no legible text, no performance claims. Paper fibres, convincing glass refraction, genuine pen metal and contact shadows, soft window light. Shallow focus commercial still life, 85mm macro lens, careful realistic photography.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-data",
+      "provenance": {
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_shot_id": "sh-data",
+        "reuse": "Existing approved generated output; no new generation."
+      }
+    },
+    {
+      "id": "sh-ai",
+      "scene_id": "scn-ai",
+      "purpose": "Automation and connected technology",
+      "subject_ids": [
+        "prop-ai"
+      ],
+      "environment_id": "elm-ai",
+      "action": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally detailed real-world photograph of a compact business automation server installation. Tight view of brushed black-metal server trays, a network switch with neatly connected short blue and grey Ethernet cables, physically plausible RJ45 connectors and fine ventilation grilles. A few restrained green status LEDs glow naturally, not neon. The cables follow clear practical routes into a tidy rack and their connectors are visibly seated; no floating connections, oversized wires or science-fiction equipment. Close side angle with shallow optical depth, central switch and connectors in sharp focus, soft daylight and neutral practical room light. Technical, elegant, believable hardware photography. No screens, words, people or robot forms.",
+      "composition": "Preserve the complete 4:3 object-scene composition in responsive image frames.",
+      "camera": "Photographic grounded perspective",
+      "lighting": "Plausible natural or practical light",
+      "copy": "",
+      "continuity": [
+        "No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots or human figures in artwork or on screens.",
+        "Synthetic illustrative scenes, not actual client deliverables or events."
+      ],
+      "references": [],
+      "exclusions": [
+        "People or human figures anywhere in the image",
+        "Generic office portraits",
+        "Holograms, synthetic gloss, implausible equipment or invented results"
+      ],
+      "output": {
+        "type": "image",
+        "aspect_ratio": "4:3",
+        "resolution": "2k"
+      },
+      "dependencies": [],
+      "status": "approved",
+      "generation_params": {
+        "aspect_ratio": "4:3",
+        "model": "flux_2",
+        "prompt": "Create a high-end commercial photograph for a creative agency service page. The subject is the service's tangible work, never a person. Photographic realism: physically plausible materials, small surface imperfections, coherent perspective and contact shadows, restrained color grading, natural optical depth. The main subject must remain recognizable in a centered near-square crop, while the full image is composed beautifully. No people, body parts, hands, faces, silhouettes, human reflections, portraits, mannequins, humanoid robots, or human figures in printed artwork or on screens. No floating objects, holograms, fantasy interfaces, visualized glowing networks, exaggerated CGI polish, watermarks, fake endorsements, performance claims or tiny invented text. An exceptionally detailed real-world photograph of a compact business automation server installation. Tight view of brushed black-metal server trays, a network switch with neatly connected short blue and grey Ethernet cables, physically plausible RJ45 connectors and fine ventilation grilles. A few restrained green status LEDs glow naturally, not neon. The cables follow clear practical routes into a tidy rack and their connectors are visibly seated; no floating connections, oversized wires or science-fiction equipment. Close side angle with shallow optical depth, central switch and connectors in sharp focus, soft daylight and neutral practical room light. Technical, elegant, believable hardware photography. No screens, words, people or robot forms.",
+        "resolution": "2k",
+        "variant": "max"
+      },
+      "motion": "Still image",
+      "selected_asset_id": "ast-ai",
+      "provenance": {
+        "source_manifest": "docs/creative/service-imagery-v3.json",
+        "source_shot_id": "sh-ai",
+        "reuse": "Existing approved generated output; no new generation."
+      }
+    }
+  ],
+  "screens": [],
+  "deliverables": [
+    {
+      "id": "del-strategy",
+      "type": "image",
+      "title": "Campaign strategy and research",
+      "channel": "web",
+      "source_ids": [
+        "sh-strategy"
+      ],
+      "aspect_ratio": "1600:1073",
+      "dimensions": "1600x1073",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A creative team reviewing research and visual references",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/strategy-v4.webp",
+      "bytes": 170688
+    },
+    {
+      "id": "del-brand",
+      "type": "image",
+      "title": "Brand identity and packaging",
+      "channel": "web",
+      "source_ids": [
+        "sh-brand"
+      ],
+      "aspect_ratio": "1600:1073",
+      "dimensions": "1600x1073",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Branded packaging and stationery with colour swatches held in hand",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/brand-v4.webp",
+      "bytes": 186048
+    },
+    {
+      "id": "del-campaigns",
+      "type": "image",
+      "title": "Outdoor advertising campaign",
+      "channel": "web",
+      "source_ids": [
+        "sh-campaigns"
+      ],
+      "aspect_ratio": "1600:1073",
+      "dimensions": "1600x1073",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A coordinated, colorful outdoor campaign on a city street",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/campaigns-v4.webp",
+      "bytes": 313606
+    },
+    {
+      "id": "del-content",
+      "type": "image",
+      "title": "Product and social content",
+      "channel": "web",
+      "source_ids": [
+        "sh-content"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A ceramic cup and coffee arranged for an editorial still life",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/content-v4.webp",
+      "bytes": 318876
+    },
+    {
+      "id": "del-media",
+      "type": "image",
+      "title": "Cross-channel media campaign",
+      "channel": "web",
+      "source_ids": [
+        "sh-media"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A product campaign coordinated across magazine, print and mobile formats",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/media-v4.webp",
+      "bytes": 136736
+    },
+    {
+      "id": "del-search",
+      "type": "image",
+      "title": "Search and website discovery",
+      "channel": "web",
+      "source_ids": [
+        "sh-search"
+      ],
+      "aspect_ratio": "1600:1073",
+      "dimensions": "1600x1073",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A smartphone map beside a creative studio storefront",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/search-v4.webp",
+      "bytes": 188800
+    },
+    {
+      "id": "del-digital",
+      "type": "image",
+      "title": "Responsive web and digital products",
+      "channel": "web",
+      "source_ids": [
+        "sh-digital"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A product website displayed across a laptop, tablet and phone",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/digital-v4.webp",
+      "bytes": 64704
+    },
+    {
+      "id": "del-commerce",
+      "type": "image",
+      "title": "Ecommerce fulfilment and customer experience",
+      "channel": "web",
+      "source_ids": [
+        "sh-commerce"
+      ],
+      "aspect_ratio": "1600:1073",
+      "dimensions": "1600x1073",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Ceramic products being packed for an online order",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/commerce-v4.webp",
+      "bytes": 109960
+    },
+    {
+      "id": "del-production",
+      "type": "image",
+      "title": "Film photography and production",
+      "channel": "web",
+      "source_ids": [
+        "sh-production"
+      ],
+      "aspect_ratio": "1600:1073",
+      "dimensions": "1600x1073",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A crew preparing lighting and a cinema camera on a film set",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/production-v4.webp",
+      "bytes": 99996
+    },
+    {
+      "id": "del-pr",
+      "type": "image",
+      "title": "Press relations and brand events",
+      "channel": "web",
+      "source_ids": [
+        "sh-pr"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Microphones arranged at an empty press briefing table",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/pr-v4.webp",
+      "bytes": 134362
+    },
+    {
+      "id": "del-data",
+      "type": "image",
+      "title": "Analytics and optimization",
+      "channel": "web",
+      "source_ids": [
+        "sh-data"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "A magnifying loupe and pen beside an illustrative analytics report",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/data-v4.webp",
+      "bytes": 72370
+    },
+    {
+      "id": "del-ai",
+      "type": "image",
+      "title": "Automation and connected technology",
+      "channel": "web",
+      "source_ids": [
+        "sh-ai"
+      ],
+      "aspect_ratio": "4:3",
+      "dimensions": "1600x1200",
+      "format": "webp",
+      "language": "en",
+      "alt_text": "Connected network and server hardware in a technology workspace",
+      "version": 4,
+      "status": "ready",
+      "path": "public/images/services/ai-v4.webp",
+      "bytes": 152314
+    }
+  ],
+  "rights_and_claims": [
+    {
+      "id": "right-retained-generated",
+      "category": "synthetic-media",
+      "description": "Six v3 generated service illustrations are reused without changes. Their original source URLs, selected jobs and generation parameters remain recorded in the asset and shot records.",
+      "evidence": "Previously requested and reviewed service illustrations; latest mixed direction retains these object scenes.",
+      "status": "confirmed"
+    },
+    {
+      "id": "right-user-references",
+      "category": "user-supplied-reference",
+      "description": "Six references supplied by the site owner are selected for display or targeted cleanup. No original generation history, model releases or identities are inferred from the files.",
+      "evidence": "User explicitly states a preference for mixed imagery like the attached references.",
+      "status": "confirmed"
+    },
+    {
+      "id": "right-disclosure",
+      "category": "synthetic-media-disclosure",
+      "description": "The existing AI-generated service imagery disclosure remains. Scenes illustrate capabilities and do not claim to depict actual client deliverables, Avalon personnel or endorsements.",
+      "evidence": "Disclosure remains in app/services/page.tsx.",
+      "status": "confirmed"
+    }
+  ],
+  "qa": {
+    "required_gates": [
+      "gate-brief",
+      "gate-direction",
+      "gate-look",
+      "gate-system",
+      "gate-rough",
+      "gate-finish",
+      "gate-delivery"
+    ],
+    "acceptance_threshold": 85,
+    "critical_failures": [],
+    "review_notes": [
+      "Latest user direction supersedes the earlier people-free brief: use a deliberate mix of the selected process scenes and approved object imagery.",
+      "Six selected reference scenes: strategy, brand, campaigns, search, commerce and production. Six retained object scenes: content, media, digital, PR, data and AI.",
+      "Brand cleanup must remove invented microcopy while retaining the selected packaging, hand and composition.",
+      "Production cleanup must remove the third disconnected person while preserving the two complete crew members and film equipment.",
+      "Search cleanup must remove the window service lettering while preserving the smartphone map, hand, storefront and composition.",
+      "Review native image framing at desktop and mobile breakpoints before approving delivery.",
+      "All twelve optimized v4 assets reviewed and available. Delivery remains pending responsive preview verification."
+    ]
+  },
+  "gates": [
+    {
+      "id": "gate-brief",
+      "name": "Brief",
+      "status": "approved",
+      "evidence": [
+        "Latest user instruction requests mixed images like the attached references; this explicitly allows the selected process scenes with people or hands."
+      ]
+    },
+    {
+      "id": "gate-direction",
+      "name": "Direction",
+      "status": "approved",
+      "evidence": [
+        "User-selected six process/reference scenes combine with six previously reviewed v3 object scenes; service relevance and photographic realism remain the governing requirements."
+      ]
+    },
+    {
+      "id": "gate-look",
+      "name": "Representative look",
+      "status": "approved",
+      "evidence": [
+        "User supplied the preferred reference images; six retained v3 object scenes passed the earlier visual review. Root inspected and accepted all three targeted edits against their supplied references."
+      ]
+    },
+    {
+      "id": "gate-system",
+      "name": "Production system",
+      "status": "approved",
+      "evidence": [
+        "All twelve versioned paths and matching alt texts are defined. Native aspect ratios are set per service. Three targeted Nano Banana Pro edits are quoted at six credits total; other assets are optimized or reused without generation."
+      ]
+    },
+    {
+      "id": "gate-rough",
+      "name": "Coherent rough",
+      "status": "approved",
+      "evidence": [
+        "Root and art-review agent reviewed the selected mixed set. Three targeted edit outputs were visually inspected and accepted: brand microcopy cleaned, disconnected production figure removed, search window lettering removed.",
+        "All twelve final WebP files were decoded and their dimensions and bytes recorded. The six reused object assets preserve the v3 outputs without regeneration."
+      ]
+    },
+    {
+      "id": "gate-finish",
+      "name": "Finish",
+      "status": "approved",
+      "evidence": [
+        "Root and art-review agent reviewed the selected mixed set. Three targeted edit outputs were visually inspected and accepted: brand microcopy cleaned, disconnected production figure removed, search window lettering removed.",
+        "All twelve final WebP files were decoded and their dimensions and bytes recorded. The six reused object assets preserve the v3 outputs without regeneration."
+      ]
+    },
+    {
+      "id": "gate-delivery",
+      "name": "Delivery",
+      "status": "planned",
+      "evidence": []
+    }
+  ],
+  "assumptions": [
+    "Latest mixed-image instruction supersedes the earlier no-human constraint.",
+    "Existing image disclosure and service capabilities remain unchanged.",
+    "The original provenance of supplied files is not inferred; source filenames and exact new edit jobs are recorded."
+  ],
+  "open_questions": [],
+  "risks": [],
+  "generation_notes": {
+    "provider": "Higgsfield",
+    "model": "nano_banana_pro (requested)",
+    "planned_new_edits": 3,
+    "quoted_total_credits": 6,
+    "edit_parameters": [
+      {
+        "id": "brand",
+        "index": 0,
+        "input": 1,
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "7828397a-e8b6-4373-a10b-67661e19f244"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+          "resolution": "2k"
+        },
+        "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged."
+      },
+      {
+        "id": "production",
+        "index": 1,
+        "input": 2,
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "651f47ef-2ce2-4e46-a12f-a5fb4931e26e"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+          "resolution": "2k"
+        },
+        "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects."
+      },
+      {
+        "id": "search",
+        "index": 2,
+        "input": 3,
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "4f2d7e66-9b3d-452e-9465-b4d2e2c897e3"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+          "resolution": "2k"
+        },
+        "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged."
+      }
+    ],
+    "jobs": [
+      {
+        "id": "brand",
+        "index": 0,
+        "input": 1,
+        "job_id": "86c8c07b-1d3b-40b6-a3b6-3c72048f8aee",
+        "model": "nano_banana_2",
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "7828397a-e8b6-4373-a10b-67661e19f244"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+          "resolution": "2k"
+        },
+        "prompt": "Make a precise photographic retouch of this exact reference. Preserve the composition, realistic hand holding the swatches, packaging, paper grain, colors, shadows, ceramic vase and circular brand marks. Remove every tiny contact detail, URL, phone number and small text from the lower green business cards, leaving only the large clean word AVALON and the circular mark. On the central cream menu retain the circular mark and the words GUEST MENU but remove all smaller text beneath that heading, leaving clean textured paper. On the coral soap box retain only SOAP and remove the tiny bottom text. Do not add or move any objects. Natural genuine photographic materials. The purpose is only to clean invented microcopy while keeping the selected photograph unchanged.",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_86c8c07b-1d3b-40b6-a3b6-3c72048f8aee.png",
+        "status": "completed",
+        "type": "image",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      },
+      {
+        "id": "production",
+        "index": 1,
+        "input": 2,
+        "job_id": "977e8210-f372-4b72-b49b-84aba1c25eee",
+        "model": "nano_banana_2",
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "651f47ef-2ce2-4e46-a12f-a5fb4931e26e"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+          "resolution": "2k"
+        },
+        "prompt": "Precisely retouch this exact studio photograph. Remove ONLY the third person: the small woman's head and partial hand visible in the gap between the two standing male crew members at center. Fill that small area with the continuous plain forest-green studio backdrop and correctly connected lighting stand where needed. The two standing men must remain exactly as photographed, naturally holding the diffusion frame. Keep both men's full anatomy, wardrobe, camera equipment, the large foreground cinema camera, lighting, cables, orange armchair with pink drape, composition and all colors unchanged. The final photo shows exactly two crew members with plausible complete anatomy, no third person or detached body parts. No redesign or new objects.",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_977e8210-f372-4b72-b49b-84aba1c25eee.png",
+        "status": "completed",
+        "type": "image",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      },
+      {
+        "id": "search",
+        "index": 2,
+        "input": 3,
+        "job_id": "cb9c874f-5082-4ef9-a6e5-7fbf34183765",
+        "model": "nano_banana_2",
+        "params": {
+          "aspect_ratio": "3:2",
+          "count": 1,
+          "medias": [
+            {
+              "role": "image",
+              "value": "4f2d7e66-9b3d-452e-9465-b4d2e2c897e3"
+            }
+          ],
+          "model": "nano_banana_pro",
+          "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+          "resolution": "2k"
+        },
+        "prompt": "Precisely retouch this exact photograph while preserving the hand, smartphone map, warm storefront, cobblestone street, books, greenery and entire composition. Remove ONLY the white lettering reading AVALON CREATIVE GROUP's services on the left lower part of the shop window. Restore natural plain clear glass there with the same believable reflections and interior visible through it. No replacement wording, logo or signage. Keep the geometric art print inside the window and all other objects exactly as they are. Real photographic surface detail and lighting unchanged.",
+        "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_103902_cb9c874f-5082-4ef9-a6e5-7fbf34183765.png",
+        "status": "completed",
+        "type": "image",
+        "requested_model": "nano_banana_pro",
+        "returned_model": "nano_banana_2"
+      }
+    ],
+    "direct_reference_optimizations": [
+      "strategy",
+      "campaigns",
+      "commerce"
+    ],
+    "byte_identical_v3_reuse": [
+      "ai",
+      "content",
+      "data",
+      "digital",
+      "media",
+      "pr"
+    ],
+    "prior_generation_history_manifest": "docs/creative/service-imagery-v3.json",
+    "retained_selected_jobs": [
+      {
+        "id": "content",
+        "index": 3,
+        "job_id": "9fb36203-93b7-4e1a-bbd0-9fdb852fbecf"
+      },
+      {
+        "id": "media",
+        "index": 4,
+        "job_id": "9fb951be-e977-46e2-96cd-a9aa2b95f74e"
+      },
+      {
+        "id": "digital",
+        "index": 14,
+        "job_id": "d4f05e44-469b-4369-ab7a-56a3980e2ebb"
+      },
+      {
+        "id": "pr",
+        "index": 9,
+        "job_id": "0d56e656-03f9-4e76-98d6-b17dc50cf4b8"
+      },
+      {
+        "id": "data",
+        "index": 16,
+        "job_id": "987ba6bc-52de-441d-9894-1f14fca37b85"
+      },
+      {
+        "id": "ai",
+        "index": 11,
+        "job_id": "f3dbf809-9faa-429c-b081-26b2af7d9f9b"
+      }
+    ],
+    "notes": "Three targeted edits only. No new generation is claimed for the six retained object scenes or three directly optimized references. Quoted cost is not a verified final account deduction.",
+    "requested_model": "nano_banana_pro",
+    "returned_model": "nano_banana_2",
+    "completed_new_edits": 3
+  },
+  "supersedes": "docs/creative/service-imagery-v3.json"
+}

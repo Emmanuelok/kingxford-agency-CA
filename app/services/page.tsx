@@ -26,18 +26,18 @@ const services = [
   { name:"AI, automation & MarTech", line:"Faster operations. Human responsibility.", items:["AI-readiness assessment","Use-case and ROI roadmap","Brand knowledge assistants","Workflow automation","Content supply chains","Creative QA systems","Hyper-personalization","Predictive media support","Conversational agents","MarTech selection","Governance and provenance","Team training and adoption"] },
 ];
 const serviceDetails = [
-  { id: "strategy", label: "Strategy", route: "brief", description: "Make confident decisions about your audience, your offer and your next market. We turn the questions behind your business into a clear direction for the work.", alt: "Research and strategy report books arranged with planning cards" },
-  { id: "brand", label: "Brand", route: "agents", description: "Create a distinctive identity that holds together everywhere your business appears. From the first impression to the smallest detail, make the brand unmistakably yours.", alt: "An embossed stationery and packaging suite arranged on a studio surface" },
-  { id: "campaigns", label: "Campaigns", route: "workflows", description: "Build a campaign around an idea with enough strength to live across formats. Connect the message, the visual direction and the channel plan from the beginning.", alt: "A coordinated series of product campaign posters on an empty brick wall" },
-  { id: "content", label: "Content", route: "content", description: "Give your audience a reason to pay attention and a reason to return. Plan, produce and adapt useful content around a consistent editorial direction.", alt: "A ceramic cup and coffee arranged for an editorial still life" },
-  { id: "media", label: "Media", route: "media", description: "Match your investment to the people, places and moments that matter. Keep creative, audience decisions, budget pacing and performance in the same conversation.", alt: "A product campaign coordinated across magazine, print and mobile formats" },
-  { id: "search", label: "Search", route: "search", description: "Make your business easier to find, understand and trust. Connect technical foundations, useful content and local visibility to the way your customers actually search.", alt: "A laptop showing search results beside an audit notebook" },
-  { id: "digital", label: "Digital", route: "search", description: "Design useful digital experiences around the people who use them. Join thoughtful interfaces with reliable engineering, accessible interactions and a clear path to action.", alt: "A product website displayed across a laptop, tablet and phone" },
-  { id: "commerce", label: "Commerce", route: "agents", description: "Connect the store, the customer journey and the relationship after purchase. Make each handoff between marketing, sales and service feel considered.", alt: "An open shipping mailer with linen and neatly folded tissue paper" },
-  { id: "production", label: "Production", route: "production", description: "Bring the idea into the real world with craft you can see and hear. Build the shot list, the production plan and the delivery formats around the story you need to tell.", alt: "A cinema camera, lenses and clapperboard arranged on a studio equipment table" },
-  { id: "pr", label: "PR & experience", route: "agents", description: "Develop the stories, relationships and experiences that earn attention. Plan the message and the response with the same care as the moment itself.", alt: "Microphones arranged at an empty press briefing table" },
-  { id: "data", label: "Data", route: "performance", description: "Separate useful signals from noise. Agree what success means, establish trustworthy measurement and turn the evidence into the next decision.", alt: "A magnifying loupe and pen beside an illustrative analytics report" },
-  { id: "ai", label: "AI & automation", route: "workflows", description: "Put automation to work where it can make a practical difference. Connect tools and workflows with clear responsibilities, traceable inputs and human review.", alt: "Connected network and server hardware in a technology workspace" },
+  { id: "strategy", label: "Strategy", route: "brief", description: "Make confident decisions about your audience, your offer and your next market. We turn the questions behind your business into a clear direction for the work.", alt: "A creative team reviewing research and visual references", imageAspectRatio: "1600 / 1073" },
+  { id: "brand", label: "Brand", route: "agents", description: "Create a distinctive identity that holds together everywhere your business appears. From the first impression to the smallest detail, make the brand unmistakably yours.", alt: "Branded packaging and stationery with colour swatches held in hand", imageAspectRatio: "1600 / 1073" },
+  { id: "campaigns", label: "Campaigns", route: "workflows", description: "Build a campaign around an idea with enough strength to live across formats. Connect the message, the visual direction and the channel plan from the beginning.", alt: "A coordinated, colorful outdoor campaign on a city street", imageAspectRatio: "1600 / 1073" },
+  { id: "content", label: "Content", route: "content", description: "Give your audience a reason to pay attention and a reason to return. Plan, produce and adapt useful content around a consistent editorial direction.", alt: "A ceramic cup and coffee arranged for an editorial still life", imageAspectRatio: "4 / 3" },
+  { id: "media", label: "Media", route: "media", description: "Match your investment to the people, places and moments that matter. Keep creative, audience decisions, budget pacing and performance in the same conversation.", alt: "A product campaign coordinated across magazine, print and mobile formats", imageAspectRatio: "4 / 3" },
+  { id: "search", label: "Search", route: "search", description: "Make your business easier to find, understand and trust. Connect technical foundations, useful content and local visibility to the way your customers actually search.", alt: "A smartphone map beside a creative studio storefront", imageAspectRatio: "1600 / 1073" },
+  { id: "digital", label: "Digital", route: "search", description: "Design useful digital experiences around the people who use them. Join thoughtful interfaces with reliable engineering, accessible interactions and a clear path to action.", alt: "A product website displayed across a laptop, tablet and phone", imageAspectRatio: "4 / 3" },
+  { id: "commerce", label: "Commerce", route: "agents", description: "Connect the store, the customer journey and the relationship after purchase. Make each handoff between marketing, sales and service feel considered.", alt: "Ceramic products being packed for an online order", imageAspectRatio: "1600 / 1073" },
+  { id: "production", label: "Production", route: "production", description: "Bring the idea into the real world with craft you can see and hear. Build the shot list, the production plan and the delivery formats around the story you need to tell.", alt: "A crew preparing lighting and a cinema camera on a film set", imageAspectRatio: "1600 / 1073" },
+  { id: "pr", label: "PR & experience", route: "agents", description: "Develop the stories, relationships and experiences that earn attention. Plan the message and the response with the same care as the moment itself.", alt: "Microphones arranged at an empty press briefing table", imageAspectRatio: "4 / 3" },
+  { id: "data", label: "Data", route: "performance", description: "Separate useful signals from noise. Agree what success means, establish trustworthy measurement and turn the evidence into the next decision.", alt: "A magnifying loupe and pen beside an illustrative analytics report", imageAspectRatio: "4 / 3" },
+  { id: "ai", label: "AI & automation", route: "workflows", description: "Put automation to work where it can make a practical difference. Connect tools and workflows with clear responsibilities, traceable inputs and human review.", alt: "Connected network and server hardware in a technology workspace", imageAspectRatio: "4 / 3" },
 ];
 
 export default function ServicesPage() {
@@ -56,7 +56,7 @@ export default function ServicesPage() {
           <div className={styles.heroNote}><span>12 disciplines</span><span>One connected creative group</span></div>
         </div>
         <figure className={styles.heroImage}>
-          <Image src="/images/services/strategy-v3.webp" alt={serviceDetails[0].alt} fill sizes="(max-width: 900px) 100vw, 50vw" priority />
+          <Image src="/images/services/strategy-v4.webp" alt={serviceDetails[0].alt} fill sizes="(max-width: 900px) 100vw, 50vw" priority />
           <figcaption><span>THE WAY WE WORK</span><p>Good questions.<br /><em>Extraordinary possibilities.</em></p></figcaption>
           <div className={styles.heroImageCorner} aria-hidden="true"><ArrowUpRight /></div>
         </figure>
@@ -80,8 +80,8 @@ export default function ServicesPage() {
           return (
             <article className={styles.service} id={detail.id} key={detail.id} aria-labelledby={`${detail.id}-title`}>
               <div className={styles.serviceInner}>
-                <figure className={styles.serviceImage}>
-                  <Image src={`/images/services/${detail.id}-v3.webp`} alt={detail.alt} fill sizes="(max-width: 900px) 100vw, 48vw" />
+                <figure className={styles.serviceImage} style={{ aspectRatio: detail.imageAspectRatio }}>
+                  <Image src={`/images/services/${detail.id}-v4.webp`} alt={detail.alt} fill sizes="(max-width: 900px) 100vw, 48vw" />
                   <figcaption><span>AVALON / {detail.label}</span><span>{String(index + 1).padStart(2, "0")}</span></figcaption>
                 </figure>
                 <div className={styles.serviceCopy}>

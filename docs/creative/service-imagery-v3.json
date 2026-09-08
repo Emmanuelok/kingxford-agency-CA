@@ -7,7 +7,8 @@
     "objective": "Show each service through tangible outputs, equipment and empty environments without any humans.",
     "audience": "Businesses exploring Avalon capabilities",
     "governing_idea": "The work is the subject.",
-    "status": "review"
+    "status": "review",
+    "lifecycle_status": "superseded"
   },
   "creative_system": {
     "visual_thesis": "Highly realistic still-life and environment photography whose focal subject is the service itself.",
@@ -1577,5 +1578,7 @@
     "attempts": 17,
     "selected_outputs": 12
   },
-  "supersedes": "docs/creative/service-imagery-revision.json"
+  "supersedes": "docs/creative/service-imagery-revision.json",
+  "superseded_by": "docs/creative/service-imagery-v4.json",
+  "supersession_note": "The user subsequently requested mixed service imagery using supplied references. This v3 manifest remains the historical record of the earlier people-free direction and retained object-scene generation provenance."
 }
