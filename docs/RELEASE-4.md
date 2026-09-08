@@ -50,7 +50,18 @@ Experiment planning uses an explicit hypothesis, baseline, lift and traffic assu
 
 ## Verification and release boundary
 
-At preview preparation, all 147 automated tests, the production build and route smoke checks passed. Focused lint checks also passed for the security and marketing fixes. The build gate checks the actual rendered route-explorer classes against the linked CSS rather than accepting unused legacy selectors. Preview browser review and final deployed-commit verification are pending at this checkpoint; source preparation alone does not mean the upgrade is live.
+All 147 automated tests, lint, the production build and route smoke checks passed, with successful CI checks. The build gate checks the actual rendered route-explorer classes against the linked CSS rather than accepting unused legacy selectors.
+
+Desktop browser review against preview commit `d07164f` verified these connected journeys:
+
+- A custom workflow generated five specialist stages and created five delivery tasks with an assigned owner.
+- A human-edited output became a separate edition, retained its source and marked four dependent outputs as stale.
+- An original editorial draft retained its planning date after native keyboard entry. CSV preview and import added dated items to the calendar; unified search opened the exact content result.
+- Editorial copy became a production asset, then a second version with ownership, rights and accessibility information. Four checks enabled named approval, and the recorded decision appeared in history.
+- A sourced two-row performance import calculated CAD 220 spend, CAD 1,000 revenue, five customers and 4.55 ROAS. Coverage gaps remained visible, and a follow-up action reached Delivery.
+- Supplied web copy rendered in the search and page previews. No application console errors were observed during these journeys.
+
+Responsive browser review against preview commit `f263c6f` covered the 390px phone overview, native custom-workflow selector, content composer, asset form and performance layouts. The Journey section also rendered at 768px tablet width. Review identified tablet homepage overflow in the objective switchboard; commit `11a7389a90dc2cfe71e18ed1b780bc3b7cce58ce` adds responsive grid sizing and keeps the decorative closing monogram within its section. Browser rechecking confirmed that the tablet document and viewport both measured 753px with the scrollbar present, the objective tabs switched correctly, and no application console errors appeared. The temporary responsive review page is removed from the release. Final production verification follows the merge and is recorded in the release handoff.
 
 An isolated PGlite PostgreSQL run passed 36 assertions covering own/cross-account writes, ownership reassignment, stale revisions, constraints, strict entitlements, anonymous/non-member denial, private quota access, account separation, interval limits, daily limits and UTC rollover. This uses simulated Auth claims and separate PostgreSQL roles; it is not verification of a hosted Supabase project or concurrent remote sessions. Instructions are in [LAUNCH.md](LAUNCH.md).
 
