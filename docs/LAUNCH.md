@@ -31,14 +31,30 @@ Record results against the exact Git commit that is deployed. CI should run the 
 The automated suite covers deterministic campaign calculations, workspace schema integrity, stale output rules, exports, and input validation. Server tests additionally exercise:
 
 - Incorrect privileged Supabase keys and insecure remote URLs are rejected before database access.
+- API paths, dashboard paths, query strings and fragments are rejected as Supabase project URLs; a valid trailing slash is normalized.
 - Avalon AI settings override legacy settings; an explicit disable cannot fall through to a legacy enable.
 - Editable user metadata and anonymous accounts cannot grant workspace access.
+- Revoked members retain a verified account identity so they can sign out, while cloud access remains denied.
 - Mutations require the exact site origin and the JSON media type.
 - Streamed request bodies are bounded by bytes, including multibyte text; malformed UTF-8 and JSON are rejected.
+- Stalled body streams return 408 after a 12-second read deadline; failed stream cancellation cannot delay a size-limit rejection.
 - Owner headers support old clients and the new Avalon naming.
 - Provider refusals, truncated drafts, tool responses, empty content, and oversized output are rejected without saving a draft.
 
 Automated unit tests do not replace a two-account database isolation test or an authenticated provider request. Never claim those passed merely because configuration variables exist.
+
+### Isolated database policy verification
+
+The setup proposal was executed in a fresh, in-memory PostgreSQL runtime using PGlite 0.5.8. All 36 assertions passed: own-account reads/writes, cross-account insert/update/delete denial, ownership reassignment denial, stale-revision updates, payload/revision constraints, strict boolean entitlements, anonymous/non-member denial, private quota protection, per-account quotas, the five-second interval, the daily cap, and UTC rollover. The test uses stub Auth identity functions and separate database roles. It verifies the SQL, not a hosted Supabase deployment, real account delivery, or concurrent connections.
+
+Reproduce without adding database tooling to the application dependencies:
+
+```sh
+npm install --prefix /tmp/avalon-db-check --no-save --ignore-scripts @electric-sql/pglite@0.5.8
+node scripts/verify-database.mjs /tmp/avalon-db-check
+```
+
+The verifier always creates an isolated in-memory database and reads `database/setup.sql`. It does not connect to or mutate a remote database. Run the hosted account-isolation acceptance checks below after the intended Supabase project is configured.
 
 ## Deployment settings
 
@@ -46,7 +62,7 @@ Use the existing Vercel project connected to `Emmanuelok/kingxford-agency-CA`, i
 
 Set `NEXT_PUBLIC_SITE_URL` to the exact canonical site origin. Configure preview deployments separately; production-origin configuration on another preview domain intentionally rejects mutations. Do not solve an origin mismatch by adding wildcard trusted origins or reflecting an arbitrary Origin header.
 
-The AI route has a 90-second function budget, with bounded database calls and a 45-second provider deadline. Database requests and sensitive API responses bypass caches. Keep the CDN no-store behavior when adding proxies or monitoring.
+The AI route has a 90-second function budget, with bounded database calls and a 45-second provider deadline. JSON body reads have a separate 12-second deadline. Database requests and sensitive API responses bypass caches, including legacy proxy cache headers. Keep the CDN no-store behavior when adding proxies or monitoring.
 
 The release sends standard anti-framing, MIME-sniffing, referrer, transport, opener, and restricted capability headers. Its CSP is a limited baseline, not a claim of complete XSS prevention. Preserve React escaping and do not render model responses with unfiltered HTML.
 
@@ -57,14 +73,16 @@ Use the agency's intended Supabase project; do not attach unrelated applications
 1. Review `database/setup.sql` on the selected project. It is an unapplied setup proposal, not proof that tables exist. Policy declarations are intended for first-time setup; use reviewed migrations for an existing database. Confirm Data API exposure/grants, RLS, and security advisors.
 2. Set server-only `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. Production database transport must use HTTPS.
 3. Configure invitation-only account provisioning, password recovery, verified delivery of invitation/recovery messages, Auth rate limits, and hosting protection for the login route. No public self-service signup is implemented.
-4. Grant `app_metadata.kingxford_access: true` through trusted administration. Keep the legacy entitlement name until a separate coordinated application-and-RLS migration is ready. Never use editable `user_metadata` for authorization.
+4. Grant `app_metadata.kingxford_access: true` as a JSON boolean through trusted administration. Both the server and setup policies reject the string `"true"`. Keep the legacy entitlement name until a separate coordinated application-and-RLS migration is ready. Never use editable `user_metadata` for authorization.
 5. Test invited accounts A and B through both the application and direct Data API: A cannot read, create, overwrite, or delete B's workspace; anonymous and non-member accounts are denied. Database JWT entitlement changes take effect when tokens refresh/expire; revocation operations must account for that delay.
 6. Save and reload a snapshot, test two concurrent saves (the stale revision must return 409), switch signed-in accounts during pending operations, verify export/recovery paths, and confirm revoked users can sign out.
 7. Establish database backups, retention, tested restore, customer deletion, access review, and incident ownership. Browser drafts are unencrypted local data; sign-out does not erase them.
 
-`GET /api/workspace/status` retains `cloud`, `ai`, `email`, and `userId` for existing clients and adds a timestamp and capability messages. `cloud` means configuration is valid. The detailed cloud state distinguishes `not-configured`, `sign-in-required`, `connected`, and `unavailable`. For an entitled signed-in user, `connected` means a read-only query to that user's workspace storage responded successfully. It does not certify write permissions or cross-account isolation. This probe never changes snapshots or consumes AI quota.
+`GET /api/workspace/status` retains `cloud`, `ai`, `email`, and `userId` for existing clients and returns `workspaceAccess`, a timestamp and capability messages. `cloud` means configuration is valid. The detailed cloud state distinguishes `not-configured`, `sign-in-required`, `access-denied`, `connected`, and `unavailable`. Revoked members retain their verified identity for sign-out, but `workspaceAccess` is false; clients must not infer entitlement from the presence of an email address. For an entitled signed-in user, `connected` means a read-only query to that user's workspace storage responded successfully. It does not certify write permissions or cross-account isolation. This probe never changes snapshots or consumes AI quota.
 
 Cloud saves are manual per-account snapshots, bounded to a 2 MB request. They are not real-time organization collaboration or organization-level roles.
+
+The review follows the current [Supabase server session guidance](https://supabase.com/docs/guides/auth/server-side/advanced-guide) and [explicit Data API grants requirement](https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically). The setup includes explicit table grants together with RLS; removing either layer changes the access model.
 
 ## Model drafting activation
 

@@ -27,16 +27,35 @@ const css = (await Promise.all(stylesheets.map((href) => {
 
 for (const selector of [
   ".avalon-nav", ".avalon-discipline-strip", ".avalon-launchpad-head",
-  ".avalon-launchpad-grid", ".avalon-launch-card", ".avalon-service-entry",
+  ".avalon-service-entry",
   ".avalon-footer", ".avalon-footer-wordmark",
 ]) {
   assert.ok(css.includes(selector), `Built homepage CSS is missing ${selector}`);
 }
-assert.match(css, /\.avalon-launchpad-grid\s*\{[^{}]*display:\s*grid\b/,
-  "Workspace launchpad must retain its grid layout");
 assert.match(css, /\.avalon-discipline-strip\s*\{[^{}]*display:\s*flex\b/,
   "Discipline strip must retain its flex layout");
-console.log("PASS built homepage styles: identity, launchpad, services and footer");
+
+// Resolve module class names from the actual rendered elements. A stale global
+// launchpad rule cannot make this check pass after the interactive replacement.
+function journeyDeclarations(part) {
+  const tag = html.match(new RegExp(`<[^>]+\\bdata-journey="${part}"[^>]*>`))?.[0];
+  assert.ok(tag, `Homepage must render the journey ${part}`);
+  const classes = tag.match(/class="([^"]+)"/)?.[1].split(/\s+/).filter(Boolean) ?? [];
+  assert.ok(classes.length && !classes.includes("undefined"), `Journey ${part} needs valid module classes`);
+  return classes.flatMap((className) => {
+    const escaped = className.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return [...css.matchAll(new RegExp(`\\.${escaped}\\s*\\{([^{}]*)\\}`, "g"))].map((match) => match[1]);
+  }).join(";");
+}
+const explorer = journeyDeclarations("explorer");
+assert.match(explorer, /background(?:-color)?:\s*[^;}]+/, "Journey explorer must retain its visible surface");
+assert.match(explorer, /(?:^|;)\s*color:\s*[^;}]+/, "Journey explorer must retain its foreground colour");
+for (const part of ["tabs", "canvas"]) {
+  const declarations = journeyDeclarations(part);
+  assert.match(declarations, /display:\s*grid\b/, `Journey ${part} must retain grid layout`);
+  assert.match(declarations, /grid-template-columns:\s*[^;}]+/, `Journey ${part} must retain responsive columns`);
+}
+console.log("PASS built homepage styles: identity, rendered journey explorer, services and footer");
 
 const servicesHtml = origin
   ? await fetchText("/services")

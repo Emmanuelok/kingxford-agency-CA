@@ -70,6 +70,8 @@ export function json(data: unknown, status = 200) {
     headers: {
       "Cache-Control": "private, no-store, max-age=0",
       "CDN-Cache-Control": "no-store",
+      "Pragma": "no-cache",
+      "Expires": "0",
       "X-Content-Type-Options": "nosniff",
       Vary: "Cookie",
     },

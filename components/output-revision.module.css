@@ -1,0 +1,22 @@
+.tabs { display:flex; flex-direction:column; min-height:0; gap:15px; }
+.tabList { display:flex; width:100%; height:auto !important; justify-content:flex-start; gap:6px; padding:5px !important; background:#eef2e6 !important; flex-wrap:wrap; }
+.tabList [role="tab"] { flex:initial; min-height:42px; padding:10px 15px; font-size:.87rem; font-weight:650; border-radius:6px; color:#526549; }
+.tabList [role="tab"][data-state="active"] { background:#fffef8; color:#203a20; box-shadow:0 1px 5px #20301b12; }
+.panel { min-height:0; display:grid; gap:16px; }
+.panel[hidden] { display:none; }
+.notice { margin:0; color:#5e6f52; font-size:.85rem; line-height:1.65; padding:13px 16px; background:#f1f5e8; border-left:3px solid #90a875; }
+.editor { display:grid; gap:16px; }
+.editor label { display:grid; gap:8px; font-size:.87rem; color:#405737; font-weight:700; }
+.editor textarea { min-height:240px; max-height:42dvh; line-height:1.65 !important; font-size:.92rem !important; resize:vertical; }
+.editorMeta { display:flex; align-items:center; justify-content:space-between; gap:15px; color:#728266; font-size:.76rem; }
+.editorMeta span { text-align:right; }
+.error { background:#fff0e8; border:1px solid #e4b5a4; color:#9b381c; padding:12px 15px; font-size:.87rem; border-radius:6px; }
+.compare { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.compare article { min-width:0; border:1px solid #d7e0cd; border-radius:7px; overflow:hidden; }
+.compare header { padding:15px; background:#eef2e6; border-bottom:1px solid #d7e0cd; }
+.compare header span { display:block; font-size:.7rem; color:#6d7d61; font-weight:750; letter-spacing:.04em; text-transform:uppercase; }
+.compare h3 { font-size:.96rem; line-height:1.5; margin:6px 0; color:#38522f; font-weight:700; }
+.compare header small { font-size:.72rem; color:#718064; }
+.compare pre { border:0 !important; margin:0 !important; border-radius:0 !important; max-height:350px !important; font-size:.84rem !important; }
+.modeLabel { display:inline-flex; padding:5px 8px; margin-bottom:9px; border:1px solid #c9d7b7; border-radius:5px; background:#eef4e2; color:#496036; font-size:.68rem; font-weight:750; }
+@media (max-width:650px) { .compare { grid-template-columns:1fr; } .compare pre { max-height:240px !important; } .tabList [role="tab"] { padding:9px 12px; font-size:.82rem; } .editor textarea { min-height:200px; } .editorMeta { align-items:flex-start; flex-direction:column; gap:6px; } .editorMeta span { text-align:left; } }

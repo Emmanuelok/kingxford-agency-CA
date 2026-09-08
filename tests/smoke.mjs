@@ -54,6 +54,7 @@ try {
     "/studio",
     "/studio/workbench",
     "/services",
+    "/projects",
     "/solutions",
     "/industries",
     "/about",

@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   ApiError, integrationConfig, hasWorkspaceAccess,
-  sameOrigin, readJson, ownerHeader, providerDraft,
+  sameOrigin, readJson, ownerHeader, providerDraft, workspaceIdentity,
 } from "../lib/server/guards.ts";
 
 const configured = {
@@ -37,12 +37,33 @@ test("Avalon AI settings retain legacy compatibility and explicit disable wins",
   assert.equal(integrationConfig({ ...configured, SUPABASE_URL: "" }).ai, false);
 });
 
+test("cloud configuration rejects API paths and query fragments, while normalizing the project origin", () => {
+  for (const suffix of ["/auth/v1", "/rest/v1", "/project/agency", "?apikey=wrong", "#settings"]) {
+    const config = integrationConfig({ ...configured, SUPABASE_URL: configured.SUPABASE_URL + suffix });
+    assert.equal(config.cloud, false);
+    assert.equal(config.ai, false);
+    assert.equal(config.cloudSupplied, true);
+  }
+  assert.equal(integrationConfig({ ...configured, SUPABASE_URL: " https://agency.supabase.co/ " }).url, "https://agency.supabase.co");
+  assert.equal(integrationConfig({ ...configured, SUPABASE_URL: "http://127.0.0.1:54321", NODE_ENV: "development" }).cloud, true);
+  assert.equal(integrationConfig({ ...configured, SUPABASE_URL: "http://127.0.0.1:54321", NODE_ENV: "production" }).cloud, false);
+});
+
 test("entitlement only accepts invited non-anonymous app metadata", () => {
   assert.equal(hasWorkspaceAccess(null), false);
   assert.equal(hasWorkspaceAccess({ app_metadata: { kingxford_access: true } }), true);
   assert.equal(hasWorkspaceAccess({ app_metadata: { kingxford_access: "true" } }), false);
   assert.equal(hasWorkspaceAccess({ user_metadata: { kingxford_access: true } }), false);
   assert.equal(hasWorkspaceAccess({ is_anonymous: true, app_metadata: { kingxford_access: true } }), false);
+});
+
+test("revoked accounts retain their verified identity for sign-out without regaining workspace access", () => {
+  const user = { id: "account-a", email: "owner@example.test", app_metadata: { kingxford_access: false } };
+  assert.deepEqual(workspaceIdentity(user), { userId: user.id, email: user.email, workspaceAccess: false });
+  assert.equal(workspaceIdentity({ ...user, app_metadata: { kingxford_access: true } }).workspaceAccess, true);
+  for (const candidate of [null, { ...user, is_anonymous: true }]) {
+    assert.deepEqual(workspaceIdentity(candidate), { userId: null, email: null, workspaceAccess: false });
+  }
 });
 
 test("write boundary enforces exact origin and JSON media type", () => {
@@ -77,6 +98,25 @@ test("streamed requests cannot evade body limit without Content-Length", async (
   });
   await assert.rejects(() => readJson(new Response(stream), 20), isStatus(413));
   assert.equal(cancelled, true);
+});
+
+test("stalled JSON bodies time out and cancel their input stream", { timeout: 1000 }, async () => {
+  let cancelled = false;
+  const stream = new ReadableStream({
+    start(controller) { controller.enqueue(new TextEncoder().encode('{"unfinished":')); },
+    cancel() { cancelled = true; },
+  });
+  await assert.rejects(() => readJson(new Response(stream), 1000, 20), isStatus(408));
+  assert.equal(cancelled, true);
+});
+
+test("a stalled cancellation cannot prevent rejecting an oversized body", { timeout: 1000 }, async () => {
+  const stalledStream = () => new ReadableStream({
+    start(controller) { controller.enqueue(new Uint8Array(32)); },
+    cancel() { return new Promise(() => {}); },
+  });
+  await assert.rejects(() => readJson(new Response(stalledStream()), 10), isStatus(413));
+  await assert.rejects(() => readJson(new Response(stalledStream(), { headers: { "Content-Length": "32" } }), 10), isStatus(413));
 });
 
 test("owner headers preserve compatibility and new header has precedence", () => {

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CHECKS, readiness, type Campaign } from "@/lib/campaign";
+import { ProductionAssetDesk } from "@/components/production-asset-desk";
 import {
   buildLaunchPackage, DELIVERY_PRESETS, deliveryCsv, deliverySummary,
   filterDeliveryTasks, isCalendarDate, localCalendarDate, offsetCalendarDate,
@@ -110,6 +111,8 @@ export function DeliveryStudio({ c, update, notify }: DeliveryActions) {
         <div className="ws-metric"><span>Approved content</span><strong>{summary.approvedContent}/{c.content.length}</strong><small>Matches the current brief revision</small></div>
         <div className="ws-metric"><span>Evidence ready</span><strong>{summary.verifiedEvidence}/{c.evidence.length}</strong><small>Source, owner and verification recorded</small></div>
       </div>
+
+      <ProductionAssetDesk c={c} update={update} notify={notify} />
 
       <div className="ws-two">
         <section className="ws-card">
