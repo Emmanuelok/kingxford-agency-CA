@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, CheckCheck, ChevronDown, CircleAlert, Download, GitBranch, ListChecks, Play, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,6 +20,7 @@ type Props = {
 const destinations: Record<string, Destination> = { brief: "brief", media: "media", proof: "proof", agents: "library", production: "production", measurement: "experiments", search: "search" };
 
 export function WorkflowStudio({ c, update, notify, go }: Props) {
+  const workflowSelectId = useId();
   const [pipelineId, setPipelineId] = useState<PipelineId>("full-launch");
   const [reuseCurrent, setReuseCurrent] = useState(true);
   const [requireApprovedDependencies, setRequireApprovedDependencies] = useState(false);
@@ -71,8 +72,16 @@ export function WorkflowStudio({ c, update, notify, go }: Props) {
   }
   return <>
     <div className="ws-panel-head"><div><span className="ws-eyebrow">CONNECTED WORKFLOWS</span><h2>From the first question<br />to a considered launch.</h2><p>{AGENTS.length} specialists share one brief. Choose an outcome or compose your own workflow, carry decisions between stages, then turn the plan into accountable delivery tasks.</p></div><span className="ws-workflow-badge"><GitBranch /> BRIEF V{c.revision}</span></div>
-    <div className="ws-pipeline-grid" role="group" aria-label="Choose a workflow">
-      {PIPELINES.map((pipeline, index) => <button key={pipeline.id} aria-pressed={pipelineId === pipeline.id} className={pipelineId === pipeline.id ? "is-selected" : ""} onClick={() => setPipelineId(pipeline.id)}><span>0{index + 1}<GitBranch /></span><h3>{pipeline.name}</h3><p>{pipeline.description}</p><b>{pipelineId === pipeline.id ? "Selected workflow" : "Preview workflow"}<ArrowRight /></b></button>)}
+    <div className={styles.mobileChooser}>
+      <label htmlFor={workflowSelectId}>Choose a workflow</label>
+      <select id={workflowSelectId} value={pipelineId} aria-describedby={`${workflowSelectId}-description`} onChange={(event) => {
+        const pipeline = PIPELINES.find((item) => item.id === event.target.value);
+        if (pipeline) setPipelineId(pipeline.id);
+      }}>{PIPELINES.map((pipeline) => <option key={pipeline.id} value={pipeline.id}>{pipeline.name}</option>)}</select>
+      <p id={`${workflowSelectId}-description`}>{plan.pipeline.description}</p>
+    </div>
+    <div className={styles.workflowGrid} role="group" aria-label="Choose a workflow">
+      {PIPELINES.map((pipeline, index) => <button key={pipeline.id} type="button" aria-pressed={pipelineId === pipeline.id} className={`${styles.workflowCard} ${pipelineId === pipeline.id ? styles.selectedWorkflow : ""}`} onClick={() => setPipelineId(pipeline.id)}><span className={styles.workflowCardHeading}><span className={styles.workflowIndex}>{String(index + 1).padStart(2, "0")}</span><span>{pipeline.name}</span>{pipelineId === pipeline.id ? <Check aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}</span><span className={styles.workflowDescription}>{pipeline.description}</span></button>)}
     </div>
     {pipelineId === "custom" && <section className="ws-card"><div className="ws-panel-head"><div><span className="ws-eyebrow">YOUR SPECIALIST TEAM</span><h3>Which outputs do you need?</h3><p>Choose the final deliverables. Their prerequisites are included automatically, so no stage loses its context.</p></div><span className="ws-status">{targets.length} selected · {plan.steps.length} connected stages</span></div><div className={styles.targetGrid}>{AGENTS.map((agent) => <label key={agent.id} className={targets.includes(agent.id) ? styles.selectedTarget : ""}><Checkbox checked={targets.includes(agent.id)} onCheckedChange={(checked) => setTargets((current) => checked ? [...current, agent.id] : current.filter((id) => id !== agent.id))} /><span><b>{agent.name}</b><small>{AGENT_DELIVERABLES[agent.id]}</small></span></label>)}</div></section>}
     <section className="ws-card ws-workflow-plan">
