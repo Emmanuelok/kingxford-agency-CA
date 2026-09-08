@@ -7,7 +7,7 @@
     "objective": "Give each service discipline a distinct realistic visual and connect the Services page to the homepage studio explorer.",
     "audience": "Prospective creative and marketing clients",
     "governing_idea": "The real materials, people and places behind connected creative work.",
-    "status": "verified"
+    "status": "superseded"
   },
   "creative_system": {
     "visual_thesis": "Contemporary editorial photography with believable human work, tactile materials and a shared forest, ivory, coral and cobalt palette.",
@@ -536,5 +536,6 @@
     "Scenes illustrate services; they are not photographs of actual Avalon employees, offices or clients."
   ],
   "open_questions": [],
-  "risks": []
+  "risks": [],
+  "superseded_by": "docs/creative/service-imagery-revision.json"
 }

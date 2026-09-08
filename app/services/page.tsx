@@ -26,18 +26,18 @@ const services = [
   { name:"AI, automation & MarTech", line:"Faster operations. Human responsibility.", items:["AI-readiness assessment","Use-case and ROI roadmap","Brand knowledge assistants","Workflow automation","Content supply chains","Creative QA systems","Hyper-personalization","Predictive media support","Conversational agents","MarTech selection","Governance and provenance","Team training and adoption"] },
 ];
 const serviceDetails = [
-  { id: "strategy", label: "Strategy", route: "brief", description: "Make confident decisions about your audience, your offer and your next market. We turn the questions behind your business into a clear direction for the work.", alt: "Four people collaborating at an oak table beside a research pinboard in a sunlit loft" },
-  { id: "brand", label: "Brand", route: "agents", description: "Create a distinctive identity that holds together everywhere your business appears. From the first impression to the smallest detail, make the brand unmistakably yours.", alt: "Coral and plum brand stationery and packaging on a cream table, arranged by a designer" },
-  { id: "campaigns", label: "Campaigns", route: "workflows", description: "Build a campaign around an idea with enough strength to live across formats. Connect the message, the visual direction and the channel plan from the beginning.", alt: "Oversized red and violet circular campaign artwork on a city brick wall at blue hour" },
-  { id: "content", label: "Content", route: "content", description: "Give your audience a reason to pay attention and a reason to return. Plan, produce and adapt useful content around a consistent editorial direction.", alt: "A tabletop camera setup photographing oranges, a cobalt vase and coral fabric" },
-  { id: "media", label: "Media", route: "media", description: "Match your investment to the people, places and moments that matter. Keep creative, audience decisions, budget pacing and performance in the same conversation.", alt: "Two media planners reviewing three screens in a dark green studio at dusk" },
-  { id: "search", label: "Search", route: "search", description: "Make your business easier to find, understand and trust. Connect technical foundations, useful content and local visibility to the way your customers actually search.", alt: "A hand holding a phone with a map in front of a warmly lit bookstore" },
-  { id: "digital", label: "Digital", route: "search", description: "Design useful digital experiences around the people who use them. Join thoughtful interfaces with reliable engineering, accessible interactions and a clear path to action.", alt: "A designer reviewing ivory, forest green and coral interfaces on a monitor and tablet" },
-  { id: "commerce", label: "Commerce", route: "agents", description: "Connect the store, the customer journey and the relationship after purchase. Make each handoff between marketing, sales and service feel considered.", alt: "A store owner packing ceramics in a cream box with coral tissue paper" },
-  { id: "production", label: "Production", route: "production", description: "Bring the idea into the real world with craft you can see and hear. Build the shot list, the production plan and the delivery formats around the story you need to tell.", alt: "Cinema camera and two crew members filming an amber chair and coral fabric on a green studio set" },
-  { id: "pr", label: "PR & experience", route: "agents", description: "Develop the stories, relationships and experiences that earn attention. Plan the message and the response with the same care as the moment itself.", alt: "Guests mingling beside a coral sculpture at a contemporary gallery event" },
-  { id: "data", label: "Data", route: "performance", description: "Separate useful signals from noise. Agree what success means, establish trustworthy measurement and turn the evidence into the next decision.", alt: "Printed line and bar charts on an oak desk, reviewed with a coral pencil" },
-  { id: "ai", label: "AI & automation", route: "workflows", description: "Put automation to work where it can make a practical difference. Connect tools and workflows with clear responsibilities, traceable inputs and human review.", alt: "A specialist reviewing workflow monitors in a technology studio lit by a warm desk lamp" },
+  { id: "strategy", label: "Strategy", route: "brief", description: "Make confident decisions about your audience, your offer and your next market. We turn the questions behind your business into a clear direction for the work.", alt: "Creative director reviewing printed concepts with a colleague in a naturally lit office" },
+  { id: "brand", label: "Brand", route: "agents", description: "Create a distinctive identity that holds together everywhere your business appears. From the first impression to the smallest detail, make the brand unmistakably yours.", alt: "Printmaker inspecting a geometric print on cream paper in a working print shop" },
+  { id: "campaigns", label: "Campaigns", route: "workflows", description: "Build a campaign around an idea with enough strength to live across formats. Connect the message, the visual direction and the channel plan from the beginning.", alt: "An illuminated orange-fruit campaign poster on a wet city street" },
+  { id: "content", label: "Content", route: "content", description: "Give your audience a reason to pay attention and a reason to return. Plan, produce and adapt useful content around a consistent editorial direction.", alt: "A content photographer documenting a baker presenting fresh sourdough in a clean bakery" },
+  { id: "media", label: "Media", route: "media", description: "Match your investment to the people, places and moments that matter. Keep creative, audience decisions, budget pacing and performance in the same conversation.", alt: "Media planner listening on an office telephone at a daylight-lit desk" },
+  { id: "search", label: "Search", route: "search", description: "Make your business easier to find, understand and trust. Connect technical foundations, useful content and local visibility to the way your customers actually search.", alt: "Customer with a canvas bag entering an independent neighborhood bookshop" },
+  { id: "digital", label: "Digital", route: "search", description: "Design useful digital experiences around the people who use them. Join thoughtful interfaces with reliable engineering, accessible interactions and a clear path to action.", alt: "A participant using a phone during a one-to-one usability research session" },
+  { id: "commerce", label: "Commerce", route: "agents", description: "Connect the store, the customer journey and the relationship after purchase. Make each handoff between marketing, sales and service feel considered.", alt: "Shop owner wrapping a linen garment in kraft paper for an online order" },
+  { id: "production", label: "Production", route: "production", description: "Bring the idea into the real world with craft you can see and hear. Build the shot list, the production plan and the delivery formats around the story you need to tell.", alt: "A cinematographer operating a professional camera on a tripod during a location shoot" },
+  { id: "pr", label: "PR & experience", route: "agents", description: "Develop the stories, relationships and experiences that earn attention. Plan the message and the response with the same care as the moment itself.", alt: "Two guests having a candid conversation at a small gallery event" },
+  { id: "data", label: "Data", route: "performance", description: "Separate useful signals from noise. Agree what success means, establish trustworthy measurement and turn the evidence into the next decision.", alt: "An analyst comparing a printed report with notes at her workstation" },
+  { id: "ai", label: "AI & automation", route: "workflows", description: "Put automation to work where it can make a practical difference. Connect tools and workflows with clear responsibilities, traceable inputs and human review.", alt: "Software specialist working on a laptop beside a studio window" },
 ];
 
 export default function ServicesPage() {
@@ -56,7 +56,7 @@ export default function ServicesPage() {
           <div className={styles.heroNote}><span>12 disciplines</span><span>One connected creative group</span></div>
         </div>
         <figure className={styles.heroImage}>
-          <Image src="/images/services/strategy.webp" alt={serviceDetails[0].alt} fill sizes="(max-width: 900px) 100vw, 50vw" priority />
+          <Image src="/images/services/strategy-v2.webp" alt={serviceDetails[0].alt} fill sizes="(max-width: 900px) 100vw, 50vw" priority />
           <figcaption><span>THE WAY WE WORK</span><p>Good questions.<br /><em>Extraordinary possibilities.</em></p></figcaption>
           <div className={styles.heroImageCorner} aria-hidden="true"><ArrowUpRight /></div>
         </figure>
@@ -81,7 +81,7 @@ export default function ServicesPage() {
             <article className={styles.service} id={detail.id} key={detail.id} aria-labelledby={`${detail.id}-title`}>
               <div className={styles.serviceInner}>
                 <figure className={styles.serviceImage}>
-                  <Image src={`/images/services/${detail.id}.webp`} alt={detail.alt} fill sizes="(max-width: 900px) 100vw, 48vw" />
+                  <Image src={`/images/services/${detail.id}-v2.webp`} alt={detail.alt} fill sizes="(max-width: 900px) 100vw, 48vw" />
                   <figcaption><span>AVALON / {detail.label}</span><span>{String(index + 1).padStart(2, "0")}</span></figcaption>
                 </figure>
                 <div className={styles.serviceCopy}>

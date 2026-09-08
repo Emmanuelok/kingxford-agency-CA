@@ -1,0 +1,546 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "avalon-service-imagery-2026-09-08",
+    "name": "Avalon documentary service imagery",
+    "mode": "image-production",
+    "objective": "Replace all twelve service images after user rejected artificial staging, malformed anatomy and fabricated screens.",
+    "status": "verified"
+  },
+  "creative_system": {
+    "visual_thesis": "Candid people, real materials and ordinary working places photographed with natural light.",
+    "anti_goals": [
+      "Coordinated coral/green props and synthetic stock styling",
+      "Malformed anatomy or equipment",
+      "Invented legible interfaces, claims, data or client evidence"
+    ],
+    "composition": "Photographic 4:3 masters with subjects positioned for responsive crops.",
+    "lighting": "Natural window light or plausible practical lighting.",
+    "typography": "Live HTML captions and service descriptions.",
+    "invariants": [
+      "Illustrative generated scenes, not actual staff or client photographs",
+      "Screens oblique, hidden or defocused when exact content would be fabricated"
+    ]
+  },
+  "assets": [
+    {
+      "id": "ast-strategy",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041719_625224ae-4c1a-4bc5-98ef-e4ff65e87341.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Candid medium-wide photograph of one female creative director, about forty, in a charcoal cotton sweater, quietly reviewing three large printed photographs and pencilled notes on a modest oak meeting table. She is seated in side profile, chin resting naturally in one hand, other hand relaxed on the table. A second colleague is softly out of focus across the table, listening, with only their shoulder and notebook visible. Real small design consultancy office with off-white plaster walls and a single north-facing window on an overcast day, worn oak floor, radiator, a chair with a coat draped on it. Soft flat window daylight, natural unretouched skin texture and flyaway hairs. Shot at seated eye level with a 50mm lens, f/4, documentary magazine photograph; intimate concentration rather than a group brainstorming pose. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/strategy-v2.webp",
+      "status": "verified",
+      "job_id": "625224ae-4c1a-4bc5-98ef-e4ff65e87341",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-brand",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041931_d31fa982-5309-473e-8015-7f5362c2ce6d.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Editorial close photograph in a working letterpress print shop. One adult printmaker's forearms, in rolled-up faded blue sleeves, hold the corners of a freshly printed cream sheet at waist height. The sheet contains one broad vermilion circle and a simple deep-navy geometric motif, no words or logos. A real metal inking roller and a few irregular paper offcuts sit on the worn workbench behind, heavy printing press softly out of focus. Honest ink texture, paper fibres, smudged work surface, natural side-window daylight. 50mm lens, f/4, quiet documentary craft photograph, not a perfectly arranged stationery mockup. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/brand-v2.webp",
+      "status": "verified",
+      "job_id": "d31fa982-5309-473e-8015-7f5362c2ce6d",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-campaigns",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041931_122352d8-c4ac-4672-9d20-5cca39787711.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Street photograph at eye level on a wet early-evening city sidewalk. A single ordinary illuminated vertical bus-shelter advertising panel shows a beautifully simple art-directed campaign photograph of one fresh orange cut in half on a saturated cobalt-blue background, with absolutely no type. One pedestrian in a charcoal coat is walking past at the far left, slightly motion blurred. Actual glass reflections, aluminium panel frame with rain spots, natural pavement scuffs, background storefronts gently out of focus. Blue hour ambient light mixed with a warm shop window, realistic dynamic range, 50mm lens. Advertising seen in a real street, not a futuristic neon city or a wall of floating billboards. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/campaigns-v2.webp",
+      "status": "verified",
+      "job_id": "122352d8-c4ac-4672-9d20-5cca39787711",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-content",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_042407_0805fc48-8049-4b82-8123-93d5aab4cc3b.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Behind-the-scenes editorial photograph in a bright, impeccably clean independent bakery. One female content photographer wearing a plain navy T-shirt stands in the near left foreground in side profile, operating a real compact mirrorless camera with both hands at eye level. At the centre of the frame a Black male baker in a clean cream apron places one freshly baked round sourdough loaf on a simple wooden serving board using both hands. He is setting the finished loaf down, not kneading it, not cutting it. The two adults and their hands are clearly separated, neither looks at the viewer. Clean white glazed subway tiles, tidy stainless-steel bench, one ordinary rack with several finished loaves, warm natural daylight from a large window. No stains, dirt, distressed walls, brand names or readable writing. 35mm documentary photograph at f/4, realistic unretouched skin, flour lightly dusting only the wooden board, natural camera mechanics. Precise real-world composition and material texture; lively craft with no CGI sheen.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/content-v2.webp",
+      "status": "verified",
+      "job_id": "0805fc48-8049-4b82-8123-93d5aab4cc3b",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-media",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_042408_5819085e-14ff-4506-8ea2-cb65c15b2fa6.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Candid editorial portrait photograph of a South Asian female media planner in her late thirties, speaking on a small black office telephone while listening attentively, seated at a clean contemporary oak desk. Frame her at eye level from the desk corner, waist up, face in three-quarter profile. She wears a textured charcoal blazer over a plain light shirt; natural skin texture, stray hairs, focused everyday expression. One closed plain unbranded silver laptop, a closed linen notebook and a pen are on the desk. No open screens, magazines, newspapers, printed writing, charts, logos or data anywhere. Soft overcast window daylight fills a well-maintained small agency office; off-white walls, blurred city window and simple shelving. Real professional editorial photography, subtle grain and restrained contrast, 50mm lens at f/4. A thoughtful media negotiation during a real workday. Main subject near center for responsive crop. No CGI, no glam retouching, no coordinated colorful props.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/media-v2.webp",
+      "status": "verified",
+      "job_id": "5819085e-14ff-4506-8ea2-cb65c15b2fa6",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-search",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041931_12c716d2-8c06-4d18-8c21-009438d5458c.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Natural editorial photograph of a neighborhood independent bookshop entrance on an overcast morning. Framed close enough to see a warm wooden door, two book-filled display shelves behind the glass, a small brass door handle, a simple leafy plant beside the threshold. A person with a canvas tote is entering, seen from behind. Signboard outside is a solid warm ivory surface without lettering; book spines are softly out of focus, no readable titles. Observational 50mm street photograph, believable reflections and weathered wood, mixed soft daylight and ordinary warm shop lighting. The feeling is being discovered in your own neighborhood, no phone mockups or fake search screens. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/search-v2.webp",
+      "status": "verified",
+      "job_id": "12c716d2-8c06-4d18-8c21-009438d5458c",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-digital",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041931_e1c6500b-f1c6-43ec-82df-ec65c13e8695.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Candid editorial photograph of a small usability research session at a normal caf\u00e9-height wooden table in a quiet office. One adult woman in a charcoal cardigan holds a real smartphone naturally in both hands and concentrates on using it; the phone is shown from the back. A researcher opposite is partly visible with a notebook, listening. The participant is central and clearly separated from the background, both hands and device anatomically plausible. Window daylight on natural facial texture, simple off-white walls, normal chairs, restrained everyday colors, 50mm lens at f/4. The photograph is about a person using a digital product, with no fabricated UI visible. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/digital-v2.webp",
+      "status": "verified",
+      "job_id": "e1c6500b-f1c6-43ec-82df-ec65c13e8695",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-commerce",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041950_c311f9ee-b3f3-4270-8e93-3d8c0aa38ba9.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Documentary medium photograph of a small independent shop owner in a faded denim shirt packing an order at a real wooden counter. Waist-up side view, hands folding one sheet of plain kraft paper around a cream linen garment inside a corrugated cardboard box. One unlabelled roll of paper tape and two folded garments nearby. Background shelves hold a few ordinary parcels, softly out of focus. Daylight from a shopfront window, natural skin texture, believable cardboard creases and fabric wrinkles, candid concentration. 50mm f/4, magazine small-business profile photograph. Avoid immaculate staged pastel packaging, confetti, text, logos or floating objects. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/commerce-v2.webp",
+      "status": "verified",
+      "job_id": "c311f9ee-b3f3-4270-8e93-3d8c0aa38ba9",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-production",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041950_5b2be9f0-8411-4167-abeb-a820814ce22d.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "A grounded behind-the-scenes photograph of a professional film camera on a heavy tripod on a real location shoot in a modest wood-paneled room. One adult camera operator in a black cotton jacket stands beside it, seen in three-quarter profile concentrating on the viewfinder; a single out-of-focus crew shoulder near the frame edge. Plausible camera rig with matte box, short lens, monitor and securely routed cables. One practical table lamp illuminates the empty set beyond, a folded sound blanket and coiled cable in the corner. Side window light mixed with the warm lamp, gentle grain, cinematic but not stylized. 35mm lens, realistic equipment mechanics, no logos and no fantastical colored studio cyclorama. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/production-v2.webp",
+      "status": "verified",
+      "job_id": "5b2be9f0-8411-4167-abeb-a820814ce22d",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-pr",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041950_186bd2c6-6d9b-4dce-9c55-8861be9d2b5b.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Candid editorial photograph at a small contemporary gallery opening. Three adult guests in their thirties and fifties in ordinary smart clothes have a relaxed conversation, captured side-on rather than facing the camera. Foreground one woman in a black blazer listening, another in a cream cotton shirt speaking; a third person softly focused. One large abstract black-and-white photograph on the white wall behind them, a tall real window, no stage or banners. Natural hand gestures with hands mostly below waist and outside the crop. Soft late-afternoon daylight with warm ceiling track lighting, honest skin texture, 50mm lens, documentary event photography, no glamorous synthetic crowd or repeated faces. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/pr-v2.webp",
+      "status": "verified",
+      "job_id": "186bd2c6-6d9b-4dce-9c55-8861be9d2b5b",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-data",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_041950_e710b67d-25c4-4b2b-bfb8-721151279856.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Documentary editorial photograph of a female analyst in her forties, wearing ordinary thin-framed spectacles and a dark blue cotton shirt, comparing a printed report with pencilled notes at a quiet workstation. Medium side-profile composition, she looks down at the report held in one hand, with the other hand relaxed beside a notebook. Printed pages are angled away and shallow-focus so there is no readable data or invented chart. One ordinary monitor is seen from its back in the background. Overcast window light, natural skin texture, honest slight paper curl and everyday desk wear, 50mm lens at f/4. Focus on concentrated human judgement, no over-designed charts or glowing analytics. Photograph for a creative agency website. Observational editorial photography, believable ordinary working environment with thoughtful composition. Neutral white balance, gentle realistic contrast, true material textures, subtle sensor grain, imperfect everyday details. No CGI, no illustration, no plastic skin, no teal-orange grading, no bloom, no staged smiles, no futuristic interfaces, no impossible equipment, no invented tiny readable text or logos. Keep the main subject around the middle of the frame so a centered portrait crop also works.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/data-v2.webp",
+      "status": "verified",
+      "job_id": "e710b67d-25c4-4b2b-bfb8-721151279856",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    },
+    {
+      "id": "ast-ai",
+      "type": "image",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_3ChJ2tLVG7i2Ag6ynWBf8Xmyz6a/hf_20260908_042407_13966ecd-b7c6-4f3d-bebd-6a946cdf9bfa.png",
+      "role": "service-illustration",
+      "rights_status": "generated",
+      "description": "Candid high-quality documentary photograph of a Black male software specialist in his thirties working on a single open laptop at a clean contemporary oak desk next to a large window. The camera is behind his left shoulder, showing the back of his head and a slight side profile; he faces directly toward the laptop in front of him, hands naturally resting on its keyboard. Laptop screen faces him and the camera but is deliberately far outside the shallow focus plane, just a softly blurred ordinary light application window with no legible content. No separate monitor and no desktop computer tower. A closed plain linen notebook, pen and one simple dark desk lamp are the only other desk objects. Well-maintained quiet studio office with white walls and blurred bookshelves; real soft morning window light, neutral color, natural skin and short curly hair texture. 50mm lens at f/2.8, thoughtful editorial composition, main subject centered. A professional working moment, no futuristic graphics, no garbled text, no brand logos, no heavy surface damage, no glow or cinematic color filters.",
+      "requested_model": "flux_2",
+      "parameters": {
+        "variant": "max",
+        "resolution": "2k",
+        "aspect_ratio": "4:3"
+      },
+      "local_path": "public/images/services/ai-v2.webp",
+      "status": "verified",
+      "job_id": "13966ecd-b7c6-4f3d-bebd-6a946cdf9bfa",
+      "reported_model": "flux_2",
+      "derivative": {
+        "width": 1600,
+        "height": 1200,
+        "format": "webp",
+        "quality": 86
+      }
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "del-strategy",
+      "type": "image",
+      "title": "strategy service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-strategy"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-brand",
+      "type": "image",
+      "title": "brand service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-brand"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-campaigns",
+      "type": "image",
+      "title": "campaigns service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-campaigns"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-content",
+      "type": "image",
+      "title": "content service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-content"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-media",
+      "type": "image",
+      "title": "media service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-media"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-search",
+      "type": "image",
+      "title": "search service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-search"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-digital",
+      "type": "image",
+      "title": "digital service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-digital"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-commerce",
+      "type": "image",
+      "title": "commerce service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-commerce"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-production",
+      "type": "image",
+      "title": "production service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-production"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-pr",
+      "type": "image",
+      "title": "pr service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-pr"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-data",
+      "type": "image",
+      "title": "data service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-data"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    },
+    {
+      "id": "del-ai",
+      "type": "image",
+      "title": "ai service image",
+      "channel": "web",
+      "source_ids": [
+        "ast-ai"
+      ],
+      "aspect_ratio": "4:3",
+      "format": "webp",
+      "version": 2,
+      "status": "verified"
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-look",
+      "name": "Representative look",
+      "status": "approved",
+      "evidence": [
+        "Strategy pilot 625224ae-4c1a-4bc5-98ef-e4ff65e87341 visually inspected: natural skin, plausible hands, ordinary light and real paper detail."
+      ]
+    },
+    {
+      "id": "gate-finish",
+      "name": "Full set visual review",
+      "status": "approved",
+      "evidence": [
+        "All twelve selected images inspected at full resolution.",
+        "Media, content and AI first attempts rejected; targeted replacements inspected and accepted.",
+        "Natural materials, anatomy, camera equipment and human-object interactions reviewed."
+      ]
+    },
+    {
+      "id": "gate-delivery",
+      "name": "Delivery",
+      "status": "approved",
+      "evidence": [
+        "Vercel preview b87089448ce9326cd9626d8a587f09f9234e5a4f reviewed in the browser at 1348px desktop width and 390px/768px iframe widths.",
+        "Footer wordmark visually checked at desktop, mobile and tablet widths: optical spacing balanced, multiple color regions in all six letters, no page overflow.",
+        "Services hero and Content/Production crops inspected on the deployed page; responsive Content crops remain readable and well framed.",
+        "All twelve service images loaded successfully from versioned v2 paths in the deployed browser.",
+        "No application browser console errors found during the preview review.",
+        "Lint, 97 regression tests, production build, smoke checks and GitHub Actions quality gates passed."
+      ]
+    }
+  ],
+  "rights_and_claims": [
+    {
+      "id": "right-generated-scenes",
+      "category": "synthetic-media",
+      "description": "User explicitly requested all service photographs to be revised. No reference likenesses or client endorsements. Existing website disclosure retained.",
+      "evidence": "Current user request",
+      "status": "documented"
+    }
+  ],
+  "qa": {
+    "required_gates": [
+      "gate-look",
+      "gate-finish",
+      "gate-delivery"
+    ],
+    "critical_failures": [],
+    "review_notes": [
+      "Original production scene contained disconnected-looking anatomy; the full original set was replaced.",
+      "Original artificial charts and screens replaced with human activities and physical craft.",
+      "Each new service image has a versioned filename to prevent stale image cache reuse."
+    ]
+  },
+  "generation_notes": {
+    "provider": "Higgsfield",
+    "model": "flux_2",
+    "variant": "max",
+    "quoted_credits_per_image": 6,
+    "planned_count": 12,
+    "planned_credits": 72,
+    "attempts": 15,
+    "successful_outputs": 15,
+    "selected_outputs": 12,
+    "quoted_total_credits": 90,
+    "rejected_job_ids": [
+      "2aae8307-bc8d-40fc-8458-bf31bde34277",
+      "88fc17cf-b17b-4119-99ab-796cd0ddb965",
+      "fd0be481-6d4e-4da5-9d88-3162b43f4cbc"
+    ]
+  },
+  "supersedes": "docs/creative/service-imagery.json"
+}
