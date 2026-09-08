@@ -5,7 +5,7 @@
     "name": "Avalon documentary service imagery",
     "mode": "image-production",
     "objective": "Replace all twelve service images after user rejected artificial staging, malformed anatomy and fabricated screens.",
-    "status": "visual-review-approved"
+    "status": "verified"
   },
   "creative_system": {
     "visual_thesis": "Candid people, real materials and ordinary working places photographed with natural light.",
@@ -492,8 +492,15 @@
     {
       "id": "gate-delivery",
       "name": "Delivery",
-      "status": "pending",
-      "evidence": []
+      "status": "approved",
+      "evidence": [
+        "Vercel preview b87089448ce9326cd9626d8a587f09f9234e5a4f reviewed in the browser at 1348px desktop width and 390px/768px iframe widths.",
+        "Footer wordmark visually checked at desktop, mobile and tablet widths: optical spacing balanced, multiple color regions in all six letters, no page overflow.",
+        "Services hero and Content/Production crops inspected on the deployed page; responsive Content crops remain readable and well framed.",
+        "All twelve service images loaded successfully from versioned v2 paths in the deployed browser.",
+        "No application browser console errors found during the preview review.",
+        "Lint, 97 regression tests, production build, smoke checks and GitHub Actions quality gates passed."
+      ]
     }
   ],
   "rights_and_claims": [
