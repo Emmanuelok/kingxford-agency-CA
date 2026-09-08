@@ -7,6 +7,7 @@ import {
 import {
   AGENT_DEPENDENCIES, PIPELINES, resolvePipelineAgents, planPipeline,
   executePipeline, qualityChecks, campaignIntelligence,
+  workflowTaskPlan, workflowManifest,
 } from "../lib/orchestration.ts";
 
 function campaign() {
@@ -89,20 +90,20 @@ test("forced regeneration replaces all downstream handoffs while retaining bound
 
 test("approval-gated workflows stop at the next dependency barrier", () => {
   const first = executePipeline(campaign(), "full-launch", { requireApprovedDependencies: true });
-  assert.deepEqual(first.runs.map((r) => r.agent), ["strategy"]);
+  assert.deepEqual(first.runs.map((r) => r.agent), ["research"]);
   assert.ok(first.blocked.length > 0);
   const stillPending = executePipeline(first.campaign, "full-launch", { requireApprovedDependencies: true });
   assert.equal(stillPending.runs.length, 0);
   const approved = approveRun(first.campaign, first.runs[0].id);
   const second = executePipeline(approved, "full-launch", { requireApprovedDependencies: true });
-  assert.deepEqual(second.runs.map((r) => r.agent), ["brand"]);
-  assert.ok(second.reused.includes("strategy"));
+  assert.deepEqual(second.runs.map((r) => r.agent), ["strategy"]);
+  assert.ok(second.reused.includes("research"));
 });
 
 test("strict workflows cannot silently reuse a cached downstream draft with unapproved inputs", () => {
   const c = executePipeline(campaign(), "creative-system").campaign;
   const plan = planPipeline(c, "creative-system", { requireApprovedDependencies: true });
-  assert.equal(plan.steps.find((step) => step.agent === "strategy").status, "reuse");
+  assert.equal(plan.steps.find((step) => step.agent === "research").status, "reuse");
   assert.equal(plan.steps.find((step) => step.agent === "brand").status, "blocked");
 });
 
@@ -132,7 +133,7 @@ test("same-revision upstream replacement recursively invalidates dependent appro
   assert.ok(readiness(c).stale > 1);
   assert.ok(!qualityChecks(c).find((check) => check.id === "approvals").passed);
   const refresh = executePipeline(c, "creative-system");
-  assert.deepEqual(refresh.reused, ["strategy"]);
+  assert.deepEqual(refresh.reused, ["research", "strategy"]);
   assert.equal(readiness(refresh.campaign).stale, 0);
 });
 
@@ -332,14 +333,84 @@ test("approval changes and task reordering alone do not create false source chan
 
 test("downstream workflow reports retain substantive upstream decisions and review runs last", () => {
   const c = campaign();
+  const research = runAgent(c, "research");
   const strategy = runAgent(c, "strategy");
   strategy.text = "# Strategy\n\n## Strategic decision\nPrioritise repeat bookings from existing customers before expanding paid acquisition.\n\n## Constraints\nA named owner must approve the first test.";
   strategy.approved = true;
-  c.runs = [strategy];
+  c.runs = [strategy, research];
   const result = executePipeline(c, "full-launch");
   const brand = result.runs.find((run) => run.agent === "brand");
   assert.match(brand.text, /Prioritise repeat bookings from existing customers/);
   assert.match(brand.text, /upstream output excerpt/);
   assert.equal(result.runs.at(-1).agent, "review");
   assert.ok(result.runs.every((run) => run.text.length <= 20000));
+});
+
+test("custom workflows resolve shared prerequisites once and reject unknown targets", () => {
+  const c = campaign();
+  const ids = resolvePipelineAgents("custom", ["search", "conversion", "search"]);
+  assert.equal(new Set(ids).size, ids.length);
+  assert.ok(ids.indexOf("research") < ids.indexOf("strategy"));
+  assert.ok(ids.indexOf("conversion") < ids.indexOf("search"));
+  assert.ok(!ids.includes("production"));
+  const run = executePipeline(c, "custom", { targets: ["search", "conversion"] });
+  assert.deepEqual(run.runs.map((output) => output.agent), ids);
+  assert.ok(campaignSchema.safeParse(run.campaign).success);
+  assert.equal(planPipeline(c, "custom").ready, false);
+  assert.match(planPipeline(c, "custom").blockers[0], /Choose at least one/);
+  assert.throws(() => resolvePipelineAgents("custom", ["inexistent"]), /available specialist/);
+});
+
+test("workflow task handoff is additive, bounded and preserves completed ownership records", () => {
+  const c = campaign();
+  const original = JSON.stringify(c);
+  const first = workflowTaskPlan(c, "evidence-first", { owner: "  Kay  " });
+  assert.equal(first.added, 3);
+  assert.equal(first.tasks[0].due, "2026-09-28");
+  assert.equal(first.tasks.at(-1).due, "2026-09-30");
+  assert.ok(first.tasks.every((task) => task.owner === "Kay" && !task.done));
+  assert.equal(JSON.stringify(c), original);
+  c.tasks = first.tasks.map((task) => ({ ...task, done: true }));
+  const second = workflowTaskPlan(c, "evidence-first", { owner: "New owner", launchDate: "2026-12-01" });
+  assert.equal(second.added, 0);
+  assert.equal(second.duplicates, 3);
+  assert.deepEqual(second.tasks, c.tasks);
+  c.tasks = Array.from({ length: 199 }, (_, index) => ({ id: crypto.randomUUID(), title: `Unrelated task ${index}`, owner: "", due: "", done: false }));
+  const limited = workflowTaskPlan(c, "evidence-first", { launchDate: "" });
+  assert.equal(limited.added, 1);
+  assert.equal(limited.excluded, 2);
+  assert.equal(limited.tasks.at(-1).due, "");
+  assert.ok(campaignSchema.safeParse({ ...c, tasks: limited.tasks }).success);
+  assert.throws(() => workflowTaskPlan(c, "evidence-first", { launchDate: "2026-02-30" }), /valid target date/);
+});
+
+test("workflow manifest records dependencies and safe campaign labels without granting approval", () => {
+  const c = executePipeline(campaign(), "evidence-first").campaign;
+  c.name = "<script>alert('bad')</script> | campaign";
+  const manifest = workflowManifest(c, "evidence-first");
+  assert.ok(!manifest.includes("<script>"));
+  assert.match(manifest, /Research planner/);
+  assert.ok(c.runs.every((run) => manifest.includes(run.id)));
+  assert.match(manifest, /not approval/);
+});
+
+test("new specialists expose evidence and operational gaps without inventing capabilities", () => {
+  const c = campaign();
+  c.tasks = [{ id: crypto.randomUUID(), title: "Verify form", owner: "", due: "", done: false }];
+  assert.match(runAgent(c, "research").text, /no interviews, browsing or independent verification/);
+  assert.match(runAgent(c, "operations").text, /1 without an owner; 1 without a date/);
+  assert.match(runAgent(c, "risk").text, /not a live security, legal or compliance audit/);
+  const result = executePipeline(c, "release-control");
+  const operations = result.runs.find((run) => run.agent === "operations");
+  const risk = result.runs.find((run) => run.agent === "risk");
+  const edited = changed(result.campaign, { tasks: c.tasks.map((task) => ({ ...task, owner: "Kay" })) }, "Assigned owner");
+  assert.equal(isRunCurrent(edited, operations), false);
+  assert.equal(isRunCurrent(edited, risk), false);
+});
+
+test("new blank campaigns do not present illustrative investment as user-entered money", () => {
+  const blank = createCampaign();
+  for (const key of ["budget", "agencyFee", "productionCost", "revenuePerCustomer"]) assert.equal(blank.brief[key], 0);
+  assert.equal(forecast(blank).spend, 0);
+  assert.equal(createCampaign(true).brief.budget, 18000);
 });

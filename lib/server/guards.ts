@@ -24,6 +24,14 @@ function httpOrigin(value: string, production = false) {
   }
 }
 
+/** Supabase's project URL is a base origin, not an API route or dashboard URL. */
+function databaseOrigin(value: string, production = false) {
+  const origin = httpOrigin(value, production);
+  if (!origin) return null;
+  const url = new URL(value);
+  return url.pathname === "/" && !url.search && !url.hash ? origin : null;
+}
+
 /** Reject a mistakenly pasted secret/service-role key before it can bypass RLS. */
 function publicDatabaseKey(key: string) {
   if (/^sb_publishable_[A-Za-z0-9_-]+$/.test(key)) return true;
@@ -38,9 +46,10 @@ function publicDatabaseKey(key: string) {
 }
 
 export function integrationConfig(env: Environment = process.env) {
-  const url = env.SUPABASE_URL?.trim() ?? "";
+  const suppliedUrl = env.SUPABASE_URL?.trim() ?? "";
+  const url = databaseOrigin(suppliedUrl, env.NODE_ENV === "production") ?? "";
   const key = env.SUPABASE_PUBLISHABLE_KEY?.trim() ?? "";
-  const cloud = !!url && !!httpOrigin(url, env.NODE_ENV === "production") && publicDatabaseKey(key);
+  const cloud = !!url && publicDatabaseKey(key);
   // An explicit Avalon false takes precedence over a legacy true.
   const enabled = (env.AVALON_AI_ENABLED ?? env.KINGXFORD_AI_ENABLED)?.trim() === "true";
   const model = (env.AVALON_AI_MODEL ?? env.KINGXFORD_AI_MODEL)?.trim() ?? "";
@@ -48,7 +57,7 @@ export function integrationConfig(env: Environment = process.env) {
   const validModel = model.length <= 200 && /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.:-]+$/.test(model);
   return {
     url, key, cloud, model, gatewayKey,
-    cloudSupplied: !!url || !!key,
+    cloudSupplied: !!suppliedUrl || !!key,
     ai: cloud && enabled && validModel && !!gatewayKey,
     aiEnabled: enabled,
   };
@@ -64,23 +73,31 @@ export function sameOrigin(request: Request, siteUrl = process.env.NEXT_PUBLIC_S
   if (contentType !== "application/json") throw new ApiError(415, "Send JSON content.");
 }
 
-export async function readJson(request: Request | Response, limit = 2000000): Promise<unknown> {
+export async function readJson(request: Request | Response, limit = 2000000, timeoutMs = 12000): Promise<unknown> {
   if (!request.body) throw new ApiError(400, "A request body is required.");
   const declared = request.headers.get("content-length");
   if (declared && /^\d+$/.test(declared) && Number(declared) > limit) {
-    await request.body.cancel();
+    // Stream cancellation is best effort; a broken source must not delay rejection.
+    void request.body.cancel().catch(() => {});
     throw new ApiError(413, "The request is too large.");
   }
   const reader = request.body.getReader();
   const decoder = new TextDecoder("utf-8", { fatal: true });
   let bytes = 0, result = "";
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(new ApiError(408, "The request body took too long to arrive. Please try again."));
+      void reader.cancel().catch(() => {});
+    }, timeoutMs);
+  });
   try {
     while (true) {
-      const { done, value } = await reader.read();
+      const { done, value } = await Promise.race([reader.read(), deadline]);
       if (done) break;
       bytes += value.byteLength;
       if (bytes > limit) {
-        await reader.cancel();
+        void reader.cancel().catch(() => {});
         throw new ApiError(413, "The request is too large.");
       }
       result += decoder.decode(value, { stream: true });
@@ -88,10 +105,12 @@ export async function readJson(request: Request | Response, limit = 2000000): Pr
     result += decoder.decode();
     return JSON.parse(result);
   } catch (error) {
+    void reader.cancel().catch(() => {});
     if (error instanceof ApiError) throw error;
     if (error instanceof Error && ["TimeoutError", "AbortError"].includes(error.name)) throw error;
     throw new ApiError(400, "The request could not be read as JSON.");
   } finally {
+    clearTimeout(timer);
     reader.releaseLock();
   }
 }
@@ -100,9 +119,21 @@ export function ownerHeader(request: Request) {
   return request.headers.get("x-avalon-owner") ?? request.headers.get("x-kingxford-owner");
 }
 
-export function hasWorkspaceAccess(user: { is_anonymous?: boolean; app_metadata?: Record<string, unknown> } | null) {
+type WorkspaceUser = { id?: string; email?: string; is_anonymous?: boolean; app_metadata?: Record<string, unknown> };
+
+export function hasWorkspaceAccess(user: WorkspaceUser | null) {
   // Preserve the existing database entitlement during the visual rebrand.
   return !!user && !user.is_anonymous && user.app_metadata?.kingxford_access === true;
+}
+
+/** Retain a verified account identity even after workspace access is revoked. */
+export function workspaceIdentity(user: WorkspaceUser | null) {
+  const signedIn = !!user && !user.is_anonymous;
+  return {
+    email: signedIn ? user.email ?? null : null,
+    userId: signedIn ? user.id ?? null : null,
+    workspaceAccess: hasWorkspaceAccess(user),
+  };
 }
 
 export function providerDraft(value: unknown) {

@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { JourneyExplorer } from "@/components/journey-explorer";
 
 import { ArrowRight, ArrowUpRight, BarChart3, Check, ChevronRight, Clapperboard, FileText, Layers3, Network, Sparkles } from "lucide-react";
 import { useState, type KeyboardEvent } from "react";
@@ -42,14 +43,15 @@ export function WorkspaceLaunchpad({ compact = false }: { compact?: boolean }) {
   return <section className={`avalon-launchpad${compact ? " is-compact" : ""}`} id="workspace" aria-labelledby="workspace-launchpad-title">
     <div className="avalon-launchpad-head">
       <div><span className="avalon-eyebrow"><i aria-hidden="true" /> THE AVALON WORKSPACE</span><h2 id="workspace-launchpad-title">One place to turn<br />ambition into <em>action.</em></h2></div>
-      <div><p>Your thinking, your studios and your next decision, connected. Start with a brief and carry it through planning, production and performance.</p><a href="/platform">Open the workspace <ArrowUpRight /></a></div>
+      <div><p>Your brief, specialist team, editorial calendar, production assets and campaign results. One connected place to make the next move.</p><a href="/platform">Open the workspace <ArrowUpRight /></a></div>
     </div>
-    <div className="avalon-launchpad-grid">
+    {!compact && <JourneyExplorer />}
+    {compact && <div className="avalon-launchpad-grid">
       {workspacePaths.filter((_, index) => !compact || [0, 3, 5].includes(index)).map(({ number, icon: Icon, title, detail, label, view }) => <a href={`/platform?view=${view}`} className="avalon-launch-card" key={view}>
         <div className="avalon-launch-card-top"><Icon strokeWidth={1.5} /><span>{number}</span></div>
         <h3>{title}</h3><p>{detail}</p><span className="avalon-launch-card-action">{label}<ArrowUpRight size={18}/></span>
       </a>)}
-    </div>
+    </div>}
     <div className="avalon-launchpad-foot"><span>Start in your browser. Keep control of every draft.</span><a href="/platform?view=proof">Review campaign readiness <ArrowRight size={17}/></a></div>
   </section>;
 }

@@ -14,21 +14,22 @@ create table if not exists public.kingxford_workspaces (
 alter table public.kingxford_workspaces enable row level security;
 revoke all on public.kingxford_workspaces from anon;
 grant select,insert,update,delete on public.kingxford_workspaces to authenticated;
--- Trust only app_metadata assigned by the owner, never editable user_metadata.
+-- Trust only boolean app_metadata assigned by the owner, never editable
+-- user_metadata or the string "true". Match the server's strict entitlement rule.
 -- Enforce entitlement in the Data API too, not just Next.js route handlers.
 create policy kingxford_workspace_select on public.kingxford_workspaces for select to authenticated
-  using ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->>'kingxford_access' = 'true'
+  using ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->'kingxford_access' = 'true'::jsonb
     and not coalesce((select auth.jwt())->>'is_anonymous','false')::boolean);
 create policy kingxford_workspace_insert on public.kingxford_workspaces for insert to authenticated
-  with check ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->>'kingxford_access' = 'true'
+  with check ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->'kingxford_access' = 'true'::jsonb
     and not coalesce((select auth.jwt())->>'is_anonymous','false')::boolean);
 create policy kingxford_workspace_update on public.kingxford_workspaces for update to authenticated
-  using ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->>'kingxford_access' = 'true'
+  using ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->'kingxford_access' = 'true'::jsonb
     and not coalesce((select auth.jwt())->>'is_anonymous','false')::boolean)
-  with check ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->>'kingxford_access' = 'true'
+  with check ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->'kingxford_access' = 'true'::jsonb
     and not coalesce((select auth.jwt())->>'is_anonymous','false')::boolean);
 create policy kingxford_workspace_delete on public.kingxford_workspaces for delete to authenticated
-  using ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->>'kingxford_access' = 'true'
+  using ((select auth.uid()) = owner_id and (select auth.jwt())->'app_metadata'->'kingxford_access' = 'true'::jsonb
     and not coalesce((select auth.jwt())->>'is_anonymous','false')::boolean);
 
 create schema if not exists kingxford_private;
@@ -50,7 +51,7 @@ returns boolean language plpgsql security definer set search_path = '' as $$
 declare caller uuid := auth.uid(); day_key date := (now() at time zone 'UTC')::date; reserved uuid;
 begin
   if caller is null or coalesce(auth.jwt()->>'is_anonymous','false')::boolean
-    or not coalesce((auth.jwt()->'app_metadata'->>'kingxford_access')::boolean,false) then
+    or not coalesce(auth.jwt()->'app_metadata'->'kingxford_access' = 'true'::jsonb,false) then
     raise exception 'An invited authenticated account is required';
   end if;
   insert into kingxford_private.agent_quota (owner_id,utc_day,requests,last_request)

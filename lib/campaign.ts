@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { performanceSchema, performanceSummary } from "./performance.ts";
+import { deliveryStateSchema, deliveryLaunchBlockers } from "./production-assets.ts";
 
 export const CHANNELS = [
   "Search",
@@ -99,6 +100,24 @@ export const AGENTS = [
     name: "Market planner",
     role: "A city-entry test with evidence requirements",
     room: "Markets",
+  },
+  {
+    id: "research",
+    name: "Research planner",
+    role: "Evidence gaps, primary research questions and an accountable source plan",
+    room: "Research",
+  },
+  {
+    id: "risk",
+    name: "Release risk reviewer",
+    role: "Claims, budget exposure, unresolved dependencies and release decisions",
+    room: "Risk",
+  },
+  {
+    id: "operations",
+    name: "Operations planner",
+    role: "Delivery capacity, accountable ownership and service recovery",
+    room: "Operations",
   },
 ] as const;
 export type AgentId = (typeof AGENTS)[number]["id"];
@@ -200,8 +219,10 @@ export const campaignSchema = z
           createdAt: z.string().datetime(),
           approved: z.boolean(),
           model: text(200).optional(),
+          editedByUser: z.boolean().optional(),
+          sourceRunId: z.string().uuid().optional(),
           sourceFingerprint: text(100).optional(),
-          inputRunIds: z.array(z.string().uuid()).max(15).refine(
+          inputRunIds: z.array(z.string().uuid()).max(30).refine(
             (ids) => new Set(ids).size === ids.length,
             "Duplicate handoff references are not allowed",
           ).optional(),
@@ -210,6 +231,7 @@ export const campaignSchema = z
       .max(100),
     checks: z.record(z.boolean()),
     performance: performanceSchema.optional(),
+    delivery: deliveryStateSchema.optional(),
     experiment: z.object({
       hypothesis: text(2000),
       baseline: z.number().finite().min(0.01).max(99),
@@ -336,11 +358,11 @@ export function createCampaign(sample = false): Campaign {
         : "",
       voice: "Confident, warm, specific. No superlatives without proof.",
       website: "",
-      budget: 18000,
-      agencyFee: 5000,
-      productionCost: 4000,
+      budget: sample ? 18000 : 0,
+      agencyFee: sample ? 5000 : 0,
+      productionCost: sample ? 4000 : 0,
       weeks: 10,
-      revenuePerCustomer: 1200,
+      revenuePerCustomer: sample ? 1200 : 0,
       margin: 45,
       leadToSale: 20,
       launchDate: "",
@@ -397,7 +419,7 @@ export function changed(
     !!patch.performance;
   const checks = contextChanged
     ? {}
-    : patch.content || patch.tasks || patch.runs
+    : patch.content || patch.tasks || patch.runs || patch.delivery
       ? { ...(patch.checks ?? c.checks), signoff: false }
       : (patch.checks ?? c.checks);
   return {
@@ -425,11 +447,12 @@ export function latestAgentRuns(c: Campaign): Run[] {
  * This is a freshness marker, not a cryptographic signature or proof of integrity.
  */
 export function agentSourceFingerprint(c: Campaign, agent: AgentId): string | undefined {
-  if (agent !== "delivery" && agent !== "review") return undefined;
+  if (!["delivery", "review", "operations", "risk"].includes(agent)) return undefined;
   const source = JSON.stringify({
     tasks: [...c.tasks].sort((a, b) => a.id.localeCompare(b.id)),
     content: [...c.content].sort((a, b) => a.id.localeCompare(b.id)),
-    checks: agent === "review" ? CHECKS.filter(([id]) => id !== "signoff").map(([id]) => [id, !!c.checks[id]]) : undefined,
+    checks: agent === "review" || agent === "risk" ? CHECKS.filter(([id]) => id !== "signoff").map(([id]) => [id, !!c.checks[id]]) : undefined,
+    delivery: c.delivery,
   });
   let first = 2166136261;
   let second = 5381;
@@ -517,6 +540,7 @@ export function readiness(c: Campaign) {
     blockers.push("The supplied proof needs at least one complete verified evidence record");
   if (!experimentMath(c.experiment).valid)
     blockers.push("Experiment conversions cannot exceed the observed visitor counts");
+  blockers.push(...deliveryLaunchBlockers(c));
   return {
     score: Math.round(
       (CHECKS.filter(([id]) => c.checks[id]).length / CHECKS.length) * 100,
@@ -810,6 +834,9 @@ export function runAgent(c: Campaign, id: AgentId): Run {
   const taskSummary = c.tasks.slice(0, 12).map((task) => `- ${task.done ? "Done" : "Open"}: ${task.title.slice(0, 160)}; owner: ${task.owner.trim() || "unassigned"}; due: ${task.due || "unscheduled"}.`).join("\n");
   const context = `${b.brand || "Unnamed brand"} · ${b.market}\nAudience: ${b.audience || "Not supplied"}\nOffer: ${b.offer || "Not supplied"}\nObjective: ${b.objective}\n`;
   const sections: Record<AgentId, string> = {
+    research: `## Research decision\nEstablish whether ${b.audience.slice(0, 650) || "the priority audience"} needs ${b.offer.slice(0, 650) || "the proposed offer"} in ${b.market}. This is a research plan based on supplied information; no interviews, browsing or independent verification have been performed.\n\n## Evidence coverage\n${verifiedEvidence.length} of ${c.evidence.length} evidence records have a claim, source, owner and verification recorded by a user.\n${c.evidence.filter((e) => !e.verified || !e.claim.trim() || !e.source.trim() || !e.owner.trim()).slice(0, 8).map((e) => `- ${e.claim.slice(0, 180) || "Unnamed claim"}: ${[!e.source.trim() ? "source missing" : "source supplied", !e.owner.trim() ? "owner missing" : `owner ${e.owner.slice(0, 80)}`, !e.verified ? "verification pending" : "verification recorded"].join("; ")}.`).join("\n") || "No incomplete records are currently listed. An empty ledger does not establish demand or substantiate future claims."}\n\n## Primary research guide\n1. Ask the intended customer about the last time this problem occurred, what they did and what it cost in time or money.\n2. Ask what prevented a purchase or enquiry and which alternatives they considered.\n3. Show the proposed offer without promising outcomes; ask what is unclear or missing.\n4. Record exact permissioned observations, recruitment criteria, interview date and sample limitations. Do not label a convenience sample representative.\n\n## Desk research handoff\nCollect dated local offer pages, first-party performance exports and delivery cost evidence. For each finding record its source URL or file, observation date, geography, limitation and accountable reviewer in the evidence ledger. Separate a competitor's claim from a verified fact.\n\n## Decision gate\nBefore approving the positioning, record which audience problem is supported, which assumption remains open, and the smallest test that would change the decision. Customer data should be minimised and stored only in an approved system.`,
+    operations: `## Capacity and ownership review\n${c.tasks.length} delivery tasks recorded; ${c.tasks.filter((t) => !t.owner.trim()).length} without an owner; ${c.tasks.filter((t) => !t.due).length} without a date; ${c.tasks.filter((t) => !t.done).length} still open. These counts do not measure staff capacity or supplier availability.\n${taskSummary || "Create a delivery plan before assigning operational commitments."}\n\n## Workback contract\nTarget launch: ${b.launchDate || "not scheduled"}. Assign a named accountable owner for brief approval, production, conversion testing, customer response, release and the first performance review. Check the actual staffing calendar before committing to turnaround times.\n\n## Demand and fulfilment\n${f.invalidBudget ? "Resolve the infeasible budget before using demand scenarios." : `Base case: ${f.customers.toFixed(1)} modelled customers across ${b.weeks} campaign weeks. Compare this assumption with actual available appointments, inventory or service hours; no operating capacity is supplied in the brief.`}\nObtain real unit delivery time, capacity per week, supplier lead time and cancellation constraints. Identify the first constraint before increasing acquisition spend.\n\n## Service recovery playbook\n- Delayed delivery: owner updates the affected customer through the approved channel and records a revised commitment.\n- Incorrect asset or offer: stop the affected placement, retain evidence and restore the approved version.\n- Broken conversion route: pause the affected spend and test recovery before reactivation.\n- Data incident: limit access, preserve an incident record and involve the authorised privacy/security owner.\n\n## Handover\n${c.delivery?.assets.length ? `${c.delivery.assets.length} production assets are recorded. Review their current versions, rights, accessibility checks and approval references in the asset desk.` : "No production asset manifest is recorded. Add final files, specifications, owners and approval evidence in the asset desk."}\nNo calendar booking, staff assignment notification or operational change is executed by this planner.`,
+    risk: `## Release risk register\nThe findings below are rule-based observations of supplied records, not a live security, legal or compliance audit.\n\n${readiness(c).blockers.slice(0, 20).map((issue, index) => `${index + 1}. Open: ${issue}. Assign a named owner, mitigation and review evidence before closure.`).join("\n") || "No current recorded launch blockers. Obtain the final accountable release decision and verify the actual live journey."}\n\n## Commercial exposure\n${f.invalidBudget ? `Costs exceed approved investment by ${money(b.agencyFee + b.productionCost - b.budget)}. Hold activation until the budget is reconciled.` : `Conservative contribution: ${money(conservative.contribution)} using user-entered assumptions. ${conservative.contribution < 0 ? "The conservative case loses contribution; approve an explicit learning budget and stopping condition before testing." : "A positive scenario does not establish observed profitability. Verify actual costs, attribution and fulfilment before scaling."}`}\n\n## Claims and rights\n${c.evidence.length - verifiedEvidence.length} evidence records require a source, owner or recorded verification. Review every material claim against the permitted source, context and usage rights. Supplied verification is not independent clearance.\n\n## Decision and recovery record\nFor each accepted residual risk capture the decision owner, rationale, affected assets, review date and reversal trigger. Keep a named launch operator and rollback contact. Reopen release review when a brief, asset, destination, right or dependency changes.\n\n## Release boundary\nThis specialist cannot approve a campaign, accept a risk on a person's behalf, publish content or activate spend. Final release belongs to the authorised human owner.`,
     strategy: `## Strategic decision\nMake ${b.brand || "the brand"} the useful choice for ${b.audience || "a clearly defined audience"}, through ${b.offer || "a specific offer"}.\n\n## Three horizons\n1. Discovery (${Math.max(1, Math.round(b.weeks * 7 * 0.2))} planned days): validate audience interviews, competitor offers and conversion friction in ${b.market}.\n2. Controlled test (${Math.max(1, Math.round(b.weeks * 7 * 0.3))} planned days): test one offer, one conversion destination and three creative hooks.\n3. Review and iteration (${b.weeks * 7 - Math.max(1, Math.round(b.weeks * 7 * 0.2)) - Math.max(1, Math.round(b.weeks * 7 * 0.3))} planned days): review qualified outcomes; scale only when contribution and delivery capacity support it.\n\n## Evidence to collect\n${b.proof || "Customer interviews, dated first-party analytics and permissioned proof."}\n\n## Open decision\nWho owns the commercial result and how will it be measured?`,
     creative: `## Territory 1 — Show the difference\nHook: “A closer look at ${b.brand || "the offer"}.”\nExecution: a real demonstration of ${b.offer || "the product benefit"}.\n\n## Territory 2 — Start with the person\nHook: “For ${b.audience || "the people this is for"}.”\nExecution: an authentic story that connects a human need to the offer.\n\n## Territory 3 — Make the choice clearer\nHook: “Your next step in ${b.market}.”\nExecution: a transparent explanation of value, process and next action.\n\n## Creative constraints\nVoice: ${b.voice}. No fabricated reviews, results or scarcity. Test hooks while keeping audience, spend and landing page constant.`,
     content: `## Editorial system\nPillars: customer problem, useful demonstration, human story, proof, frequently asked questions, invitation.\n\n## Channel adaptations\n${activeChannels

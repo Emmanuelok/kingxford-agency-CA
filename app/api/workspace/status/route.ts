@@ -1,14 +1,13 @@
 import {
   db,
-  hasWorkspaceAccess,
   integrationConfig,
   json,
 } from "@/lib/server/workspace";
+import { workspaceIdentity } from "@/lib/server/guards";
 export const dynamic = "force-dynamic";
 export async function GET() {
   const config = integrationConfig();
-  let email: string | null = null,
-    userId: string | null = null;
+  let identity = workspaceIdentity(null);
   let cloudState = config.cloud ? "sign-in-required" : "not-configured";
   let cloudMessage = config.cloud
     ? "Sign in to verify private cloud storage."
@@ -23,19 +22,23 @@ export async function GET() {
         cloudState = "unavailable";
         cloudMessage = "The account connection could not be verified. Sign in again or retry shortly.";
       }
-      if (data.user && hasWorkspaceAccess(data.user)) {
-        email = data.user.email ?? null;
-        userId = data.user.id;
-        // A read-only probe does not overwrite snapshots or consume model quota.
-        const { error: storageError } = await client
-          .from("kingxford_workspaces")
-          .select("revision")
-          .eq("owner_id", data.user.id)
-          .maybeSingle();
-        cloudState = storageError ? "unavailable" : "connected";
-        cloudMessage = storageError
-          ? "Signed in, but cloud storage did not respond. Keep a device backup and ask the owner to verify storage setup."
-          : "Private cloud storage responded. Save and load are manual.";
+      if (!error && data.user && !data.user.is_anonymous) {
+        identity = workspaceIdentity(data.user);
+        if (!identity.workspaceAccess) {
+          cloudState = "access-denied";
+          cloudMessage = "This account no longer has workspace access. You can sign out or ask the workspace owner to restore access. Your device drafts remain available.";
+        } else {
+          // A read-only probe does not overwrite snapshots or consume model quota.
+          const { error: storageError } = await client
+            .from("kingxford_workspaces")
+            .select("revision")
+            .eq("owner_id", data.user.id)
+            .maybeSingle();
+          cloudState = storageError ? "unavailable" : "connected";
+          cloudMessage = storageError
+            ? "Signed in, but cloud storage did not respond. Keep a device backup and ask the owner to verify storage setup."
+            : "Private cloud storage responded. Save and load are manual.";
+        }
       }
     } catch {
       cloudState = "unavailable";
@@ -44,9 +47,8 @@ export async function GET() {
   return json({
     cloud: config.cloud,
     ai: config.ai,
-    email,
-    userId,
-    release: "3.0.0",
+    ...identity,
+    release: "4.0.0",
     checkedAt: new Date().toISOString(),
     capabilities: {
       cloud: { state: cloudState, message: cloudMessage },

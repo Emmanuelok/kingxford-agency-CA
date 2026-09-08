@@ -1,4 +1,5 @@
 import { isRunCurrent, type Campaign } from "./campaign.ts";
+import { buildAssetHandoffMarkdown } from "./production-assets.ts";
 
 export type DeliveryTask = Campaign["tasks"][number];
 export type DeliveryFilter = "all" | "open" | "complete" | "overdue" | "unassigned" | "unscheduled";
@@ -218,12 +219,7 @@ export function buildLaunchPackage(c: Campaign, options: {
       `${cell(run.agent)} · ${cell(run.mode)} · ${run.createdAt} · ${!isRunCurrent(c, run) ? `STALE — revision ${run.revision}; inputs changed or output superseded` : run.approved ? "Approved for current brief" : "Review required"}`, "",
       block(run.text), "",
     ]),
-    "## Handoff decisions", "",
-    "- Release owner: ____________________",
-    "- Client approval reference: ____________________",
-    "- Live destination / placement record: ____________________",
-    "- First review date and owner: ____________________",
-    "- Pause / rollback contact: ____________________", "",
+    ...buildAssetHandoffMarkdown(c).split("\n"), "",
   ];
   return lines.join("\n");
 }
