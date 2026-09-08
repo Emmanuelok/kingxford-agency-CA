@@ -5,6 +5,7 @@ import { ArrowDown, ArrowUpRight, Check, MoveRight } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import styles from "./services.module.css";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 
 export const metadata: Metadata = { alternates: { canonical: "/services" },
   title: "Services",
@@ -64,7 +65,7 @@ export default function ServicesPage() {
 
       <section className={styles.introduction} aria-labelledby="intro-title">
         <div><p className={styles.eyebrow}>INDEPENDENT THINKING. CONNECTED DELIVERY.</p><h2 id="intro-title">Bring the ambition.<br />We’ll bring <em>the disciplines.</em></h2></div>
-        <div className={styles.introductionCopy}><p>Your customers experience one business. Your brand, content, media and digital experience should feel like one, too.</p><p>Choose a specific capability or bring us the entire growth problem. We assemble the work around a commercial objective, with a senior core, qualified specialists and transparent production partners.</p><Link className={styles.underlinedLink} href="/platform?view=brief">Create your shared brief <ArrowUpRight size={20} /></Link></div>
+        <div className={styles.introductionCopy}><p>Your customers experience one business. Your brand, content, media and digital experience should feel like one, too.</p><p>Choose a specific capability or bring us the entire growth problem. We assemble the work around a commercial objective, with a senior core, qualified specialists and transparent production partners.</p><Link className={styles.underlinedLink} href={WORKSPACE_ENABLED ? "/platform?view=brief" : "/start"}>{WORKSPACE_ENABLED ? "Create your shared brief" : "Tell us about your project"} <ArrowUpRight size={20} /></Link></div>
       </section>
 
       <nav className={styles.directory} id="capabilities" aria-label="Service categories">
@@ -92,8 +93,8 @@ export default function ServicesPage() {
                   <div className={styles.capabilitiesHeading}><h3>What we can help with</h3><span>12 capabilities</span></div>
                   <ul className={styles.capabilityList}>{service.items.map(item => <li key={item}><Check size={14} aria-hidden="true" /><span>{item}</span></li>)}</ul>
                   <div className={styles.serviceActions}>
-                    <Link href="/start">Discuss an engagement <ArrowUpRight size={18} /></Link>
-                    <Link href={`/platform?view=${detail.route}`}>Explore the workspace tools <MoveRight size={18} /></Link>
+                    <Link href={`/start?service=${detail.id}`}>Discuss {detail.label.toLowerCase()} <ArrowUpRight size={18} /></Link>
+                    {WORKSPACE_ENABLED && <Link href={`/platform?view=${detail.route}`}>Explore the workspace tools <MoveRight size={18} /></Link>}
                   </div>
                 </div>
               </div>
@@ -104,11 +105,11 @@ export default function ServicesPage() {
       <p className={styles.imageryCredit}>AI-generated service imagery. Scenes illustrate our capabilities.</p>
 
       <section className={styles.connectedWork} aria-labelledby="connected-title">
-        <div className={styles.connectedHeader}><p className={styles.eyebrow}>FROM CAPABILITY TO ACTION</p><h2 id="connected-title">Built to work<br /><em>together.</em></h2><p>A shared brief gives every discipline the same starting point. Connected studios keep the plan, the production and the learning in view.</p><Link className={styles.primaryAction} href="/platform?view=brief">Open your workspace <ArrowUpRight size={20} /></Link></div>
+        <div className={styles.connectedHeader}><p className={styles.eyebrow}>FROM CAPABILITY TO ACTION</p><h2 id="connected-title">Built to work<br /><em>together.</em></h2><p>A clear brief gives every discipline the same starting point. We connect strategy, creative and delivery around your objective, with agreed responsibilities at every stage.</p><Link className={styles.primaryAction} href={WORKSPACE_ENABLED ? "/platform?view=brief" : "/start"}>{WORKSPACE_ENABLED ? "Open your workspace" : "Start a conversation"} <ArrowUpRight size={20} /></Link></div>
         <ol className={styles.steps}>
           <li><span>01</span><div><h3>Set the direction.</h3><p>Capture your audience, offer, objective and evidence in one shared brief.</p></div><ArrowUpRight aria-hidden="true" /></li>
-          <li><span>02</span><div><h3>Connect the work.</h3><p>Develop the plan with specialist tools for creative, content, production and growth.</p></div><ArrowUpRight aria-hidden="true" /></li>
-          <li><span>03</span><div><h3>Learn. Then move.</h3><p>Bring campaign results back into the workspace and use the evidence to plan the next test.</p></div><ArrowUpRight aria-hidden="true" /></li>
+          <li><span>02</span><div><h3>Connect the work.</h3><p>Bring together the right specialists for creative, content, production and growth.</p></div><ArrowUpRight aria-hidden="true" /></li>
+          <li><span>03</span><div><h3>Learn. Then move.</h3><p>Review campaign results together and use the evidence to plan the next test.</p></div><ArrowUpRight aria-hidden="true" /></li>
         </ol>
       </section>
       <section className={styles.standards} aria-label="Standards across our services">
@@ -120,7 +121,7 @@ export default function ServicesPage() {
       <section className={styles.closing}>
         <p className={styles.eyebrow}>NOT SURE WHERE TO START?</p>
         <h2>Start with<br /><em>the outcome.</em></h2>
-        <div><p>You don’t need a shopping list of services. Tell us where you want to go.</p><Link href="/tools" className={styles.darkAction}>Build my growth plan <ArrowUpRight size={22} /></Link></div>
+        <div><p>You don’t need a shopping list of services. Tell us where you want to go.</p><Link href={WORKSPACE_ENABLED ? "/tools" : "/start"} className={styles.darkAction}>{WORKSPACE_ENABLED ? "Build my growth plan" : "Discuss your next move"} <ArrowUpRight size={22} /></Link></div>
       </section>
       <SiteFooter />
     </main>

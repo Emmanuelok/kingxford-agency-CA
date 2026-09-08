@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import {
   ArrowLeft,
   ArrowRight,
@@ -55,11 +56,11 @@ const scopesAvailable = [
   "PR or experience",
   "Not sure yet",
 ];
-export function ProjectBrief() {
+export function ProjectBrief({ initialScopes = [] }: { initialScopes?: string[] }) {
   const router = useRouter();
   const [step, setStep] = useState(1),
     [goal, setGoal] = useState<Brief["objective"]>("leads"),
-    [scopes, setScopes] = useState<string[]>([]),
+    [scopes, setScopes] = useState<string[]>(() => initialScopes.filter((scope) => scopesAvailable.includes(scope))),
     [budget, setBudget] = useState(""),
     [useBudgetEstimate, setUseBudgetEstimate] = useState(false),
     [timing, setTiming] = useState(""),
@@ -133,6 +134,7 @@ export function ProjectBrief() {
     setStep(Math.min(4, step + 1));
   }
   function sendToWorkspace() {
+    if (!WORKSPACE_ENABLED) return;
     try {
       const raw = localStorage.getItem("kingxford-workspace-v2");
       const campaign = prepareInquiryCampaign(createCampaign(), {
@@ -353,10 +355,11 @@ export function ProjectBrief() {
                   <Mail /> Prepare email
                 </a>
               </Button>
-              <Button type="button" onClick={sendToWorkspace}>
+              {WORKSPACE_ENABLED && <Button type="button" onClick={sendToWorkspace}>
                 Continue in workspace <ArrowRight />
-              </Button>
+              </Button>}
             </div>
+            {WORKSPACE_ENABLED && <>
             <p>
               Create a separate campaign with your organization, objective,
               challenge, target date and scope tasks. Your existing campaigns are
@@ -370,6 +373,7 @@ export function ProjectBrief() {
             ) : (
               <p>Your budget range is saved as a task to confirm. No financial amount is assumed.</p>
             )}
+            </>}
           </div>
         )}
       </section>

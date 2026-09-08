@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import {
   AGENTS,
   campaignSchema,
@@ -27,6 +28,7 @@ const inputSchema = z
   })
   .strict();
 export async function POST(request: Request) {
+  if (!WORKSPACE_ENABLED) return json({ error: "Not found" }, 404);
   try {
     sameOrigin(request);
     if (!aiConfigured())

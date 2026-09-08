@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -23,4 +24,4 @@ export default function SolutionsPage(){return <main className="site-shell"><Sit
     {outcomes.map(o=><article className="outcome-card" key={o.n}><span className="outcome-num">{o.n}</span><div><h2>{o.title}</h2><p>{o.desc}</p><small>{o.path}</small></div><div className="outcome-engagement"><span>Recommended entry</span><b>{o.engagement}</b><a href="/start">Build this plan <ArrowRight/></a></div></article>)}
   </section>
   <section className="process-band"><div className="section-kicker inverse"><span>06</span> ONE CONNECTED PROCESS</div><div className="process-steps">{["Diagnose","Align","Make","Launch","Learn","Scale"].map((x,i)=><div key={x}><span>0{i+1}</span><b>{x}</b></div>)}</div></section>
-  <section className="next-cta acid-block"><span>Have several problems at once?</span><h2>Good. Bring the whole thing.</h2><a className="button button-dark" href="/tools">Use the growth planner <ArrowUpRight/></a></section><SiteFooter/></main>}
+  <section className="next-cta acid-block"><span>Have several problems at once?</span><h2>Good. Bring the whole thing.</h2><a className="button button-dark" href={WORKSPACE_ENABLED ? "/tools" : "/start"}>{WORKSPACE_ENABLED ? "Use the growth planner" : "Start a project brief"} <ArrowUpRight/></a></section><SiteFooter/></main>}

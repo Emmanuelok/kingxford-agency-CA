@@ -3,6 +3,7 @@
 import { ArrowUpRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 import {
   Sheet,
   SheetClose,
@@ -17,7 +18,7 @@ const links = [
   ["Services", "/services"],
   ["Solutions", "/solutions"],
   ["Work", "/projects"],
-  ["Studio", "/studio"],
+  ...(WORKSPACE_ENABLED ? [["Studio", "/studio"]] : []),
   ["About", "/about"],
 ];
 
@@ -40,7 +41,7 @@ export function SiteNav() {
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map(([label, href]) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
         </nav>
-        <Link className="nav-cta desktop-project" href="/platform">The workspace <ArrowUpRight size={17} /></Link>
+        <Link className="nav-cta desktop-project" href={WORKSPACE_ENABLED ? "/platform" : "/start"}>{WORKSPACE_ENABLED ? "The workspace" : "Start a project"} <ArrowUpRight size={17} /></Link>
         <Sheet>
           <SheetTrigger asChild>
             <button className="mobile-menu" aria-label="Open menu"><Menu /></button>
@@ -57,7 +58,7 @@ export function SiteNav() {
             </nav>
             <div className="mobile-sheet-foot">
               <a className="button button-coral" href="/start">Start with the outcome <ArrowUpRight /></a>
-              <a className="mobile-workspace-link" href="/platform">Open your workspace <ArrowUpRight size={18} /></a>
+              <a className="mobile-workspace-link" href={WORKSPACE_ENABLED ? "/platform" : "/projects"}>{WORKSPACE_ENABLED ? "Open your workspace" : "Explore completed projects"} <ArrowUpRight size={18} /></a>
               <span>Independent thinking. Connected delivery. Canada.</span>
             </div>
           </SheetContent>

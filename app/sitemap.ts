@@ -1,2 +1,9 @@
 import type { MetadataRoute } from "next";
-export default function sitemap():MetadataRoute.Sitemap{const origin="https://kingxford-agency-ca.vercel.app";return ["","/services","/solutions","/projects","/studio","/studio/workbench","/platform","/tools","/industries","/about","/pricing","/start","/privacy","/accessibility","/responsible-advertising"].map(path=>({url:new URL(path||"/",origin).href}));}
+import { WORKSPACE_ENABLED } from "@/lib/release";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const origin = "https://kingxford-agency-ca.vercel.app";
+  const paths = ["", "/services", "/solutions", "/projects", "/industries", "/about", "/pricing", "/start", "/privacy", "/accessibility", "/responsible-advertising"];
+  if (WORKSPACE_ENABLED) paths.push("/studio", "/studio/workbench", "/platform", "/tools");
+  return paths.map((path) => ({ url: new URL(path || "/", origin).href }));
+}

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | AVALON Creative Group",
   },
   description:
-    "Independent strategy, brand design, film, digital experiences and growth. Avalon Creative Group connects your brief, creative studios, campaign planning and results in one workspace.",
+    "Independent strategy, brand design, film, digital experiences and growth. Avalon Creative Group brings creative expertise and reliable delivery together around your business objectives.",
   keywords: [
     "advertising agency St. John's",
     "marketing agency Newfoundland",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "AVALON Creative Group — Ideas with vision. Work with impact.",
-    description: "Strategy, design, production, digital and growth. One creative group. One connected workspace.",
+    description: "Strategy, design, production, digital and growth. One creative group, working together around your ambitions.",
     type: "website",
     locale: "en_CA",
     images: [{ url: "/images/hero-research-wall.webp", width: 1600, height: 900, alt: "The opening research wall in AVALON's cinematic agency film" }],
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AVALON Creative Group — Ideas with vision. Work with impact.",
-    description: "Strategy, design, production, digital and growth. One creative group. One connected workspace.",
+    description: "Strategy, design, production, digital and growth. One creative group, working together around your ambitions.",
     images: ["/images/hero-research-wall.webp"],
   },
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },

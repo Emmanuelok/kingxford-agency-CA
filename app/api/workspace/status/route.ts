@@ -4,8 +4,10 @@ import {
   json,
 } from "@/lib/server/workspace";
 import { workspaceIdentity } from "@/lib/server/guards";
+import { WORKSPACE_ENABLED } from "@/lib/release";
 export const dynamic = "force-dynamic";
 export async function GET() {
+  if (!WORKSPACE_ENABLED) return json({ error: "Not found" }, 404);
   const config = integrationConfig();
   let identity = workspaceIdentity(null);
   let cloudState = config.cloud ? "sign-in-required" : "not-configured";
