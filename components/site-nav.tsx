@@ -16,7 +16,7 @@ import {
 const links = [
   ["Services", "/services"],
   ["Solutions", "/solutions"],
-  ["Work", "/#work"],
+  ["Work", "/projects"],
   ["Studio", "/studio"],
   ["About", "/about"],
 ];
@@ -52,7 +52,7 @@ export function SiteNav() {
             </SheetHeader>
             <nav className="mobile-links" aria-label="Mobile navigation">
               {links.map(([label, href], index) => (
-                <SheetClose asChild key={href}><a href={href}><span>{String(index + 1).padStart(2,"0")}</span>{label}<ArrowUpRight /></a></SheetClose>
+                <SheetClose asChild key={href}><a href={href} aria-current={pathname === href ? "page" : undefined}><span>{String(index + 1).padStart(2,"0")}</span>{label}<ArrowUpRight /></a></SheetClose>
               ))}
             </nav>
             <div className="mobile-sheet-foot">

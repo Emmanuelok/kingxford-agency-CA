@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
@@ -105,6 +106,9 @@ export function CampaignStudies() {
           Self-initiated campaign concepts exploring how strategy becomes
           visual storytelling. These are independent capability studies,
           not commissioned client work or reported campaign results.
+          <Link className="button button-dark" href="/projects" style={{ marginTop: 24 }}>
+            View completed projects <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
         </p>
       </header>
 

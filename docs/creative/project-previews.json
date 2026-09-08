@@ -1,0 +1,45 @@
+{
+  "description": "Public website captures for the Avalon completed projects page. Screens show the observed websites at capture time. No simulated interfaces or generated previews.",
+  "assets": [
+    {
+      "path": "public/images/projects/kings-perla-home.webp",
+      "source_url": "https://www.kingsperl.com/",
+      "captured_on": "2026-09-08",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 77872,
+      "sha256": "4a465a77faa600672e5ae29e85c9869b1f3246e4c9d8f12f4cb471edcf2142b1"
+    },
+    {
+      "path": "public/images/projects/trios-services-home.webp",
+      "source_url": "https://triosservices.vercel.app/",
+      "captured_on": "2026-09-08",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 120234,
+      "sha256": "b160c35167c5aa8c71a9afa35ef2b32dae6ec5c8b92375786274041b09a9f964"
+    },
+    {
+      "path": "public/images/projects/trios-services-planner.webp",
+      "source_url": "https://triosservices.vercel.app/planner",
+      "captured_on": "2026-09-08",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 75710,
+      "sha256": "50fa32783758ff2bb90ea34743cf3c3386912bfc1221e654db81a3a28df0c0e0"
+    },
+    {
+      "path": "public/images/projects/kings-perla-gallery.webp",
+      "source_url": "https://www.kingsperl.com/gallery#gallery-collection",
+      "captured_on": "2026-09-08",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 120386,
+      "sha256": "284570d40045153456f2f3b44670fce774a0747a802ac03f5f6cbba4946d8031"
+    }
+  ]
+}
