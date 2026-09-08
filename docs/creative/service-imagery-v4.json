@@ -2,13 +2,13 @@
   "schema_version": "1.0",
   "project": {
     "id": "avalon-services-v4",
-    "name": "Avalon services \u2014 mixed process and object imagery",
+    "name": "Avalon services — mixed process and object imagery",
     "mode": "image-production",
     "objective": "Present realistic service work through the user-selected mix of process scenes with people or hands and detailed object-led service imagery.",
     "audience": "Businesses exploring Avalon capabilities",
     "governing_idea": "The work and the process share the spotlight.",
-    "status": "review",
-    "phase": "production"
+    "status": "approved",
+    "phase": "delivery"
   },
   "creative_system": {
     "visual_thesis": "Realistic commercial imagery balances selected creative-process scenes with tangible outputs, equipment and product still lifes.",
@@ -1480,7 +1480,7 @@
       "language": "en",
       "alt_text": "A creative team reviewing research and visual references",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/strategy-v4.webp",
       "bytes": 170688
     },
@@ -1498,7 +1498,7 @@
       "language": "en",
       "alt_text": "Branded packaging and stationery with colour swatches held in hand",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/brand-v4.webp",
       "bytes": 186048
     },
@@ -1516,7 +1516,7 @@
       "language": "en",
       "alt_text": "A coordinated, colorful outdoor campaign on a city street",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/campaigns-v4.webp",
       "bytes": 313606
     },
@@ -1534,7 +1534,7 @@
       "language": "en",
       "alt_text": "A ceramic cup and coffee arranged for an editorial still life",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/content-v4.webp",
       "bytes": 318876
     },
@@ -1552,7 +1552,7 @@
       "language": "en",
       "alt_text": "A product campaign coordinated across magazine, print and mobile formats",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/media-v4.webp",
       "bytes": 136736
     },
@@ -1570,7 +1570,7 @@
       "language": "en",
       "alt_text": "A smartphone map beside a creative studio storefront",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/search-v4.webp",
       "bytes": 188800
     },
@@ -1588,7 +1588,7 @@
       "language": "en",
       "alt_text": "A product website displayed across a laptop, tablet and phone",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/digital-v4.webp",
       "bytes": 64704
     },
@@ -1606,7 +1606,7 @@
       "language": "en",
       "alt_text": "Ceramic products being packed for an online order",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/commerce-v4.webp",
       "bytes": 109960
     },
@@ -1624,7 +1624,7 @@
       "language": "en",
       "alt_text": "A crew preparing lighting and a cinema camera on a film set",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/production-v4.webp",
       "bytes": 99996
     },
@@ -1642,7 +1642,7 @@
       "language": "en",
       "alt_text": "Microphones arranged at an empty press briefing table",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/pr-v4.webp",
       "bytes": 134362
     },
@@ -1660,7 +1660,7 @@
       "language": "en",
       "alt_text": "A magnifying loupe and pen beside an illustrative analytics report",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/data-v4.webp",
       "bytes": 72370
     },
@@ -1678,7 +1678,7 @@
       "language": "en",
       "alt_text": "Connected network and server hardware in a technology workspace",
       "version": 4,
-      "status": "ready",
+      "status": "approved",
       "path": "public/images/services/ai-v4.webp",
       "bytes": 152314
     }
@@ -1724,8 +1724,7 @@
       "Brand cleanup must remove invented microcopy while retaining the selected packaging, hand and composition.",
       "Production cleanup must remove the third disconnected person while preserving the two complete crew members and film equipment.",
       "Search cleanup must remove the window service lettering while preserving the smartphone map, hand, storefront and composition.",
-      "Review native image framing at desktop and mobile breakpoints before approving delivery.",
-      "All twelve optimized v4 assets reviewed and available. Delivery remains pending responsive preview verification."
+      "All twelve final image files are ready for release; responsive preview verification passed and the temporary review helper was removed."
     ]
   },
   "gates": [
@@ -1782,8 +1781,14 @@
     {
       "id": "gate-delivery",
       "name": "Delivery",
-      "status": "planned",
-      "evidence": []
+      "status": "approved",
+      "evidence": [
+        "Preview deployment dpl_BQHQu9x7CCgFsSAoBfzdJhCdjxpj at commit f6c3d9a56c008bd863e61b66acce228bd8d38f18 is READY.",
+        "Visual browser review passed for desktop hero and brand imagery plus production imagery in 390px and 768px responsive frames. Per-service native aspect ratios preserve the selected compositions.",
+        "Desktop, mobile and tablet documents have no horizontal overflow. No application console errors were observed.",
+        "Lint, production build, all twelve WebP checks, built-style smoke verification and GitHub Actions quality gates (run 34217108284) passed.",
+        "All twelve uploaded Git blobs match the hashes of the verified local image assets."
+      ]
     }
   ],
   "assumptions": [
