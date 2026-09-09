@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock3, MapPin, MessageSquareText } from "lucide-react";
+import { Clock3, MapPin, MessageSquareText, Phone } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
@@ -39,7 +39,8 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
           <div className="contact-facts">
             <span><Clock3 />About five minutes to define the essentials</span>
             <span><MapPin />Canada-wide creative collaboration</span>
-            <span><MessageSquareText /><a href="mailto:hello@kingxford.co">hello@kingxford.co</a></span>
+            <span><MessageSquareText /><a href="mailto:avalon@veridanth.com">avalon@veridanth.com</a></span>
+            <span><Phone aria-hidden="true" /><a href="tel:+15878374472">+1 (587) 837-4472</a></span>
           </div>
           <p>Your answers stay in this page until you choose an action. Preparing a brief does not book work or send a message.</p>
         </div>

@@ -23,7 +23,7 @@ export function SiteFooter() {
           <div className={styles.identity}>
             <BrandLockup footer />
             <p>Independent thinking. Exceptional craft. Connected delivery. Strategy, brand, film, digital and growth, from St. John&apos;s to markets across Canada.</p>
-            <a className={styles.contact} href="mailto:hello@kingxford.co">Let&apos;s talk <ArrowUpRight size={19} aria-hidden="true" /></a>
+            <a className={styles.contact} href="mailto:avalon@veridanth.com">Let&apos;s talk <ArrowUpRight size={19} aria-hidden="true" /></a>
           </div>
           <nav className={styles.column} aria-label="Explore Avalon">
             <b>The group</b>
@@ -52,7 +52,8 @@ export function SiteFooter() {
             <Link href="/privacy">Privacy & data</Link><Link href="/accessibility">Accessibility</Link>
             <Link href="/responsible-advertising">Responsible advertising</Link>
             <span className={styles.location}>St. John&apos;s, Newfoundland<br />& Labrador, Canada</span>
-            <a href="mailto:hello@kingxford.co">hello@kingxford.co <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="mailto:avalon@veridanth.com">avalon@veridanth.com <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="tel:+15878374472">+1 (587) 837-4472</a>
           </nav>
         </div>
       </div>

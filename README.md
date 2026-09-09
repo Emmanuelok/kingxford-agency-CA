@@ -56,6 +56,6 @@ The build verifies the styles actually linked by the rendered homepage, includin
 - Cloud snapshots remain explicit per-account saves and loads with ownership checks and optimistic concurrency. A present email address does not grant workspace access; clients use the verified `workspaceAccess` flag.
 - Cloud accounts and model drafting remain unconfigured in the inspected production environment. The intended agency Supabase project and gateway credentials are still required. The SQL proposal has only been tested locally; unrelated projects were not modified.
 - No social publishing, advertising activation, mail delivery, payment collection, website crawling or live analytics connectors are implemented. Imports, drafts, prototypes and plans must not be presented as those external capabilities.
-- Avalon configuration names coexist with legacy database, entitlement and environment names. The contact mailbox remains `hello@kingxford.co` and the deployment remains `https://kingxford-agency-ca.vercel.app`.
+- Avalon configuration names coexist with legacy database, entitlement and environment names. Contact: `avalon@veridanth.com` · `+1 (587) 837-4472`. The deployment remains `https://kingxford-agency-ca.vercel.app`.
 
 Read [version 4 release notes](docs/RELEASE-4.md), [launch operations](docs/LAUNCH.md) and [adding completed projects](docs/adding-projects.md). A successful application deployment does not activate unconfigured external services.

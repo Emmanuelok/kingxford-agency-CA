@@ -350,7 +350,7 @@ export function ProjectBrief({ initialScopes = [] }: { initialScopes?: string[] 
               </Button>
               <Button asChild>
                 <a
-                  href={`mailto:hello@kingxford.co?subject=${encodeURIComponent("Project brief — " + org)}&body=${encodeURIComponent(brief)}`}
+                  href={`mailto:avalon@veridanth.com?subject=${encodeURIComponent("Project brief — " + org)}&body=${encodeURIComponent(brief)}`}
                 >
                   <Mail /> Prepare email
                 </a>

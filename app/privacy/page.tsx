@@ -108,8 +108,8 @@ export default function PrivacyPage() {
           <p>
             {WORKSPACE_ENABLED ? "Use Storage & connections to export data, sign out or delete the active device campaign. Device copies remain after sign-out, so remove them on shared devices. " : "You can review your inquiry before sending it, download a copy, or leave the page without submitting it. "}
             For questions, access, correction or deletion requests, contact{" "}
-            <a href="mailto:hello@kingxford.co?subject=Privacy%20request">
-              hello@kingxford.co
+            <a href="mailto:avalon@veridanth.com?subject=Privacy%20request">
+              avalon@veridanth.com
             </a>
             . Retention and legal obligations may affect deletion of business
             records.

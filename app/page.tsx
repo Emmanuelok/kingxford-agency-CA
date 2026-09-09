@@ -184,7 +184,7 @@ export default function Home() {
           <a href="/start">
             Start the brief <ArrowUpRight />
           </a>
-          <a href="mailto:hello@kingxford.co">Talk to AVALON</a>
+          <a href="mailto:avalon@veridanth.com">Talk to AVALON</a>
         </div>
         <span className="avalon-close-monogram" aria-hidden="true">A</span>
       </section>
