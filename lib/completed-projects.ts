@@ -1,4 +1,5 @@
 export type CompletedProject = {
+  published: boolean;
   slug: string;
   name: string;
   shortName: string;
@@ -18,9 +19,10 @@ export type CompletedProject = {
   tone: "rose" | "sage";
 };
 
-// Add verified, completed projects here. The showcase and project count update together.
-export const completedProjects: readonly CompletedProject[] = [
+// Keep unpublished records for later restoration; export only the public showcase.
+const projectRegistry: readonly CompletedProject[] = [
   {
+    published: false,
     slug: "kings-perla",
     name: "Kingsford & Perla",
     shortName: "Kings & Perla",
@@ -54,6 +56,7 @@ export const completedProjects: readonly CompletedProject[] = [
     tone: "rose",
   },
   {
+    published: true,
     slug: "trios-services",
     name: "Trios Snow and Mowing Inc.",
     shortName: "Trios Services",
@@ -87,3 +90,7 @@ export const completedProjects: readonly CompletedProject[] = [
     tone: "sage",
   },
 ];
+
+export const completedProjects: readonly CompletedProject[] = projectRegistry.filter(
+  (project) => project.published,
+);
