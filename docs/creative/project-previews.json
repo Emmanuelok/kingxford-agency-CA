@@ -40,6 +40,46 @@
       "height": 926,
       "bytes": 120386,
       "sha256": "284570d40045153456f2f3b44670fce774a0747a802ac03f5f6cbba4946d8031"
+    },
+    {
+      "path": "public/images/projects/elk-developers-home.webp",
+      "source_url": "https://elk-developers.vercel.app/",
+      "captured_on": "2026-09-11",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 57854,
+      "sha256": "dbb718450e1745e844894fb0dbbbac43c3ff8812ea056c728a7c8383c6504da6"
+    },
+    {
+      "path": "public/images/projects/elk-developers-portfolio.webp",
+      "source_url": "https://elk-developers.vercel.app/portfolio",
+      "captured_on": "2026-09-11",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 61206,
+      "sha256": "2058c452f456918e4b26c3614cac3cb0bee02e721c0db2ad5dbd1e5af8805f19"
+    },
+    {
+      "path": "public/images/projects/elkings-studio-home.webp",
+      "source_url": "https://kay-media.vercel.app/",
+      "captured_on": "2026-09-11",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 76928,
+      "sha256": "a20d36acc1deda30afe71d3ee156dc7855bd3e0a72c8d2ea8a2ff82e74783fe3"
+    },
+    {
+      "path": "public/images/projects/elkings-studio-photography.webp",
+      "source_url": "https://kay-media.vercel.app/photography",
+      "captured_on": "2026-09-11",
+      "type": "actual_browser_screenshot",
+      "width": 1348,
+      "height": 926,
+      "bytes": 76154,
+      "sha256": "0344563feab31fd30ef350e6c1fe8cbf13c0d369f121a21e8cc31add35c6094c"
     }
   ]
 }

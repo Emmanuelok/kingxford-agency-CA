@@ -21,7 +21,7 @@ The public experience includes the original cinematic landing film, an interacti
 | `/platform?view=experiments` | Fixed-horizon sample planning and observed two-proportion intervals |
 | `/platform?view=proof` | Evidence ledger, campaign readiness, stale-output detection and human release checks |
 | `/platform?view=library` | Searchable outputs, explicit human revisions as new editions, source comparison and report exports |
-| `/projects` | Kingsford & Perla and Trios Services, authentic previews, project details and live website links |
+| `/projects` | ELKINGS Developers, ELKINGS Studio and Trios Services, authentic previews, project details and live website links |
 | `/start` | Validated inquiry, review/copy/download/email preparation and a separate campaign handoff |
 
 The new specialists are the **Research planner**, **Release risk reviewer** and **Operations planner**. They join strategy, brand, creative, editorial, production, conversion, lifecycle, media, search, accessibility, experiments, performance, market expansion, delivery and proof. Planning engines use deterministic rules and supplied data. Optional model responses are labelled **AI draft**, require an invited account and remain subject to human review.
