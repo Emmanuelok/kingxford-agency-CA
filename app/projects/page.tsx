@@ -7,7 +7,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { completedProjects } from "@/lib/completed-projects";
 import styles from "./projects.module.css";
 
-const description = "Explore completed websites by Avalon Creative Group, including Kingsford & Perla and Trios Snow and Mowing Inc. Visit the live projects and discover the details behind the work.";
+const description = "Explore a selection of completed websites by Avalon Creative Group. Visit the live projects and discover the details behind the work.";
+const shareImage = completedProjects[0]?.image ?? {
+  src: "/images/hero-research-wall.webp",
+  width: 1600,
+  height: 900,
+  alt: "Avalon Creative Group — completed projects",
+};
 
 export const metadata: Metadata = {
   title: "Completed projects",
@@ -18,13 +24,13 @@ export const metadata: Metadata = {
     description,
     url: "/projects",
     type: "website",
-    images: [{ url: "/images/projects/kings-perla-home.webp", width: 1348, height: 926, alt: "Kingsford & Perla, a completed website by Avalon Creative Group" }],
+    images: [{ url: shareImage.src, width: shareImage.width, height: shareImage.height, alt: shareImage.alt }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Completed projects | AVALON Creative Group",
     description,
-    images: ["/images/projects/kings-perla-home.webp"],
+    images: [shareImage.src],
   },
 };
 
