@@ -44,8 +44,8 @@ export default function PrintStudio({ design, onChange, onSave, onQuote, brand, 
   const remember = (before: Design) => { history.current.past.push(before); if (history.current.past.length > 60) history.current.past.shift(); history.current.future = []; setHistoryCounts({ past: history.current.past.length, future: history.current.future.length }); };
   const commit = (next: Design, record = true) => { if (record) remember(current.current); const updated = { ...next, updatedAt: new Date().toISOString() }; current.current = updated; onChange(updated); setStatus(''); };
   const updateLayer = (patch: Partial<DesignLayer>) => { if (!selectedId) return; commit({ ...current.current, layers: current.current.layers.map(layer => layer.id === selectedId ? { ...layer, ...patch } : layer) }); };
-  const undo = () => { const previous = history.current.past.pop(); if (!previous) return; history.current.future.push(current.current); current.current = previous; onChange(previous); setHistoryCounts({ past: history.current.past.length, future: history.current.future.length }); };
-  const redo = () => { const next = history.current.future.pop(); if (!next) return; history.current.past.push(current.current); current.current = next; onChange(next); setHistoryCounts({ past: history.current.past.length, future: history.current.future.length }); };
+  const undo = () => { const previous = history.current.past.pop(); if (!previous) return; setStatus(''); history.current.future.push(current.current); current.current = previous; onChange(previous); setHistoryCounts({ past: history.current.past.length, future: history.current.future.length }); };
+  const redo = () => { const next = history.current.future.pop(); if (!next) return; setStatus(''); history.current.past.push(current.current); current.current = next; onChange(next); setHistoryCounts({ past: history.current.past.length, future: history.current.future.length }); };
   const remove = () => { if (!selectedId) return; commit({ ...current.current, layers: current.current.layers.filter(layer => layer.id !== selectedId) }); setSelectedId(null); };
   const duplicate = () => { const layer = current.current.layers.find(l => l.id === selectedId); if (!layer) return; if (current.current.layers.length >= 100) { setError('This artwork has reached its 100-layer limit. Remove a layer before duplicating another.'); return; } const duplicate = { ...layer, id: uid(), x: clamp(layer.x + 3, 0, 100), y: clamp(layer.y + 3, 0, 100) }; commit({ ...current.current, layers: [...current.current.layers, duplicate] }); setSelectedId(duplicate.id); };
   const onKeyboard = useEffectEvent((event: KeyboardEvent) => { const target = event.target as HTMLElement; if (target.isContentEditable || target.closest('input,textarea,select,[role="dialog"]') || proofOpen || mode !== 'artwork') return;
@@ -165,7 +165,7 @@ export default function PrintStudio({ design, onChange, onSave, onQuote, brand, 
         <button className={mode === 'artwork' ? 'active' : ''} aria-pressed={mode === 'artwork'} onClick={() => setMode('artwork')}><MousePointer2 size={14}/>Design</button>
         <button className={mode === 'mockup' ? 'active' : ''} aria-pressed={mode === 'mockup'} onClick={() => setMode('mockup')}><Box size={14}/>Preview</button>
       </div>
-      <button className="studio-inspector-toggle" onClick={() => { setMobileSheet(mobileSheet === 'inspector' ? null : 'inspector'); setSideTab('design'); }}><PanelRight size={17}/><span>Properties</span></button>
+      <button className="studio-inspector-toggle" aria-label={mobileSheet === 'inspector' ? 'Close properties' : 'Open properties'} onClick={() => { setMobileSheet(mobileSheet === 'inspector' ? null : 'inspector'); setSideTab('design'); }}><PanelRight size={17}/><span>Properties</span></button>
       <span className="studio-toolbar-brand">AVALON <b>PRINT</b></span>
     </div>
 

@@ -107,6 +107,8 @@ The print SQL test runs the actual bootstrap files in isolated PGlite with test 
 
 ### Studio v2 browser acceptance
 
+The full-window editor rebuild was reviewed on the public deployment at desktop width and in 390 px and 768 px frames. New-project setup created a named blank canvas; text insertion and editing worked; template replacement retained the project name and quantity, and Undo restored the preceding artwork. Returning to the project library and reopening preserved the saved project. On smaller screens, resource panels opened and closed, typography controls edited physical positions, quantity changes recalculated the estimate, and the product/flat-proof controls remained usable. The editor had no page-level horizontal or vertical overflow at either tested frame size. Live review also identified and corrected an obsolete preview-caption style, a stale template notice after Undo, and the phone properties button's accessible name.
+
 The deployed application was exercised through its visible controls: image upload, text editing and undo/redo, project saves across reloads, restoring an older revision as a new version, multi-item estimates with quantities and finishes, review readiness, CSV export, printable estimates, backup export/import, campaign creation, brand changes and the live quote API playground. Imported copies preserved the existing workspace. A downloaded business-card PNG measured 1,051 × 602 pixels with 300-DPI metadata.
 
 Phone and tablet review covered 390 px and 768 px frames. The editor fit the phone viewport; the corrected estimate layout had no page-level horizontal overflow at either size. The estimate library scrolls independently when several saved estimates are present.

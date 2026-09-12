@@ -150,7 +150,6 @@
 .av-print .studio-3d { height: 100%; min-height: 0; width: 100%; }
 .av-print .studio-3d .mockup-webgl { height: 100%; min-height: 0; position: relative; }
 .av-print .studio-3d .mockup-webgl canvas { display: block; width: 100%; height: 100%; }
-.av-print .studio-3d .mockup-instruction { position: absolute; bottom: 18px; left: 20px; right: 20px; display: block; text-align: center; font-size: 11px; color: #6e7864; background: #ffffffd4; padding: 8px; border-radius: 6px; }
 .av-print .studio-3d .empty-state,
 .av-print .studio-loading { display: flex; flex-direction: column; gap: 13px; align-items: center; justify-content: center; height: 100%; min-height: 240px; padding: 35px; color: #6d7465; font-size: 12px; text-align: center; }
 .av-print .studio-inspector { display: flex; flex-direction: column; flex: 0 0 272px; width: 272px; min-width: 0; min-height: 0; border-left: 1px solid var(--studio-line); background: #fff; }
