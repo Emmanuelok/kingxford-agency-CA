@@ -2,6 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          has: [{ type: "host", value: "print.avaloncreative.group" }],
+          destination: "/print-app/index.html",
+        },
+        { source: "/print", destination: "/print-app/index.html" },
+      ],
+    };
+  },
   async headers() {
     return [
       {

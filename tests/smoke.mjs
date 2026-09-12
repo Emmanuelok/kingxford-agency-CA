@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { createServer } from "node:net";
+import { get } from "node:http";
 import assert from "node:assert/strict";
 const workspaceEnabled = process.env.NEXT_PUBLIC_AVALON_WORKSPACE_ENABLED === "true";
 const workspacePaths = ["/platform", "/tools", "/studio", "/studio/workbench"];
@@ -29,6 +30,11 @@ const server = spawn(
       SUPABASE_PUBLISHABLE_KEY: "",
       AI_GATEWAY_API_KEY: "",
       KINGXFORD_AI_ENABLED: "false",
+      AVALON_PRINT_SUPABASE_URL: "",
+      AVALON_PRINT_SUPABASE_PUBLISHABLE_KEY: "",
+      AVALON_PRINT_SUPABASE_SECRET_KEY: "",
+      AVALON_PRINT_AI_GATEWAY_API_KEY: "",
+      AVALON_PRINT_AI_MODEL: "",
     },
     stdio: ["ignore", "pipe", "pipe"],
   },
@@ -51,6 +57,7 @@ try {
   assert.ok(ready, "Production server did not start");
   const routes = [
     "/",
+    "/print",
     "/platform",
     "/tools",
     "/studio",
@@ -87,6 +94,46 @@ try {
     }
     console.log("PASS", route);
   }
+  const printHtml = await (await fetch(origin + "/print")).text();
+  assert.match(printHtml, /Avalon Print/);
+  assert.doesNotMatch(printHtml, /\/_next\/static\//, "Print retains its own document and styles");
+  const printAssets = [...printHtml.matchAll(/(?:src|href)="(\/print-app\/[^\"]+)"/g)].map((m) => m[1]);
+  assert.ok(printAssets.some((p) => p.endsWith(".js")) && printAssets.some((p) => p.endsWith(".css")));
+  for (const asset of [...printAssets, "/print-app/images/collection.jpg", "/print-app/images/cards.jpg", "/print-app/images/merch.jpg"]) {
+    assert.equal((await fetch(origin + asset)).status, 200, asset);
+  }
+  // Node fetch normalizes Host to its URL; raw HTTP is needed to exercise routing.
+  const printHost = await new Promise((resolve, reject) => {
+    get(origin + "/", {headers: {Host: "print.avaloncreative.group"}}, (response) => {
+      let html = "";
+      response.setEncoding("utf8");
+      response.on("data", (chunk) => { html += chunk; });
+      response.on("end", () => resolve({status: response.statusCode, html}));
+    }).on("error", reject);
+  });
+  assert.equal(printHost.status, 200);
+  assert.equal(printHost.html, printHtml, "Custom print hostname serves the print document");
+  const printConfig = await fetch(origin + "/api/print/config");
+  assert.deepEqual(await printConfig.json(), {cloud: null});
+  assert.match(printConfig.headers.get("cache-control") ?? "", /no-store/);
+  const printStatus = await (await fetch(origin + "/api/print/status")).json();
+  assert.equal(printStatus.storage, false);
+  assert.equal(printStatus.payments, false);
+  const catalogue = await (await fetch(origin + "/api/print/catalogue")).json();
+  assert.equal(catalogue.products.length, 51);
+  const printQuote = await fetch(origin + "/api/print/quote", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({productId: "cards", quantity: 500, tier: "Value", finish: "Standard", sides: 1, city: "Calgary", shipping: 0}),
+  });
+  assert.equal(printQuote.status, 200);
+  assert.equal((await printQuote.json()).total, 29.95);
+  assert.equal((await fetch(origin + "/api/print/quote")).status, 405);
+  const malformed = await fetch(origin + "/api/print/quote", {method: "POST", headers: {"Content-Type": "application/json"}, body: '{"productId":'});
+  assert.equal(malformed.status, 400);
+  for (const endpoint of ["orders", "assistant", "platform"]) {
+    assert.equal((await fetch(origin + "/api/print/" + endpoint, {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"})).status, 503);
+  }
+  console.log("PASS Avalon Print document, assets, hostname routing, catalogue, quote and inactive service boundaries");
   const optimizedImage = await fetch(origin + "/_next/image?url=%2Fimages%2Fhero-research-wall.webp&w=640&q=75");
   assert.equal(optimizedImage.status, 200, "Optimized hero poster");
   assert.ok(optimizedImage.headers.get("content-type")?.startsWith("image/"));

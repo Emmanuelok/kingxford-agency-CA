@@ -29,6 +29,7 @@ export function SiteFooter() {
             <b>The group</b>
             <Link href="/services">Our capabilities</Link><Link href="/solutions">Your next move</Link>
             <Link href="/projects">Completed projects</Link>
+            <a href="/print">Avalon Print</a>
             <Link href="/#work">Creative explorations</Link><Link href="/industries">Industries</Link>
             <Link href="/about">About Avalon</Link><Link href="/pricing">Ways to work</Link>
           </nav>

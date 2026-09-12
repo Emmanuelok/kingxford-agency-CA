@@ -18,6 +18,7 @@ const links = [
   ["Services", "/services"],
   ["Solutions", "/solutions"],
   ["Work", "/projects"],
+  ["Print", "/print"],
   ...(WORKSPACE_ENABLED ? [["Studio", "/studio"]] : []),
   ["About", "/about"],
 ];
@@ -39,7 +40,7 @@ export function SiteNav() {
       <header className="nav-shell avalon-nav" role="banner">
         <BrandLockup />
         <nav className="desktop-nav" aria-label="Main navigation">
-          {links.map(([label, href]) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
+          {links.map(([label, href]) => href === "/print" ? <a key={href} href={href}>{label}</a> : <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
         </nav>
         <Link className="nav-cta desktop-project" href={WORKSPACE_ENABLED ? "/platform" : "/start"}>{WORKSPACE_ENABLED ? "The workspace" : "Start a project"} <ArrowUpRight size={17} /></Link>
         <Sheet>

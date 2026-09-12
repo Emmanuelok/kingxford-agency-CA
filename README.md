@@ -1,5 +1,7 @@
 # Avalon Creative Group — version 4.0
 
+**Avalon Print** now lives in this repository at `/print`, with the custom hostname `print.avaloncreative.group` prepared in the app routing. It includes the interactive print catalogue, artwork editor, 3D previews, quotation engine and namespaced server endpoints. Read [Avalon Print setup and domain activation](docs/AVALON-PRINT.md) for configuration and the remaining service boundaries. The print client is built automatically with the agency site.
+
 Avalon connects campaign strategy, original content, production assets, commercial planning, measured results and delivery decisions in one workspace. Version 4 adds a searchable campaign command centre, 18 specialists, eight workflow presets and a custom composer, editable output editions, production version control, editorial and web workbenches, and evidence-based growth planning.
 
 The public experience includes the original cinematic landing film, an interactive route explorer, 12 service disciplines, and completed projects with real website previews. Existing version-2 campaign backups remain supported.
