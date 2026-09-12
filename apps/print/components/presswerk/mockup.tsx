@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { products, type Design, type Product } from '@/lib/presswerk/catalog';
 import { renderArtworkCanvas } from '@/lib/next/artwork';
+import ProductProof from '@/components/next/product-proof';
 
 /** Shared rendering keeps the editor, exported artwork and mockup in agreement. */
 export async function designCanvas(design: Design, max = 1600) {
@@ -327,6 +328,8 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
   const runtime = useRef<SceneRuntime | null>(null);
   const artworkVersion = useRef(0);
   const [failed, setFailed] = useState(false);
+  const [fallbackView, setFallbackView] = useState<'product' | 'flat'>('product');
+  const [illustrationArtwork, setIllustrationArtwork] = useState('');
   const [artworkError, setArtworkError] = useState('');
   const [view, setView] = useState<CameraView>('isometric');
   const [rotation, setRotation] = useState({ prop: spin, value: spin });
@@ -536,6 +539,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
           flat.height = canvas.height;
           flat.getContext('2d')?.drawImage(canvas, 0, 0);
         }
+        if (failed) setIllustrationArtwork(canvas.toDataURL('image/png'));
         const current = runtime.current;
         if (current && !current.disposed) {
           const previousTexture = current.texture;
@@ -564,12 +568,13 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
         if (cancelled || version !== artworkVersion.current) return;
         const flat = flatCanvas.current;
         if (flat) flat.getContext('2d')?.clearRect(0, 0, flat.width, flat.height);
+        setIllustrationArtwork('');
         setArtworkError(error instanceof Error ? error.message : 'This artwork could not be rendered. Re-upload the affected image.');
       }
     };
     void update();
     return () => { cancelled = true; };
-  }, [design]);
+  }, [design, failed]);
 
   const changeView = (next: CameraView) => {
     setView(next);
@@ -578,19 +583,24 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
   };
   const proofOnly = product ? measuredOnly.has(product.id) : true;
   const showFlat = failed || !product || !!artworkError;
+  const showIllustration = failed && !proofOnly && fallbackView === 'product' && !!illustrationArtwork && !artworkError;
   return (
     <div className="mockup-webgl" style={{ position: 'absolute', inset: 0, background: '#eeece4', color: FOREST, overflow: 'hidden' }}>
       <div ref={host} className="mockup-renderer" style={{ position: 'absolute', inset: 0, visibility: showFlat ? 'hidden' : 'visible' }} />
       <div className="mockup-status" style={{ position: 'absolute', top: 18, left: 18, fontSize: 10, letterSpacing: '.09em', textTransform: 'uppercase', pointerEvents: 'none' }}>
-        {proofOnly ? 'Measured artwork proof' : 'Live product preview'}
+        {proofOnly ? 'Measured artwork proof' : failed ? 'Live artwork placement' : 'Live product preview'}
       </div>
       <div className="mockup-dimensions" style={{ position: 'absolute', top: 18, right: 18, fontSize: 10, pointerEvents: 'none' }}>
         {product ? `${product.width} × ${product.height} mm artwork` : 'Choose a product'}
       </div>
       <div className="mockup-fallback" style={{ display: showFlat ? 'flex' : 'none', position: 'absolute', inset: '65px 24px 118px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 20 }}>
-        <canvas ref={flatCanvas} aria-label={`Flat artwork proof for ${design.name}`} style={{ display: artworkError ? 'none' : 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', boxShadow: '0 18px 40px #173d3220' }} />
+        {showIllustration && product && <ProductProof product={product} artwork={illustrationArtwork} />}
+        <canvas ref={flatCanvas} aria-label={`Flat artwork proof for ${design.name}`} style={{ display: artworkError || showIllustration ? 'none' : 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', boxShadow: '0 18px 40px #173d3220' }} />
         {artworkError && <p role="alert" style={{ maxWidth: 360, fontSize: 14, lineHeight: 1.6, textAlign: 'center' }}>{artworkError}</p>}
       </div>
+      {failed && !proofOnly && !artworkError && <div role="group" aria-label="Preview format" style={{ position: 'absolute', bottom: 67, left: 12, right: 12, display: 'flex', justifyContent: 'center', gap: 6 }}>
+        {(['product', 'flat'] as const).map(option => <button key={option} type="button" aria-pressed={fallbackView === option} onClick={() => setFallbackView(option)} style={{ padding: '9px 15px', minHeight: 40, borderRadius: 22, background: fallbackView === option ? FOREST : '#ffffffdf', color: fallbackView === option ? '#fff' : FOREST, border: '1px solid #173d3222', fontSize: 11 }}>{option === 'product' ? 'Product illustration' : 'Exact flat proof'}</button>)}
+      </div>}
       {!showFlat && <div className="mockup-controls" role="group" aria-label="Mockup camera controls" style={{ position: 'absolute', bottom: 61, left: 12, right: 12, display: 'flex', justifyContent: 'center', gap: 5, flexWrap: 'wrap' }}>
         {(['front', 'isometric', 'back'] as const).map(option => (
           <button key={option} type="button" aria-pressed={view === option && !spinning} onClick={() => changeView(option)} style={{ padding: '9px 13px', minHeight: 40, borderRadius: 22, background: view === option && !spinning ? FOREST : '#ffffffdf', color: view === option && !spinning ? '#fff' : FOREST, border: '1px solid #173d3222', fontSize: 11, textTransform: 'capitalize' }}>{option}</button>
@@ -599,7 +609,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
         <button type="button" onClick={() => changeView('isometric')} style={{ padding: '9px 13px', minHeight: 40, borderRadius: 22, background: '#ffffffdf', color: FOREST, border: '1px solid #173d3222', fontSize: 11 }}>Reset</button>
       </div>}
       <p className="mockup-instruction" style={{ position: 'absolute', bottom: 18, left: 20, right: 20, textAlign: 'center', fontSize: 10, lineHeight: 1.5, color: '#567063', pointerEvents: 'none' }}>
-        {failed ? '3D is unavailable on this device. Your live artwork proof is shown above.' : product ? description(product) : 'Choose a product to prepare a preview.'}
+        {failed ? <>{showIllustration ? 'Product illustration' : 'Measured artwork proof'} · 3D unavailable on this device<br />{product ? description(product) : ''}</> : product ? description(product) : 'Choose a product to prepare a preview.'}
         {!showFlat && <><br />Drag to rotate · Scroll or pinch to zoom{product?.id === 'mug' ? ' · Artwork wraps around the mug' : ' · Back artwork is not configured'}</>}
       </p>
     </div>
