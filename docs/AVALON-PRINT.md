@@ -2,6 +2,20 @@
 
 Avalon Print is the printing division inside `Emmanuelok/kingxford-agency-CA`. The existing Avalon agency site and its production Vercel project remain the host. The print catalogue, artwork editor, live mockups and estimates work without cloud credentials; accounts and production requests require the separate print backend described below.
 
+## Studio v2: implemented workflows
+
+The public workspace uses `components/next/app.tsx`, with its own forest, ivory and lime design system and bespoke photography. All 51 catalogue formats have distinct product illustrations, searchable specifications, filters, favourites and a three-product comparison. Twelve editable templates, a persistent brand kit, campaign composition, pricing experiments and a live API playground form the creation workflow.
+
+The editor supports text, embedded PNG/JPG/WebP uploads, shapes, layer ordering, duplication, alignment, rotation, opacity, drag/resize, undo/redo and keyboard controls. Artwork uses millimetres, physical image proportions and resolution checks. Product-specific Three.js previews distinguish mugs, bottles, apparel, bags, packaging, books and flat formats; unsupported specialty products use an explicitly flat proof. Preview colour, materials and geometry are approximations. Artwork currently describes one printable face.
+
+Projects save stable identities and immutable revisions (the latest 20 retained), with search, duplication, recoverable archives and restoration. Estimates contain multiple independently editable specifications, customer and delivery drafts, validation before review, CSV export and browser print/save-to-PDF. A local review status is preparation for human review, not a submitted production order. Prices remain proposed CAD planning estimates; tax, carrier pricing and final supplier rates are not live.
+
+### Device storage and recovery
+
+The default workspace saves to IndexedDB after a hydration gate and debounced, serialized writes. The save indicator reflects the transaction outcome. Atomic revision comparison and cross-tab notifications detect conflicting edits, preserve the current tab's unsaved work and offer backup export before reload. Storage can fail or be cleared by the browser; export/import is provided for recovery and transfer. Imports validate nested artwork and references before an atomic merge and remap colliding design identities consistently. Workspace limits are 200 projects, 200 estimates, 100 lines per estimate and 20 retained project revisions. Each embedded image is limited to 12 MB; raster export rejects allocations above 100 megapixels. Large embedded images and histories can consume browser storage quickly.
+
+Device and cloud workspaces are deliberately separate. The optional Team & cloud panel requires the dedicated backend below. Cloud artwork enters device storage only through an explicit copy action. The campaign planner composes curated layouts; it does not present templates as AI generation. Authenticated cloud AI advice requires the separately configured server service. Payments, subscriptions, supplier fulfilment, carrier quotes and machine integrations still require implementation and provider activation.
+
 ## Application layout
 
 | Location | Responsibility |

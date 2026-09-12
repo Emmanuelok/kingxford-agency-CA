@@ -13,7 +13,7 @@
     "test:smoke": "node tests/smoke.mjs",
     "lint": "eslint . --ignore-pattern .next",
     "build:print": "tsc --project apps/print/tsconfig.json && vite build --config apps/print/vite.config.ts",
-    "test:print": "cd apps/print && node --experimental-strip-types tests/quote-engine.test.mjs && node --experimental-strip-types tests/cloud-security.test.mjs && node --experimental-strip-types --test tests/api-handlers.test.mjs"
+    "test:print": "cd apps/print && node --experimental-strip-types tests/quote-engine.test.mjs && node --experimental-strip-types tests/cloud-security.test.mjs && node --experimental-strip-types --test tests/api-handlers.test.mjs && node --experimental-strip-types --test tests/artwork-v2.test.mjs tests/workspace-v2.test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
