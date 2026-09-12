@@ -10,6 +10,7 @@ import {designTemplates,makeTemplate,contrastingInk} from '../../lib/next/templa
 import type {BrandKit,PrintProject,QuoteDraft,StudioWorkspace,WorkspaceView} from '../../lib/next/types';
 import {DesignPreview} from './artwork';
 import ProductVisual from './product-visual';
+import ToolBoundary from './tool-boundary';
 
 const Studio=lazy(()=>import('./studio'));
 const Projects=lazy(()=>import('./projects'));
@@ -76,6 +77,8 @@ export default function AvalonPrint(){
     update(s=>{let next=s;for(const d of designs)next=saveProject(next,d);const saved=designs.map(d=>next.projects.find(p=>p.id===d.id)!.design);next=createQuote(next,saved[0]);const latest=next.quotes[0];return validateWorkspace({...next,quotes:[{...latest,name:(s.brand.name+' · campaign estimate').slice(0,160),lines:saved.map(design=>({id:crypto.randomUUID(),design:structuredClone(design)}))},...next.quotes.slice(1)]});});
     toast.success('Campaign designs and combined estimate created');go('projects');
   });
+  const reopenTool=async()=>{try{await flush();window.location.reload();}catch(error){toast.error(error instanceof Error?error.message:'Export a backup before reloading.');}};
+  const exportWorkspace=()=>download(JSON.stringify(workspace,null,2),'avalon-print-backup.json');
   const stats={projects:workspace.projects.filter(p=>!p.archived).length,quotes:workspace.quotes.filter(q=>q.status!=='Archived').length};
   return <div className="av-print"><Toaster position="bottom-right" richColors/>
     <a className="av-skip" href="#av-main">Skip to workspace</a>
@@ -91,7 +94,7 @@ export default function AvalonPrint(){
       <header className="av-topbar"><div><button className="av-mobile-toggle av-icon" onClick={()=>setMobile(true)} aria-label="Open navigation"><Menu size={21}/></button><span className="av-breadcrumb">Workspace <ChevronRight size={13}/><b>{navigation.find(n=>n.id===view)?.label}</b></span></div><div className="av-topbar-actions"><button className="av-search-trigger" aria-label="Search workspace" onClick={()=>setSearch('')}><Search size={16}/><span>Search anything</span><kbd>⌘ K</kbd></button><button className={'av-save-status '+storageStatus} onClick={()=>setBackupOpen(true)} title={storageError||'Workspace storage'}>{storageStatus==='saved'?<CheckCircle2 size={14}/>:storageStatus==='error'||storageStatus==='conflict'?<AlertCircle size={14}/>:<RefreshCw size={14}/>}<span>{storageStatus==='saved'?'Saved on device':storageStatus==='saving'?'Saving…':storageStatus==='conflict'?'Another tab changed this workspace':storageStatus==='error'?'Save needs attention':'Opening workspace…'}</span></button><button className="av-avatar" aria-label="Open team and cloud workspace" onClick={()=>setCloudOpen(true)}>A</button></div></header>
       {(storageStatus==='error'||storageStatus==='conflict')&&<div className="av-storage-alert" role="alert"><AlertCircle size={18}/><span>{storageError||'Your work could not be saved.'}</span><button onClick={()=>download(JSON.stringify(workspace,null,2),'avalon-print-backup.json')}>Export a backup</button><button onClick={()=>reload().catch(e=>toast.error(e.message))}>Reload saved version</button></div>}
       <main id="av-main" className={'av-content view-'+view}>
-      {!ready?<div className="av-loading"><span className="av-loader"/><h2>Opening your studio…</h2></div>:<Suspense fallback={<div className="av-loading"><span className="av-loader"/>Loading your tools…</div>}>
+      {!ready?<div className="av-loading"><span className="av-loader"/><h2>Opening your studio…</h2></div>:<ToolBoundary key={view} onReload={reopenTool} onBackup={exportWorkspace}><Suspense fallback={<div className="av-loading"><span className="av-loader"/>Loading your tools…</div>}>
         {view==='home'&&<Overview workspace={workspace} go={go} start={start} edit={edit} onDetail={setProductDetail}/>}
         {view==='catalogue'&&<Catalogue favourites={workspace.favourites} onFavourite={id=>update(s=>({...s,favourites:s.favourites.includes(id)?s.favourites.filter(x=>x!==id):[...s.favourites,id]}))} onDetail={setProductDetail} start={start}/>}
         {view==='studio'&&<Studio key={workspace.activeDesign.id} design={workspace.activeDesign} onChange={d=>update(s=>({...s,activeDesign:d}))} onSave={save} onQuote={setQuoteDesign} brand={workspace.brand} saving={storageStatus==='saving'}/>}
@@ -103,7 +106,7 @@ export default function AvalonPrint(){
         {view==='pricing'&&<PricingLab start={start}/>}
         {view==='production'&&<ProductionWorkspace quotes={workspace.quotes} projects={workspace.projects} onQuotes={()=>go('quotes')} onCloud={()=>setCloudOpen(true)}/>}
         {view==='developers'&&<DeveloperDesk/>}
-      </Suspense>}
+      </Suspense></ToolBoundary>}
       </main>
       {view!=='studio'&&<footer className="av-workspace-footer"><span><Leaf size={13}/> Thoughtful design. Tangible results.</span><span>AVALON PRINT <i/> Canada · CAD</span></footer>}
     </div>
@@ -112,7 +115,7 @@ export default function AvalonPrint(){
     {quoteDesign&&<Modal title="Add artwork to an estimate" description="Your design is saved with the estimate. You can adjust quantities and finishes there." onClose={()=>setQuoteDesign(null)}><div className="av-quote-choice"><button className="av-btn primary" onClick={()=>addQuote()}><Plus size={17}/> Create a new estimate</button>{workspace.quotes.filter(q=>q.status!=='Archived').map(q=><button className="av-choice-row" key={q.id} onClick={()=>addQuote(q.id)}><FileText size={20}/><span><b>{q.name}</b><small>{q.lines.length} item{q.lines.length===1?'':'s'} · {q.status}</small></span><Plus size={17}/></button>)}</div></Modal>}
     {backupOpen&&<Modal title="Your workspace, safely kept" description="Projects, uploaded artwork, revisions, brand kit and estimates are stored in this browser on this device." onClose={()=>setBackupOpen(false)}><div className="av-backup-summary"><span><b>{stats.projects}</b> projects</span><span><b>{stats.quotes}</b> estimates</span><span><b>{storageStatus==='saved'?'Saved':'Pending'}</b> storage status</span></div><p className="av-help">Export a backup to move your work to another browser or device. Browser storage can be cleared by your browser; a downloaded backup gives you another copy.</p><div className="av-button-row"><button className="av-btn primary" onClick={()=>download(JSON.stringify(workspace,null,2),'avalon-print-backup.json')}><ArrowDownToLine size={16}/> Export backup</button><button className="av-btn" onClick={()=>importInput.current?.click()}><Upload size={16}/> Import backup</button></div><button className="av-text-link" onClick={()=>{setBackupOpen(false);setCloudOpen(true);}}>Explore team & cloud storage <ArrowRight size={14}/></button></Modal>}
     {imported&&<Modal title="Import this workspace?" description="Existing projects and estimates will be kept. Matching projects are imported as separate copies." onClose={()=>setImported(null)}><div className="av-backup-summary"><span><b>{imported.projects.length}</b> projects</span><span><b>{imported.quotes.length}</b> estimates</span></div><button className="av-btn primary" onClick={mergeImport}>Add to my workspace <ArrowRight size={16}/></button></Modal>}
-    {cloudOpen&&<Modal title="Team & cloud workspace" description="Connect your print team, cloud projects and production records." onClose={()=>setCloudOpen(false)}><Suspense fallback={<p>Loading team services…</p>}><CloudWorkspace activeDesign={workspace.activeDesign} onOpenDesign={d=>{edit(d);setCloudOpen(false);}}/></Suspense></Modal>}
+    {cloudOpen&&<Modal title="Team & cloud workspace" description="Connect your print team, cloud projects and production records." onClose={()=>setCloudOpen(false)}><ToolBoundary onReload={reopenTool} onBackup={exportWorkspace}><Suspense fallback={<p>Loading team services…</p>}><CloudWorkspace activeDesign={workspace.activeDesign} onOpenDesign={d=>{edit(d);setCloudOpen(false);}}/></Suspense></ToolBoundary></Modal>}
     {productDetail&&<ProductDetail product={productDetail} onClose={()=>setProductDetail(null)} onStart={()=>{start(productDetail.id);setProductDetail(null);}}/>}
   </div>;
 }

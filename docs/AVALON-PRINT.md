@@ -16,6 +16,8 @@ The default workspace saves to IndexedDB after a hydration gate and debounced, s
 
 Device and cloud workspaces are deliberately separate. The optional Team & cloud panel requires the dedicated backend below. Cloud artwork enters device storage only through an explicit copy action. The campaign planner composes curated layouts; it does not present templates as AI generation. Authenticated cloud AI advice requires the separately configured server service. Payments, subscriptions, supplier fulfilment, carrier quotes and machine integrations still require implementation and provider activation.
 
+Individual tools have an error boundary that keeps the parent workspace mounted if a lazy download or render fails, including an old asset URL after deployment. The recovery panel can export the retained workspace or save and reload. Reload only follows a successful IndexedDB flush; a storage failure or cross-tab conflict keeps the current page open.
+
 ## Application layout
 
 | Location | Responsibility |
@@ -96,5 +98,13 @@ npm run test:smoke
 ```
 
 The print SQL test runs the actual bootstrap files in isolated PGlite with test Auth and Storage scaffolding. It verifies tenant isolation, roles, private uploads, immutable revisions, stale-version conflicts, proof/order integrity, production audit, quotas, invitations and key revocation. It does not provision or certify a live Supabase project. The API boundary test verifies actual Next wrapper exports, method handling, invalid bodies, non-binding quotes and that agency credentials cannot activate print services or leak through public configuration.
+
+### Studio v2 browser acceptance
+
+The deployed application was exercised through its visible controls: image upload, text editing and undo/redo, project saves across reloads, restoring an older revision as a new version, multi-item estimates with quantities and finishes, review readiness, CSV export, printable estimates, backup export/import, campaign creation, brand changes and the live quote API playground. Imported copies preserved the existing workspace. A downloaded business-card PNG measured 1,051 × 602 pixels with 300-DPI metadata.
+
+Phone and tablet review covered 390 px and 768 px frames. The editor fit the phone viewport; the corrected estimate layout had no page-level horizontal overflow at either size. The estimate library scrolls independently when several saved estimates are present.
+
+The verification browser disables WebGL, so GPU rendering was not visually certified in that environment. The fallback was verified with real mug artwork on a product illustration and a working switch to the exact flat proof. The cloud panel accurately reported that team sync is not connected. These checks do not certify physical print output or activate external services.
 
 Payments, subscription billing, final taxes, shipping/carrier services, supplier order submission and machine integrations are not live integrations in this release. Production stages are manually updated by authorized workspace operators. Catalogue prices are proposed launch estimates; custom-quote formats have no invented product price. These boundaries must remain visible when evaluating the deployed application.
