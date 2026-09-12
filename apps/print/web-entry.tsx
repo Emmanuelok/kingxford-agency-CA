@@ -1,5 +1,5 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import Presswerk from './components/presswerk/app';
-import './app/globals.css';
-createRoot(document.getElementById('root')!).render(<Presswerk/>);
+import AvalonPrint from './components/next/app';
+import './app/studio-v2.css';
+createRoot(document.getElementById('root')!).render(<AvalonPrint/>);
