@@ -208,8 +208,8 @@ export function createQuote(state: StudioWorkspace, input: Design): StudioWorksp
 
 /** Save first so the estimate captures the exact revision that now exists. */
 export function addDesignToQuote(state: StudioWorkspace, design: Design, targetId?: string): StudioWorkspace {
-  const target = targetId ? state.quotes.find(quote => quote.id === targetId) : undefined;
-  if (targetId && !target) throw new Error('The selected estimate no longer exists. Choose another estimate.');
+  const target = targetId === undefined ? undefined : state.quotes.find(quote => quote.id === targetId);
+  if (targetId !== undefined && !target) throw new Error('The selected estimate no longer exists. Choose another estimate.');
   if (target && target.lines.length >= 100) throw new Error('An estimate can contain a maximum of 100 print items.');
   const saved = saveProject(state, design);
   const savedDesign = saved.projects.find(project => project.id === design.id)!.design;

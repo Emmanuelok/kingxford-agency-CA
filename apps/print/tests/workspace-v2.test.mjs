@@ -180,6 +180,7 @@ test('adding artwork to an estimate captures the newly saved revision rather tha
   assert.equal(more.quotes[0].lines[0].design.version, 2, 'The first quoted revision stays immutable.');
   assert.equal(more.quotes[0].status, 'Draft');
   assert.throws(() => addDesignToQuote(more, changed, crypto.randomUUID()), /no longer exists/);
+  assert.throws(() => addDesignToQuote(more, changed, ''), /no longer exists/);
   more.quotes[0].status = 'Archived';
   assert.equal(addDesignToQuote(more, changed, target.id).quotes[0].status, 'Draft');
   const full = structuredClone(more);
