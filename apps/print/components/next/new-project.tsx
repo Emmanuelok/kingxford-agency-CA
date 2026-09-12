@@ -38,7 +38,7 @@ export default function NewProject({ productId, configuration, onClose, onCreate
         </div>
         <form className="np-form" onSubmit={event => { event.preventDefault(); create(); }}>
           <label>Project name<input autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={80} placeholder={`e.g. ${selected.id === 'cards' ? 'My new business cards' : 'Summer collection'}`}/></label>
-          {configuration ? <div className="np-configured"><strong>{selected.name}</strong><span>{configuration.quantity.toLocaleString()} items · {configuration.finish} · {configuration.sides === 2 ? 'Front & back' : 'One print area'}</span><small>{configuration.tier} service</small></div> : <label>Print format<select value={product} onChange={event => setProduct(event.target.value)}>{products.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>}
+          {configuration ? <div className="np-configured"><strong>{selected.name}</strong><span>{configuration.quantity.toLocaleString()} {configuration.quantity === 1 ? 'item' : 'items'} · {configuration.finish} · {configuration.sides === 2 ? 'Front & back' : 'One print area'}</span><small>{configuration.tier} service</small></div> : <label>Print format<select value={product} onChange={event => setProduct(event.target.value)}>{products.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>}
           <div className="np-format-details"><span>{selected.material}</span><span>{selected.method}</span></div>
           <fieldset>
             <legend>Starting point</legend>

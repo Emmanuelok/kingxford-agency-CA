@@ -200,7 +200,7 @@ export default function PrintStudio({ design: project, onChange, onSave, onQuote
       </nav>
       {mobileSheet && <button className={`studio-sheet-scrim studio-scrim-${mobileSheet}`} aria-label="Close editor panel" onClick={() => setMobileSheet(null)}/>}
       {resource && <aside className={`studio-resources ${mobileSheet === 'resources' ? 'studio-panel-open' : ''}`} aria-label={`${resource} panel`}>
-        <div className="studio-panel-heading"><div><h2>{resources.find(item => item.id === resource)?.label}</h2><span>{resource === 'templates' ? 'A considered place to start.' : resource === 'uploads' ? 'Your images, ready to use.' : resource === 'layers' ? `${design.layers.length} objects on this artwork` : resource === 'brand' ? 'Make it unmistakably yours.' : resource === 'text' ? 'Give your idea a voice.' : 'Build with simple forms.'}</span></div><IconButton label="Close resources" onClick={closeSheet}><X size={17}/></IconButton></div>
+        <div className="studio-panel-heading"><div><h2>{resources.find(item => item.id === resource)?.label}</h2><span>{resource === 'templates' ? 'A considered place to start.' : resource === 'uploads' ? 'Your images, ready to use.' : resource === 'layers' ? `${design.layers.length} ${design.layers.length === 1 ? 'object' : 'objects'} on this artwork` : resource === 'brand' ? 'Make it unmistakably yours.' : resource === 'text' ? 'Give your idea a voice.' : 'Build with simple forms.'}</span></div><IconButton label="Close resources" onClick={closeSheet}><X size={17}/></IconButton></div>
         <div className="studio-resource-scroll">
           {resource === 'templates' && (candidate ? <div className="studio-template-confirm">
             <button className="studio-text-button" onClick={() => setTemplateCandidate(null)}><ArrowLeft size={14}/>All templates</button>
@@ -262,7 +262,7 @@ export default function PrintStudio({ design: project, onChange, onSave, onQuote
 
       <div className="studio-canvas-column">
         {supportsReverse(p) && <div className="studio-face-strip" aria-label="Print faces">
-          <div role="group" aria-label="Choose artwork face">{faces.map(item => <button key={item.face} aria-label={`Edit ${item.face} artwork`} aria-pressed={face === item.face} disabled={uploading} onClick={() => changeFace(item.face)}><span className="studio-face-thumb"><DesignPreview design={item.design}/></span><span>{item.label}<small>{item.design.layers.length ? `${item.design.layers.length} objects` : 'Add artwork'}</small></span></button>)}</div>
+          <div role="group" aria-label="Choose artwork face">{faces.map(item => <button key={item.face} aria-label={`Edit ${item.face} artwork`} aria-pressed={face === item.face} disabled={uploading} onClick={() => changeFace(item.face)}><span className="studio-face-thumb"><DesignPreview design={item.design}/></span><span>{item.label}<small>{item.design.layers.length ? `${item.design.layers.length} ${item.design.layers.length === 1 ? 'object' : 'objects'}` : 'Add artwork'}</small></span></button>)}</div>
           {project.sides === 1 ? <button className="studio-add-face" disabled={uploading} onClick={() => setSides(2)}><Plus size={15}/>Add back</button> : <span className="studio-face-count">Two-sided print</span>}
         </div>}
         <div className="studio-stage" ref={stage} onDragOver={event => event.preventDefault()} onDrop={event => { event.preventDefault(); const file = event.dataTransfer.files[0]; if (file && !uploading) void upload(file); }}>
