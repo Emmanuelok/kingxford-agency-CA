@@ -53,24 +53,39 @@ create table public.pw_revisions (
   primary key(project_id,version)
 );
 create index pw_revisions_workspace on public.pw_revisions(workspace_id);
-create function pw_private.valid_design(d jsonb) returns boolean language plpgsql immutable set search_path='' as $$
+-- Validate the same artwork structure on each face. An absent reverse remains a valid draft.
+create function pw_private.valid_face(f jsonb) returns boolean language plpgsql immutable set search_path='' as $$
 declare l jsonb; k text;
 begin
-  if not coalesce(jsonb_typeof(d)='object' and d ?& array['layers','name','productId','background','quantity','tier','finish','sides','city'] and jsonb_typeof(d->'layers')='array' and jsonb_array_length(d->'layers')<=100 and jsonb_typeof(d->'name')='string' and length(d->>'name') between 1 and 80 and d->>'background' ~ '^#[0-9a-fA-F]{6}$' and jsonb_typeof(d->'quantity')='number' and (d->>'quantity')::numeric between 1 and 100000 and mod((d->>'quantity')::numeric,1)=0 and d->>'tier' in ('Value','Design Plus','Priority') and (d->>'sides')::integer in (1,2) and jsonb_typeof(d->'city')='string' and length(d->>'city') between 1 and 100,false) then return false; end if;
-  if not coalesce((d->>'productId' in ('cards','brochure','bw','colour','flyer','postcard','letterhead','envelope','invitation','menu','photobook','book','magazine','notebook','calendar') and d->>'finish' in ('Standard','Soft touch','Gloss laminate','Foil accent')) or (d->>'productId' in ('tee','box','mug','hoodie','tote','cap','sport','fabric','security','tissue','tape','mailer','pouch','bottle','award','plans','model','parts','braille','electronics','edible') and d->>'finish' in ('Standard')) or (d->>'productId' in ('stickers','poster','banner','canvas','roll','clear','yard','vinyl','wrap','acrylic','booth','photos','metal','wall','floor') and d->>'finish' in ('Standard','Gloss laminate')),false) then return false; end if;
-  for l in select value from jsonb_array_elements(d->'layers') loop
-    if not coalesce(l ?& array['id','type','text','x','y','size','color','rotation','opacity'] and jsonb_typeof(l->'text')='string' and length(l->>'text')<=10000 and jsonb_typeof(l->'id')='string' and length(l->>'id') between 1 and 80 and l->>'type' in ('text','image','shape') and l->>'color' ~ '^#[0-9a-fA-F]{6}$',false) then return false; end if;
+  if not coalesce(jsonb_typeof(f)='object' and f ?& array['background','layers'] and f->>'background' ~ '^#[0-9a-fA-F]{6}$' and jsonb_typeof(f->'layers')='array' and jsonb_array_length(f->'layers')<=100,false) then return false; end if;
+  for l in select value from jsonb_array_elements(f->'layers') loop
+    if not coalesce(jsonb_typeof(l)='object' and l ?& array['id','type','text','x','y','size','color','rotation','opacity'] and jsonb_typeof(l->'text')='string' and length(l->>'text')<=10000 and jsonb_typeof(l->'id')='string' and length(l->>'id') between 1 and 80 and l->>'type' in ('text','image','shape') and l->>'color' ~ '^#[0-9a-fA-F]{6}$',false) then return false; end if;
     foreach k in array array['x','y','size','rotation','opacity'] loop if jsonb_typeof(l->k) is distinct from 'number' then return false; end if; end loop;
     if (l->>'x')::numeric not between 0 and 100 or (l->>'y')::numeric not between 0 and 100 or (l->>'size')::numeric not between 1 and 50 or (l->>'rotation')::numeric not between -360 and 360 or (l->>'opacity')::numeric not between 0 and 1 then return false; end if;
     foreach k in array array['width','height'] loop if l ? k and not coalesce(jsonb_typeof(l->k)='number' and (l->>k)::numeric>0 and (l->>k)::numeric<=100,false) then return false; end if; end loop;
     if l ? 'font' and not coalesce(l->>'font' in ('Arial','Georgia','Verdana','Courier New'),false) then return false; end if;
     if l ? 'weight' and not coalesce(jsonb_typeof(l->'weight')='number' and (l->>'weight')::numeric between 100 and 900,false) then return false; end if;
   end loop;
-  if (select count(*) from jsonb_array_elements(d->'layers'))<>(select count(distinct value->>'id') from jsonb_array_elements(d->'layers')) then return false; end if;
+  if (select count(*) from jsonb_array_elements(f->'layers'))<>(select count(distinct value->>'id') from jsonb_array_elements(f->'layers')) then return false; end if;
+  return true;
+exception when others then return false;
+end $$;
+revoke all on function pw_private.valid_face(jsonb) from public;
+create function pw_private.valid_design(d jsonb) returns boolean language plpgsql immutable set search_path='' as $$
+begin
+  if not coalesce(jsonb_typeof(d)='object' and d ?& array['layers','name','productId','background','quantity','tier','finish','sides','city'] and jsonb_typeof(d->'layers')='array' and jsonb_array_length(d->'layers')<=100 and jsonb_typeof(d->'name')='string' and length(d->>'name') between 1 and 80 and d->>'background' ~ '^#[0-9a-fA-F]{6}$' and jsonb_typeof(d->'quantity')='number' and (d->>'quantity')::numeric between 1 and 100000 and mod((d->>'quantity')::numeric,1)=0 and d->>'tier' in ('Value','Design Plus','Priority') and (d->>'sides')::integer in (1,2) and jsonb_typeof(d->'city')='string' and length(d->>'city') between 1 and 100,false) then return false; end if;
+  if not coalesce((d->>'productId' in ('cards','brochure','bw','colour','flyer','postcard','letterhead','envelope','invitation','menu','photobook','book','magazine','notebook','calendar') and d->>'finish' in ('Standard','Soft touch','Gloss laminate','Foil accent')) or (d->>'productId' in ('tee','box','mug','hoodie','tote','cap','sport','fabric','security','tissue','tape','mailer','pouch','bottle','award','plans','model','parts','braille','electronics','edible') and d->>'finish' in ('Standard')) or (d->>'productId' in ('stickers','poster','banner','canvas','roll','clear','yard','vinyl','wrap','acrylic','booth','photos','metal','wall','floor') and d->>'finish' in ('Standard','Gloss laminate')),false) then return false; end if;
+  if not pw_private.valid_face(d) then return false; end if;
+  if d ? 'back' and not pw_private.valid_face(d->'back') then return false; end if;
   return true;
 exception when others then return false;
 end $$;
 revoke all on function pw_private.valid_design(jsonb) from public;
+create function pw_private.has_print_content(f jsonb) returns boolean language sql immutable set search_path='' as $$
+  select exists(select 1 from jsonb_array_elements(coalesce(f->'layers','[]'::jsonb)) l
+    where (l->>'opacity')::numeric>0 and (l->>'type'<>'text' or l->>'text' ~ '[^[:space:]]'));
+$$;
+revoke all on function pw_private.has_print_content(jsonb) from public;
 create function pw_private.project_revision() returns trigger language plpgsql security definer set search_path='' as $$
 declare layer jsonb;
 begin
@@ -79,9 +94,10 @@ begin
   if new.created_by<>auth.uid() and tg_op='INSERT' then raise exception 'Invalid project creator'; end if;
   if not pw_private.valid_design(new.design) then raise exception 'Invalid design fields'; end if;
   if not (new.design ?& array['layers','name','productId','background','quantity','tier','finish','sides','city']) or jsonb_typeof(new.design->'layers') is distinct from 'array' or jsonb_array_length(new.design->'layers')>100 or coalesce(length(new.design->>'name'),0) not between 1 and 80 then raise exception 'Invalid design'; end if;
-  for layer in select value from jsonb_array_elements(new.design->'layers') loop
+  for layer in select value from jsonb_array_elements((new.design->'layers') || coalesce(new.design->'back'->'layers','[]'::jsonb)) loop
     if layer ? 'src' then raise exception 'Store artwork in the private bucket first'; end if;
-    if layer->>'type'='image' and (layer->>'assetPath' is null or split_part(layer->>'assetPath','/',1)<>new.workspace_id::text) then raise exception 'Artwork belongs to another workspace'; end if;
+    if layer->>'type'='image' and not layer ? 'assetPath' then raise exception 'Store artwork in the private bucket first'; end if;
+    if layer ? 'assetPath' and not coalesce(jsonb_typeof(layer->'assetPath')='string' and length(layer->>'assetPath')<=200 and layer->>'assetPath' ~ ('^'||new.workspace_id::text||'/[A-Za-z0-9][A-Za-z0-9._-]*$'),false) then raise exception 'Artwork belongs to another workspace or has an invalid asset path'; end if;
   end loop;
   new.version := case when tg_op='INSERT' then 1 else old.version+1 end;
   new.updated_at:=clock_timestamp();
@@ -136,11 +152,17 @@ create table public.pw_order_events (
 );
 create index pw_events_workspace on public.pw_order_events(workspace_id,created_at desc);
 create function pw_private.check_order() returns trigger language plpgsql security definer set search_path='' as $$
-declare stages text[]:=array['Artwork review','Ready to produce','Printing','Finishing','Dispatched']; actor uuid:=auth.uid();
+declare stages text[]:=array['Artwork review','Ready to produce','Printing','Finishing','Dispatched']; actor uuid:=auth.uid(); artwork jsonb;
 begin
   if actor is null and current_setting('request.jwt.claims',true)::jsonb->>'role'='service_role' then actor:=new.created_by; end if;
   if actor is null or not exists(select 1 from public.pw_members m where m.workspace_id=new.workspace_id and m.user_id=actor and m.role in ('owner','admin','designer','operator')) then raise exception 'Workspace access required'; end if;
-  if not exists(select 1 from public.pw_revisions r where r.project_id=new.project_id and r.version=new.version and r.workspace_id=new.workspace_id) then raise exception 'Invalid artwork revision'; end if;
+  select r.design into artwork from public.pw_revisions r where r.project_id=new.project_id and r.version=new.version and r.workspace_id=new.workspace_id;
+  if not found then raise exception 'Invalid artwork revision'; end if;
+  if not pw_private.has_print_content(artwork) then raise exception 'Add front artwork before submitting a production request'; end if;
+  if (artwork->>'sides')::integer=2 then
+    if artwork->>'productId' not in ('cards','postcard','flyer','letterhead','invitation','menu') then raise exception 'This product does not support a two-sided production request'; end if;
+    if not pw_private.has_print_content(artwork->'back') then raise exception 'Add reverse artwork before submitting a two-sided production request'; end if;
+  end if;
   if tg_op='INSERT' then
     if new.created_by<>actor or new.status<>'Artwork review' then raise exception 'New orders require artwork review'; end if;
   else

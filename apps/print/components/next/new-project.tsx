@@ -5,10 +5,11 @@ import { initialDesign, products, type Design } from '../../lib/presswerk/catalo
 import { designTemplates, makeTemplate } from '../../lib/next/templates';
 import { DesignPreview } from './artwork';
 import ProductVisual from './product-visual';
+import type { ProductConfiguration } from './product-configurator';
 import './new-project.css';
 
-export default function NewProject({ productId, onClose, onCreate }: {
-  productId: string; onClose: () => void; onCreate: (design: Design) => void;
+export default function NewProject({ productId, configuration, onClose, onCreate }: {
+  productId: string; configuration?: ProductConfiguration; onClose: () => void; onCreate: (design: Design) => void;
 }) {
   const [product, setProduct] = useState(productId);
   const [name, setName] = useState('');
@@ -18,13 +19,16 @@ export default function NewProject({ productId, onClose, onCreate }: {
     ? { ...initialDesign(product), background: '#ffffff', layers: [] }
     : makeTemplate(template, product), [product, template]);
   const templatePreviews = useMemo(() => designTemplates.map(item => ({ ...item, design: makeTemplate(item.id, product) })), [product]);
-  const create = () => onCreate({ ...preview, id: crypto.randomUUID(), name: name.trim() || `Untitled ${selected.name.toLowerCase()}`, version: 1, updatedAt: new Date().toISOString() });
+  const create = () => {
+    const specification = configuration?.productId === product ? configuration : undefined;
+    onCreate({ ...preview, ...specification, ...(specification?.sides === 2 ? { back: { background: '#ffffff', layers: [] } } : {}), id: crypto.randomUUID(), name: name.trim() || `Untitled ${selected.name.toLowerCase()}`, version: 1, updatedAt: new Date().toISOString() });
+  };
 
   return <Dialog open onOpenChange={open => !open && onClose()}>
     <DialogContent className="av-new-project">
       <DialogHeader>
         <DialogTitle>Make something of your own.</DialogTitle>
-        <DialogDescription>Choose your format and a starting point.</DialogDescription>
+            <DialogDescription>Your product is configured. Choose how to start the artwork.</DialogDescription>
       </DialogHeader>
       <div className="np-layout">
         <div className="np-preview">
@@ -34,7 +38,7 @@ export default function NewProject({ productId, onClose, onCreate }: {
         </div>
         <form className="np-form" onSubmit={event => { event.preventDefault(); create(); }}>
           <label>Project name<input autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={80} placeholder={`e.g. ${selected.id === 'cards' ? 'My new business cards' : 'Summer collection'}`}/></label>
-          <label>Print format<select value={product} onChange={event => setProduct(event.target.value)}>{products.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
+          {configuration ? <div className="np-configured"><strong>{selected.name}</strong><span>{configuration.quantity.toLocaleString()} items · {configuration.finish} · {configuration.sides === 2 ? 'Front & back' : 'One print area'}</span><small>{configuration.tier} service</small></div> : <label>Print format<select value={product} onChange={event => setProduct(event.target.value)}>{products.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>}
           <div className="np-format-details"><span>{selected.material}</span><span>{selected.method}</span></div>
           <fieldset>
             <legend>Starting point</legend>

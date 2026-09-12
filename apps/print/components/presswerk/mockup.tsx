@@ -344,7 +344,7 @@ function description(product: Product) {
   return 'Artwork placement preview · Material and colour vary in production';
 }
 
-export default function Mockup({ design, spin = false }: { design: Design; spin?: boolean }) {
+export default function Mockup({ design, spin = false, faceLabel }: { design: Design; spin?: boolean; faceLabel?: string }) {
   const host = useRef<HTMLDivElement>(null);
   const flatCanvas = useRef<HTMLCanvasElement>(null);
   const runtime = useRef<SceneRuntime | null>(null);
@@ -622,7 +622,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
       <div ref={host} className="mockup-renderer" style={{ position: 'absolute', inset: '49px 0 128px', visibility: showFlat ? 'hidden' : 'visible' }} />
       <div style={{ position: 'absolute', top: 9, left: 15, right: 11, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
         <span className="mockup-status" style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', lineHeight: 1.5 }}>
-          {flatSelected ? 'Exact flat proof' : failed ? 'Product illustration' : 'Product preview'}
+          {faceLabel && <strong style={{ display: 'block', fontWeight: 600, letterSpacing: '.02em', marginBottom: 2 }}>{faceLabel} artwork</strong>}{flatSelected ? 'Exact flat proof' : failed ? 'Product illustration' : 'Product preview'}
         </span>
         <div role="group" aria-label="Preview background" style={{ display: 'flex', gap: 1 }}>
           {(Object.keys(backdrops) as Backdrop[]).map(option => <button key={option} type="button" aria-label={`${option[0].toUpperCase() + option.slice(1)} background`} title={`${option} background`} aria-pressed={backdrop === option} onClick={() => setBackdrop(option)} style={{ width: 36, height: 40, display: 'grid', placeItems: 'center', background: 'transparent', border: 0, cursor: 'pointer' }}>
@@ -632,7 +632,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
       </div>
       <div className="mockup-fallback" style={{ display: showFlat ? 'flex' : 'none', position: 'absolute', inset: '50px 18px 133px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
         {showIllustration && product && <ProductProof product={product} artwork={illustrationArtwork} dark={dark} />}
-        <canvas ref={flatCanvas} aria-label={`Flat artwork proof for ${design.name}`} style={{ display: artworkError || showIllustration ? 'none' : 'block', maxWidth: '94%', maxHeight: '92%', width: 'auto', height: 'auto', objectFit: 'contain', boxShadow: dark ? '0 20px 44px #0007, 0 2px 5px #0004' : '0 20px 44px #25333d24, 0 2px 5px #25333d16' }} />
+        <canvas ref={flatCanvas} aria-label={`${faceLabel ? `${faceLabel} — ` : ''}Flat artwork proof for ${design.name}`} style={{ display: artworkError || showIllustration ? 'none' : 'block', maxWidth: '94%', maxHeight: '92%', width: 'auto', height: 'auto', objectFit: 'contain', boxShadow: dark ? '0 20px 44px #0007, 0 2px 5px #0004' : '0 20px 44px #25333d24, 0 2px 5px #25333d16' }} />
         {artworkError && <p role="alert" style={{ maxWidth: 360, fontSize: 14, lineHeight: 1.6, textAlign: 'center' }}>{artworkError}</p>}
       </div>
       <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -641,7 +641,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
         </div>}
         {!showFlat && <div className="mockup-controls" role="group" aria-label="Mockup camera controls" style={{ display: 'flex', justifyContent: 'center', gap: 5, flexWrap: 'wrap' }}>
           <select aria-label="Camera angle" value={view} onChange={event => changeView(event.target.value as CameraView)} style={buttonStyle()}>
-            <option value="front">Front view</option><option value="isometric">Three-quarter view</option><option value="back">Back view</option>
+            <option value="front">Face-on view</option><option value="isometric">Three-quarter view</option>{!faceLabel && <option value="back">Back view</option>}
           </select>
           <button type="button" aria-pressed={spinning} onClick={() => setRotation({ prop: spin, value: !spinning })} style={buttonStyle(spinning)}>{spinning ? 'Pause' : 'Rotate'}</button>
           <button type="button" aria-label="Reset camera and zoom" onClick={() => changeView('isometric')} style={buttonStyle()}>Reset</button>

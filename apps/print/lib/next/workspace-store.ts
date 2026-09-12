@@ -17,27 +17,31 @@ const draftDesignSchema = designSchema.extend({ name: z.string().max(80) });
 export function validateLocalDesign(value: unknown, allowUntitled = false): Design {
   const design = (allowUntitled ? draftDesignSchema : designSchema).parse(value);
   calculateQuote({ ...design, shipping: 0 });
-  const seen = new Set<string>();
-  design.layers = design.layers.map(layer => {
-    if (seen.has(layer.id)) throw new Error('Each design layer needs a unique identifier.');
-    seen.add(layer.id);
-    if (layer.src) {
-      const match = supportedImage.exec(layer.src);
-      if (!match || match[2].length % 4 !== 0) {
-        throw new Error('Artwork must be an embedded PNG, JPG or WebP image.');
+  const localLayers = (layers: typeof design.layers) => {
+    const seen = new Set<string>();
+    return layers.map(layer => {
+      if (seen.has(layer.id)) throw new Error('Each design layer needs a unique identifier.');
+      seen.add(layer.id);
+      if (layer.src) {
+        const match = supportedImage.exec(layer.src);
+        if (!match || match[2].length % 4 !== 0) {
+          throw new Error('Artwork must be an embedded PNG, JPG or WebP image.');
+        }
+        const bytes = match[2].length * 3 / 4 - (match[2].endsWith('==') ? 2 : match[2].endsWith('=') ? 1 : 0);
+        if (bytes > 12 * 1024 * 1024) throw new Error('Artwork files must be under 12MB.');
       }
-      const bytes = match[2].length * 3 / 4 - (match[2].endsWith('==') ? 2 : match[2].endsWith('=') ? 1 : 0);
-      if (bytes > 12 * 1024 * 1024) throw new Error('Artwork files must be under 12MB.');
-    }
-    if (layer.type === 'image' && !layer.src) {
-      throw new Error('An image is missing. Embed its artwork before importing this design.');
-    }
-    // A hydrated cloud export may have both fields. Retain the actual artwork,
-    // never a storage reference that would require another account's credentials.
-    const local = { ...layer };
-    delete local.assetPath;
-    return local;
-  });
+      if (layer.type === 'image' && !layer.src) {
+        throw new Error('An image is missing. Embed its artwork before importing this design.');
+      }
+      // A hydrated cloud export may have both fields. Retain the actual artwork,
+      // never a storage reference that would require another account's credentials.
+      const local = { ...layer };
+      delete local.assetPath;
+      return local;
+    });
+  };
+  design.layers = localLayers(design.layers);
+  if (design.back) design.back = { ...design.back, layers: localLayers(design.back.layers) };
   return design;
 }
 
@@ -189,7 +193,7 @@ export function saveProject(state: StudioWorkspace, input: Design, label?: strin
 
 function preserveActiveDesign(state: StudioWorkspace): StudioWorkspace {
   const outgoing = state.activeDesign;
-  const shouldPreserve = outgoing.layers.length > 0 || outgoing.name.trim().length > 0 || state.projects.some(project => project.id === outgoing.id);
+  const shouldPreserve = outgoing.layers.length > 0 || (outgoing.back?.layers.length ?? 0) > 0 || outgoing.name.trim().length > 0 || state.projects.some(project => project.id === outgoing.id);
   return shouldPreserve
     ? saveProject(state, {
       ...outgoing,
@@ -246,6 +250,34 @@ export function addDesignToQuote(state: StudioWorkspace, design: Design, targetI
     quotes: saved.quotes.map(quote => quote.id !== target.id ? quote : {
       ...quote,
       lines: [...quote.lines, { id: uuid(), design: structuredClone(savedDesign) }],
+      status: 'Draft' as const,
+      updatedAt: now,
+    }),
+    updatedAt: now,
+  });
+}
+
+/** Replace one estimate's artwork explicitly; other quoted revisions stay intact. */
+export function updateQuoteArtwork(state: StudioWorkspace, quoteId: string, lineId: string, input: Design, expectedFingerprint?: string): StudioWorkspace {
+  const target = state.quotes.find(quote => quote.id === quoteId);
+  if (!target) throw new Error('The selected estimate no longer exists. Your edited project is still available in the studio.');
+  const line = target.lines.find(item => item.id === lineId);
+  if (!line) throw new Error('This print item was removed from the estimate. Add the edited artwork as a new item.');
+  if (expectedFingerprint !== undefined && designFingerprint(line.design) !== expectedFingerprint) {
+    throw new Error('This estimate item changed while you were editing. Reopen its current artwork before replacing it.');
+  }
+  const design = validateLocalDesign(input);
+  if (design.productId !== line.design.productId) throw new Error('Choose the original product when updating this estimate item, or add a new print item.');
+  // The studio may use an independent project ID so an old quoted revision never
+  // overwrites a newer project. Save it before capturing its actual saved version.
+  const saved = saveProject(state, design);
+  const savedDesign = saved.projects.find(project => project.id === design.id)!.design;
+  const now = timestamp();
+  return validateWorkspace({
+    ...saved,
+    quotes: saved.quotes.map(quote => quote.id !== quoteId ? quote : {
+      ...quote,
+      lines: quote.lines.map(item => item.id !== lineId ? item : { ...item, design: structuredClone(savedDesign) }),
       status: 'Draft' as const,
       updatedAt: now,
     }),

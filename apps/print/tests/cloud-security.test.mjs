@@ -41,6 +41,16 @@ await rejected(()=>q('update public.pw_projects set workspace_id=$1 where id=$2'
 await rejected(()=>q('update public.pw_projects set design=$1 where id=$2',['{}',project]),/Invalid design/);
 await rejected(()=>q('update public.pw_workspaces set brand=$1 where id=$2',['{}',wa]),/check constraint/);
 await rejected(()=>q('update public.pw_projects set design=$1 where id=$2',[JSON.stringify({...d,layers:[{...d.layers[0],type:'image',assetPath:wb+'/foreign.png'}]}),project]),/another workspace/);
+// An inactive reverse must be validated too: switching to one side cannot hide unsafe assets.
+for(const sides of [1,2]){
+  const reverse={...d,sides,back:{background:'#ffffff',layers:[{...d.layers[0],type:'image',assetPath:wb+'/foreign.png'}]}};
+  await rejected(()=>q('update public.pw_projects set design=$1 where id=$2',[JSON.stringify(reverse),project]),/another workspace/);
+  await rejected(()=>q('update public.pw_projects set design=$1 where id=$2',[JSON.stringify({...reverse,back:{...reverse.back,layers:[{...reverse.back.layers[0],assetPath:wa+'/../'+wb+'/foreign.png'}]}}),project]),/invalid asset path/);
+  await rejected(()=>q('update public.pw_projects set design=$1 where id=$2',[JSON.stringify({...reverse,back:{...reverse.back,layers:[{...d.layers[0],src:'data:image/png;base64,AAAA'}]}}),project]),/private bucket/);
+}
+for(const back of [null,[],{}, {background:'#ffffff',layers:{}}, {background:'red',layers:[]}, {background:'#ffffff',layers:[{...d.layers[0],x:null}]}, {background:'#ffffff',layers:[d.layers[0],d.layers[0]]}, {background:'#ffffff',layers:Array.from({length:101},(_,i)=>({...d.layers[0],id:'layer-'+i}))}]){
+  await rejected(()=>q('update public.pw_projects set design=$1 where id=$2',[JSON.stringify({...d,back}),project]),/Invalid design/);
+}
 await rejected(()=>q('insert into public.pw_proofs(workspace_id,project_id,version,approved_at) values($1,$2,2,now())',[wa,project]),/permission denied/);
 await rejected(()=>q('insert into public.pw_orders(workspace_id,project_id,version,idempotency_key,estimate) values($1,$2,2,$3,$4)',[wa,project,randomUUID(),JSON.stringify({total:.01})]),/permission denied/);
 await q('insert into storage.objects(bucket_id,name) values($1,$2)',['presswerk-artwork',wa+'/artwork.png']);
@@ -82,5 +92,29 @@ assert.equal(response.orders.length,1);assert.equal(response.orders[0].id,order)
 await rejected(()=>q("select public.pw_platform_request($1,'orders')",['pw_live_'+'f'.repeat(64)]),/invalid/);
 await as(alice);await q("select public.pw_keys($1,'revoke','',$2)",[wa,list[0].id]);
 await as(null,'anon');await rejected(()=>q("select public.pw_platform_request($1,'orders')",[key]),/invalid or revoked/);
+// Draft compatibility is separate from production readiness. Both faces survive cloud revisions.
+await as(alice);
+const reverseProject=randomUUID();
+const twoSided={...d,id:reverseProject,sides:2,back:{background:'#ffffff',layers:[{...d.layers[0],text:'Reverse artwork',color:'#171719'},{...d.layers[1],id:'back-image',type:'image',assetPath:wa+'/artwork.png'}]}};
+await q('insert into public.pw_projects(id,workspace_id,design) values($1,$2,$3)',[reverseProject,wa,JSON.stringify(twoSided)]);
+const reverseRoundtrip=(await q('select design from public.pw_revisions where project_id=$1',[reverseProject])).rows[0].design;
+assert.deepEqual(reverseRoundtrip.back,twoSided.back);
+assert.equal(designFingerprint(twoSided),designFingerprint(reverseRoundtrip));
+await as(null,'service_role');
+await q('insert into public.pw_orders(workspace_id,project_id,version,idempotency_key,estimate,created_by) values($1,$2,1,$3,$4,$5)',[wa,reverseProject,randomUUID(),JSON.stringify(estimate),alice]);
+for(const [draft,reason] of [
+  [{...d,sides:2},/reverse artwork/],
+  [{...d,sides:2,back:{background:'#ffffff',layers:[]}},/reverse artwork/],
+  [{...twoSided,back:{...twoSided.back,layers:[{...d.layers[0],text:'\n\t  '}]}},/reverse artwork/],
+  [{...twoSided,back:{...twoSided.back,layers:[{...d.layers[0],opacity:0}]}},/reverse artwork/],
+  [{...twoSided,productId:'mug'},/does not support/],
+  [{...d,layers:[]},/front artwork/]
+]){
+  const draftId=randomUUID();
+  await as(alice);
+  await q('insert into public.pw_projects(id,workspace_id,design) values($1,$2,$3)',[draftId,wa,JSON.stringify({...draft,id:draftId})]);
+  await as(null,'service_role');
+  await rejected(()=>q('insert into public.pw_orders(workspace_id,project_id,version,idempotency_key,estimate,created_by) values($1,$2,1,$3,$4,$5)',[wa,draftId,randomUUID(),JSON.stringify(estimate),alice]),reason);
+}
 await db.close();
-console.log('PASS: isolated tenants, roles, private storage, immutable revisions, conflicts, proof integrity, trusted order creation, audited transitions, AI quotas, invitations and API key revocation.');
+console.log('PASS: isolated tenants, roles, private artwork on both faces, reverse validation, immutable revisions, production readiness, conflicts, proof integrity, trusted order creation, audited transitions, AI quotas, invitations and API key revocation.');

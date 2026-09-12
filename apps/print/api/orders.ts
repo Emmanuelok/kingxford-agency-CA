@@ -1,7 +1,7 @@
 import type {ServerResponse} from 'node:http';
 import {z} from 'zod';
 import {authenticated,privileged,bodyOf,json,failure,methodNotAllowed,type Request} from '../lib/presswerk/server.ts';
-import {calculateQuote} from '../lib/presswerk/catalog.ts';
+import {calculateQuote,products,supportsReverse,type DesignLayer} from '../lib/presswerk/catalog.ts';
 import {designSchema} from '../lib/presswerk/cloud.ts';
 const orderSchema=z.object({workspaceId:z.string().uuid(),projectId:z.string().uuid(),version:z.number().int().positive(),idempotencyKey:z.string().uuid()});
 export default async function handler(req:Request,res:ServerResponse){
@@ -15,7 +15,15 @@ export default async function handler(req:Request,res:ServerResponse){
     if(existing.data){if(existing.data.project_id!==input.projectId||existing.data.version!==input.version)return json(res,409,{error:'Idempotency key was already used for another artwork revision.'});return json(res,200,{order:existing.data});}
     const {data:revision,error}=await db.from('pw_revisions').select('design').eq('workspace_id',input.workspaceId).eq('project_id',input.projectId).eq('version',input.version).single();
     if(error||!revision)return json(res,404,{error:'Artwork revision was not found in your workspace.'});
-    const design=designSchema.parse(revision.design);const estimate={...calculateQuote({...design,shipping:0}),quantity:design.quantity,city:design.city,projectName:design.name};
+    const design=designSchema.parse(revision.design);
+    const hasContent=(layers:DesignLayer[])=>layers.some(layer=>layer.opacity>0&&(layer.type!=='text'||layer.text.trim().length>0));
+    if(!hasContent(design.layers))return json(res,400,{error:'Add front artwork before submitting a production request.'});
+    if(design.sides===2){
+      const product=products.find(p=>p.id===design.productId);
+      if(!product||!supportsReverse(product))return json(res,400,{error:'This product does not support a two-sided production request.'});
+      if(!design.back||!hasContent(design.back.layers))return json(res,400,{error:'Add reverse artwork before submitting a two-sided production request.'});
+    }
+    const estimate={...calculateQuote({...design,shipping:0}),quantity:design.quantity,city:design.city,projectName:design.name};
     const {data:order,error:insertError}=await privileged().from('pw_orders').insert({workspace_id:input.workspaceId,project_id:input.projectId,version:input.version,idempotency_key:input.idempotencyKey,estimate,created_by:user.id}).select().single();
     if(insertError){if(insertError.code==='23505'){const retry=await db.from('pw_orders').select('*').eq('workspace_id',input.workspaceId).eq('idempotency_key',input.idempotencyKey).single();if(retry.data&&retry.data.project_id===input.projectId&&retry.data.version===input.version)return json(res,200,{order:retry.data});}throw insertError;}
     return json(res,201,{order,notice:'Production request saved. Estimates are non-binding; no payment or supplier order has been submitted.'});

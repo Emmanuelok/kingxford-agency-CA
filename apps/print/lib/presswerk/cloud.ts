@@ -1,6 +1,6 @@
 import {createClient, type SupabaseClient, type Session} from '@supabase/supabase-js';
 import {z} from 'zod';
-import {calculateQuote, products, type Design} from './catalog.ts';
+import {calculateQuote, products, type Design, type DesignLayer} from './catalog.ts';
 
 export type CloudConfig={url:string;publishableKey:string};
 export type Brand={name:string;tagline:string;primary:string;secondary:string;accent:string;font:string};
@@ -9,7 +9,9 @@ export type CloudOrder={id:string;workspace_id:string;project_id:string;version:
 export type Role='owner'|'admin'|'designer'|'operator'|'viewer';
 export const brandSchema=z.object({name:z.string().min(1).max(60),tagline:z.string().max(100),primary:z.string().regex(/^#[0-9a-f]{6}$/i),secondary:z.string().regex(/^#[0-9a-f]{6}$/i),accent:z.string().regex(/^#[0-9a-f]{6}$/i),font:z.enum(['Arial','Georgia','Verdana','Courier New'])});
 const layerSchema=z.object({id:z.string().min(1).max(80),type:z.enum(['text','image','shape']),text:z.string().max(10000),x:z.number().min(0).max(100),y:z.number().min(0).max(100),size:z.number().min(1).max(50),color:z.string().regex(/^#[0-9a-f]{6}$/i),rotation:z.number().min(-360).max(360),opacity:z.number().min(0).max(1),src:z.string().max(17000000).optional(),assetPath:z.string().max(200).optional(),width:z.number().positive().max(100).optional(),height:z.number().positive().max(100).optional(),font:z.enum(['Arial','Georgia','Verdana','Courier New']).optional(),weight:z.number().int().min(100).max(900).optional(),naturalWidth:z.number().int().positive().max(60000).optional(),naturalHeight:z.number().int().positive().max(60000).optional()});
-export const designSchema=z.object({id:z.string().uuid(),name:z.string().min(1).max(80),productId:z.string().refine(id=>products.some(p=>p.id===id)),background:z.string().regex(/^#[0-9a-f]{6}$/i),layers:z.array(layerSchema).max(100),quantity:z.number().int().min(1).max(100000),tier:z.enum(['Value','Design Plus','Priority']),finish:z.string(),sides:z.number().int().min(1).max(2),city:z.string().min(1).max(100),imageWidth:z.number().positive().optional(),imageHeight:z.number().positive().optional(),version:z.number().int().min(1),updatedAt:z.string().refine(s=>Number.isFinite(Date.parse(s)))});
+const faceLayersSchema=z.array(layerSchema).max(100).refine(layers=>new Set(layers.map(layer=>layer.id)).size===layers.length,'Each print face needs unique layer identifiers.');
+const designFaceSchema=z.object({background:z.string().regex(/^#[0-9a-f]{6}$/i),layers:faceLayersSchema});
+export const designSchema=z.object({id:z.string().uuid(),name:z.string().min(1).max(80),productId:z.string().refine(id=>products.some(p=>p.id===id)),background:z.string().regex(/^#[0-9a-f]{6}$/i),layers:faceLayersSchema,back:designFaceSchema.optional(),quantity:z.number().int().min(1).max(100000),tier:z.enum(['Value','Design Plus','Priority']),finish:z.string(),sides:z.number().int().min(1).max(2),city:z.string().min(1).max(100),imageWidth:z.number().positive().optional(),imageHeight:z.number().positive().optional(),version:z.number().int().min(1),updatedAt:z.string().refine(s=>Number.isFinite(Date.parse(s)))});
 let client:SupabaseClient|null=null;
 export function connectCloud(config:CloudConfig){
   if(!/^https:\/\//.test(config.url)||!config.publishableKey)throw Error('Account service is not configured.');
@@ -24,8 +26,9 @@ export async function createWorkspace(name:string,userId:string){const {data,err
 const readBlob=(blob:Blob)=>new Promise<string>((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(Error('Artwork could not be read'));r.readAsDataURL(blob);});
 export async function hydrateDesign(value:unknown){
   const d=designSchema.parse(value) as Design;
-  const layers=await Promise.all(d.layers.map(async l=>{if(!l.assetPath)return l;const {data,error}=await cloud().storage.from('presswerk-artwork').download(l.assetPath);check(error);if(!data)throw Error('Artwork is missing.');return{...l,src:await readBlob(data)};}));
-  return{...d,layers};
+  const hydrateLayers=(layers:DesignLayer[])=>Promise.all(layers.map(async l=>{if(!l.assetPath)return l;const {data,error}=await cloud().storage.from('presswerk-artwork').download(l.assetPath);check(error);if(!data)throw Error('Artwork is missing.');return{...l,src:await readBlob(data)};}));
+  const [layers,backLayers]=await Promise.all([hydrateLayers(d.layers),d.back?hydrateLayers(d.back.layers):undefined]);
+  return{...d,layers,...(d.back&&backLayers?{back:{...d.back,layers:backLayers}}:{})};
 }
 export async function loadWorkspace(workspaceId:string,userId:string){
   const results=await Promise.all([
@@ -39,7 +42,7 @@ export async function loadWorkspace(workspaceId:string,userId:string){
 }
 export async function saveCloudProject(workspaceId:string,design:Design,expectedVersion:number){
   const parsed=designSchema.parse(design) as Design;calculateQuote({...parsed,shipping:0});
-  const layers=await Promise.all(parsed.layers.map(async l=>{
+  const storeLayers=(faceLayers:DesignLayer[])=>Promise.all(faceLayers.map(async l=>{
     if(l.type!=='image')return l;
     if(l.assetPath?.startsWith(workspaceId+'/')){const {src:_,...rest}=l;return rest;}
     if(!l.src||!/^data:image\/(png|jpeg|webp);base64,/.test(l.src))throw Error('Upload a supported artwork image first.');
@@ -48,11 +51,14 @@ export async function saveCloudProject(workspaceId:string,design:Design,expected
     const {error}=await cloud().storage.from('presswerk-artwork').upload(path,blob,{contentType:blob.type,upsert:false});check(error);
     const {src:_,...rest}=l;return{...rest,assetPath:path};
   }));
-  const stored={...parsed,layers};
+  const [layers,backLayers]=await Promise.all([storeLayers(parsed.layers),parsed.back?storeLayers(parsed.back.layers):undefined]);
+  const stored={...parsed,layers,...(parsed.back&&backLayers?{back:{...parsed.back,layers:backLayers}}:{})};
   const query=expectedVersion===0?cloud().from('pw_projects').insert({id:parsed.id,workspace_id:workspaceId,design:stored}):cloud().from('pw_projects').update({design:stored}).eq('id',parsed.id).eq('workspace_id',workspaceId).eq('version',expectedVersion);
   const {data,error}=await query.select('design').maybeSingle();check(error);
   if(!data)throw Error('This project changed in another session. Reload the workspace before saving.');
-  return {...(data.design as Design),layers:(data.design as Design).layers.map(l=>({...l,src:parsed.layers.find(x=>x.id===l.id)?.src}))};
+  const saved=designSchema.parse(data.design) as Design;
+  const restoreSources=(layers:DesignLayer[],source:DesignLayer[])=>layers.map(l=>({...l,src:source.find(x=>x.id===l.id)?.src}));
+  return {...saved,layers:restoreSources(saved.layers,parsed.layers),...(saved.back?{back:{...saved.back,layers:restoreSources(saved.back.layers,parsed.back?.layers||[])}}:{})};
 }
 export async function approveCloudProof(workspaceId:string,design:Design){const {data,error}=await cloud().from('pw_proofs').insert({workspace_id:workspaceId,project_id:design.id,version:design.version}).select().single();check(error);return data;}
 export async function saveCloudBrand(workspaceId:string,brand:Brand){const value=brandSchema.parse(brand);const {data,error}=await cloud().from('pw_workspaces').update({brand:value}).eq('id',workspaceId).select('id').single();check(error);return data;}

@@ -1,10 +1,22 @@
-import { products } from '../presswerk/catalog.ts';
+import { products, supportsReverse } from '../presswerk/catalog.ts';
 import type { Design, DesignLayer, Product } from '../presswerk/catalog.ts';
 
 export type Bounds = { x: number; y: number; width: number; height: number };
-export type ArtworkIssue = { id: string; severity: 'warning' | 'error'; title: string; detail: string; layerId?: string };
+export type ArtworkIssue = { id: string; severity: 'warning' | 'error'; title: string; detail: string; layerId?: string; face?: 'front' | 'back' };
+export type PrintFace = 'front' | 'back';
 export const ARTWORK_FONTS = ['Arial', 'Georgia', 'Verdana', 'Courier New'];
 export const copyDesign = (design: Design): Design => JSON.parse(JSON.stringify(design));
+/** A standalone face for existing preview and export renderers. */
+export function designForFace(design: Design, face: PrintFace): Design {
+  const { back, ...front } = design;
+  const content = face === 'back' ? back ?? { background: '#ffffff', layers: [] } : front;
+  return { ...front, background: content.background, layers: content.layers.map(layer => ({ ...layer })), sides: 1 };
+}
+/** One-sided printing retains any reverse draft but does not include it in output. */
+export function printFaces(design: Design): { face: PrintFace; label: string; design: Design }[] {
+  const faces: PrintFace[] = design.sides === 2 ? ['front', 'back'] : ['front'];
+  return faces.map(face => ({ face, label: face === 'front' ? 'Front' : 'Back', design: designForFace(design, face) }));
+}
 export function artworkProduct(design: Design): Product {
   const product = products.find(p => p.id === design.productId);
   if (!product) throw new Error('This product is unavailable. Choose a product from the catalogue.');
@@ -21,7 +33,8 @@ export function safeImageSource(src?: string): string | undefined {
 }
 export function artworkFingerprint(design: Design) {
   // This is a local review identity, not a cryptographic approval or an order authorization.
-  return JSON.stringify({ productId: design.productId, background: design.background, sides: design.sides, finish: design.finish, layers: design.layers.map(layer => { const copy = { ...layer }; delete copy.assetPath; return copy; }) });
+  const clean = (layers: DesignLayer[]) => layers.map(layer => { const copy = { ...layer }; delete copy.assetPath; return copy; });
+  return JSON.stringify({ productId: design.productId, background: design.background, sides: design.sides, finish: design.finish, layers: clean(design.layers), ...(design.back ? { back: { background: design.back.background, layers: clean(design.back.layers) } } : {}) });
 }
 let measuringContext: CanvasRenderingContext2D | null = null;
 function textWidth(text: string, font: string, size: number, weight: number) {
@@ -67,10 +80,9 @@ export function alignLayer(layer: DesignLayer, product: Pick<Product, 'width' | 
   if (direction === 'bottom') dy = product.height - b.y - b.height;
   return { ...layer, x: Math.min(100, Math.max(0, layer.x + dx / product.width * 100)), y: Math.min(100, Math.max(0, layer.y + dy / product.height * 100)) };
 }
-export function preflightArtwork(design: Design): ArtworkIssue[] {
+function preflightFace(design: Design): ArtworkIssue[] {
   const p = artworkProduct(design), issues: ArtworkIssue[] = [];
   if (!design.layers.some(l => l.opacity > 0 && (l.type !== 'text' || l.text.trim()))) issues.push({ id: 'empty', severity: 'error', title: 'There is no visible artwork', detail: 'Add text, a shape or an image before requesting print.' });
-  if (design.sides !== 1) issues.push({ id: 'single-face', severity: 'error', title: 'A reverse side still needs artwork', detail: 'This studio edits one print face. Quote the reverse side separately or set this project to one side.' });
   for (const layer of design.layers) {
     if (layer.opacity === 0 || (layer.type === 'text' && !layer.text.trim())) continue;
     const name = layer.type === 'text' ? layer.text.slice(0, 35).replace(/\n/g, ' ') : layer.text || (layer.type === 'image' ? 'Image' : 'Shape');
@@ -84,6 +96,17 @@ export function preflightArtwork(design: Design): ArtworkIssue[] {
       if (!resolution) issues.push({ id: `${layer.id}-resolution`, severity: 'warning', title: 'Image resolution is unknown', detail: `Upload ${name} again so its original pixel dimensions can be checked.`, layerId: layer.id });
       else if (resolution.minimum < 300) issues.push({ id: `${layer.id}-resolution`, severity: 'warning', title: `${name}: ${Math.round(resolution.minimum)} PPI`, detail: `${Math.round(resolution.horizontal)} × ${Math.round(resolution.vertical)} PPI at this size. 300 PPI is a useful target for close-view print; confirm large-format requirements with production.`, layerId: layer.id });
     }
+  }
+  return issues;
+}
+export function preflightArtwork(design: Design): ArtworkIssue[] {
+  const issues: ArtworkIssue[] = [];
+  if (design.sides === 2 && !supportsReverse(artworkProduct(design))) {
+    issues.push({ id: 'unsupported-reverse', severity: 'error', title: 'This product needs a different print specification', detail: 'Two independent print faces are supported for business cards, postcards, flyers, letterheads, invitations and menus. Use one face or request a custom specification for this product.', face: 'back' });
+  }
+  for (const { face, label, design: artwork } of printFaces(design)) {
+    const faceIssues = preflightFace(artwork);
+    issues.push(...faceIssues.map(issue => ({ ...issue, id: design.sides === 2 ? `${face}-${issue.id}` : issue.id, title: design.sides === 2 ? `${label}: ${issue.title}` : issue.title, face })));
   }
   return issues;
 }

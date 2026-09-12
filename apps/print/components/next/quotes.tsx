@@ -1,37 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { z } from 'zod';
-import { Archive, ArrowUpRight, Check, CheckCircle2, ChevronRight, Copy, Download, FileText, MapPin, Plus, Printer, Search, Trash2 } from 'lucide-react';
-import { calculateQuote, finishesFor, money, products, type Design, type Tier } from '../../lib/presswerk/catalog';
-import type { QuoteDraft, QuoteLine } from '../../lib/next/types';
+import { Archive, ArrowUpRight, Check, AlertCircle, CheckCircle2, ChevronRight, Copy, Download, FileArchive, FileText, Layers, Mail, MapPin, Plus, Printer, Search, Trash2 } from 'lucide-react';
+import { finishesFor, money, products, supportsReverse, type Design, type Tier } from '../../lib/presswerk/catalog';
+import type { QuoteDraft } from '../../lib/next/types';
 import { DesignPreview } from './artwork';
+import { downloadArtwork, printFaces } from '../../lib/next/artwork';
+import { buildProductionPackage, quoteBudget as summary, quoteIdentifier as identifier, quoteReadiness, quotationEmailHref } from '../../lib/next/production-package';
 import './workspace-views.css';
+import './quotes.css';
 
-function lineEstimate(line: QuoteLine) {
-  try { return { value: calculateQuote({ ...line.design, shipping: 0 }), error: '' }; }
-  catch (error) { return { value: null, error: error instanceof Error ? error.message : 'Review the product specifications.' }; }
-}
-function summary(quote: QuoteDraft) {
-  const calculated = quote.lines.map(lineEstimate);
-  const subtotal = +calculated.reduce((total, line) => total + (line.value?.subtotal || 0), 0).toFixed(2);
-  const pending = calculated.filter(line => line.value?.quoteOnly).length;
-  const allowance = quote.delivery.method === 'Delivery' && Number.isFinite(quote.delivery.allowance) ? quote.delivery.allowance : 0;
-  return { calculated, subtotal, pending, allowance, total: +(subtotal + allowance).toFixed(2), invalid: calculated.some(line => !!line.error) || allowance < 0 || allowance > 100000 || !Number.isFinite(quote.delivery.allowance) };
-}
-function validation(quote: QuoteDraft) {
-  const errors: string[] = [];
-  if (!quote.name.trim()) errors.push('Give this estimate a name.');
-  if (!quote.lines.length) errors.push('Add at least one print item.');
-  if (quote.lines.length > 100) errors.push('Each estimate supports up to 100 print items.');
-  quote.lines.forEach((line, i) => { const estimate = lineEstimate(line); if (estimate.error) errors.push(`Item ${i + 1}: ${estimate.error}`); });
-  if (!quote.customer.name.trim()) errors.push('Enter a contact name.');
-  if (!z.string().email().safeParse(quote.customer.email.trim()).success) errors.push('Enter a valid contact email.');
-  if (quote.delivery.method === 'Delivery' && !quote.delivery.city.trim()) errors.push('Enter the delivery city.');
-  if (!Number.isFinite(quote.delivery.allowance) || quote.delivery.allowance < 0 || quote.delivery.allowance > 100000) errors.push('Enter a delivery allowance between $0 and $100,000.');
-  return errors;
-}
 const date = (value: string) => new Date(value).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
 const escapeHtml = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]!));
-const identifier = (quote: QuoteDraft) => `AP-${quote.id.replace(/[^a-z0-9]/gi, '').slice(0, 8).toUpperCase()}`;
 const filename = (quote: QuoteDraft) => (quote.name || 'Avalon-estimate').replace(/[^a-z0-9-_]/gi, '-').slice(0, 80);
 function downloadCsv(quote: QuoteDraft) {
   const totals = summary(quote);
@@ -55,20 +33,65 @@ function printQuote(quote: QuoteDraft) {
   setTimeout(() => { if (!popup.closed) { popup.focus(); popup.print(); } }, 300);
 }
 
-export default function Quotes({ quotes, onChange, onOpenDesign, onNew }: {
+function ProductionReview({ quote, readiness, packaging, onDownload, onEditDetails, onEditArtwork }: {
+  quote: QuoteDraft;
+  readiness: ReturnType<typeof quoteReadiness>;
+  packaging: boolean;
+  onDownload: () => void;
+  onEditDetails: () => void;
+  onEditArtwork: (lineId: string) => void;
+}) {
+  const budget = summary(quote);
+  const faceCount = quote.lines.reduce((count, line) => count + printFaces(line.design).length, 0);
+  return <div className="pq-review">
+    <div className="pq-review-heading"><span className="pv-eyebrow">THE FINAL LOOK</span><h2>Your artwork. Every side.</h2><p>Check the flat artwork below. Your package includes these files at the chosen print dimensions.</p></div>
+    <div className="pq-proofs">{quote.lines.map((line, index) => {
+      const product = products.find(item => item.id === line.design.productId), check = readiness.lines[index];
+      return <article className="pq-proof" key={line.id}>
+        <header><div><h3>{line.design.name}</h3><p>{product?.name} · {line.design.quantity.toLocaleString()} items · {product?.width} × {product?.height} mm</p></div><button className="pv-text-action" onClick={() => onEditArtwork(line.id)}>Edit artwork <ArrowUpRight size={14} /></button></header>
+        <div className="pq-proof-faces">{printFaces(line.design).map(face => <figure key={face.face}><div className="pq-proof-art"><DesignPreview design={face.design} /></div><figcaption><span>{face.label}</span><span>Artwork v{line.design.version}</span></figcaption></figure>)}</div>
+        <div className="pq-proof-specs"><span>{product?.material}</span><span>{line.design.finish}</span><span>{line.design.tier}</span></div>
+        {check.issues.length ? <details className={`pq-proof-checks ${check.errorCount ? 'has-errors' : ''}`} open={check.errorCount > 0}><summary><AlertCircle size={15} />{check.errorCount ? `${check.errorCount} ${check.errorCount === 1 ? 'issue needs' : 'issues need'} a fix` : `${check.warningCount} ${check.warningCount === 1 ? 'note' : 'notes'} for your review`}</summary><ul>{check.issues.map(issue => <li key={issue.id}><strong>{issue.title}</strong><p>{issue.detail}</p></li>)}</ul></details> : <p className="pq-proof-passed"><CheckCircle2 size={15} /> Automated artwork checks passed</p>}
+      </article>;
+    })}</div>
+    <div className="pq-handoff-grid">
+      <section className="pq-package-card" aria-label="Quotation review package"><div className="pq-package-icon"><FileArchive size={25} /></div><span className="pv-eyebrow">READY TO HAND OVER</span><h3>One package.<br />All the print details.</h3><p>A complete brief for Avalon to review, quote and prepare for production.</p><ul><li><Layers size={16} /><span>{faceCount} individual SVG artwork {faceCount === 1 ? 'file' : 'files'}<small>Every print face, at its physical dimensions</small></span></li><li><FileText size={16} /><span>Visual review & written brief<small>Artwork, materials, quantities and your notes</small></span></li><li><CheckCircle2 size={16} /><span>Specifications & artwork checks<small>Structured quote.json for production handoff</small></span></li></ul>
+        <button className="pv-button pv-primary" disabled={!readiness.ready || packaging || quote.status === 'Archived'} onClick={onDownload}><Download size={17} />{packaging ? 'Preparing package…' : 'Download review package'}</button>
+        <p className="pq-package-note">ZIP · Includes RGB SVG artwork with live text. Bleed, colour conversion and supplier requirements are confirmed in production review.</p>
+      </section>
+      <section className="pq-send-card" aria-label="Request a quotation"><span className="pv-eyebrow">NEXT STEP</span><h3>Send it to Avalon.</h3><p>Open an email draft with your request details, then attach the downloaded ZIP.</p>
+        <dl className="pq-contact-summary"><div><dt>Contact</dt><dd>{quote.customer.name || 'Add your name'}{quote.customer.company && <small>{quote.customer.company}</small>}</dd></div><div><dt>Email</dt><dd>{quote.customer.email || 'Add your email'}</dd></div><div><dt>Fulfilment</dt><dd>{quote.delivery.method} · {quote.delivery.city || 'Location to confirm'}</dd></div></dl>
+        <button className="pv-text-action" onClick={onEditDetails}>Edit contact & specifications <ArrowUpRight size={14} /></button>
+        <div className="pq-budget"><div><span>Known items</span><strong>{money(budget.subtotal)}</strong></div><div><span>Delivery allowance</span><strong>{money(budget.allowance)}</strong></div><div className="pq-budget-total"><span>{budget.pending ? 'Known amount' : 'Estimated total'}</span><strong>{budget.invalid ? 'Check items' : money(budget.total)}</strong></div><p>{budget.pending ? `${budget.pending} custom-price ${budget.pending === 1 ? 'item excluded' : 'items excluded'} · ` : ''}CAD · Taxes not included</p></div>
+        <a className="pv-button pq-email-button" href={readiness.ready && quote.status !== 'Archived' ? quotationEmailHref(quote) : undefined} aria-disabled={!readiness.ready || quote.status === 'Archived'} onClick={event => { if (!readiness.ready || quote.status === 'Archived') event.preventDefault(); }}><Mail size={17} /> Email quotation request</a><p className="pq-email-note">Opens your email app. Review and send the message there; the ZIP must be attached manually.</p>
+      </section>
+    </div>
+    {!readiness.ready && <div className="pq-review-incomplete" role="status"><AlertCircle size={20} /><div><strong>Complete {readiness.errors.length} {readiness.errors.length === 1 ? 'detail' : 'details'} to prepare your package</strong><ul>{readiness.errors.map((error, index) => <li key={`${index}-${error}`}>{error}</li>)}</ul><button className="pv-text-action" onClick={onEditDetails}>Back to items & details <ChevronRight size={14} /></button></div></div>}
+  </div>;
+}
+
+export default function Quotes({ quotes, onChange, onOpenDesign, onNew, selectedQuoteId }: {
   quotes: QuoteDraft[];
   onChange: (quote: QuoteDraft) => void;
-  onOpenDesign: (design: Design) => void;
-  onNew: () => void;
+  onOpenDesign: (design: Design, context?: { quoteId: string; lineId: string }) => void;
+  onNew: (quoteId?: string) => void;
+  selectedQuoteId?: string;
 }) {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(selectedQuoteId || null);
+  const [reviewId, setReviewId] = useState<string | null>(null);
+  const [packaging, setPackaging] = useState(false);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('active');
+  const [requestedId, setRequestedId] = useState(selectedQuoteId);
+  if (requestedId !== selectedQuoteId) {
+    setRequestedId(selectedQuoteId);
+    if (selectedQuoteId) { setSelectedId(selectedQuoteId); setFilter('active'); setSearch(''); }
+  }
   const [feedback, setFeedback] = useState<{ quoteId: string; errors: string[]; message: string }>({ quoteId: '', errors: [], message: '' });
   const knownIds = useRef(new Set(quotes.map(quote => quote.id)));
   const sorted = useMemo(() => [...quotes].sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt)), [quotes]);
   const visible = sorted.filter(quote => filter === 'all' || (filter === 'archived' ? quote.status === 'Archived' : quote.status !== 'Archived')).filter(quote => `${quote.name} ${quote.customer.name} ${quote.customer.company} ${identifier(quote)}`.toLowerCase().includes(search.toLowerCase()));
-  const current = quotes.find(quote => quote.id === selectedId) || visible[0];
+  const current = visible.find(quote => quote.id === selectedId) || visible[0];
   useEffect(() => {
     const added = quotes.find(quote => !knownIds.current.has(quote.id));
     knownIds.current = new Set(quotes.map(quote => quote.id));
@@ -79,6 +102,8 @@ export default function Quotes({ quotes, onChange, onOpenDesign, onNew }: {
   const setErrors = (items: string[]) => setFeedback(previous => ({ quoteId: current?.id || '', errors: items, message: previous.quoteId === current?.id ? previous.message : '' }));
   const setMessage = (text: string) => setFeedback(previous => ({ quoteId: current?.id || '', errors: previous.quoteId === current?.id ? previous.errors : [], message: text }));
   const totals = current ? summary(current) : null;
+  const readiness = current ? quoteReadiness(current) : null;
+  const reviewing = !!current && reviewId === current.id;
   const update = (patch: Partial<QuoteDraft>, keepStatus = false): boolean => {
     if (!current) return false;
     try {
@@ -91,27 +116,45 @@ export default function Quotes({ quotes, onChange, onOpenDesign, onNew }: {
     }
   };
   const updateLine = (id: string, patch: Partial<Design>) => { if (!current) return; update({ lines: current.lines.map(line => line.id === id ? { ...line, design: { ...line.design, ...patch, updatedAt: new Date().toISOString() } } : line) }); };
-  const markReady = () => { if (!current) return; const issues = validation(current); setErrors(issues); if (!issues.length && update({ status: 'Ready for review' }, true)) { setMessage('Your estimate is ready for review. You can print or export it; nothing has been submitted.'); } };
+  const markReady = () => { if (!current) return; const issues = quoteReadiness(current).errors; setErrors(issues); if (!issues.length && update({ status: 'Ready for review' }, true)) { setReviewId(current.id); setMessage('Ready to share. Download the review package and attach it to your quotation request.'); } };
 
-  return <section className="pv-workspace">
-    <header className="pv-page-head"><div><span className="pv-eyebrow">FROM IDEA TO ESTIMATE</span><h1>Make the numbers work.</h1><p>Bring products, artwork and specifications together in one clear, shareable print estimate.</p></div><button className="pv-button pv-primary" onClick={onNew}><Plus size={17} /> New estimate</button></header>
-    {!quotes.length ? <div className="pv-empty"><div className="pv-empty-icon"><FileText size={32} /></div><h2>A clear estimate starts here.</h2><p>Build an estimate from a saved design or start a new one. Compare quantities, choose finishes and prepare a PDF with every specification in one place.</p><button className="pv-button pv-primary" onClick={onNew}>Create your first estimate <ArrowUpRight size={17} /></button></div> : <div className="pv-quotes-layout">
+  const downloadPackage = async () => {
+    if (!current) return;
+    setPackaging(true); setErrors([]);
+    try {
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      const result = buildProductionPackage(current);
+      downloadArtwork(new Blob([result.bytes], { type: 'application/zip' }), result.filename);
+      setMessage('Review package downloaded. Attach the ZIP to your email quotation request.');
+    } catch (error) { setErrors([error instanceof Error ? error.message : 'The package could not be created.']); }
+    finally { setPackaging(false); }
+  };
+
+  return <section className="pv-workspace pv-quotation-workspace">
+    <header className="pv-page-head"><div><span className="pv-eyebrow">YOUR PRINT REQUESTS</span><h1>Prepare it for print.</h1><p>Review your artwork, build a print estimate and send the complete brief to Avalon.</p></div><button className="pv-button pv-primary" onClick={() => onNew()}><Plus size={17} /> New estimate</button></header>
+    {!quotes.length ? <div className="pv-empty"><div className="pv-empty-icon"><FileText size={32} /></div><h2>A clear estimate starts here.</h2><p>Choose a product, create its artwork and add it to a print request. Compare quantities and finishes, then prepare a package with every print file and specification.</p><button className="pv-button pv-primary" onClick={() => onNew()}>Create your first estimate <ArrowUpRight size={17} /></button></div> : <div className="pv-quotes-layout">
       <aside className="pv-quote-library" aria-label="Saved estimates"><div className="pv-library-title"><h2>Your estimates</h2><span>{quotes.length}</span></div><label className="pv-search"><Search size={16} /><input aria-label="Search estimates" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search by name or client" /></label><label className="pv-library-filter"><span className="pv-sr-only">Estimate status filter</span><select value={filter} onChange={event => { setFilter(event.target.value); setSelectedId(null); }}><option value="active">Active estimates</option><option value="archived">Archived estimates</option><option value="all">All estimates</option></select></label><div className="pv-quote-list">{visible.map(quote => { const overview = summary(quote); return <button key={quote.id} className={`pv-quote-list-item ${current?.id === quote.id ? 'is-active' : ''}`} onClick={() => { setSelectedId(quote.id); setErrors([]); }} aria-pressed={current?.id === quote.id}><div><span>{identifier(quote)}</span><ChevronRight size={15} /></div><strong>{quote.name || 'Untitled estimate'}</strong><p>{quote.customer.company || quote.customer.name || 'Client not added'} · {quote.lines.length} {quote.lines.length === 1 ? 'item' : 'items'}</p><div><span className={`pv-status ${quote.status === 'Ready for review' ? 'pv-status-ready' : ''}`}>{quote.status}</span><span>{overview.invalid ? 'Review items' : overview.pending ? `${money(overview.total)} + custom` : money(overview.total)}</span></div></button>; })}{!visible.length && <p className="pv-list-empty">No estimates match this view.</p>}</div><div className="pv-library-note"><FileText size={18} /><p>Estimates stay in your workspace. Export a copy whenever you are ready to share.</p></div></aside>
       {current && totals ? <div className="pv-quote-editor" key={current.id}>
         <div className="pv-estimate-heading"><div><span className="pv-eyebrow">{identifier(current)} <span> / </span> {current.status}</span><label><span className="pv-sr-only">Estimate name</span><input className="pv-title-input" value={current.name} maxLength={160} onChange={event => update({ name: event.target.value })} placeholder="Name your estimate" /></label><p>Updated {date(current.updatedAt)} · All prices in CAD</p></div><button className="pv-icon-button" aria-label={current.status === 'Archived' ? 'Restore estimate' : 'Archive estimate'} title={current.status === 'Archived' ? 'Restore estimate' : 'Archive estimate'} onClick={() => update({ status: current.status === 'Archived' ? 'Draft' : 'Archived' }, true)}><Archive size={19} /></button></div>
-        <div className="pv-form-section"><div className="pv-section-label"><span>01</span><h2>Print items</h2><span className="pv-section-count">{current.lines.length}</span><button className="pv-text-action" onClick={onNew}><Plus size={14} /> Add print item</button></div>
+        <nav className="pq-journey" aria-label="Estimate steps"><button className={!reviewing ? 'is-active' : ''} aria-current={!reviewing ? 'step' : undefined} onClick={() => setReviewId(null)}><span>01</span><div><strong>Items & details</strong><small>{current.lines.length} print {current.lines.length === 1 ? 'item' : 'items'}</small></div></button><ChevronRight size={17} /><button className={reviewing ? 'is-active' : ''} aria-current={reviewing ? 'step' : undefined} onClick={() => setReviewId(current.id)}><span>02</span><div><strong>Review & share</strong><small>{readiness?.ready ? 'Package ready to prepare' : 'Artwork, brief & files'}</small></div></button></nav>
+        {reviewing ? <ProductionReview quote={current} readiness={readiness!} packaging={packaging} onDownload={() => void downloadPackage()} onEditDetails={() => setReviewId(null)} onEditArtwork={lineId => { const line = current.lines.find(item => item.id === lineId); if (line) onOpenDesign(line.design, { quoteId: current.id, lineId }); }} /> : <>
+        <div className="pv-form-section"><div className="pv-section-label"><span>01</span><h2>Print items</h2><span className="pv-section-count">{current.lines.length}</span><button className="pv-text-action" onClick={() => onNew(current.id)}><Plus size={14} /> Add print item</button></div>
           <div className="pv-estimate-lines">{current.lines.map((line, index) => {
-            const product = products.find(p => p.id === line.design.productId); const calculation = totals.calculated[index];
-            return <article className="pv-estimate-line" key={line.id}><div className="pv-line-heading"><button className="pv-line-preview" aria-label={`Edit artwork for ${line.design.name}`} onClick={() => onOpenDesign(line.design)}><DesignPreview design={line.design} /></button><div className="pv-line-name"><strong>{line.design.name}</strong><p>{product?.name || 'Unknown product'} · Artwork v{line.design.version}</p><span>{product?.width} × {product?.height} mm · {product?.material}</span><button className="pv-text-action" onClick={() => onOpenDesign(line.design)}>Open in studio <ArrowUpRight size={13} /></button></div><div className="pv-line-total"><strong>{calculation.error ? 'Review item' : calculation.value?.quoteOnly ? 'Custom quote' : money(calculation.value?.subtotal || 0)}</strong><span>{calculation.value?.quoteOnly ? 'Pricing pending' : calculation.value ? `${money(calculation.value.unit)} / item` : 'Check specifications'}</span></div></div>
-              <div className="pv-line-options"><label>Quantity<input type="number" min={1} max={100000} step={1} aria-label={`Quantity for ${line.design.name}`} value={line.design.quantity} title="Enter a whole number from 1 to 100,000" onChange={event => { const value = Number(event.target.value); if (Number.isInteger(value) && value >= 1 && value <= 100000) updateLine(line.id, { quantity: value }); }} /></label><label>Finish<select value={line.design.finish} aria-label={`Finish for ${line.design.name}`} onChange={event => updateLine(line.id, { finish: event.target.value })}>{(product ? finishesFor(product) : ['Standard']).map(finish => <option key={finish}>{finish}</option>)}</select></label><label>Service<select value={line.design.tier} aria-label={`Service tier for ${line.design.name}`} onChange={event => updateLine(line.id, { tier: event.target.value as Tier })}><option>Value</option><option>Design Plus</option><option>Priority</option></select></label><label>Sides<select value={line.design.sides} aria-label={`Printed sides for ${line.design.name}`} onChange={event => updateLine(line.id, { sides: Number(event.target.value) })}><option value={1}>1 side</option><option value={2}>2 sides</option></select></label><div className="pv-line-tools"><button className="pv-icon-button" title={current.lines.length >= 100 ? 'This estimate has reached its 100-item limit' : 'Duplicate item'} disabled={current.lines.length >= 100} aria-label={`Duplicate item ${line.design.name}`} onClick={() => update({ lines: [...current.lines, { ...line, id: crypto.randomUUID(), design: structuredClone(line.design) }] })}><Copy size={16} /></button><button className="pv-icon-button" title="Remove item" aria-label={`Remove item ${line.design.name}`} onClick={() => update({ lines: current.lines.filter(item => item.id !== line.id) })}><Trash2 size={16} /></button></div></div>
+            const product = products.find(p => p.id === line.design.productId); const calculation = totals.calculated[index]; const checks = readiness!.lines[index];
+            return <article className="pv-estimate-line" key={line.id}><div className="pv-line-heading"><button className="pv-line-preview" aria-label={`Edit artwork for ${line.design.name}`} onClick={() => onOpenDesign(line.design, { quoteId: current.id, lineId: line.id })}><DesignPreview design={line.design} /></button><div className="pv-line-name"><strong>{line.design.name}</strong><p>{product?.name || 'Unknown product'} · Artwork v{line.design.version}</p><span>{product?.width} × {product?.height} mm · {product?.material}</span><button className="pv-text-action" onClick={() => onOpenDesign(line.design, { quoteId: current.id, lineId: line.id })}>Edit artwork <ArrowUpRight size={13} /></button></div><div className="pv-line-total"><strong>{calculation.error ? 'Review item' : calculation.value?.quoteOnly ? 'Custom quote' : money(calculation.value?.subtotal || 0)}</strong><span>{calculation.value?.quoteOnly ? 'Pricing pending' : calculation.value ? `${money(calculation.value.unit)} / item` : 'Check specifications'}</span></div></div>
+              <div className={`pq-line-readiness ${checks.errorCount ? 'has-errors' : checks.warningCount ? 'has-warnings' : 'is-ready'}`}>
+                {checks.errorCount ? <AlertCircle size={14} /> : <CheckCircle2 size={14} />}<span>{checks.errorCount ? `${checks.errorCount} artwork ${checks.errorCount === 1 ? 'issue' : 'issues'} to resolve` : checks.warningCount ? `${checks.warningCount} artwork ${checks.warningCount === 1 ? 'note' : 'notes'} to review` : `${line.design.sides === 2 ? 'Both faces checked' : 'Artwork checked'}`}</span>
+                {checks.errorCount > 0 && <button className="pv-text-action" onClick={() => onOpenDesign(line.design, { quoteId: current.id, lineId: line.id })}>Fix artwork <ChevronRight size={13} /></button>}
+              </div><div className="pv-line-options"><label>Quantity<input type="number" min={1} max={100000} step={1} aria-label={`Quantity for ${line.design.name}`} value={line.design.quantity} title="Enter a whole number from 1 to 100,000" onChange={event => { const value = Number(event.target.value); if (Number.isInteger(value) && value >= 1 && value <= 100000) updateLine(line.id, { quantity: value }); }} /></label><label>Finish<select value={line.design.finish} aria-label={`Finish for ${line.design.name}`} onChange={event => updateLine(line.id, { finish: event.target.value })}>{(product ? finishesFor(product) : ['Standard']).map(finish => <option key={finish}>{finish}</option>)}</select></label><label>Service<select value={line.design.tier} aria-label={`Service tier for ${line.design.name}`} onChange={event => updateLine(line.id, { tier: event.target.value as Tier })}><option>Value</option><option>Design Plus</option><option>Priority</option></select></label><label>Sides<select value={line.design.sides} aria-label={`Printed sides for ${line.design.name}`} onChange={event => updateLine(line.id, { sides: Number(event.target.value) })}><option value={1}>1 side</option><option value={2} disabled={!product || !supportsReverse(product)}>2 sides{product && !supportsReverse(product) ? ' · unavailable' : ''}</option></select></label><div className="pv-line-tools"><button className="pv-icon-button" title={current.lines.length >= 100 ? 'This estimate has reached its 100-item limit' : 'Duplicate item'} disabled={current.lines.length >= 100} aria-label={`Duplicate item ${line.design.name}`} onClick={() => update({ lines: [...current.lines, { ...line, id: crypto.randomUUID(), design: structuredClone(line.design) }] })}><Copy size={16} /></button><button className="pv-icon-button" title="Remove item" aria-label={`Remove item ${line.design.name}`} onClick={() => update({ lines: current.lines.filter(item => item.id !== line.id) })}><Trash2 size={16} /></button></div></div>
               {calculation.error ? <p className="pv-inline-error" role="alert">{calculation.error}</p> : calculation.value && !calculation.value.quoteOnly ? <details className="pv-price-detail"><summary>Price breakdown</summary><dl><div><dt>Base print</dt><dd>{money(calculation.value.base)}</dd></div><div><dt>Finish</dt><dd>{money(calculation.value.finish)}</dd></div><div><dt>Second side</dt><dd>{money(calculation.value.sides)}</dd></div><div><dt>Service tier</dt><dd>{money(calculation.value.service)}</dd></div></dl><p>Line prices may include a $5 minimum and rounding. Production timing is confirmed after artwork review.</p></details> : <p className="pv-custom-note">Material and production review needed. This item is excluded from the priced subtotal.</p>}
             </article>;
-          })}</div>{current.lines.length >= 100 && <p className="pv-custom-note">This estimate has reached its 100-item limit. Remove an item or start another estimate to add more.</p>}{!current.lines.length && <div className="pv-line-empty"><Plus size={23} /><p>This estimate needs a print item. Open a saved project and choose “Build estimate” to add your artwork.</p></div>}
+          })}</div>{current.lines.length >= 100 && <p className="pv-custom-note">This estimate has reached its 100-item limit. Remove an item or start another estimate to add more.</p>}{!current.lines.length && <div className="pv-line-empty"><Plus size={23} /><p>Add a print item to choose your product, create its artwork and return it to this estimate.</p></div>}
         </div>
         <div className="pv-form-section"><div className="pv-section-label"><span>02</span><h2>Client & fulfilment</h2></div><div className="pv-fields pv-three-fields"><label>Contact name<input autoComplete="name" value={current.customer.name} maxLength={160} onChange={event => update({ customer: { ...current.customer, name: event.target.value } })} placeholder="Full name" /></label><label>Company <span>(optional)</span><input autoComplete="organization" value={current.customer.company} maxLength={160} onChange={event => update({ customer: { ...current.customer, company: event.target.value } })} placeholder="Company or organisation" /></label><label>Email address<input type="email" autoComplete="email" value={current.customer.email} maxLength={254} onChange={event => update({ customer: { ...current.customer, email: event.target.value } })} placeholder="name@company.com" /></label></div><div className="pv-fields pv-three-fields"><label>Fulfilment preference<select value={current.delivery.method} onChange={event => update({ delivery: { ...current.delivery, method: event.target.value as 'Pickup' | 'Delivery' } })}><option>Pickup</option><option>Delivery</option></select></label><label>{current.delivery.method === 'Delivery' ? 'Delivery city' : 'Preferred pickup city'}<input value={current.delivery.city} autoComplete="address-level2" maxLength={160} onChange={event => update({ delivery: { ...current.delivery, city: event.target.value } })} placeholder="Calgary or St. John’s" /></label><label>Delivery allowance <span>(CAD estimate)</span><input type="number" min={0} max={100000} step="0.01" disabled={current.delivery.method === 'Pickup'} value={current.delivery.method === 'Pickup' ? 0 : current.delivery.allowance} onChange={event => { const value = Number(event.target.value); if (event.target.value !== '' && Number.isFinite(value) && value >= 0 && value <= 100000) update({ delivery: { ...current.delivery, allowance: value } }); }} /></label></div><div className="pv-fields"><label>Delivery / pickup instructions <span>(optional)</span><input value={current.delivery.notes} maxLength={1000} onChange={event => update({ delivery: { ...current.delivery, notes: event.target.value } })} placeholder="Deadline, preferred area or packaging requirements" /></label></div><p className="pv-field-help"><MapPin size={14} /> Pickup location and shipping costs are confirmed during review. No delivery booking is created here.</p></div>
         <div className="pv-estimate-bottom"><div className="pv-notes"><label>Project notes<textarea rows={4} maxLength={4000} value={current.notes} onChange={event => update({ notes: event.target.value })} placeholder="What should the print team know? Add colour requirements, intended use or special finishing details." /></label><p>Editing a review-ready estimate returns it to Draft so its updated details can be checked.</p></div><div className="pv-totals"><div><span>Known item subtotal</span><strong>{money(totals.subtotal)}</strong></div><div><span>Delivery allowance</span><strong>{money(totals.allowance)}</strong></div><div><span>Taxes</span><span>Not included</span></div><div className="pv-grand-total"><span>{totals.pending ? 'Known subtotal' : 'Estimated total'}</span><strong>{totals.invalid ? 'Check items' : money(totals.total)}</strong></div>{totals.pending > 0 && <p>{totals.pending} custom-price {totals.pending === 1 ? 'item is' : 'items are'} still awaiting pricing. This is not the final order total.</p>}<span className="pv-estimate-caption">CAD · Subject to artwork and production review</span></div></div>
+        </>}
         {errors.length > 0 && <div className="pv-validation" role="alert"><strong>A few details need your attention</strong><ul>{errors.map(error => <li key={error}>{error}</li>)}</ul></div>}{message && <div className="pv-message" role="status"><CheckCircle2 size={18} /><p>{message}</p></div>}
-        <div className="pv-estimate-footer"><div className="pv-export-actions"><button className="pv-button" onClick={() => { try { printQuote(current); setErrors([]); } catch (error) { setErrors([error instanceof Error ? error.message : 'Unable to open the print view.']); } }}><Printer size={16} /> Print / save PDF</button><button className="pv-button" onClick={() => { try { downloadCsv(current); setErrors([]); setMessage('Your itemised CSV is ready. No client information has been sent.'); } catch (error) { setErrors([error instanceof Error ? error.message : 'Unable to export the estimate.']); } }}><Download size={16} /> Export CSV</button></div>{current.status === 'Archived' ? <button className="pv-button pv-primary" onClick={() => update({ status: 'Draft' }, true)}>Restore draft <ArrowUpRight size={16} /></button> : <button className="pv-button pv-primary" disabled={current.status === 'Ready for review'} onClick={markReady}>{current.status === 'Ready for review' ? <><Check size={17} /> Ready for review</> : <>Mark ready for review <ArrowUpRight size={17} /></>}</button>}</div><p className="pv-no-submit">A saved estimate is a planning document. Preparing or exporting it does not send an order, collect payment or reserve production.</p>
+        <div className="pv-estimate-footer"><div className="pv-export-actions"><button className="pv-button" onClick={() => { try { printQuote(current); setErrors([]); } catch (error) { setErrors([error instanceof Error ? error.message : 'Unable to open the print view.']); } }}><Printer size={16} /> Print / save PDF</button><button className="pv-button" onClick={() => { try { downloadCsv(current); setErrors([]); setMessage('Your itemised CSV is ready. No client information has been sent.'); } catch (error) { setErrors([error instanceof Error ? error.message : 'Unable to export the estimate.']); } }}><Download size={16} /> Export CSV</button></div>{current.status === 'Archived' ? <button className="pv-button pv-primary" onClick={() => update({ status: 'Draft' }, true)}>Restore draft <ArrowUpRight size={16} /></button> : !reviewing ? <button className="pv-button pv-primary" onClick={() => setReviewId(current.id)}>Review artwork & share <ArrowUpRight size={17} /></button> : <button className="pv-button pv-primary" disabled={current.status === 'Ready for review'} onClick={markReady}>{current.status === 'Ready for review' ? <><Check size={17} /> Ready for review</> : <>Mark ready for review <ArrowUpRight size={17} /></>}</button>}</div><p className="pv-no-submit">A saved estimate is a planning document. Preparing or exporting it does not send an order, collect payment or reserve production.</p>
       </div> : <div className="pv-empty"><FileText size={30} /><h2>No estimates in this view.</h2><p>Choose another filter or start a new estimate.</p></div>}
     </div>}
   </section>;

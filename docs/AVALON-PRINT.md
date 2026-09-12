@@ -4,7 +4,7 @@ Avalon Print is the printing division inside `Emmanuelok/kingxford-agency-CA`. T
 
 ## Studio v2: implemented workflows
 
-The artwork editor now occupies the full viewport. A compact document bar keeps project naming, save status, backups and review actions available. Templates, text presets, uploads, elements, brand colours and layer ordering live in a dedicated resource rail; a separate inspector divides design controls from print specifications, exports and artwork checks. Smaller screens use collapsible editing panels. New projects start through a format chooser with an explicit blank-canvas or template choice.
+The artwork editor now occupies the full viewport. A compact document bar keeps project naming, save status, backups and review actions available. Templates, text presets, uploads, elements, brand colours and layer ordering live in a dedicated resource rail; a separate inspector divides design controls from print specifications, exports and artwork checks. Smaller screens use collapsible editing panels. A product configuration page carries quantity, finish, service and supported print faces into an explicit blank-canvas or template choice.
 
 Applying an editor template preserves the project identity, name and print specifications and can be undone. Switching projects preserves outgoing drafts, including named empty canvases; opening the same project resumes its active edits. Backup import also preserves the outgoing draft before an atomic merge. Returning to the project library saves and flushes the current artwork first.
 
@@ -12,7 +12,7 @@ Product previews include light, warm and dark backgrounds and an exact flat-proo
 
 The public workspace uses `components/next/app.tsx`, with its own forest, ivory and lime design system and bespoke photography. All 51 catalogue formats have distinct product illustrations, searchable specifications, filters, favourites and a three-product comparison. Twelve editable templates, a persistent brand kit, campaign composition, pricing experiments and a live API playground form the creation workflow.
 
-The editor supports text, embedded PNG/JPG/WebP uploads, shapes, layer ordering, duplication, alignment, rotation, opacity, drag/resize, undo/redo and keyboard controls. Artwork uses millimetres, physical image proportions and resolution checks. Product-specific Three.js previews distinguish mugs, bottles, apparel, bags, packaging, books and flat formats; unsupported specialty products use an explicitly flat proof. Preview colour, materials and geometry are approximations. Artwork currently describes one printable face.
+The editor supports text, embedded PNG/JPG/WebP uploads, shapes, layer ordering, duplication, alignment, rotation, opacity, drag/resize, undo/redo and keyboard controls. Artwork uses millimetres, physical image proportions and resolution checks. Product-specific Three.js previews distinguish mugs, bottles, apparel, bags, packaging, books and flat formats; unsupported specialty products use an explicitly flat proof. Preview colour, materials and geometry are approximations. Supported flat formats (business cards, postcards, flyers, letterheads, invitations and menus) support independent front and back artwork. Other formats currently describe one printable face. Each included face is checked and exported separately.
 
 Projects save stable identities and immutable revisions (the latest 20 retained), with search, duplication, recoverable archives and restoration. Estimates contain multiple independently editable specifications, customer and delivery drafts, validation before review, CSV export and browser print/save-to-PDF. A local review status is preparation for human review, not a submitted production order. Prices remain proposed CAD planning estimates; tax, carrier pricing and final supplier rates are not live.
 
@@ -23,6 +23,18 @@ The default workspace saves to IndexedDB after a hydration gate and debounced, s
 Device and cloud workspaces are deliberately separate. The optional Team & cloud panel requires the dedicated backend below. Cloud artwork enters device storage only through an explicit copy action. The campaign planner composes curated layouts; it does not present templates as AI generation. Authenticated cloud AI advice requires the separately configured server service. Payments, subscriptions, supplier fulfilment, carrier quotes and machine integrations still require implementation and provider activation.
 
 Individual tools have an error boundary that keeps the parent workspace mounted if a lazy download or render fails, including an old asset URL after deployment. The recovery panel can export the retained workspace or save and reload. Reload only follows a successful IndexedDB flush; a storage failure or cross-tab conflict keeps the current page open.
+
+## Product-to-quotation workflow
+
+The customer entry page leads with product discovery, occasion collections, search and existing designs. Shared navigation prioritises products, templates, saved designs and estimates. Operator and developer tools remain available in the workspace menu.
+
+Product detail is a dedicated hash route such as `#/catalogue/cards`, with quantity breakpoints, supported finishing, print areas, live itemised CAD estimates and a dimensioned blank SVG. These are proposed launch estimates, not verified supplier prices. Quote-only products never appear as free.
+
+Adding another product to an estimate retains that destination. Editing an estimate item opens an independent artwork draft and provides explicit update and return actions. The destination binds to the exact draft, estimate item and source estimate revision; returning without updating preserves the artwork as a project. Successful in-memory attachment advances the retained target before storage flush, so retrying a failed save cannot append a duplicate item.
+
+The estimate's Review & share step checks both artwork faces, contact details and specifications. It exports a ZIP containing the front/back SVG files, a review document, text brief and JSON specifications. Its email action opens a quotation-request draft addressed to Avalon; the user attaches the package and sends it. Downloading a package or opening an email draft does not submit a supplier order or collect payment.
+
+Both-face validation is implemented in the local workspace, cloud payload schema, image storage handling, SQL asset guards and order API. These SQL changes update the bootstrap source; no external print database was provisioned or migrated in this release.
 
 ## Application layout
 

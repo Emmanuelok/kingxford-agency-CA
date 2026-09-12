@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { addDesignToQuote, createWorkspace, createQuote, mergeWorkspaceBackup, openDesign, saveProject, validateLocalDesign, validateWorkspace } from '../lib/next/workspace-store.ts';
+import { addDesignToQuote, createWorkspace, createQuote, mergeWorkspaceBackup, openDesign, saveProject, updateQuoteArtwork, validateLocalDesign, validateWorkspace } from '../lib/next/workspace-store.ts';
 import { designFingerprint } from '../lib/presswerk/design-identity.ts';
 
 const imageData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl6fWkAAAAASUVORK5CYII=';
@@ -429,4 +429,213 @@ test('capacity and malformed-backup failures leave both workspaces unchanged', (
   const quoteImport = createQuote(createWorkspace(), createWorkspace().activeDesign);
   assert.throws(() => mergeWorkspaceBackup(fullQuotes, quoteImport), /maximum of 200 estimates/);
   assert.throws(() => createQuote(fullQuotes, fullQuotes.activeDesign), /maximum of 200 estimates/);
+});
+
+test('reverse artwork validates each face independently and retains hydrated cloud images without account paths', () => {
+  const state = createWorkspace();
+  const frontImage = imageLayer();
+  state.activeDesign.layers = [frontImage];
+  state.activeDesign.back = { background: '#abcdef', layers: [{ ...frontImage, assetPath: 'private-team/reverse.png' }] };
+  state.activeDesign.sides = 2;
+  const local = validateLocalDesign(state.activeDesign);
+  assert.equal(local.layers[0].id, local.back.layers[0].id, 'Layer identifiers are scoped to a face.');
+  assert.equal(local.back.layers[0].src, imageData);
+  assert.equal(local.back.layers[0].assetPath, undefined);
+  assert.equal(state.activeDesign.back.layers[0].assetPath, 'private-team/reverse.png');
+  const invalid = [
+    back => { back.background = 'url(https://bad.test)'; },
+    back => { back.layers[0].src = 'https://private.test/image.png'; },
+    back => { delete back.layers[0].src; },
+    back => { back.layers.push(structuredClone(back.layers[0])); },
+    back => { back.layers[0].width = 101; },
+    back => { back.layers = Array.from({ length: 101 }, () => imageLayer()); },
+  ];
+  for (const mutate of invalid) {
+    const bad = structuredClone(state.activeDesign);
+    mutate(bad.back);
+    assert.throws(() => validateLocalDesign(bad));
+  }
+  const both = { ...local, layers: Array.from({ length: 100 }, () => imageLayer()), back: { ...local.back, layers: Array.from({ length: 100 }, () => imageLayer()) } };
+  assert.equal(validateLocalDesign(both).back.layers.length, 100, 'Each face has its own layer limit.');
+});
+
+test('reverse-only untitled drafts survive switching and old single-face backups still round-trip', () => {
+  const old = createWorkspace();
+  assert.deepEqual(validateWorkspace(JSON.parse(JSON.stringify(old))), old);
+  const state = createWorkspace();
+  state.activeDesign.name = '';
+  state.activeDesign.layers = [];
+  state.activeDesign.back = { background: '#ffffff', layers: [imageLayer()] };
+  const opened = openDesign(state, old.activeDesign);
+  assert.equal(opened.projects.length, 1);
+  assert.equal(opened.projects[0].design.name, 'Untitled project');
+  assert.deepEqual(opened.projects[0].design.back, state.activeDesign.back);
+  assert.equal(opened.projects[0].design.sides, 1, 'A preserved reverse draft does not silently enable two-side printing.');
+  const legacy = createWorkspace();
+  legacy.activeDesign.sides = 2;
+  legacy.activeDesign.productId = 'mug';
+  assert.deepEqual(validateWorkspace(legacy), legacy, 'Incomplete legacy specifications must remain recoverable; preflight blocks production.');
+});
+
+test('both faces survive quote snapshots, revisions and backup remapping and invalidate stale proof identities', () => {
+  let state = createWorkspace();
+  state.activeDesign.sides = 2;
+  state.activeDesign.back = { background: '#fedcba', layers: [imageLayer()] };
+  state = addDesignToQuote(state, state.activeDesign);
+  const original = structuredClone(state);
+  const originalFingerprint = designFingerprint(state.activeDesign);
+  state.projects[0].proof = { fingerprint: originalFingerprint, reviewedAt: state.updatedAt };
+  const edited = { ...state.activeDesign, back: { ...state.activeDesign.back, background: '#abcdef' } };
+  assert.notEqual(designFingerprint(edited), originalFingerprint);
+  state = saveProject(state, edited);
+  assert.equal(state.projects[0].design.version, 2);
+  assert.equal(state.projects[0].proof, undefined);
+  assert.equal(state.projects[0].revisions[0].design.back.background, '#fedcba');
+  assert.equal(state.quotes[0].lines[0].design.back.background, '#fedcba');
+  const backup = validateWorkspace(JSON.parse(JSON.stringify(state)));
+  assert.deepEqual(backup, state);
+  const imported = mergeWorkspaceBackup(state, backup);
+  assert.notEqual(imported.activeDesign.id, state.activeDesign.id);
+  assert.deepEqual(imported.activeDesign.back, state.activeDesign.back);
+  assert.deepEqual(imported.quotes[0].lines[0].design.back, original.quotes[0].lines[0].design.back);
+  assert.equal(imported.quotes[0].lines[0].design.id, imported.activeDesign.id);
+});
+
+test('editing a quoted snapshot replaces exactly its line using an independent saved project and current specifications', () => {
+  let state = createWorkspace();
+  state = addDesignToQuote(state, state.activeDesign);
+  state = addDesignToQuote(state, state.activeDesign, state.quotes[0].id);
+  const quote = state.quotes[0];
+  const line = quote.lines[0];
+  const fingerprint = designFingerprint(line.design);
+  state = saveProject(state, { ...state.activeDesign, name: 'Newer project version' });
+  const originalProject = structuredClone(state.projects[0]);
+  const otherLine = structuredClone(state.quotes[0].lines[1]);
+  const edited = { ...structuredClone(line.design), id: crypto.randomUUID(), name: 'Edited estimate artwork', quantity: 750, finish: 'Soft touch', sides: 2, back: { background: '#ffffff', layers: [imageLayer()] } };
+  state.activeDesign = edited;
+  const before = structuredClone(state);
+  const updated = updateQuoteArtwork(state, quote.id, line.id, edited, fingerprint);
+  assert.deepEqual(state, before);
+  assert.equal(updated.quotes.length, 1);
+  assert.equal(updated.quotes[0].lines.length, 2);
+  assert.equal(updated.quotes[0].lines[0].id, line.id);
+  assert.equal(updated.quotes[0].lines[0].design.id, edited.id);
+  assert.equal(updated.quotes[0].lines[0].design.quantity, 750);
+  assert.equal(updated.quotes[0].lines[0].design.finish, 'Soft touch');
+  assert.deepEqual(updated.quotes[0].lines[0].design.back, edited.back);
+  assert.deepEqual(updated.quotes[0].lines[1], otherLine);
+  assert.deepEqual(updated.projects.find(project => project.id === originalProject.id), originalProject);
+  assert.deepEqual(updated.quotes[0].lines[0].design, updated.projects.find(project => project.id === edited.id).design);
+  assert.equal(updated.quotes[0].status, 'Draft');
+  edited.back.layers[0].text = 'External mutation';
+  assert.notEqual(updated.quotes[0].lines[0].design.back.layers[0].text, 'External mutation');
+});
+
+test('quote artwork replacement rejects stale, removed, different-product and invalid targets atomically', () => {
+  let state = createWorkspace();
+  state = addDesignToQuote(state, state.activeDesign);
+  const quote = state.quotes[0], line = quote.lines[0];
+  const edited = { ...structuredClone(line.design), id: crypto.randomUUID() };
+  const before = structuredClone(state);
+  assert.throws(() => updateQuoteArtwork(state, crypto.randomUUID(), line.id, edited), /no longer exists/);
+  assert.throws(() => updateQuoteArtwork(state, quote.id, crypto.randomUUID(), edited), /removed/);
+  assert.throws(() => updateQuoteArtwork(state, quote.id, line.id, edited, 'stale-fingerprint'), /changed while/);
+  assert.throws(() => updateQuoteArtwork(state, quote.id, line.id, { ...edited, productId: 'mug' }), /original product/);
+  assert.throws(() => updateQuoteArtwork(state, quote.id, line.id, { ...edited, quantity: 0 }));
+  assert.deepEqual(state, before);
+  state.quotes[0].customer = { name: 'Emmanuel', company: 'Avalon', email: 'emmanuel@example.com' };
+  state.quotes[0].status = 'Ready for review';
+  assert.equal(updateQuoteArtwork(state, quote.id, line.id, edited).quotes[0].status, 'Draft');
+  for (let index = state.projects.length; index < 200; index += 1) {
+    const design = createWorkspace().activeDesign;
+    state.projects.push({ id: design.id, design, revisions: [], archived: false, createdAt: state.updatedAt, updatedAt: state.updatedAt });
+  }
+  const fullBefore = structuredClone(state);
+  assert.throws(() => updateQuoteArtwork(state, quote.id, line.id, edited), /maximum of 200 projects/);
+  assert.deepEqual(state, fullBefore);
+});
+
+test('cloud save and hydration process both faces independently even when their layer IDs match', async () => {
+  const { connectCloud, hydrateDesign, saveCloudProject } = await import('../lib/presswerk/cloud.ts');
+  const client = connectCloud({ url: 'https://test-avalon.supabase.co', publishableKey: 'test-key' });
+  const originalStorage = client.storage.from;
+  const originalFrom = client.from;
+  const uploads = new Map();
+  let stored;
+  client.storage.from = () => ({
+    upload: async (path, blob) => { uploads.set(path, blob); return { error: null }; },
+    download: async path => ({ data: uploads.get(path), error: null }),
+  });
+  client.from = () => ({
+    insert: row => {
+      stored = structuredClone(row.design);
+      return { select: () => ({ maybeSingle: async () => ({ data: { design: stored }, error: null }) }) };
+    },
+  });
+  const workspaceId = crypto.randomUUID();
+  const source = createWorkspace().activeDesign;
+  const reverseData = 'data:image/png;base64,YWJj';
+  source.layers = [{ ...imageLayer(), id: 'shared-image-id' }];
+  source.sides = 2;
+  source.back = { background: '#abcdef', layers: [{ ...imageLayer(), id: 'shared-image-id', src: reverseData }] };
+  try {
+    const saved = await saveCloudProject(workspaceId, source, 0);
+    assert.equal(uploads.size, 2);
+    assert.ok(stored.layers[0].assetPath.startsWith(workspaceId + '/'));
+    assert.ok(stored.back.layers[0].assetPath.startsWith(workspaceId + '/'));
+    assert.notEqual(stored.layers[0].assetPath, stored.back.layers[0].assetPath);
+    assert.equal(stored.layers[0].src, undefined);
+    assert.equal(stored.back.layers[0].src, undefined);
+    assert.equal(saved.layers[0].src, imageData);
+    assert.equal(saved.back.layers[0].src, reverseData, 'The front source must never be restored onto a same-ID reverse layer.');
+    // Node has no FileReader. Supply the browser-compatible adapter for this
+    // isolated storage round trip; no service credentials or network are used.
+    const OriginalReader = globalThis.FileReader;
+    globalThis.FileReader = class {
+      readAsDataURL(blob) { blob.arrayBuffer().then(buffer => { this.result = `data:${blob.type};base64,${Buffer.from(buffer).toString('base64')}`; this.onload(); }).catch(() => this.onerror()); }
+    };
+    try {
+      const hydrated = await hydrateDesign(stored);
+      assert.equal(hydrated.layers[0].src, imageData);
+      assert.equal(hydrated.back.layers[0].src, reverseData);
+      assert.equal(hydrated.back.background, '#abcdef');
+    } finally { if (OriginalReader === undefined) delete globalThis.FileReader; else globalThis.FileReader = OriginalReader; }
+  } finally {
+    client.storage.from = originalStorage;
+    client.from = originalFrom;
+    await client.auth.stopAutoRefresh();
+  }
+});
+
+test('configured 250-card front-and-back journey keeps its price and artwork through backup and exact estimate replacement', async () => {
+  const { calculateQuote, initialDesign } = await import('../lib/presswerk/catalog.ts');
+  const { preflightArtwork, printFaces } = await import('../lib/next/artwork.ts');
+  const configuration = { productId: 'cards', quantity: 250, finish: 'Soft touch', tier: 'Value', sides: 2 };
+  let state = createWorkspace();
+  const configured = { ...initialDesign('cards'), ...configuration, name: 'Avalon launch cards', back: { background: '#ffffff', layers: [] } };
+  state = openDesign(state, configured);
+  assert.ok(preflightArtwork(state.activeDesign).some(issue => issue.id === 'back-empty'));
+  state.activeDesign.back.layers = [{ ...structuredClone(state.activeDesign.layers[0]), text: 'Contact Avalon', color: '#123456', size: 5 }];
+  assert.equal(preflightArtwork(state.activeDesign).filter(issue => issue.severity === 'error').length, 0);
+  assert.equal(calculateQuote({ ...state.activeDesign, shipping: 0 }).subtotal, 34.43);
+  state = addDesignToQuote(state, state.activeDesign);
+  state = addDesignToQuote(state, { ...state.activeDesign, id: crypto.randomUUID(), name: 'Second recipient' }, state.quotes[0].id);
+  state = validateWorkspace(JSON.parse(JSON.stringify(state)));
+  const targetQuote = state.quotes[0], targetLine = targetQuote.lines[0];
+  const otherBefore = structuredClone(targetQuote.lines[1]);
+  const originalFingerprint = designFingerprint(targetLine.design);
+  const editing = { ...structuredClone(targetLine.design), id: crypto.randomUUID(), version: 1 };
+  state = openDesign(state, editing);
+  state.activeDesign.back.layers[0].text = 'Updated contact information';
+  const replaced = updateQuoteArtwork(state, targetQuote.id, targetLine.id, state.activeDesign, originalFingerprint);
+  const item = replaced.quotes[0].lines[0];
+  assert.equal(item.id, targetLine.id);
+  assert.equal(replaced.quotes[0].lines.length, 2);
+  assert.deepEqual(replaced.quotes[0].lines[1], otherBefore);
+  for (const [key, value] of Object.entries(configuration)) assert.equal(item.design[key], value);
+  assert.equal(item.design.back.layers[0].text, 'Updated contact information');
+  assert.equal(calculateQuote({ ...item.design, shipping: 0 }).subtotal, 34.43);
+  assert.deepEqual(printFaces(item.design).map(face => face.face), ['front', 'back']);
+  assert.equal(preflightArtwork(item.design).filter(issue => issue.severity === 'error').length, 0);
+  assert.deepEqual(validateWorkspace(JSON.parse(JSON.stringify(replaced))), replaced);
 });

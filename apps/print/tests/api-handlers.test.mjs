@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
+import {randomUUID} from 'node:crypto';
+import {initialDesign} from '../lib/presswerk/catalog.ts';
 import * as configRoute from '../../../pages/api/print/config.ts';
 import * as statusRoute from '../../../pages/api/print/status.ts';
 import * as catalogueRoute from '../../../pages/api/print/catalogue.ts';
@@ -67,5 +69,56 @@ test('Print API methods, input validation, activation boundaries and isolated cr
   }finally{
     globalThis.fetch=originalFetch;
     for(const [name,value] of previous){if(value===undefined)delete process.env[name];else process.env[name]=value;}
+  }
+});
+
+test('Production API validates both print faces before using the privileged order service',async()=>{
+  const originalFetch=globalThis.fetch;
+  const savedEnv=new Map(envNames.map(name=>[name,process.env[name]]));
+  const userId=randomUUID(),workspaceId=randomUUID(),projectId=randomUUID();
+  const design={...initialDesign(),id:projectId,sides:2,back:{background:'#ffffff',layers:[{...initialDesign().layers[0],text:'Reverse artwork'}]}};
+  let revision=design,insertions=0;
+  const json=value=>new Response(JSON.stringify(value),{status:200,headers:{'Content-Type':'application/json'}});
+  globalThis.fetch=async(input,options={})=>{
+    const url=new URL(typeof input==='string'?input:input instanceof URL?input.href:input.url);
+    assert.equal(url.origin,'https://print-workspace.example.test');
+    if(url.pathname==='/auth/v1/user')return json({id:userId,email:'designer@example.test'});
+    if(url.pathname==='/rest/v1/pw_members')return json({role:'designer'});
+    if(url.pathname==='/rest/v1/pw_revisions')return json({design:revision});
+    if(url.pathname==='/rest/v1/pw_orders'){
+      if(options.method==='POST'){insertions++;return json({id:randomUUID(),...JSON.parse(options.body)});}
+      return json(null);
+    }
+    throw Error('Unexpected mocked endpoint: '+url.pathname);
+  };
+  try{
+    process.env.AVALON_PRINT_SUPABASE_URL='https://print-workspace.example.test';
+    process.env.AVALON_PRINT_SUPABASE_PUBLISHABLE_KEY='sb_publishable_test_print';
+    process.env.AVALON_PRINT_SUPABASE_SECRET_KEY='server-only-print-secret';
+    const submit=()=>request('orders','POST',{workspaceId,projectId,version:1,idempotencyKey:randomUUID()},{authorization:'Bearer test-user-token'});
+    for(const [value,message] of [
+      [{...design,back:undefined},/reverse artwork/],
+      [{...design,back:{...design.back,layers:[]}},/reverse artwork/],
+      [{...design,back:{...design.back,layers:[{...design.back.layers[0],text:' \n\t '}]}},/reverse artwork/],
+      [{...design,back:{...design.back,layers:[{...design.back.layers[0],opacity:0}]}},/reverse artwork/],
+      [{...design,productId:'tee'},/does not support/],
+      [{...design,layers:[]},/front artwork/],
+      [{...design,back:{background:'#ffffff',layers:'invalid'}},/layers/]
+    ]){
+      revision=value;
+      const response=await submit();
+      assert.equal(response.statusCode,400);
+      assert.match(response.body.error,message);
+      assert.equal(insertions,0,'Invalid artwork must never reach the privileged order insert');
+    }
+    revision=design;
+    assert.equal((await submit()).statusCode,201);
+    assert.equal(insertions,1,'Supported two-sided artwork reaches the order service');
+    revision={...design,sides:1,back:undefined};
+    assert.equal((await submit()).statusCode,201);
+    assert.equal(insertions,2,'Legacy single-sided artwork remains supported');
+  }finally{
+    globalThis.fetch=originalFetch;
+    for(const [name,value] of savedEnv){if(value===undefined)delete process.env[name];else process.env[name]=value;}
   }
 });

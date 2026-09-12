@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { alignLayer, artworkFingerprint, artworkSvg, escapeXml, imagePercentSize, imagePpi, layerBounds, pngDensity, preflightArtwork, rasterDimensions, rotatedBounds, safeImageSource } from '../lib/next/artwork.ts';
-import { initialDesign, products } from '../lib/presswerk/catalog.ts';
+import { alignLayer, artworkFingerprint, artworkSvg, designForFace, escapeXml, imagePercentSize, imagePpi, layerBounds, pngDensity, preflightArtwork, printFaces, rasterDimensions, rotatedBounds, safeImageSource } from '../lib/next/artwork.ts';
+import { initialDesign, products, supportsReverse } from '../lib/presswerk/catalog.ts';
 
 const card = products.find(p => p.id === 'cards');
 const shape = { id: 'shape', type: 'shape', text: 'Rectangle', x: 20, y: 30, size: 10, color: '#123456', rotation: 0, opacity: 1, width: 25, height: 20 };
@@ -34,14 +34,47 @@ test('canvas alignment accounts for rotated physical bounds', () => {
   const bottom = layerBounds(alignLayer(layer, card, 'bottom'), card);
   near(bottom.y + bottom.height, card.height);
 });
-test('preflight detects rotated clipping, missing images and single-face limitations', () => {
+test('preflight detects rotated clipping, missing images and missing reverse artwork', () => {
   const design = { ...initialDesign(), layers: [{ ...shape, x: 0, y: 0, rotation: -45 }] };
   assert.ok(preflightArtwork(design).some(issue => issue.id === 'shape-bounds'));
   const missing = { ...design, sides: 2, layers: [{ ...shape, type: 'image', src: 'https://host.test/private.png' }] };
   const issues = preflightArtwork(missing);
-  assert.ok(issues.some(issue => issue.id === 'shape-missing' && issue.severity === 'error'));
-  assert.ok(issues.some(issue => issue.id === 'single-face'));
+  assert.ok(issues.some(issue => issue.id === 'front-shape-missing' && issue.severity === 'error' && issue.face === 'front'));
+  assert.ok(issues.some(issue => issue.id === 'back-empty' && issue.face === 'back'));
   assert.ok(preflightArtwork({ ...design, layers: [{ ...shape, opacity: 0 }] }).some(issue => issue.id === 'empty'));
+});
+test('both print faces have independent previews, exports and actionable preflight issues', () => {
+  const front = { ...initialDesign(), layers: [{ ...shape, type: 'text', text: 'FRONT ONLY', size: 3 }], sides: 2 };
+  const design = { ...front, back: { background: '#abcdef', layers: [{ ...shape, type: 'text', text: 'REVERSE ONLY', size: 3 }] } };
+  const before = structuredClone(design);
+  const faces = printFaces(design);
+  assert.deepEqual(faces.map(face => face.face), ['front', 'back']);
+  assert.ok(faces.every(face => face.design.sides === 1 && !('back' in face.design)));
+  assert.ok(artworkSvg(faces[0].design).includes('FRONT ONLY'));
+  assert.ok(!artworkSvg(faces[0].design).includes('REVERSE ONLY'));
+  assert.ok(artworkSvg(faces[1].design).includes('REVERSE ONLY'));
+  assert.ok(!artworkSvg(faces[1].design).includes('FRONT ONLY'));
+  assert.equal(faces[1].design.background, '#abcdef');
+  faces[1].design.layers[0].text = 'Mutated view';
+  assert.deepEqual(design, before, 'A flattened view must not mutate either stored face.');
+  assert.equal(preflightArtwork(design).filter(issue => issue.severity === 'error').length, 0);
+  const invalidBack = { ...design, back: { ...design.back, layers: [{ ...shape, type: 'image', src: 'https://not-embedded.test/image.png' }] } };
+  const missing = preflightArtwork(invalidBack).find(issue => issue.id === 'back-shape-missing');
+  assert.equal(missing.face, 'back');
+  assert.equal(missing.layerId, 'shape');
+  assert.match(missing.title, /^Back:/);
+});
+test('single-side output excludes preserved reverse drafts and unsupported two-side products fail preflight', () => {
+  const design = { ...initialDesign(), back: { background: '#ffffff', layers: [] } };
+  assert.deepEqual(printFaces(design).map(face => face.face), ['front']);
+  assert.ok(!preflightArtwork(design).some(issue => issue.face === 'back'));
+  assert.deepEqual(designForFace(design, 'back').layers, []);
+  assert.ok(preflightArtwork({ ...design, sides: 2 }).some(issue => issue.id === 'back-empty'));
+  for (const p of products) {
+    assert.equal(supportsReverse(p), ['cards', 'postcard', 'flyer', 'letterhead', 'invitation', 'menu'].includes(p.id));
+  }
+  const invalid = { ...design, productId: 'mug', sides: 2, back: { background: '#ffffff', layers: [{ ...shape }] } };
+  assert.ok(preflightArtwork(invalid).some(issue => issue.id === 'unsupported-reverse'));
 });
 test('raster export uses physical size and rejects excessive browser allocations', () => {
   assert.deepEqual(rasterDimensions({ width: 25.4, height: 50.8 }), { width: 300, height: 600 });
@@ -63,6 +96,10 @@ test('artwork review identity changes for content and finish but not save metada
   assert.equal(artworkFingerprint(design), artworkFingerprint({ ...design, updatedAt: 'tomorrow', version: 99, quantity: 500 }));
   assert.notEqual(artworkFingerprint(design), artworkFingerprint({ ...design, finish: 'Gloss laminate' }));
   assert.notEqual(artworkFingerprint(design), artworkFingerprint({ ...design, layers: design.layers.map(l => ({ ...l, x: l.x + 1 })) }));
+  const double = { ...design, sides: 2, back: { background: '#ffffff', layers: [{ ...shape }] } };
+  assert.notEqual(artworkFingerprint(double), artworkFingerprint({ ...double, back: { ...double.back, background: '#123456' } }));
+  assert.notEqual(artworkFingerprint(double), artworkFingerprint({ ...double, back: { ...double.back, layers: [] } }));
+  assert.equal(artworkFingerprint(double), artworkFingerprint({ ...double, back: { ...double.back, layers: double.back.layers.map(layer => ({ ...layer, assetPath: 'temporary/cloud/reference' })) } }));
 });
 test('PNG physical-density chunk records 300 DPI without duplicate metadata', () => {
   const source = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9iQAAAAASUVORK5CYII=', 'base64');
