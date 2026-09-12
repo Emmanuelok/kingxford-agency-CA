@@ -187,6 +187,32 @@ export function saveProject(state: StudioWorkspace, input: Design, label?: strin
   };
 }
 
+function preserveActiveDesign(state: StudioWorkspace): StudioWorkspace {
+  const outgoing = state.activeDesign;
+  const shouldPreserve = outgoing.layers.length > 0 || outgoing.name.trim().length > 0 || state.projects.some(project => project.id === outgoing.id);
+  return shouldPreserve
+    ? saveProject(state, {
+      ...outgoing,
+      name: outgoing.name.trim() ? outgoing.name : 'Untitled project',
+    }, 'Saved before switching projects')
+    : state;
+}
+
+/**
+ * Switching artwork keeps the outgoing draft as a recoverable project. Opening
+ * the same identity resumes the active draft instead of replacing unsaved edits
+ * with a project card or estimate's older snapshot. Explicit revision restores
+ * continue to use saveProject. Cloud callers must pass their independent copy's
+ * identity; local validation removes account-bound storage references.
+ */
+export function openDesign(state: StudioWorkspace, input: unknown): StudioWorkspace {
+  // Parse first: an invalid incoming file must never trigger a save or switch.
+  const incoming = validateLocalDesign(input, true);
+  if (incoming.id === state.activeDesign.id) return state;
+  const preserved = preserveActiveDesign(state);
+  return { ...preserved, activeDesign: incoming, updatedAt: timestamp() };
+}
+
 /** A quotation is a separate draft specification, never a paid or submitted job. */
 export function createQuote(state: StudioWorkspace, input: Design): StudioWorkspace {
   const design = validateLocalDesign(input);
@@ -245,8 +271,11 @@ function allIdentifiers(state: StudioWorkspace): Set<string> {
 
 /** Import copies share a single ID map, including artwork that only lives in a quote. */
 export function mergeWorkspaceBackup(state: StudioWorkspace, incoming: StudioWorkspace): StudioWorkspace {
-  const current = validateWorkspace(state);
+  const validated = validateWorkspace(state);
   const imported = validateWorkspace(incoming);
+  // Import also replaces the open artwork. Preserve that draft before counting
+  // combined capacity or remapping identities; any failure remains atomic.
+  const current = preserveActiveDesign(validated);
   if (current.projects.length + imported.projects.length > 200) throw new Error('This import would exceed the workspace maximum of 200 projects.');
   if (current.quotes.length + imported.quotes.length > 200) throw new Error('This import would exceed the workspace maximum of 200 estimates.');
 

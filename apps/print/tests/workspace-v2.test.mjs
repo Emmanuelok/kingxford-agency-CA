@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { addDesignToQuote, createWorkspace, createQuote, mergeWorkspaceBackup, saveProject, validateLocalDesign, validateWorkspace } from '../lib/next/workspace-store.ts';
+import { addDesignToQuote, createWorkspace, createQuote, mergeWorkspaceBackup, openDesign, saveProject, validateLocalDesign, validateWorkspace } from '../lib/next/workspace-store.ts';
 import { designFingerprint } from '../lib/presswerk/design-identity.ts';
 
 const imageData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl6fWkAAAAASUVORK5CYII=';
@@ -55,6 +55,143 @@ test('revision history caps at twenty while version numbers continue and restore
   assert.equal(restored.projects[0].design.version, 26);
   assert.equal(restored.projects[0].design.name, 'Revision 6');
   assert.deepEqual(validateWorkspace(restored), restored);
+});
+
+test('switching designs preserves outgoing artwork and specifications as an independent saved project', () => {
+  const state = createWorkspace();
+  state.activeDesign.name = 'Calgary launch cards';
+  state.activeDesign.layers[0].text = 'Work in progress';
+  state.activeDesign.layers.push(imageLayer());
+  state.activeDesign.quantity = 500;
+  state.activeDesign.finish = 'Soft touch';
+  state.activeDesign.sides = 2;
+  const incoming = createWorkspace().activeDesign;
+  const before = structuredClone(state);
+  const incomingBefore = structuredClone(incoming);
+  const opened = openDesign(state, incoming);
+  assert.deepEqual(state, before, 'Opening artwork must not mutate the current workspace.');
+  assert.deepEqual(incoming, incomingBefore);
+  assert.deepEqual(opened.activeDesign, incoming);
+  assert.equal(opened.projects.length, 1);
+  const preserved = opened.projects[0];
+  assert.equal(preserved.id, state.activeDesign.id);
+  assert.equal(designFingerprint(preserved.design), designFingerprint(state.activeDesign));
+  assert.equal(preserved.design.quantity, 500);
+  assert.equal(preserved.design.finish, 'Soft touch');
+  assert.equal(preserved.design.sides, 2);
+  assert.equal(preserved.revisions.length, 1);
+  assert.deepEqual(validateWorkspace(opened), opened);
+  state.activeDesign.layers[0].text = 'Later mutation';
+  incoming.layers[0].text = 'Incoming mutation';
+  assert.equal(preserved.design.layers[0].text, 'Work in progress');
+  assert.equal(opened.activeDesign.layers[0].text, incomingBefore.layers[0].text);
+});
+
+test('switching preserves named empty specifications, normalizes unnamed artwork, and skips only unnamed empty drafts', () => {
+  for (const name of ['', '   ']) {
+    const state = createWorkspace();
+    state.activeDesign.name = name;
+    const opened = openDesign(state, createWorkspace().activeDesign);
+    assert.equal(opened.projects[0].design.name, 'Untitled project');
+    assert.equal(opened.projects[0].revisions[0].design.name, 'Untitled project');
+    assert.equal(state.activeDesign.name, name);
+    assert.deepEqual(validateWorkspace(opened), opened);
+  }
+  const empty = createWorkspace();
+  empty.activeDesign.layers = [];
+  empty.activeDesign.name = '';
+  assert.equal(openDesign(empty, createWorkspace().activeDesign).projects.length, 0);
+
+  const named = createWorkspace();
+  named.activeDesign.layers = [];
+  named.activeDesign.name = 'Reserved launch cards';
+  named.activeDesign.quantity = 750;
+  named.activeDesign.background = '#234567';
+  named.activeDesign.finish = 'Soft touch';
+  const preservedBlank = openDesign(named, createWorkspace().activeDesign).projects[0].design;
+  assert.equal(preservedBlank.name, 'Reserved launch cards');
+  assert.equal(preservedBlank.quantity, 750);
+  assert.equal(preservedBlank.background, '#234567');
+  assert.equal(preservedBlank.finish, 'Soft touch');
+  assert.deepEqual(preservedBlank.layers, []);
+
+  let saved = createWorkspace();
+  saved = saveProject(saved, saved.activeDesign);
+  saved.activeDesign.layers = [];
+  const opened = openDesign(saved, createWorkspace().activeDesign);
+  assert.equal(opened.projects.length, 1);
+  assert.equal(opened.projects[0].design.version, 2);
+  assert.deepEqual(opened.projects[0].design.layers, []);
+  assert.ok(opened.projects[0].revisions[0].design.layers.length > 0, 'Clearing artwork must preserve the earlier revision.');
+});
+
+test('opening the active project resumes unsaved edits and switching unchanged projects does not manufacture revisions', () => {
+  let state = createWorkspace();
+  state = saveProject(state, state.activeDesign);
+  const staleCard = structuredClone(state.projects[0].design);
+  state.activeDesign.layers[0].text = 'Keep my unsaved message';
+  state.activeDesign.quantity = 750;
+  const resumed = openDesign(state, staleCard);
+  assert.equal(resumed, state);
+  assert.equal(resumed.activeDesign.layers[0].text, 'Keep my unsaved message');
+  assert.equal(resumed.activeDesign.quantity, 750);
+  assert.equal(resumed.projects[0].revisions.length, 1);
+
+  const other = createWorkspace().activeDesign;
+  const switched = openDesign(resumed, other);
+  assert.equal(switched.projects[0].design.version, 2);
+  assert.equal(switched.projects[0].design.layers[0].text, 'Keep my unsaved message');
+  const back = openDesign(switched, switched.projects[0].design);
+  const away = openDesign(back, other);
+  const original = away.projects.find(project => project.id === state.activeDesign.id);
+  assert.equal(original.revisions.length, 2);
+  assert.equal(original.design.version, 2);
+  assert.equal(away.projects.length, 2);
+});
+
+test('cloud artwork copies retain their independent identity and embedded images without retaining account references', () => {
+  const state = createWorkspace();
+  const cloudSource = structuredClone(state.activeDesign);
+  cloudSource.layers.push({ ...imageLayer(), assetPath: 'team-workspace/private.png' });
+  const copied = { ...structuredClone(cloudSource), id: crypto.randomUUID(), version: 1, name: 'Team artwork (copy)' };
+  const opened = openDesign(state, copied);
+  assert.equal(opened.activeDesign.id, copied.id, 'The already independent cloud copy keeps one stable local identity.');
+  assert.notEqual(opened.activeDesign.id, cloudSource.id);
+  assert.equal(opened.activeDesign.layers.at(-1).src, imageData);
+  assert.equal(opened.activeDesign.layers.at(-1).assetPath, undefined);
+  assert.equal(copied.layers.at(-1).assetPath, 'team-workspace/private.png');
+  const saved = saveProject(opened, opened.activeDesign);
+  assert.equal(saved.projects.length, 2);
+  assert.equal(saved.projects[0].id, copied.id);
+  assert.equal(saved.projects[1].id, state.activeDesign.id);
+});
+
+test('invalid incoming designs and preservation capacity failures leave the active draft and projects unchanged', () => {
+  const state = createWorkspace();
+  state.activeDesign.layers[0].text = 'Irreplaceable draft';
+  for (let index = 0; index < 200; index += 1) {
+    const design = createWorkspace().activeDesign;
+    state.projects.push({ id: design.id, design, revisions: [], archived: false, createdAt: state.updatedAt, updatedAt: state.updatedAt });
+  }
+  const before = structuredClone(state);
+  const incoming = createWorkspace().activeDesign;
+  assert.throws(() => openDesign(state, incoming), /maximum of 200 projects/);
+  assert.deepEqual(state, before);
+  const invalid = { ...incoming, quantity: 0 };
+  assert.throws(() => openDesign(state, invalid), error => !/maximum of 200 projects/.test(error.message), 'Incoming validation must run before outgoing preservation.');
+  assert.deepEqual(state, before);
+  assert.throws(() => openDesign(state, { ...state.activeDesign, quantity: 0 }), 'Even a same-ID request must be validated.');
+  const missing = { ...incoming, layers: [{ ...imageLayer(), src: undefined, assetPath: 'team-workspace/private.png' }] };
+  assert.throws(() => openDesign(state, missing), /missing/);
+  assert.deepEqual(state, before);
+
+  // At capacity, an existing project can still save a changed draft and switch.
+  const existing = { ...state, activeDesign: structuredClone(state.projects[0].design) };
+  existing.activeDesign.layers[0].text = 'Updated at capacity';
+  const opened = openDesign(existing, incoming);
+  assert.equal(opened.projects.length, 200);
+  assert.equal(opened.projects[0].design.layers[0].text, 'Updated at capacity');
+  assert.equal(opened.activeDesign.id, incoming.id);
 });
 
 test('quotes capture independent specifications and remain drafts without invented orders or stored prices', () => {
@@ -235,7 +372,8 @@ test('backup import remaps quote-only and unsaved active artwork collisions agai
   incoming = createQuote(incoming, incoming.activeDesign);
   incoming.quotes[0].lines.push({ id: crypto.randomUUID(), design: structuredClone(state.activeDesign) });
   const merged = mergeWorkspaceBackup(state, incoming);
-  assert.equal(merged.projects.length, 0);
+  assert.equal(merged.projects.length, 1, 'The outgoing active draft becomes a recoverable project.');
+  assert.equal(merged.projects[0].id, state.activeDesign.id);
   assert.notEqual(merged.activeDesign.id, existingQuoteOnly);
   assert.equal(merged.quotes[0].lines[0].design.id, merged.activeDesign.id);
   assert.notEqual(merged.quotes[0].lines[1].design.id, state.activeDesign.id);
@@ -243,6 +381,29 @@ test('backup import remaps quote-only and unsaved active artwork collisions agai
   const repeat = mergeWorkspaceBackup(merged, incoming);
   assert.notEqual(repeat.activeDesign.id, merged.activeDesign.id);
   assert.equal(repeat.quotes.length, 3);
+});
+
+test('backup import preserves unnamed outgoing drafts and accounts for their saved project before accepting capacity', () => {
+  const state = createWorkspace();
+  state.activeDesign.name = '';
+  state.activeDesign.layers[0].text = 'Do not lose this before importing';
+  const incoming = createWorkspace();
+  const before = structuredClone(state);
+  const merged = mergeWorkspaceBackup(state, incoming);
+  assert.deepEqual(state, before);
+  const preserved = merged.projects.find(project => project.id === state.activeDesign.id);
+  assert.equal(preserved.design.name, 'Untitled project');
+  assert.equal(preserved.design.layers[0].text, state.activeDesign.layers[0].text);
+  assert.equal(merged.activeDesign.id, incoming.activeDesign.id);
+
+  for (let index = 0; index < 199; index += 1) {
+    const design = createWorkspace().activeDesign;
+    state.projects.push({ id: design.id, design, revisions: [], archived: false, createdAt: state.updatedAt, updatedAt: state.updatedAt });
+  }
+  const fullBefore = structuredClone(state);
+  const withProject = saveProject(incoming, incoming.activeDesign);
+  assert.throws(() => mergeWorkspaceBackup(state, withProject), /maximum of 200 projects/);
+  assert.deepEqual(state, fullBefore, 'Failed imports must not partially save, rename, or replace the outgoing draft.');
 });
 
 test('capacity and malformed-backup failures leave both workspaces unchanged', () => {

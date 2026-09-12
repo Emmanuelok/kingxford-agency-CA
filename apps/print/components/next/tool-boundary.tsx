@@ -1,6 +1,6 @@
 import { Component, type ReactNode } from 'react';
 
-type Props = { children: ReactNode; onReload: () => Promise<void>; onBackup: () => void };
+type Props = { children: ReactNode; onReload: () => Promise<void>; onBackup: () => void; onExit?: () => void };
 
 /** Keep the parent workspace alive if a lazy tool fails during a deployment. */
 export default class ToolBoundary extends Component<Props, { failed: boolean }> {
@@ -14,6 +14,7 @@ export default class ToolBoundary extends Component<Props, { failed: boolean }> 
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 20 }}>
         <button className="av-btn primary" onClick={() => void this.props.onReload()}>Save &amp; reload</button>
         <button className="av-btn" onClick={this.props.onBackup}>Export workspace backup</button>
+        {this.props.onExit && <button className="av-btn" onClick={this.props.onExit}>Back to workspace</button>}
       </div>
     </section>;
   }

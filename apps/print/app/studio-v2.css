@@ -43,3 +43,11 @@
 
 /* Keep navigation controls readable when shared button defaults are loaded. */
 .av-print .av-local-card button{background:transparent;border:0;padding:0;color:#d8ed80;min-height:24px;box-shadow:none}
+
+/* The artwork editor owns the viewport; workspace navigation resumes on exit. */
+.av-print.av-editor-open{height:100dvh;min-height:0;overflow:hidden;background:#f0f1f3}
+.av-print.av-editor-open>.av-sidebar,.av-print.av-editor-open>.av-sidebar-scrim,.av-print.av-editor-open .av-topbar{display:none!important}
+.av-print.av-editor-open>.av-workspace{margin:0;height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.av-print.av-editor-open .av-content.view-studio{padding:0;margin:0;width:100%;max-width:none;min-height:0;flex:1;display:flex;flex-direction:column;overflow:hidden}
+.av-print.av-editor-open .av-storage-alert{flex-shrink:0;font-size:12px;padding:9px 18px;z-index:50}
+.av-print.av-editor-open .av-loading{height:100%;flex:1;min-height:0}

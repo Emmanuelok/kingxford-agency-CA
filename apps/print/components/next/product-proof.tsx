@@ -4,37 +4,43 @@ import { useId } from 'react';
 import type { Product } from '@/lib/presswerk/catalog';
 
 /** A deliberately illustrative, aspect-correct alternative for devices without WebGL. */
-export default function ProductProof({ product, artwork }: { product: Product; artwork: string }) {
+export default function ProductProof({ product, artwork, dark = false }: { product: Product; artwork: string; dark?: boolean }) {
   const id = useId().replace(/:/g, '');
   const paint = (x: number, y: number, width: number, height: number, clip?: string) => (
     <image href={artwork} x={x} y={y} width={width} height={height} preserveAspectRatio="xMidYMid meet" clipPath={clip ? `url(#${id}-${clip})` : undefined} />
   );
-  const scale = Math.min(350 / product.width, 285 / product.height);
+  const scale = Math.min(390 / product.width, 330 / product.height);
   const width = product.width * scale;
   const height = product.height * scale;
   const x = 300 - width / 2;
   const y = 245 - height / 2;
   const ceramic = `url(#${id}-ceramic)`;
   const fabric = `url(#${id}-fabric)`;
-  return <svg viewBox="0 0 600 500" role="img" aria-label={`${product.name} product illustration with your artwork`} style={{ display: 'block', width: '100%', height: '100%', overflow: 'visible' }}>
+  const frames: Record<string, string> = { mug: '108 111 393 310', bottle: '166 53 268 384', tee: '104 77 392 364', hoodie: '101 39 398 404', tote: '146 43 308 404', cap: '128 82 369 349' };
+  const frame = frames[product.id] || `${x - 38} ${y - 33} ${width + 88} ${height + 102}`;
+  return <svg viewBox={frame} role="img" aria-label={`${product.name} product illustration with your artwork`} style={{ display: 'block', width: '100%', height: '100%', overflow: 'visible' }}>
     <defs>
-      <linearGradient id={`${id}-ceramic`} x1="0" x2="1"><stop stopColor="#d2d3c9" /><stop offset=".2" stopColor="#faf9f0" /><stop offset=".65" stopColor="#fffef6" /><stop offset="1" stopColor="#d8d9ce" /></linearGradient>
-      <linearGradient id={`${id}-fabric`} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#f0eadd" /><stop offset=".55" stopColor="#e5ddca" /><stop offset="1" stopColor="#cdc3ac" /></linearGradient>
-      <linearGradient id={`${id}-shine`}><stop stopColor="#000" stopOpacity=".08" /><stop offset=".25" stopColor="#fff" stopOpacity=".08" /><stop offset=".75" stopColor="#fff" stopOpacity="0" /><stop offset="1" stopColor="#000" stopOpacity=".13" /></linearGradient>
-      <radialGradient id={`${id}-shadow`}><stop stopColor="#173d32" stopOpacity=".2" /><stop offset="1" stopColor="#173d32" stopOpacity="0" /></radialGradient>
-      <clipPath id={`${id}-mug`}><path d="M160 158 Q275 185 390 158 L380 357 Q277 390 170 357Z" /></clipPath>
+      <linearGradient id={`${id}-ceramic`} x1="0" x2="1"><stop stopColor="#bfc4c6" /><stop offset=".13" stopColor="#edf0f0" /><stop offset=".35" stopColor="#fff" /><stop offset=".73" stopColor="#f4f5f4" /><stop offset="1" stopColor="#b6bec1" /></linearGradient>
+      <linearGradient id={`${id}-fabric`} x1="0" y1="0" x2="1" y2="1"><stop stopColor="#f9f7f0" /><stop offset=".36" stopColor="#eae5d8" /><stop offset=".72" stopColor="#dfd8c7" /><stop offset="1" stopColor="#c0b8a5" /></linearGradient>
+      <linearGradient id={`${id}-shine`}><stop stopColor="#0e1c25" stopOpacity=".24" /><stop offset=".16" stopColor="#fff" stopOpacity=".19" /><stop offset=".43" stopColor="#fff" stopOpacity=".05" /><stop offset=".76" stopColor="#fff" stopOpacity="0" /><stop offset="1" stopColor="#0e1c25" stopOpacity=".26" /></linearGradient>
+      <radialGradient id={`${id}-shadow`}><stop stopColor="#0b1015" stopOpacity={dark ? .65 : .3} /><stop offset=".42" stopColor="#0b1015" stopOpacity={dark ? .28 : .14} /><stop offset="1" stopColor="#0b1015" stopOpacity="0" /></radialGradient>
+      <linearGradient id={`${id}-interior`} x1="0" y1="0" x2="0" y2="1"><stop stopColor="#929da3" /><stop offset="1" stopColor="#dfe4e5" /></linearGradient>
+      <filter id={`${id}-contact`} x="-40%" y="-200%" width="180%" height="500%"><feGaussianBlur stdDeviation="4" /></filter>
+      <clipPath id={`${id}-mug`}><path d="M161 174 Q275 192 389 174 L380 350 Q277 387 170 350Z" /></clipPath>
       <clipPath id={`${id}-bottle`}><rect x="242" y="194" width="116" height="174" rx="3" /></clipPath>
     </defs>
-    <ellipse cx="302" cy="424" rx="205" ry="30" fill={`url(#${id}-shadow)`} />
+    <ellipse cx={product.id === 'mug' ? 294 : 304} cy={product.id === 'mug' ? 393 : product.id === 'cap' ? 396 : ['bottle', 'tee', 'hoodie', 'tote'].includes(product.id) ? 419 : y + height + 35} rx={product.id === 'bottle' ? 96 : width / 2 + 27} ry={product.id === 'mug' ? 23 : 18} fill={`url(#${id}-shadow)`} />
+    {product.id === 'mug' && <ellipse cx="279" cy="380" rx="97" ry="9" fill="#0b1015" opacity={dark ? '.35' : '.17'} filter={`url(#${id}-contact)`} />}
     {product.id === 'mug' ? <g>
       <path d="M385 188 C501 160 501 346 382 329" fill="none" stroke="#d5d6cb" strokeWidth="27" />
       <path d="M388 186 C481 170 485 329 386 326" fill="none" stroke="#f9f8ef" strokeWidth="15" />
       <path d="M160 158 Q275 128 390 158 L380 357 Q277 403 170 357Z" fill={ceramic} stroke="#d1d2c5" strokeWidth="2" />
-      {paint(160, 182, 230, 156, 'mug')}
+      {/* A centred section of the wrap is visible; the exact flat proof retains the complete artwork. */}
+      {paint(275 - (product.width / product.height * 183) / 2, 174, product.width / product.height * 183, 183, 'mug')}
       <path d="M160 158 Q275 185 390 158 L380 357 Q277 390 170 357Z" fill={`url(#${id}-shine)`} />
-      <ellipse cx="275" cy="158" rx="115" ry="27" fill="#fbfaf0" stroke="#d0d1c5" strokeWidth="2" />
-      <ellipse cx="275" cy="158" rx="101" ry="18" fill="#bfc2b4" />
-      <path d="M177 159 Q275 181 373 159 Q275 193 177 159" fill="#e1e2d8" />
+      <ellipse cx="275" cy="158" rx="115" ry="27" fill="#fcfdfc" stroke="#c6cdd0" strokeWidth="2" />
+      <ellipse cx="275" cy="158" rx="101" ry="18" fill={`url(#${id}-interior)`} />
+      <path d="M177 159 Q275 181 373 159 Q275 193 177 159" fill="#edf0f0" />
       <path d="M183 357 Q274 383 366 357" fill="none" stroke="#fffdf2" strokeWidth="4" opacity=".7" />
     </g> : product.id === 'bottle' ? <g>
       <path d="M231 385 L231 175 Q231 149 268 127 L268 107 H332 V127 Q369 149 369 175 V385 Q369 409 300 409 Q231 409 231 385Z" fill={ceramic} stroke="#c7cec2" strokeWidth="2" />

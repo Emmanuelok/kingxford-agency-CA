@@ -5,12 +5,13 @@ import {Toaster} from '../ui/sonner';
 import {Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle} from '../ui/dialog';
 import {products,categories,calculateQuote,finishesFor,money,type Design,type Product,type Tier} from '../../lib/presswerk/catalog';
 import {useWorkspace} from '../../lib/next/use-workspace';
-import {saveProject,createQuote,validateWorkspace,addDesignToQuote,mergeWorkspaceBackup} from '../../lib/next/workspace-store';
+import {saveProject,createQuote,validateWorkspace,addDesignToQuote,mergeWorkspaceBackup,openDesign} from '../../lib/next/workspace-store';
 import {designTemplates,makeTemplate,contrastingInk} from '../../lib/next/templates';
 import type {BrandKit,PrintProject,QuoteDraft,StudioWorkspace,WorkspaceView} from '../../lib/next/types';
 import {DesignPreview} from './artwork';
 import ProductVisual from './product-visual';
 import ToolBoundary from './tool-boundary';
+import NewProject from './new-project';
 
 const Studio=lazy(()=>import('./studio'));
 const Projects=lazy(()=>import('./projects'));
@@ -56,13 +57,15 @@ export default function AvalonPrint(){
   const [imported,setImported]=useState<StudioWorkspace|null>(null);
   const [cloudOpen,setCloudOpen]=useState(()=>new URLSearchParams(window.location.search).has('invite')||new URLSearchParams(window.location.search).has('recovery'));
   const [productDetail,setProductDetail]=useState<Product|null>(null);
+  const [newProject,setNewProject]=useState<string|null>(null);
   const importInput=useRef<HTMLInputElement>(null);
   const go=useCallback((next:WorkspaceView)=>{window.location.hash='/'+next;setView(next);setMobile(false);window.scrollTo({top:0,behavior:'instant'});},[]);
   useEffect(()=>{const changed=()=>{setView(currentView());setMobile(false);};window.addEventListener('hashchange',changed);return()=>window.removeEventListener('hashchange',changed);},[]);
   useEffect(()=>{const key=(event:KeyboardEvent)=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();setSearch(s=>s===null?'':null);}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[]);
   const act=(action:()=>void)=>{try{action();}catch(error){toast.error(error instanceof Error?error.message:'This action could not be completed.');}};
-  const edit=(design:Design)=>act(()=>{update(s=>({...s,activeDesign:structuredClone(design)}));go('studio');});
-  const start=(id='cards')=>{const d=makeTemplate('atelier',id);edit(d);};
+  const edit=(design:Design)=>act(()=>{update(s=>openDesign(s,design));setNewProject(null);go('studio');});
+  const start=(id='cards')=>setNewProject(id);
+  const leaveStudio=async()=>{try{update(s=>saveProject(s,{...s.activeDesign,name:s.activeDesign.name.trim()||'Untitled project'}));await flush();go('projects');}catch(error){toast.error(error instanceof Error?error.message:'Export a backup before leaving this design.');}};
   const save=async(design:Design)=>{update(s=>saveProject(s,design));await flush();toast.success('Project and revision saved on this device');};
   const duplicate=(project:PrintProject)=>act(()=>{const d={...structuredClone(project.design),id:crypto.randomUUID(),name:(project.design.name+' copy').slice(0,80),version:1};update(s=>saveProject(s,d));toast.success('Project duplicated');});
   const addQuote=(target?:string)=>act(()=>{
@@ -80,7 +83,7 @@ export default function AvalonPrint(){
   const reopenTool=async()=>{try{await flush();window.location.reload();}catch(error){toast.error(error instanceof Error?error.message:'Export a backup before reloading.');}};
   const exportWorkspace=()=>download(JSON.stringify(workspace,null,2),'avalon-print-backup.json');
   const stats={projects:workspace.projects.filter(p=>!p.archived).length,quotes:workspace.quotes.filter(q=>q.status!=='Archived').length};
-  return <div className="av-print"><Toaster position="bottom-right" richColors/>
+  return <div className={'av-print'+(view==='studio'?' av-editor-open':'')}><Toaster position="bottom-right" richColors/>
     <a className="av-skip" href="#av-main">Skip to workspace</a>
     {mobile&&<button className="av-sidebar-scrim" aria-label="Close navigation" onClick={()=>setMobile(false)}/>}
     <aside className={'av-sidebar '+(mobile?'is-open':'')}>
@@ -94,10 +97,10 @@ export default function AvalonPrint(){
       <header className="av-topbar"><div><button className="av-mobile-toggle av-icon" onClick={()=>setMobile(true)} aria-label="Open navigation"><Menu size={21}/></button><span className="av-breadcrumb">Workspace <ChevronRight size={13}/><b>{navigation.find(n=>n.id===view)?.label}</b></span></div><div className="av-topbar-actions"><button className="av-search-trigger" aria-label="Search workspace" onClick={()=>setSearch('')}><Search size={16}/><span>Search anything</span><kbd>⌘ K</kbd></button><button className={'av-save-status '+storageStatus} onClick={()=>setBackupOpen(true)} title={storageError||'Workspace storage'}>{storageStatus==='saved'?<CheckCircle2 size={14}/>:storageStatus==='error'||storageStatus==='conflict'?<AlertCircle size={14}/>:<RefreshCw size={14}/>}<span>{storageStatus==='saved'?'Saved on device':storageStatus==='saving'?'Saving…':storageStatus==='conflict'?'Another tab changed this workspace':storageStatus==='error'?'Save needs attention':'Opening workspace…'}</span></button><button className="av-avatar" aria-label="Open team and cloud workspace" onClick={()=>setCloudOpen(true)}>A</button></div></header>
       {(storageStatus==='error'||storageStatus==='conflict')&&<div className="av-storage-alert" role="alert"><AlertCircle size={18}/><span>{storageError||'Your work could not be saved.'}</span><button onClick={()=>download(JSON.stringify(workspace,null,2),'avalon-print-backup.json')}>Export a backup</button><button onClick={()=>reload().catch(e=>toast.error(e.message))}>Reload saved version</button></div>}
       <main id="av-main" className={'av-content view-'+view}>
-      {!ready?<div className="av-loading"><span className="av-loader"/><h2>Opening your studio…</h2></div>:<ToolBoundary key={view} onReload={reopenTool} onBackup={exportWorkspace}><Suspense fallback={<div className="av-loading"><span className="av-loader"/>Loading your tools…</div>}>
+      {!ready?<div className="av-loading"><span className="av-loader"/><h2>Opening your studio…</h2></div>:<ToolBoundary key={view} onReload={reopenTool} onBackup={exportWorkspace} onExit={()=>go('home')}><Suspense fallback={<div className="av-loading"><span className="av-loader"/>Loading your tools…</div>}>
         {view==='home'&&<Overview workspace={workspace} go={go} start={start} edit={edit} onDetail={setProductDetail}/>}
         {view==='catalogue'&&<Catalogue favourites={workspace.favourites} onFavourite={id=>update(s=>({...s,favourites:s.favourites.includes(id)?s.favourites.filter(x=>x!==id):[...s.favourites,id]}))} onDetail={setProductDetail} start={start}/>}
-        {view==='studio'&&<Studio key={workspace.activeDesign.id} design={workspace.activeDesign} onChange={d=>update(s=>({...s,activeDesign:d}))} onSave={save} onQuote={setQuoteDesign} brand={workspace.brand} saving={storageStatus==='saving'}/>}
+        {view==='studio'&&<Studio key={workspace.activeDesign.id} design={workspace.activeDesign} onChange={d=>update(s=>({...s,activeDesign:d}))} onSave={save} onQuote={setQuoteDesign} brand={workspace.brand} saving={storageStatus==='saving'} onExit={()=>void leaveStudio()} storageStatus={storageStatus} onStorage={()=>setBackupOpen(true)}/>}
         {view==='templates'&&<TemplateLibrary brand={workspace.brand} onUse={edit}/>}
         {view==='projects'&&<Projects projects={workspace.projects} onOpen={edit} onDuplicate={duplicate} onArchive={(id,archived)=>update(s=>({...s,projects:s.projects.map(p=>p.id===id?{...p,archived}:p)}))} onRestore={(id,revision)=>act(()=>{update(s=>saveProject(s,{...structuredClone(revision.design),id},'Restored: '+revision.label));toast.success('Revision restored as a new version');})} onQuote={setQuoteDesign}/>}
         {view==='quotes'&&<Quotes quotes={workspace.quotes} onChange={quote=>update(s=>({...s,quotes:s.quotes.map(q=>q.id===quote.id?quote:q)}))} onOpenDesign={edit} onNew={()=>go('catalogue')}/>}
@@ -116,6 +119,7 @@ export default function AvalonPrint(){
     {backupOpen&&<Modal title="Your workspace, safely kept" description="Projects, uploaded artwork, revisions, brand kit and estimates are stored in this browser on this device." onClose={()=>setBackupOpen(false)}><div className="av-backup-summary"><span><b>{stats.projects}</b> projects</span><span><b>{stats.quotes}</b> estimates</span><span><b>{storageStatus==='saved'?'Saved':'Pending'}</b> storage status</span></div><p className="av-help">Export a backup to move your work to another browser or device. Browser storage can be cleared by your browser; a downloaded backup gives you another copy.</p><div className="av-button-row"><button className="av-btn primary" onClick={()=>download(JSON.stringify(workspace,null,2),'avalon-print-backup.json')}><ArrowDownToLine size={16}/> Export backup</button><button className="av-btn" onClick={()=>importInput.current?.click()}><Upload size={16}/> Import backup</button></div><button className="av-text-link" onClick={()=>{setBackupOpen(false);setCloudOpen(true);}}>Explore team & cloud storage <ArrowRight size={14}/></button></Modal>}
     {imported&&<Modal title="Import this workspace?" description="Existing projects and estimates will be kept. Matching projects are imported as separate copies." onClose={()=>setImported(null)}><div className="av-backup-summary"><span><b>{imported.projects.length}</b> projects</span><span><b>{imported.quotes.length}</b> estimates</span></div><button className="av-btn primary" onClick={mergeImport}>Add to my workspace <ArrowRight size={16}/></button></Modal>}
     {cloudOpen&&<Modal title="Team & cloud workspace" description="Connect your print team, cloud projects and production records." onClose={()=>setCloudOpen(false)}><ToolBoundary onReload={reopenTool} onBackup={exportWorkspace}><Suspense fallback={<p>Loading team services…</p>}><CloudWorkspace activeDesign={workspace.activeDesign} onOpenDesign={d=>{edit(d);setCloudOpen(false);}}/></Suspense></ToolBoundary></Modal>}
+    {newProject&&<NewProject productId={newProject} onClose={()=>setNewProject(null)} onCreate={edit}/>}
     {productDetail&&<ProductDetail product={productDetail} onClose={()=>setProductDetail(null)} onStart={()=>{start(productDetail.id);setProductDetail(null);}}/>}
   </div>;
 }

@@ -4,6 +4,12 @@ Avalon Print is the printing division inside `Emmanuelok/kingxford-agency-CA`. T
 
 ## Studio v2: implemented workflows
 
+The artwork editor now occupies the full viewport. A compact document bar keeps project naming, save status, backups and review actions available. Templates, text presets, uploads, elements, brand colours and layer ordering live in a dedicated resource rail; a separate inspector divides design controls from print specifications, exports and artwork checks. Smaller screens use collapsible editing panels. New projects start through a format chooser with an explicit blank-canvas or template choice.
+
+Applying an editor template preserves the project identity, name and print specifications and can be undone. Switching projects preserves outgoing drafts, including named empty canvases; opening the same project resumes its active edits. Backup import also preserves the outgoing draft before an atomic merge. Returning to the project library saves and flushes the current artwork first.
+
+Product previews include light, warm and dark backgrounds and an exact flat-proof view. WebGL cameras fit the actual product bounds; the fallback uses a larger product illustration. A mug preview shows the visible portion of a wrap, with the full artwork available in the flat proof. These remain illustrative presentations, not physical samples or calibrated press proofs.
+
 The public workspace uses `components/next/app.tsx`, with its own forest, ivory and lime design system and bespoke photography. All 51 catalogue formats have distinct product illustrations, searchable specifications, filters, favourites and a three-product comparison. Twelve editable templates, a persistent brand kit, campaign composition, pricing experiments and a live API playground form the creation workflow.
 
 The editor supports text, embedded PNG/JPG/WebP uploads, shapes, layer ordering, duplication, alignment, rotation, opacity, drag/resize, undo/redo and keyboard controls. Artwork uses millimetres, physical image proportions and resolution checks. Product-specific Three.js previews distinguish mugs, bottles, apparel, bags, packaging, books and flat formats; unsupported specialty products use an explicitly flat proof. Preview colour, materials and geometry are approximations. Artwork currently describes one printable face.

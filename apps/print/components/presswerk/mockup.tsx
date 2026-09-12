@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { products, type Design, type Product } from '@/lib/presswerk/catalog';
@@ -13,12 +13,15 @@ export async function designCanvas(design: Design, max = 1600) {
 }
 
 type CameraView = 'front' | 'isometric' | 'back';
+type Backdrop = 'light' | 'warm' | 'dark';
+const backdrops = { light: { base: '#eef1f4', highlight: '#ffffff', ink: '#26333d' }, warm: { base: '#e9e1d5', highlight: '#faf6ed', ink: '#34382f' }, dark: { base: '#23272e', highlight: '#424b55', ink: '#f4f6f8' } };
 type SceneRuntime = {
   renderer: THREE.WebGLRenderer;
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   controls: OrbitControls;
   product: THREE.Group | null;
+  cameraView: CameraView;
   printMaterial: THREE.MeshStandardMaterial;
   texture: THREE.CanvasTexture;
   invalidate: () => void;
@@ -188,10 +191,13 @@ function drinkware(product: Product, group: THREE.Group, print: THREE.Material) 
     mesh(group, new THREE.CylinderGeometry(0.32, 0.51, 0.26, 64), metal, [0, 1.235, 0]);
     mesh(group, new THREE.CylinderGeometry(0.345, 0.345, 0.32, 64), lid, [0, 1.495, 0]);
     // A 100 × 150 mm print patch: it is not stretched around an entire bottle.
-    mesh(group, new THREE.CylinderGeometry(0.535, 0.535, 1.65, 64, 1, true, -1.05, 2.1), print, [0, -0.12, 0]);
+    mesh(group, new THREE.CylinderGeometry(0.535, 0.535, 1.65, 64, 1, true, -(1.65 * product.width / product.height / .535) / 2, 1.65 * product.width / product.height / .535), print, [0, -0.12, 0]);
     return;
   }
-  mesh(group, new THREE.CylinderGeometry(0.79, 0.76, 1.82, 72, 1, true, -Math.PI), print);
+  mesh(group, new THREE.CylinderGeometry(0.79, 0.76, 1.82, 72, 1, true), ceramic);
+  const wrapHeight = 1.66;
+  const wrapArc = Math.min(Math.PI * 2 - .18, wrapHeight * product.width / product.height / .795);
+  mesh(group, new THREE.CylinderGeometry(0.795, 0.768, wrapHeight, 72, 1, true, -wrapArc / 2, wrapArc), print);
   const innerSurface = material('#e6e4db', 0.28);
   innerSurface.side = THREE.BackSide;
   mesh(group, new THREE.CylinderGeometry(0.71, 0.68, 1.71, 72, 1, true), innerSurface, [0, 0.047, 0]);
@@ -303,18 +309,34 @@ function disposeProduct(group: THREE.Group, sharedMaterial: THREE.Material) {
   materials.forEach(surface => surface.dispose());
 }
 
+/** Fit the actual product bounds to the available stage, including portrait screens. */
 function setCamera(runtime: SceneRuntime, view: CameraView) {
-  const position: Record<CameraView, [number, number, number]> = {
-    front: [0, 0, 7.8], isometric: [4.6, 2.5, 6.2], back: [0, 0.45, -7.8],
-  };
-  runtime.controls.target.set(0, 0, 0);
-  runtime.camera.position.set(...position[view]);
+  runtime.cameraView = view;
+  const bounds = runtime.product ? new THREE.Box3().setFromObject(runtime.product) : new THREE.Box3(new THREE.Vector3(-1.5, -1.5, -.5), new THREE.Vector3(1.5, 1.5, .5));
+  const centre = bounds.getCenter(new THREE.Vector3());
+  const direction = new THREE.Vector3(...({ front: [0, 0, 1], isometric: [0.48, 0.22, 1], back: [0, 0.06, -1] }[view] as [number, number, number])).normalize();
+  const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), direction).normalize();
+  const up = new THREE.Vector3().crossVectors(direction, right).normalize();
+  const tangentY = Math.tan(THREE.MathUtils.degToRad(runtime.camera.fov / 2));
+  const tangentX = tangentY * runtime.camera.aspect;
+  let distance = 0;
+  for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
+    const corner = new THREE.Vector3(x, y, z).sub(centre);
+    const depth = corner.dot(direction);
+    distance = Math.max(distance, Math.abs(corner.dot(right)) / tangentX + depth, Math.abs(corner.dot(up)) / tangentY + depth);
+  }
+  distance = Math.max(2.5, distance * 1.17);
+  runtime.controls.target.copy(centre);
+  runtime.camera.position.copy(centre).addScaledVector(direction, distance);
+  runtime.controls.minDistance = Math.max(1.8, distance * .55);
+  runtime.controls.maxDistance = Math.max(12, distance * 2.5);
   runtime.controls.update();
   runtime.invalidate();
 }
 
 function description(product: Product) {
   if (measuredOnly.has(product.id)) return 'Measured artwork proof · Product shape requires a production template';
+  if (product.id === 'mug') return 'Visible section of your wrap · Open flat proof to review the full artwork';
   if (product.id === 'cap') return 'Artwork placement · Thread, stitch and cap fit require sampling';
   if (product.id === 'box') return 'Mailer lid artwork · Complete dieline requires supplier review';
   if (product.id === 'brochure') return 'Unfolded outer artwork · Fold layout requires proof review';
@@ -328,7 +350,8 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
   const runtime = useRef<SceneRuntime | null>(null);
   const artworkVersion = useRef(0);
   const [failed, setFailed] = useState(false);
-  const [fallbackView, setFallbackView] = useState<'product' | 'flat'>('product');
+  const [previewMode, setPreviewMode] = useState<'product' | 'flat'>('product');
+  const [backdrop, setBackdrop] = useState<Backdrop>('light');
   const [illustrationArtwork, setIllustrationArtwork] = useState('');
   const [artworkError, setArtworkError] = useState('');
   const [view, setView] = useState<CameraView>('isometric');
@@ -361,9 +384,9 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
       cancelAnimationFrame(animation);
     };
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setClearColor('#eeece4', 1);
+      renderer.setClearColor(0x000000, 0);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.08;
@@ -395,7 +418,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
       const printMaterial = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.8, metalness: 0 });
-      current = { renderer, scene, camera, controls, texture, printMaterial, product: null, invalidate, disposed: false };
+      current = { renderer, scene, camera, controls, texture, printMaterial, product: null, cameraView: 'isometric', invalidate, disposed: false };
       runtime.current = current;
       setCamera(current, 'isometric');
 
@@ -425,8 +448,9 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
         current.renderer.setSize(width, height, false);
         current.camera.aspect = width / height;
         // Keep a whole product visible in narrow mobile viewports.
-        current.camera.fov = width / height < 0.85 ? 45 : 34;
+        current.camera.fov = 34;
         current.camera.updateProjectionMatrix();
+        setCamera(current, current.cameraView);
         dirty = true;
       };
       resizeObserver = new ResizeObserver(resize);
@@ -504,7 +528,7 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
     current.scene.add(current.product);
     const ground = current.scene.getObjectByName('product-ground');
     if (ground) ground.position.y = new THREE.Box3().setFromObject(current.product).min.y - 0.04;
-    current.invalidate();
+    setCamera(current, current.cameraView);
   }, [product]);
 
   useEffect(() => {
@@ -519,9 +543,9 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
   useEffect(() => {
     const current = runtime.current;
     if (!current || current.disposed) return;
-    current.controls.autoRotate = spinning;
+    current.controls.autoRotate = spinning && previewMode === 'product';
     current.invalidate();
-  }, [spinning]);
+  }, [spinning, previewMode]);
 
   useEffect(() => {
     const version = ++artworkVersion.current;
@@ -582,36 +606,52 @@ export default function Mockup({ design, spin = false }: { design: Design; spin?
     if (runtime.current && !runtime.current.disposed) setCamera(runtime.current, next);
   };
   const proofOnly = product ? measuredOnly.has(product.id) : true;
-  const showFlat = failed || !product || !!artworkError;
-  const showIllustration = failed && !proofOnly && fallbackView === 'product' && !!illustrationArtwork && !artworkError;
+  const flatSelected = previewMode === 'flat' || proofOnly;
+  const showFlat = failed || flatSelected || !product || !!artworkError;
+  const showIllustration = failed && !flatSelected && !!illustrationArtwork && !artworkError;
+  const theme = backdrops[backdrop];
+  const dark = backdrop === 'dark';
+  const buttonStyle = (active = false): CSSProperties => ({
+    minHeight: 40, padding: '8px 13px', borderRadius: 8, cursor: 'pointer', font: 'inherit', fontSize: 11, fontWeight: 600,
+    border: `1px solid ${active ? 'transparent' : dark ? '#ffffff24' : '#25333d1c'}`,
+    background: active ? dark ? '#f4f6f8' : '#26333d' : dark ? '#343b43ee' : '#ffffffed',
+    color: active ? dark ? '#26333d' : '#fff' : theme.ink,
+  });
   return (
-    <div className="mockup-webgl" style={{ position: 'absolute', inset: 0, background: '#eeece4', color: FOREST, overflow: 'hidden' }}>
-      <div ref={host} className="mockup-renderer" style={{ position: 'absolute', inset: 0, visibility: showFlat ? 'hidden' : 'visible' }} />
-      <div className="mockup-status" style={{ position: 'absolute', top: 18, left: 18, fontSize: 10, letterSpacing: '.09em', textTransform: 'uppercase', pointerEvents: 'none' }}>
-        {proofOnly ? 'Measured artwork proof' : failed ? 'Live artwork placement' : 'Live product preview'}
+    <div className="mockup-webgl" style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse at 40% 28%, ${theme.highlight} 0%, ${theme.base} 76%)`, color: theme.ink, overflow: 'hidden' }}>
+      <div ref={host} className="mockup-renderer" style={{ position: 'absolute', inset: '49px 0 128px', visibility: showFlat ? 'hidden' : 'visible' }} />
+      <div style={{ position: 'absolute', top: 9, left: 15, right: 11, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+        <span className="mockup-status" style={{ fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', lineHeight: 1.5 }}>
+          {flatSelected ? 'Exact flat proof' : failed ? 'Product illustration' : 'Product preview'}
+        </span>
+        <div role="group" aria-label="Preview background" style={{ display: 'flex', gap: 1 }}>
+          {(Object.keys(backdrops) as Backdrop[]).map(option => <button key={option} type="button" aria-label={`${option[0].toUpperCase() + option.slice(1)} background`} title={`${option} background`} aria-pressed={backdrop === option} onClick={() => setBackdrop(option)} style={{ width: 36, height: 40, display: 'grid', placeItems: 'center', background: 'transparent', border: 0, cursor: 'pointer' }}>
+            <span style={{ width: 19, height: 19, borderRadius: '50%', background: backdrops[option].base, border: `1px solid ${dark ? '#ffffff60' : '#26333d40'}`, outline: backdrop === option ? `1.5px solid ${theme.ink}` : 'none', outlineOffset: 3 }} />
+          </button>)}
+        </div>
       </div>
-      <div className="mockup-dimensions" style={{ position: 'absolute', top: 18, right: 18, fontSize: 10, pointerEvents: 'none' }}>
-        {product ? `${product.width} × ${product.height} mm artwork` : 'Choose a product'}
-      </div>
-      <div className="mockup-fallback" style={{ display: showFlat ? 'flex' : 'none', position: 'absolute', inset: '65px 24px 118px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 20 }}>
-        {showIllustration && product && <ProductProof product={product} artwork={illustrationArtwork} />}
-        <canvas ref={flatCanvas} aria-label={`Flat artwork proof for ${design.name}`} style={{ display: artworkError || showIllustration ? 'none' : 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', boxShadow: '0 18px 40px #173d3220' }} />
+      <div className="mockup-fallback" style={{ display: showFlat ? 'flex' : 'none', position: 'absolute', inset: '50px 18px 133px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        {showIllustration && product && <ProductProof product={product} artwork={illustrationArtwork} dark={dark} />}
+        <canvas ref={flatCanvas} aria-label={`Flat artwork proof for ${design.name}`} style={{ display: artworkError || showIllustration ? 'none' : 'block', maxWidth: '94%', maxHeight: '92%', width: 'auto', height: 'auto', objectFit: 'contain', boxShadow: dark ? '0 20px 44px #0007, 0 2px 5px #0004' : '0 20px 44px #25333d24, 0 2px 5px #25333d16' }} />
         {artworkError && <p role="alert" style={{ maxWidth: 360, fontSize: 14, lineHeight: 1.6, textAlign: 'center' }}>{artworkError}</p>}
       </div>
-      {failed && !proofOnly && !artworkError && <div role="group" aria-label="Preview format" style={{ position: 'absolute', bottom: 67, left: 12, right: 12, display: 'flex', justifyContent: 'center', gap: 6 }}>
-        {(['product', 'flat'] as const).map(option => <button key={option} type="button" aria-pressed={fallbackView === option} onClick={() => setFallbackView(option)} style={{ padding: '9px 15px', minHeight: 40, borderRadius: 22, background: fallbackView === option ? FOREST : '#ffffffdf', color: fallbackView === option ? '#fff' : FOREST, border: '1px solid #173d3222', fontSize: 11 }}>{option === 'product' ? 'Product illustration' : 'Exact flat proof'}</button>)}
-      </div>}
-      {!showFlat && <div className="mockup-controls" role="group" aria-label="Mockup camera controls" style={{ position: 'absolute', bottom: 61, left: 12, right: 12, display: 'flex', justifyContent: 'center', gap: 5, flexWrap: 'wrap' }}>
-        {(['front', 'isometric', 'back'] as const).map(option => (
-          <button key={option} type="button" aria-pressed={view === option && !spinning} onClick={() => changeView(option)} style={{ padding: '9px 13px', minHeight: 40, borderRadius: 22, background: view === option && !spinning ? FOREST : '#ffffffdf', color: view === option && !spinning ? '#fff' : FOREST, border: '1px solid #173d3222', fontSize: 11, textTransform: 'capitalize' }}>{option}</button>
-        ))}
-        <button type="button" aria-pressed={spinning} onClick={() => setRotation({ prop: spin, value: !spinning })} style={{ padding: '9px 13px', minHeight: 40, borderRadius: 22, background: spinning ? FOREST : '#ffffffdf', color: spinning ? '#fff' : FOREST, border: '1px solid #173d3222', fontSize: 11 }}>{spinning ? 'Pause rotation' : 'Rotate'}</button>
-        <button type="button" onClick={() => changeView('isometric')} style={{ padding: '9px 13px', minHeight: 40, borderRadius: 22, background: '#ffffffdf', color: FOREST, border: '1px solid #173d3222', fontSize: 11 }}>Reset</button>
-      </div>}
-      <p className="mockup-instruction" style={{ position: 'absolute', bottom: 18, left: 20, right: 20, textAlign: 'center', fontSize: 10, lineHeight: 1.5, color: '#567063', pointerEvents: 'none' }}>
-        {failed ? <>{showIllustration ? 'Product illustration' : 'Measured artwork proof'} · 3D unavailable on this device<br />{product ? description(product) : ''}</> : product ? description(product) : 'Choose a product to prepare a preview.'}
-        {!showFlat && <><br />Drag to rotate · Scroll or pinch to zoom{product?.id === 'mug' ? ' · Artwork wraps around the mug' : ' · Back artwork is not configured'}</>}
-      </p>
+      <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        {!proofOnly && !artworkError && <div role="group" aria-label="Preview format" style={{ display: 'flex', gap: 5 }}>
+          {(['product', 'flat'] as const).map(option => <button key={option} type="button" aria-pressed={previewMode === option} onClick={() => setPreviewMode(option)} style={buttonStyle(previewMode === option)}>{option === 'product' ? failed ? 'Product illustration' : '3D product' : 'Exact flat proof'}</button>)}
+        </div>}
+        {!showFlat && <div className="mockup-controls" role="group" aria-label="Mockup camera controls" style={{ display: 'flex', justifyContent: 'center', gap: 5, flexWrap: 'wrap' }}>
+          <select aria-label="Camera angle" value={view} onChange={event => changeView(event.target.value as CameraView)} style={buttonStyle()}>
+            <option value="front">Front view</option><option value="isometric">Three-quarter view</option><option value="back">Back view</option>
+          </select>
+          <button type="button" aria-pressed={spinning} onClick={() => setRotation({ prop: spin, value: !spinning })} style={buttonStyle(spinning)}>{spinning ? 'Pause' : 'Rotate'}</button>
+          <button type="button" aria-label="Reset camera and zoom" onClick={() => changeView('isometric')} style={buttonStyle()}>Reset</button>
+        </div>}
+        <p className="mockup-instruction" style={{ maxWidth: 460, margin: 0, textAlign: 'center', fontSize: 10, lineHeight: 1.5, color: dark ? '#c1c9d1' : '#647079' }}>
+          <span className="mockup-dimensions">{product ? `${product.width} × ${product.height} mm artwork` : 'Choose a product'}</span>
+          {!showFlat && ' · Drag to rotate · Pinch to zoom'}
+          <br />{flatSelected ? 'Artwork at the correct proportions · Screen colours are indicative' : product ? description(product) : ''}
+        </p>
+      </div>
     </div>
   );
 }
