@@ -1,8 +1,12 @@
-import { useId, useState } from 'react';
+import { lazy, Suspense, useId, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ChevronRight, Download, Image as ImageIcon, Layers, Ruler, SlidersHorizontal } from 'lucide-react';
 import { calculateQuote, finishesFor, money, products, supportsReverse, type Product, type Tier } from '../../lib/presswerk/catalog';
 import ProductVisual from './product-visual';
+import { photoSceneFor } from '../../lib/next/photo-scenes';
+import { makeTemplate } from '../../lib/next/templates';
 import './product-configurator.css';
+
+const PhotoPreview = lazy(() => import('./photo-preview'));
 
 export type ProductConfiguration = {
   productId: string;
@@ -67,6 +71,8 @@ function ConfiguredProduct({ product, onBack, onStart, onProduct }: Props) {
   const minimumPixels = { width: Math.ceil(product.width / 25.4 * 300), height: Math.ceil(product.height / 25.4 * 300) };
   const related = products.filter(item => item.id !== product.id && item.category === product.category).slice(0, 3);
   const areaRatio = product.width / product.height;
+  const photoScene = photoSceneFor(product.id);
+  const exampleDesign = useMemo(() => makeTemplate(product.id === 'tee' ? 'mono' : product.id === 'poster' ? 'gallery' : 'atelier', product.id), [product.id]);
 
   return <section className="pc-product" aria-labelledby={`${id}-title`}>
     <div className="pc-navigation">
@@ -78,9 +84,9 @@ function ConfiguredProduct({ product, onBack, onStart, onProduct }: Props) {
 
     <div className="pc-product-layout">
       <div className="pc-gallery-column">
-        <div className={`pc-gallery ${gallery === 'area' ? 'is-area' : ''}`}>
-          <div className="pc-gallery-heading"><span>{product.category}</span><span>{gallery === 'product' ? 'Product illustration' : 'Artwork dimensions'}</span></div>
-          {gallery === 'product' ? <div className="pc-product-stage"><ProductVisual product={product} /></div> : <div className="pc-area-stage">
+        <div className={`pc-gallery ${gallery === 'area' ? 'is-area' : photoScene ? 'has-photo' : ''}`}>
+          <div className="pc-gallery-heading"><span>{product.category}</span><span>{gallery === 'product' ? photoScene ? 'Design example' : 'Product illustration' : 'Artwork dimensions'}</span></div>
+          {gallery === 'product' ? <div className={`pc-product-stage ${photoScene ? 'pc-photo-stage' : ''}`}>{photoScene ? <Suspense fallback={<ProductVisual product={product}/>}><PhotoPreview design={exampleDesign} scene={photoScene} compact/></Suspense> : <ProductVisual product={product} />}</div> : <div className="pc-area-stage">
             <div className="pc-artboard" style={{ aspectRatio: areaRatio, width: areaRatio >= 1 ? 'min(76%, 440px)' : `min(${Math.max(18, 64 * areaRatio)}%, 320px)` }}>
               <span className="pc-area-width">{product.width} mm</span><span className="pc-area-height">{product.height} mm</span>
               <div><Layers size={30} /><strong>Your artwork</strong><small>{canPrintReverse && sides === 2 ? 'One canvas for each side' : 'One printable canvas'}</small></div>
@@ -128,7 +134,7 @@ function ConfiguredProduct({ product, onBack, onStart, onProduct }: Props) {
 
     <div className="pc-information">
       <section className="pc-details"><span className="pc-eyebrow">THE DETAILS</span><h2>Know your format.</h2><dl><div><dt>Material</dt><dd>{product.material}</dd></div><div><dt>Print method</dt><dd>{product.method}</dd></div><div><dt>Artwork area</dt><dd>{product.width} × {product.height} mm</dd></div><div><dt>Available finishes</dt><dd>{finishesFor(product).join(' · ')}</dd></div><div><dt>Artwork sides</dt><dd>{canPrintReverse ? 'Separate front and back supported' : 'Single artwork area'}</dd></div></dl></section>
-      <section className="pc-file-guide"><div className="pc-file-heading"><div><span className="pc-eyebrow">BRING YOUR OWN ARTWORK</span><h2>Start with the right file.</h2></div><Download size={25} /></div><p>Upload a PNG or JPG in the studio, or create editable text and shapes directly on your canvas.</p><div className="pc-resolution"><span>At 300 DPI</span><strong>{minimumPixels.width.toLocaleString('en-CA')} × {minimumPixels.height.toLocaleString('en-CA')} px</strong><small>Minimum image dimensions to cover this artwork area at 300 DPI.</small></div><button className="pc-template-download" onClick={() => { try { downloadTemplate(product); setNotice('Blank SVG template downloaded. Open it in your preferred vector design application.'); } catch { setNotice('The template could not be downloaded. Please try again.'); } }}><Download size={16} /> Download blank SVG template <ArrowRight size={16} /></button><p className="pc-template-note">Artwork area only. Confirm bleed, folds, wrapping and finishing requirements with your print provider. Export a PNG or JPG to bring external artwork into the studio.</p>{notice && <p className="pc-download-status" role="status">{notice}</p>}</section>
+      <section className="pc-file-guide"><div className="pc-file-heading"><div><span className="pc-eyebrow">BRING YOUR OWN ARTWORK</span><h2>Start with the right file.</h2></div><Download size={25} /></div><p>Upload a finished PDF, PNG, JPG or WebP, or create editable text and shapes directly on your canvas. Choose PDF pages for each print face in the studio.</p><div className="pc-resolution"><span>At 300 DPI</span><strong>{minimumPixels.width.toLocaleString('en-CA')} × {minimumPixels.height.toLocaleString('en-CA')} px</strong><small>Minimum image dimensions to cover this artwork area at 300 DPI.</small></div><button className="pc-template-download" onClick={() => { try { downloadTemplate(product); setNotice('Blank SVG template downloaded. Open it in your preferred vector design application.'); } catch { setNotice('The template could not be downloaded. Please try again.'); } }}><Download size={16} /> Download blank SVG template <ArrowRight size={16} /></button><p className="pc-template-note">Artwork area only. Confirm bleed, folds, wrapping and finishing requirements with your print provider. PDF pages import as image artwork; text and shapes created in the studio remain editable.</p>{notice && <p className="pc-download-status" role="status">{notice}</p>}</section>
     </div>
 
     {onProduct && related.length > 0 && <section className="pc-related"><div className="pc-related-heading"><div><span className="pc-eyebrow">EXPLORE THE COLLECTION</span><h2>Find the right fit.</h2></div><button onClick={onBack}>All products <ArrowRight size={17} /></button></div><div className="pc-related-grid">{related.map(item => <button key={item.id} onClick={() => onProduct(item.id)}><ProductVisual product={item} small /><div><span>{item.material}</span><h3>{item.name}<ArrowRight size={17} /></h3><p>{item.quoteOnly ? 'Custom quotation' : `${money(item.price)} / ${item.quantity === 1 ? 'item' : `${item.quantity} pieces`}`}</p></div></button>)}</div></section>}

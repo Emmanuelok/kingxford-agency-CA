@@ -6,6 +6,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { products, type Design, type Product } from '@/lib/presswerk/catalog';
 import { renderArtworkCanvas } from '@/lib/next/artwork';
 import ProductProof from '@/components/next/product-proof';
+import PhotoPreview from '@/components/next/photo-preview';
+import { photoSceneFor } from '@/lib/next/photo-scenes';
+import { Box, Camera, Scan } from 'lucide-react';
 
 /** Shared rendering keeps the editor, exported artwork and mockup in agreement. */
 export async function designCanvas(design: Design, max = 1600) {
@@ -344,13 +347,32 @@ function description(product: Product) {
   return 'Artwork placement preview · Material and colour vary in production';
 }
 
-export default function Mockup({ design, spin = false, faceLabel }: { design: Design; spin?: boolean; faceLabel?: string }) {
+type MockupProps = { design: Design; spin?: boolean; faceLabel?: string };
+export default function Mockup(props: MockupProps) {
+  // A new product starts in its best available view; face/artwork edits retain the user's selection.
+  return <PreviewWorkspace key={props.design.productId} {...props}/>;
+}
+
+function PreviewWorkspace({ design, spin = false, faceLabel }: MockupProps) {
+  const scene = photoSceneFor(design.productId);
+  const proofOnly = measuredOnly.has(design.productId);
+  const [mode, setMode] = useState<'photo' | 'product' | 'flat'>(scene ? 'photo' : proofOnly ? 'flat' : 'product');
+  return <div className="print-preview-shell">
+    <div className="print-preview-tabs" role="group" aria-label="Preview format">
+      {scene && <button className="print-preview-tab" type="button" aria-pressed={mode === 'photo'} onClick={() => setMode('photo')}><Camera size={14}/>Photo scene</button>}
+      {!proofOnly && <button className="print-preview-tab" type="button" aria-pressed={mode === 'product'} onClick={() => setMode('product')}><Box size={14}/>3D product</button>}
+      <button className="print-preview-tab" type="button" aria-pressed={mode === 'flat'} onClick={() => setMode('flat')}><Scan size={14}/>Exact flat proof</button>
+    </div>
+    <div className="print-preview-content">{mode === 'photo' && scene ? <PhotoPreview design={design} scene={scene} faceLabel={faceLabel}/> : <ProductMockup key={mode} design={design} spin={spin} faceLabel={faceLabel} previewMode={mode === 'flat' ? 'flat' : 'product'}/>}</div>
+  </div>;
+}
+
+function ProductMockup({ design, spin = false, faceLabel, previewMode }: MockupProps & { previewMode: 'product' | 'flat' }) {
   const host = useRef<HTMLDivElement>(null);
   const flatCanvas = useRef<HTMLCanvasElement>(null);
   const runtime = useRef<SceneRuntime | null>(null);
   const artworkVersion = useRef(0);
   const [failed, setFailed] = useState(false);
-  const [previewMode, setPreviewMode] = useState<'product' | 'flat'>('product');
   const [backdrop, setBackdrop] = useState<Backdrop>('light');
   const [illustrationArtwork, setIllustrationArtwork] = useState('');
   const [artworkError, setArtworkError] = useState('');
@@ -365,6 +387,7 @@ export default function Mockup({ design, spin = false, faceLabel }: { design: De
   // A renderer survives all artwork, finish and product changes. Only unmount
   // (or an actual WebGL failure) releases its context and scene resources.
   useEffect(() => {
+    if (previewMode === 'flat') return;
     const element = host.current;
     if (!element) return;
     let renderer: THREE.WebGLRenderer | undefined;
@@ -514,7 +537,7 @@ export default function Mockup({ design, spin = false, faceLabel }: { design: De
       renderer?.domElement.remove();
       if (runtime.current === current) runtime.current = null;
     };
-  }, []);
+  }, [previewMode]);
 
   // Product geometry is rebuilt only when the chosen product changes.
   useEffect(() => {
@@ -636,9 +659,6 @@ export default function Mockup({ design, spin = false, faceLabel }: { design: De
         {artworkError && <p role="alert" style={{ maxWidth: 360, fontSize: 14, lineHeight: 1.6, textAlign: 'center' }}>{artworkError}</p>}
       </div>
       <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-        {!proofOnly && !artworkError && <div role="group" aria-label="Preview format" style={{ display: 'flex', gap: 5 }}>
-          {(['product', 'flat'] as const).map(option => <button key={option} type="button" aria-pressed={previewMode === option} onClick={() => setPreviewMode(option)} style={buttonStyle(previewMode === option)}>{option === 'product' ? failed ? 'Product illustration' : '3D product' : 'Exact flat proof'}</button>)}
-        </div>}
         {!showFlat && <div className="mockup-controls" role="group" aria-label="Mockup camera controls" style={{ display: 'flex', justifyContent: 'center', gap: 5, flexWrap: 'wrap' }}>
           <select aria-label="Camera angle" value={view} onChange={event => changeView(event.target.value as CameraView)} style={buttonStyle()}>
             <option value="front">Face-on view</option><option value="isometric">Three-quarter view</option>{!faceLabel && <option value="back">Back view</option>}

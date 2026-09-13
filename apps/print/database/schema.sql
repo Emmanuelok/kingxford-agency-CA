@@ -61,10 +61,17 @@ begin
   for l in select value from jsonb_array_elements(f->'layers') loop
     if not coalesce(jsonb_typeof(l)='object' and l ?& array['id','type','text','x','y','size','color','rotation','opacity'] and jsonb_typeof(l->'text')='string' and length(l->>'text')<=10000 and jsonb_typeof(l->'id')='string' and length(l->>'id') between 1 and 80 and l->>'type' in ('text','image','shape') and l->>'color' ~ '^#[0-9a-fA-F]{6}$',false) then return false; end if;
     foreach k in array array['x','y','size','rotation','opacity'] loop if jsonb_typeof(l->k) is distinct from 'number' then return false; end if; end loop;
-    if (l->>'x')::numeric not between 0 and 100 or (l->>'y')::numeric not between 0 and 100 or (l->>'size')::numeric not between 1 and 50 or (l->>'rotation')::numeric not between -360 and 360 or (l->>'opacity')::numeric not between 0 and 1 then return false; end if;
+    if (l->>'x')::numeric not between 0 and 100 or (l->>'y')::numeric not between 0 and 100 or (l->>'size')::numeric not between .01 and 50 or (l->>'rotation')::numeric not between -360 and 360 or (l->>'opacity')::numeric not between 0 and 1 then return false; end if;
     foreach k in array array['width','height'] loop if l ? k and not coalesce(jsonb_typeof(l->k)='number' and (l->>k)::numeric>0 and (l->>k)::numeric<=100,false) then return false; end if; end loop;
     if l ? 'font' and not coalesce(l->>'font' in ('Arial','Georgia','Verdana','Courier New'),false) then return false; end if;
     if l ? 'weight' and not coalesce(jsonb_typeof(l->'weight')='number' and (l->>'weight')::numeric between 100 and 900,false) then return false; end if;
+    if l ? 'crop' then
+      if l->>'type'<>'image' or jsonb_typeof(l->'crop') is distinct from 'object' or not (l->'crop' ?& array['x','y','width','height']) or (select count(*) from jsonb_object_keys(l->'crop'))<>4 then return false; end if;
+      foreach k in array array['x','y','width','height'] loop
+        if jsonb_typeof(l->'crop'->k) is distinct from 'number' then return false; end if;
+      end loop;
+      if (l->'crop'->>'x')::numeric not between 0 and 1 or (l->'crop'->>'y')::numeric not between 0 and 1 or (l->'crop'->>'width')::numeric not between .001 and 1 or (l->'crop'->>'height')::numeric not between .001 and 1 or (l->'crop'->>'x')::numeric+(l->'crop'->>'width')::numeric>1.000000001 or (l->'crop'->>'y')::numeric+(l->'crop'->>'height')::numeric>1.000000001 then return false; end if;
+    end if;
   end loop;
   if (select count(*) from jsonb_array_elements(f->'layers'))<>(select count(distinct value->>'id') from jsonb_array_elements(f->'layers')) then return false; end if;
   return true;

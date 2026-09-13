@@ -99,7 +99,7 @@ try {
   assert.doesNotMatch(printHtml, /\/_next\/static\//, "Print retains its own document and styles");
   const printAssets = [...printHtml.matchAll(/(?:src|href)="(\/print-app\/[^\"]+)"/g)].map((m) => m[1]);
   assert.ok(printAssets.some((p) => p.endsWith(".js")) && printAssets.some((p) => p.endsWith(".css")));
-  for (const asset of [...printAssets, "/print-app/images/collection.jpg", "/print-app/images/cards.jpg", "/print-app/images/merch.jpg"]) {
+  for (const asset of [...printAssets, "/print-app/images/collection.jpg", "/print-app/images/cards.jpg", "/print-app/images/merch.jpg", "/print-app/images/mockups/cards-limestone.webp", "/print-app/images/mockups/tee-cotton.webp", "/print-app/images/mockups/poster-gallery.webp", "/print-app/pdfjs/pdf.worker.min.mjs", "/print-app/pdfjs/standard_fonts/LiberationSans-Regular.ttf"]) {
     assert.equal((await fetch(origin + asset)).status, 200, asset);
   }
   // Node fetch normalizes Host to its URL; raw HTTP is needed to exercise routing.

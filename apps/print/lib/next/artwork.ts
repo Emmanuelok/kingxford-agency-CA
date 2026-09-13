@@ -1,5 +1,5 @@
 import { products, supportsReverse } from '../presswerk/catalog.ts';
-import type { Design, DesignLayer, Product } from '../presswerk/catalog.ts';
+import type { Design, DesignLayer, ImageCrop, Product } from '../presswerk/catalog.ts';
 
 export type Bounds = { x: number; y: number; width: number; height: number };
 export type ArtworkIssue = { id: string; severity: 'warning' | 'error'; title: string; detail: string; layerId?: string; face?: 'front' | 'back' };
@@ -10,7 +10,7 @@ export const copyDesign = (design: Design): Design => JSON.parse(JSON.stringify(
 export function designForFace(design: Design, face: PrintFace): Design {
   const { back, ...front } = design;
   const content = face === 'back' ? back ?? { background: '#ffffff', layers: [] } : front;
-  return { ...front, background: content.background, layers: content.layers.map(layer => ({ ...layer })), sides: 1 };
+  return { ...front, background: content.background, layers: content.layers.map(layer => ({ ...layer, ...(layer.crop ? { crop: { ...layer.crop } } : {}) })), sides: 1 };
 }
 /** One-sided printing retains any reverse draft but does not include it in output. */
 export function printFaces(design: Design): { face: PrintFace; label: string; design: Design }[] {
@@ -62,8 +62,34 @@ export function rotatedBounds(bounds: Bounds, degrees: number): Bounds {
 export function layerBounds(layer: DesignLayer, product: Pick<Product, 'width' | 'height'>): Bounds { return rotatedBounds(unrotatedLayerBounds(layer, product), layer.rotation); }
 export function imagePpi(layer: DesignLayer, product: Pick<Product, 'width' | 'height'>) {
   if (layer.type !== 'image' || !layer.naturalWidth || !layer.naturalHeight) return null;
+  const crop = imageCrop(layer);
   const width = (layer.width || 30) / 100 * product.width, height = (layer.height || 25) / 100 * product.height;
-  return { horizontal: layer.naturalWidth / (width / 25.4), vertical: layer.naturalHeight / (height / 25.4), minimum: Math.min(layer.naturalWidth / (width / 25.4), layer.naturalHeight / (height / 25.4)) };
+  const horizontal = layer.naturalWidth * crop.width / (width / 25.4), vertical = layer.naturalHeight * crop.height / (height / 25.4);
+  return { horizontal, vertical, minimum: Math.min(horizontal, vertical) };
+}
+/** Shared crop coordinates for the editor, physical proof, PNG and vector SVG. */
+export function imageCrop(layer: Pick<DesignLayer, 'crop'>): ImageCrop {
+  const crop = layer.crop ?? { x: 0, y: 0, width: 1, height: 1 };
+  if (![crop.x, crop.y, crop.width, crop.height].every(Number.isFinite) || crop.x < 0 || crop.y < 0 || crop.width < .001 || crop.height < .001 || crop.x + crop.width > 1 + 1e-9 || crop.y + crop.height > 1 + 1e-9) throw new Error('The image crop must remain within the original image.');
+  return { ...crop };
+}
+/** A source crop that fills a physical frame without stretching the photograph. */
+export function cropToFrame(naturalWidth: number, naturalHeight: number, frameWidth: number, frameHeight: number, zoom = 1, position = { x: .5, y: .5 }): ImageCrop {
+  if (![naturalWidth, naturalHeight, frameWidth, frameHeight, zoom, position.x, position.y].every(Number.isFinite) || Math.min(naturalWidth, naturalHeight, frameWidth, frameHeight) <= 0) throw new Error('Image and frame dimensions must be positive finite numbers.');
+  const relative = frameWidth / frameHeight / (naturalWidth / naturalHeight);
+  const baseWidth = Math.min(1, relative), baseHeight = Math.min(1, 1 / relative);
+  if (Math.min(baseWidth, baseHeight) < .001) throw new Error('This image is too narrow for the selected frame. Use a less extreme aspect ratio.');
+  const scale = Math.max(1, Math.min(zoom, 8, baseWidth / .001, baseHeight / .001));
+  const width = baseWidth / scale, height = baseHeight / scale;
+  return { x: (1 - width) * Math.max(0, Math.min(1, position.x)), y: (1 - height) * Math.max(0, Math.min(1, position.y)), width, height };
+}
+/** Replace only the source, retaining the customer's existing composition. */
+export function replaceLayerImage(layer: DesignLayer, product: Pick<Product, 'width' | 'height'>, image: { src: string; naturalWidth: number; naturalHeight: number; name?: string }): DesignLayer {
+  if (layer.type !== 'image' || !safeImageSource(image.src)) throw new Error('Choose a supported image to replace this image layer.');
+  if (!Number.isInteger(image.naturalWidth) || !Number.isInteger(image.naturalHeight) || Math.min(image.naturalWidth, image.naturalHeight) < 1 || Math.max(image.naturalWidth, image.naturalHeight) > 60000 || image.naturalWidth * image.naturalHeight > 60_000_000) throw new Error('The replacement image dimensions are not supported.');
+  const next = { ...layer, src: image.src, naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, text: image.name?.slice(0, 80) || layer.text, crop: cropToFrame(image.naturalWidth, image.naturalHeight, (layer.width || 30) / 100 * product.width, (layer.height || 25) / 100 * product.height) };
+  delete next.assetPath;
+  return next;
 }
 export function imagePercentSize(naturalWidth: number, naturalHeight: number, product: Pick<Product, 'width' | 'height'>, maximum = 72) {
   if (!(naturalWidth > 0) || !(naturalHeight > 0)) throw new Error('The image dimensions could not be read.');
@@ -123,7 +149,7 @@ export function artworkSvg(design: Design): string {
     let content = '';
     if (layer.type === 'text') content = `<text fill="${safeColor(layer.color)}" font-family="${safeFont(layer.font)}" font-weight="${layer.weight || 700}" font-size="${layer.size / 100 * width}" dominant-baseline="text-before-edge">${layer.text.split('\n').map((line, i) => `<tspan x="0" y="${i * layer.size / 100 * width * 1.1}">${escapeXml(line)}</tspan>`).join('')}</text>`;
     else if (layer.type === 'shape') content = `<rect width="${(layer.width || 30) / 100 * width}" height="${(layer.height || 25) / 100 * height}" fill="${safeColor(layer.color)}"/>`;
-    else { const src = safeImageSource(layer.src); if (src) content = `<image width="${(layer.width || 30) / 100 * width}" height="${(layer.height || 25) / 100 * height}" href="${escapeXml(src)}" preserveAspectRatio="none"/>`; }
+    else { const src = safeImageSource(layer.src); if (src) { const crop = imageCrop(layer); content = layer.crop ? `<svg width="${(layer.width || 30) / 100 * width}" height="${(layer.height || 25) / 100 * height}" viewBox="${crop.x * 1000} ${crop.y * 1000} ${crop.width * 1000} ${crop.height * 1000}" preserveAspectRatio="none" overflow="hidden"><image width="1000" height="1000" href="${escapeXml(src)}" preserveAspectRatio="none"/></svg>` : `<image width="${(layer.width || 30) / 100 * width}" height="${(layer.height || 25) / 100 * height}" href="${escapeXml(src)}" preserveAspectRatio="none"/>`; } }
     return `<g opacity="${layer.opacity}" transform="${transform}">${content}</g>`;
   }).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${p.width}mm" height="${p.height}mm" viewBox="0 0 ${width} ${height}"><title>${escapeXml(design.name)}</title><defs><clipPath id="trim"><rect width="${width}" height="${height}"/></clipPath></defs><g clip-path="url(#trim)"><rect width="${width}" height="${height}" fill="${safeColor(design.background)}"/>${layers}</g></svg>`;
@@ -137,7 +163,7 @@ async function drawArtwork(design: Design, width: number, height: number) {
     ctx.save(); ctx.translate(layer.x / 100 * width, layer.y / 100 * height); ctx.rotate(layer.rotation * Math.PI / 180); ctx.globalAlpha = layer.opacity; ctx.fillStyle = safeColor(layer.color);
     if (layer.type === 'text') { const size = layer.size / 100 * width; ctx.font = `${layer.weight || 700} ${size}px "${safeFont(layer.font)}"`; ctx.textBaseline = 'top'; layer.text.split('\n').forEach((line, i) => ctx.fillText(line, 0, i * size * 1.1)); }
     else if (layer.type === 'shape') ctx.fillRect(0, 0, (layer.width || 30) / 100 * width, (layer.height || 25) / 100 * height);
-    else { const src = safeImageSource(layer.src); if (!src) throw new Error('An image is missing. Upload it again before exporting.'); const image = new Image(); image.src = src; try { await image.decode(); } catch { throw new Error('An image could not be opened. Replace it with a PNG, JPEG or WebP file.'); } if (image.naturalWidth * image.naturalHeight > 60_000_000) throw new Error('An image exceeds 60 megapixels. Resize it before exporting.'); ctx.drawImage(image, 0, 0, (layer.width || 30) / 100 * width, (layer.height || 25) / 100 * height); }
+    else { const src = safeImageSource(layer.src); if (!src) throw new Error('An image is missing. Upload it again before exporting.'); const image = new Image(); image.src = src; try { await image.decode(); } catch { throw new Error('An image could not be opened. Replace it with a PNG, JPEG or WebP file.'); } if (image.naturalWidth * image.naturalHeight > 60_000_000) throw new Error('An image exceeds 60 megapixels. Resize it before exporting.'); const crop = imageCrop(layer); ctx.drawImage(image, crop.x * image.naturalWidth, crop.y * image.naturalHeight, crop.width * image.naturalWidth, crop.height * image.naturalHeight, 0, 0, (layer.width || 30) / 100 * width, (layer.height || 25) / 100 * height); }
     ctx.restore();
   } } catch (error) { canvas.width = 0; canvas.height = 0; throw error; }
   return canvas;
