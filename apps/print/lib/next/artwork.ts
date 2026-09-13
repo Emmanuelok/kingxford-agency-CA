@@ -5,6 +5,9 @@ export type Bounds = { x: number; y: number; width: number; height: number };
 export type ArtworkIssue = { id: string; severity: 'warning' | 'error'; title: string; detail: string; layerId?: string; face?: 'front' | 'back' };
 export type PrintFace = 'front' | 'back';
 export const ARTWORK_FONTS = ['Arial', 'Georgia', 'Verdana', 'Courier New'];
+// Whole-pixel rasters at physical dimensions can land just below 300 PPI.
+// Match the nearest-whole-PPI label so a displayed 300 PPI does not warn.
+export const PRINT_PPI_WARNING_THRESHOLD = 299.5;
 export const copyDesign = (design: Design): Design => JSON.parse(JSON.stringify(design));
 /** A standalone face for existing preview and export renderers. */
 export function designForFace(design: Design, face: PrintFace): Design {
@@ -120,7 +123,7 @@ function preflightFace(design: Design): ArtworkIssue[] {
       if (!safeImageSource(layer.src)) issues.push({ id: `${layer.id}-missing`, severity: 'error', title: 'An image is unavailable', detail: `Upload ${name} again before exporting or requesting print.`, layerId: layer.id });
       const resolution = imagePpi(layer, p);
       if (!resolution) issues.push({ id: `${layer.id}-resolution`, severity: 'warning', title: 'Image resolution is unknown', detail: `Upload ${name} again so its original pixel dimensions can be checked.`, layerId: layer.id });
-      else if (resolution.minimum < 300) issues.push({ id: `${layer.id}-resolution`, severity: 'warning', title: `${name}: ${Math.round(resolution.minimum)} PPI`, detail: `${Math.round(resolution.horizontal)} × ${Math.round(resolution.vertical)} PPI at this size. 300 PPI is a useful target for close-view print; confirm large-format requirements with production.`, layerId: layer.id });
+      else if (resolution.minimum < PRINT_PPI_WARNING_THRESHOLD) issues.push({ id: `${layer.id}-resolution`, severity: 'warning', title: `${name}: ${Math.round(resolution.minimum)} PPI`, detail: `${Math.round(resolution.horizontal)} × ${Math.round(resolution.vertical)} PPI at this size. 300 PPI is a useful target for close-view print; confirm large-format requirements with production.`, layerId: layer.id });
     }
   }
   return issues;

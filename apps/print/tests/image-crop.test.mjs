@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PGlite } from '@electric-sql/pglite';
-import { initialDesign } from '../lib/presswerk/catalog.ts';
+import { initialDesign, products } from '../lib/presswerk/catalog.ts';
 import { designSchema, imageCropSchema } from '../lib/presswerk/cloud.ts';
-import { artworkFingerprint, artworkSvg, cropToFrame, designForFace, imageCrop, imagePpi, renderArtworkCanvas, replaceLayerImage } from '../lib/next/artwork.ts';
+import { artworkFingerprint, artworkSvg, cropToFrame, designForFace, imageCrop, imagePpi, preflightArtwork, renderArtworkCanvas, replaceLayerImage } from '../lib/next/artwork.ts';
 import { createWorkspace, createQuote, validateWorkspace } from '../lib/next/workspace-store.ts';
 
 const source = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9iQAAAAASUVORK5CYII=';
@@ -35,6 +35,25 @@ test('crop quality uses retained original pixels and untouched legacy images kee
   assert.deepEqual(imagePpi(image, product), { horizontal: 2400, vertical: 1200, minimum: 1200 });
   assert.deepEqual(imagePpi({ ...image, crop: { x: .25, y: .25, width: .25, height: .5 } }, product), { horizontal: 600, vertical: 600, minimum: 600 });
   assert.deepEqual(imageCrop(image), { x: 0, y: 0, width: 1, height: 1 });
+});
+
+test('preflight tolerates raster rounding at 300 PPI while flagging the next genuinely lower displayed value', () => {
+  const card = products.find(product => product.id === 'cards');
+  const photo = { ...image, x: 0, y: 0, width: 100, height: 100, rotation: 0, naturalWidth: 1200, naturalHeight: 602 };
+  // 1050 pixels over the 89 mm card width is 299.663 PPI, displayed as 300;
+  // 1049 pixels is 299.378, displayed as 299 and should still warn.
+  for (const [naturalWidth, warning] of [[1049, true], [1050, false], [1051, false]]) {
+    const design = { ...initialDesign('cards'), layers: [{ ...photo, naturalWidth }] };
+    assert.equal(preflightArtwork(design).some(issue => issue.id === 'photo-resolution'), warning);
+  }
+  // Source crops can yield fractional retained pixels. Exercise both sides of
+  // the half-PPI boundary without changing the physical print frame.
+  for (const [ppi, warning] of [[299.49, true], [299.5, false], [299.51, false], [299.8, false]]) {
+    const crop = { x: 0, y: 0, width: ppi * (card.width / 25.4) / photo.naturalWidth, height: 1 };
+    const design = { ...initialDesign('cards'), layers: [{ ...photo, crop }] };
+    near(imagePpi(design.layers[0], card).minimum, ppi);
+    assert.equal(preflightArtwork(design).some(issue => issue.id === 'photo-resolution'), warning, `${ppi} PPI`);
+  }
 });
 
 test('replacement changes the source while preserving frame, transforms, identity and independent input', () => {

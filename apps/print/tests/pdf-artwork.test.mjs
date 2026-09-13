@@ -4,7 +4,6 @@ import { deflateSync } from 'node:zlib';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { PDFDocument, PDFName, PDFNumber } from 'pdf-lib';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
@@ -129,7 +128,9 @@ test('the configured PDF renderer rejects oversized embedded images instead of p
   const upstream = await readFile(rendererPath, 'utf8');
   assert.throws(() => patchPdfRenderer(upstream, '7.0.0'), /before upgrading/);
   assert.throws(() => patchPdfRenderer('upstream changed', packageInfo.version), /no longer matches/);
-  const directory = await mkdtemp(path.join(tmpdir(), 'avalon-pdf-engine-'));
+  // The generated renderer resolves its optional native canvas package relative
+  // to import.meta.url. Keep it under the installed dependency, not OS /tmp.
+  const directory = await mkdtemp(path.join(path.dirname(packagePath), 'avalon-pdf-engine-'));
   const patchedPath = path.join(directory, 'pdf.mjs');
   await writeFile(patchedPath, patchPdfRenderer(upstream, packageInfo.version));
   const patched = await import(pathToFileURL(patchedPath).href);

@@ -1,8 +1,8 @@
 import { useEffect, useEffectEvent, useId, useRef, useState } from 'react';
-import type { PointerEvent as ReactPointerEvent } from 'react';
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 import { Crop, Move, RotateCcw, X } from 'lucide-react';
 import type { DesignLayer, ImageCrop, Product } from '../../lib/presswerk/catalog';
-import { cropToFrame, imageCrop, imagePpi, safeImageSource } from '../../lib/next/artwork';
+import { cropToFrame, imageCrop, imagePpi, PRINT_PPI_WARNING_THRESHOLD, safeImageSource } from '../../lib/next/artwork';
 import './image-crop-editor.css';
 
 type Props = {
@@ -65,7 +65,7 @@ export default function ImageCropEditor({ layer, product, onApply, onCancel }: P
       <header className="image-crop-header"><span className="image-crop-symbol"><Crop size={22}/></span><div><h2 id={titleId}>Make the frame yours</h2><p id={descriptionId}>Reposition the image to choose what appears in print.</p></div><button type="button" className="image-crop-close" aria-label="Close crop editor" onClick={onCancel}><X size={20}/></button></header>
       {crop && src ? <>
         <div className="image-crop-stage">
-          <div className="image-crop-frame" style={{ width: Math.min(440, 320 * frameWidth / frameHeight), aspectRatio: `${frameWidth} / ${frameHeight}` }} onPointerDown={beginDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={finishDrag}>
+          <div className="image-crop-frame" style={{ width: Math.min(440, 320 * frameWidth / frameHeight), aspectRatio: `${frameWidth} / ${frameHeight}`, '--image-crop-mobile-width': `${240 * frameWidth / frameHeight}px` } as CSSProperties} onPointerDown={beginDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={finishDrag}>
             <svg viewBox={`${crop.x * 1000} ${crop.y * 1000} ${crop.width * 1000} ${crop.height * 1000}`} preserveAspectRatio="none" role="img" aria-label={`Crop preview for ${layer.text || 'your image'}`}><image width={1000} height={1000} href={src} preserveAspectRatio="none"/></svg>
             <div className="image-crop-thirds" aria-hidden="true"/>
           </div>
@@ -77,7 +77,7 @@ export default function ImageCropEditor({ layer, product, onApply, onCancel }: P
             <label className="image-crop-slider"><span>Horizontal position<strong>{Math.round(state.x * 100)}%</strong></span><input type="range" min={0} max={100} step={.1} disabled={crop.width >= 1} value={state.x * 100} onChange={event => setState(value => ({ ...value, x: Number(event.target.value) / 100 }))}/></label>
             <label className="image-crop-slider"><span>Vertical position<strong>{Math.round(state.y * 100)}%</strong></span><input type="range" min={0} max={100} step={.1} disabled={crop.height >= 1} value={state.y * 100} onChange={event => setState(value => ({ ...value, y: Number(event.target.value) / 100 }))}/></label>
           </div>
-          <div className={`image-crop-quality ${resolution && resolution.minimum < 300 ? 'caution' : ''}`} aria-live="polite"><strong>{resolution ? `${Math.round(resolution.minimum)} PPI at print size` : 'Image quality unavailable'}</strong><span>{Math.round(naturalWidth * crop.width).toLocaleString()} × {Math.round(naturalHeight * crop.height).toLocaleString()} pixels selected · {frameWidth.toFixed(1)} × {frameHeight.toFixed(1)} mm frame</span>{resolution && resolution.minimum < 300 && <small>Zooming in uses fewer original pixels. Check the preview carefully for close-view print.</small>}</div>
+          <div className={`image-crop-quality ${resolution && resolution.minimum < PRINT_PPI_WARNING_THRESHOLD ? 'caution' : ''}`} aria-live="polite"><strong>{resolution ? `${Math.round(resolution.minimum)} PPI at print size` : 'Image quality unavailable'}</strong><span>{Math.round(naturalWidth * crop.width).toLocaleString()} × {Math.round(naturalHeight * crop.height).toLocaleString()} pixels selected · {frameWidth.toFixed(1)} × {frameHeight.toFixed(1)} mm frame</span>{resolution && resolution.minimum < PRINT_PPI_WARNING_THRESHOLD && <small>Zooming in uses fewer original pixels. Check the preview carefully for close-view print.</small>}</div>
         </div>
       </> : <p className="image-crop-unavailable">Replace this image with a PNG, JPEG or WebP that has readable dimensions before adjusting its crop.</p>}
       <footer className="image-crop-footer"><button type="button" className="image-crop-reset" disabled={!crop} onClick={() => setState({ zoom: 1, x: .5, y: .5 })}><RotateCcw size={15}/>Reset framing</button><div><button type="button" className="image-crop-cancel" onClick={onCancel}>Cancel</button><button type="button" className="image-crop-apply" disabled={!crop} onClick={() => { if (crop) onApply({ ...crop }); }}>Apply crop</button></div></footer>
