@@ -2,6 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "stjohnsmethodist.vercel.app",
+        pathname: "/assets/og.png",
+      },
+    ],
+  },
   async rewrites() {
     return {
       beforeFiles: [
