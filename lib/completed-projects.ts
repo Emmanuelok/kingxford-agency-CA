@@ -157,6 +157,34 @@ const projectRegistry: readonly CompletedProject[] = [
     },
     tone: "sage",
   },
+  {
+    published: true,
+    slug: "st-johns-methodist",
+    name: "St. John’s Methodist Church",
+    shortName: "St. John’s Methodist",
+    sector: "Church & community",
+    website: "https://stjohnsmethodist.vercel.app/",
+    domain: "stjohnsmethodist.vercel.app",
+    description: "A welcoming digital home for the Ghanaian Methodist community in St. John’s, bringing worship, church life, congregation resources and visit information together.",
+    introduction: "Ghanaian roots. Newfoundland home.",
+    capabilities: ["Website design", "Church resources", "Community experience"],
+    highlights: [
+      { title: "A warm welcome", description: "A clear introduction shares the church’s identity and helps visitors discover how to join Sunday worship." },
+      { title: "Church life in one place", description: "Dedicated sections connect visitors with worship, community, upcoming events and watch-and-listen content." },
+      { title: "Resources for the congregation", description: "A dedicated resources area gives members and leaders a clear place to explore church materials." },
+    ],
+    image: {
+      src: "https://stjohnsmethodist.vercel.app/assets/og.png",
+      alt: "St. John’s Methodist Church website preview",
+      width: 1200,
+      height: 630,
+    },
+    detail: {
+      label: "Explore church resources",
+      website: "https://stjohnsmethodist.vercel.app/resources/",
+    },
+    tone: "rose",
+  },
 ];
 
 export const completedProjects: readonly CompletedProject[] = projectRegistry.filter(
