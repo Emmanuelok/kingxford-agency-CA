@@ -632,7 +632,7 @@ export function CampaignWorkspace({
     <section
       className="ws"
       id="main-content"
-      aria-label="AVALON Creative Group campaign workspace"
+      aria-label="AVALON Creatives Group campaign workspace"
     >
       <Tabs
         orientation="vertical"
@@ -709,7 +709,7 @@ export function CampaignWorkspace({
         <div className="ws-main">
           <header className="ws-topbar">
             <div>
-              <span>AVALON CREATIVE GROUP / {views.find(([id]) => id === view)?.[1]}</span>
+              <span>AVALON CREATIVES GROUP / {views.find(([id]) => id === view)?.[1]}</span>
               <b>{c.brief.brand || "Your next campaign"}</b>
             </div>
             <div className="ws-top-actions">
@@ -1027,7 +1027,7 @@ const roomDescriptions: Record<View, string> = {
 };
 function campaignReport(c: Campaign) {
   const f = forecast(c), r = readiness(c);
-  return `# AVALON Creative Group · Campaign review
+  return `# AVALON Creatives Group · Campaign review
 
 ## ${c.name}
 Prepared ${new Date().toISOString()} · Brief v${c.revision}

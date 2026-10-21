@@ -7,12 +7,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { completedProjects } from "@/lib/completed-projects";
 import styles from "./projects.module.css";
 
-const description = "Explore a selection of completed websites by Avalon Creative Group. Visit the live projects and discover the details behind the work.";
+const description = "Explore a selection of completed websites by Avalon Creatives Group. Visit the live projects and discover the details behind the work.";
 const shareImage = completedProjects[0]?.image ?? {
   src: "/images/hero-research-wall.webp",
   width: 1600,
   height: 900,
-  alt: "Avalon Creative Group — completed projects",
+  alt: "Avalon Creatives Group — completed projects",
 };
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/projects" },
   openGraph: {
-    title: "Completed projects | AVALON Creative Group",
+    title: "Completed projects | AVALON Creatives Group",
     description,
     url: "/projects",
     type: "website",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Completed projects | AVALON Creative Group",
+    title: "Completed projects | AVALON Creatives Group",
     description,
     images: [shareImage.src],
   },

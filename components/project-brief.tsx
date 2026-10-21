@@ -82,7 +82,7 @@ export function ProjectBrief({ initialScopes = [] }: { initialScopes?: string[] 
   }, [step]);
   const brief = useMemo(
     () =>
-      `AVALON CREATIVE GROUP · PROJECT BRIEF\n\nName: ${name}\nOrganization: ${org}\nEmail: ${email}\nPrimary objective: ${goals.find(([id]) => id === goal)?.[1]}\nCapabilities: ${scopes.join(", ") || "Recommend the right mix"}\nWorking investment: ${budget || "To discuss"} CAD\nTarget launch: ${timing || "To discuss"}\n\nWhat must move:\n${challenge}\n\nMarketing updates consent: ${consent ? "Yes" : "No"}`,
+      `AVALON CREATIVES GROUP · PROJECT BRIEF\n\nName: ${name}\nOrganization: ${org}\nEmail: ${email}\nPrimary objective: ${goals.find(([id]) => id === goal)?.[1]}\nCapabilities: ${scopes.join(", ") || "Recommend the right mix"}\nWorking investment: ${budget || "To discuss"} CAD\nTarget launch: ${timing || "To discuss"}\n\nWhat must move:\n${challenge}\n\nMarketing updates consent: ${consent ? "Yes" : "No"}`,
     [name, org, email, goal, scopes, budget, timing, challenge, consent],
   );
   function download() {

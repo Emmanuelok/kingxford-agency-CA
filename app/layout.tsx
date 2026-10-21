@@ -19,36 +19,39 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const siteUrl = "https://kingxford-agency-ca.vercel.app";
+const siteUrl = "https://avaloncreative.group";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AVALON Creative Group — Ideas with vision. Work with impact.",
-    template: "%s | AVALON Creative Group",
+    default: "AVALON Creatives Group — Ideas with vision. Work with impact.",
+    template: "%s | AVALON Creatives Group",
   },
   description:
-    "Independent strategy, brand design, film, digital experiences and growth. Avalon Creative Group brings creative expertise and reliable delivery together around your business objectives.",
+    "Independent strategy, brand design, film, digital experiences and growth. Avalon Creatives Group is a global creative platform with a presence across Calgary, St. John’s, Accra in Ghana, Hong Kong and the UK.",
   keywords: [
-    "advertising agency St. John's",
-    "marketing agency Newfoundland",
-    "Canadian creative agency",
+    "global creative platform",
+    "creative agency Calgary",
+    "creative agency St. John’s",
+    "creative services Accra Ghana",
+    "creative services Hong Kong",
+    "creative services UK",
     "social media agency",
     "web development agency",
     "commercial production",
     "media buying Canada",
   ],
   openGraph: {
-    title: "AVALON Creative Group — Ideas with vision. Work with impact.",
-    description: "Strategy, design, production, digital and growth. One creative group, working together around your ambitions.",
+    title: "AVALON Creatives Group — Ideas with vision. Work with impact.",
+    description: "A global creative platform connecting strategy, design, production, digital and growth across Calgary, St. John’s, Accra, Hong Kong and the UK.",
     type: "website",
     locale: "en_CA",
     images: [{ url: "/images/hero-research-wall.webp", width: 1600, height: 900, alt: "The opening research wall in AVALON's cinematic agency film" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AVALON Creative Group — Ideas with vision. Work with impact.",
-    description: "Strategy, design, production, digital and growth. One creative group, working together around your ambitions.",
+    title: "AVALON Creatives Group — Ideas with vision. Work with impact.",
+    description: "A global creative platform connecting strategy, design, production, digital and growth across Calgary, St. John’s, Accra, Hong Kong and the UK.",
     images: ["/images/hero-research-wall.webp"],
   },
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
@@ -57,7 +60,26 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": `${siteUrl}/#organization`,
+          name: "Avalon Creatives Group",
+          url: siteUrl,
+          description: "A global creative platform for strategy, brand design, film, digital experiences and growth.",
+          email: "avalon@veridanth.com",
+          telephone: "+1-587-837-4472",
+          areaServed: [
+            { "@type": "City", name: "Calgary" },
+            { "@type": "City", name: "St. John's" },
+            { "@type": "City", name: "Accra", containedInPlace: { "@type": "Country", name: "Ghana" } },
+            { "@type": "Place", name: "Hong Kong" },
+            { "@type": "Country", name: "United Kingdom" },
+          ],
+        }).replace(/</g, "\u003c") }} />
+        {children}
+      </body>
     </html>
   );
 }

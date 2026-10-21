@@ -85,7 +85,7 @@ try {
     const html = isPage ? await r.text() : "";
     if (!workspaceEnabled && isPage) {
       assert.doesNotMatch(html, /href="\/(?:platform|tools|studio)(?:[/?#"])/, `No unpublished entry links on ${route}`);
-      assert.doesNotMatch(html, /aria-label="AVALON Creative Group campaign workspace"/, `Workspace must not mount on ${route}`);
+      assert.doesNotMatch(html, /aria-label="AVALON Creatives Group campaign workspace"/, `Workspace must not mount on ${route}`);
     }
     if (route === "/") {
       assert.ok(html.includes("AVALON"), "Avalon identity is rendered");

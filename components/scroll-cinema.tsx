@@ -215,19 +215,19 @@ export function ScrollCinema() {
 
         <div className="kx5-address">
           <span>Independent by design. Connected by purpose.</span>
-          <span>St. John&apos;s · Canada</span>
+          <span>Calgary · St. John&apos;s · Accra · Hong Kong · UK</span>
           <span>Strategy / Creative / Production / Growth</span>
         </div>
 
         <div className="kx5-title-beat">
-          <span className="kx5-overline">Introducing Avalon Creative Group</span>
+          <span className="kx5-overline">Introducing Avalon Creatives Group</span>
           <h1>
             Ideas with vision.
             <br />
             <em>Work with impact.</em>
           </h1>
           <p>
-            A creative group for brands ready to go further. Strategy, design,
+            A global creative platform for brands ready to go further. Strategy, design,
             film, digital and growth, working together from the very first brief.
           </p>
           <div className="kx5-hero-actions">

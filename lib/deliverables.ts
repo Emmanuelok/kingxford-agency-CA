@@ -170,7 +170,7 @@ export function buildLaunchPackage(c: Campaign, options: {
 }): string {
   const summary = deliverySummary(c, options.today);
   const lines = [
-    "# AVALON Creative Group · Campaign launch package", "",
+    "# AVALON Creatives Group · Campaign launch package", "",
     `Campaign: ${cell(c.name)}`, `Campaign ID: ${c.id}`, `Brief revision: ${c.revision}`,
     `Generated: ${cell(options.generatedAt)}`, `Date basis: ${options.today} (local calendar date)`, "",
     "This is an exported working record. It does not publish content, book media, notify owners or certify legal clearance.", "",

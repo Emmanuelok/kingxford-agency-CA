@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/industries" },
   title: "Industries",
   description:
-    "Sector-specialist advertising, production, digital and growth systems from St. John's to markets across Canada.",
+    "Sector-specialist advertising, production, digital and growth systems across Calgary, St. John’s, Accra in Ghana, Hong Kong and the UK.",
 };
 
 const sectors = [
@@ -122,20 +122,20 @@ export default function IndustriesPage() {
       <section className="expansion-section content-section dark-block">
         <div>
           <div className="section-kicker inverse">
-            <span>→</span> EXPANSION ROADMAP
+            <span>→</span> GLOBAL PRESENCE
           </div>
           <h2>
-            City by city.
+            Across markets.
             <br />
             <em>Without losing the care.</em>
           </h2>
         </div>
         <div className="city-path">
-          <span className="active">St. John&apos;s / Avalon</span>
-          <span>Newfoundland & Labrador</span>
-          <span>Atlantic Canada</span>
-          <span>Calgary · Ottawa · Toronto</span>
-          <span>Montréal / French-ready</span>
+          <span className="active">Calgary, Canada</span>
+          <span>St. John&apos;s, Canada</span>
+          <span>Accra, Ghana</span>
+          <span>Hong Kong</span>
+          <span>United Kingdom</span>
         </div>
       </section>
       <SiteFooter />

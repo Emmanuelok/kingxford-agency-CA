@@ -1,4 +1,4 @@
-# Avalon Creative Group — version 4.0
+# Avalon Creatives Group — version 4.0
 
 **Avalon Print** now lives in this repository at `/print`, with the custom hostname `print.avaloncreative.group` prepared in the app routing. Studio v2 includes a redesigned 51-format catalogue, editable template library, brand kit, campaign composer, physical artwork editor, product-specific 3D previews, persistent device projects with revision history, multi-item estimates and namespaced server endpoints. Device workflows work without cloud credentials; authenticated team services remain separately configurable. Read [Avalon Print setup and domain activation](docs/AVALON-PRINT.md) for configuration and the remaining service boundaries. The print client is built automatically with the agency site.
 

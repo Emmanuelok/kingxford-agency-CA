@@ -6,7 +6,7 @@ import { CampaignWorkspace } from "@/components/campaign-workspace";
 export const metadata: Metadata = {
   title: "Growth Tools & Performance Studios",
   description:
-    "Plan campaign economics, import actual results, inspect attribution and run connected specialist workflows with AVALON Creative Group.",
+    "Plan campaign economics, import actual results, inspect attribution and run connected specialist workflows with AVALON Creatives Group.",
   alternates: { canonical: "/tools" },
   robots: { index: WORKSPACE_ENABLED, follow: WORKSPACE_ENABLED },
 };

@@ -7,7 +7,7 @@ import { AGENTS } from "@/lib/campaign";
 export const metadata: Metadata = {
   title: "Connected Creative Workspace",
   description:
-    `AVALON Creative Group: ${AGENTS.length} specialist engines, connected campaign workflows, production delivery, actual performance analysis and accountable launch review in one workspace.`,
+    `AVALON Creatives Group: ${AGENTS.length} specialist engines, connected campaign workflows, production delivery, actual performance analysis and accountable launch review in one workspace.`,
   alternates: { canonical: "/platform" },
   robots: { index: WORKSPACE_ENABLED, follow: WORKSPACE_ENABLED },
 };

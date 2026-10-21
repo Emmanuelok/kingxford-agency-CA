@@ -9,11 +9,11 @@ import { WORKSPACE_ENABLED } from "@/lib/release";
 
 export const metadata: Metadata = { alternates: { canonical: "/services" },
   title: "Services",
-  description: "Strategy, brand, advertising, production, media, social, web, commerce, PR, data and responsible AI—connected around one commercial objective.",
+  description: "Strategy, brand, advertising, production, media, social, web, commerce, PR, data and responsible AI—connected around one commercial objective for brands across markets.",
 };
 
 const services = [
-  { name:"Strategy, research & advisory", line:"Find the sharp edge.", items:["Market and category research","Customer and audience insight","Competitive intelligence","Segmentation and personas","Brand and marketing audits","Go-to-market strategy","Offer and pricing strategy","Customer journey mapping","City and province expansion","Stakeholder engagement","Annual marketing planning","Fractional marketing leadership"] },
+  { name:"Strategy, research & advisory", line:"Find the sharp edge.", items:["Market and category research","Customer and audience insight","Competitive intelligence","Segmentation and personas","Brand and marketing audits","Go-to-market strategy","Offer and pricing strategy","Customer journey mapping","Market expansion strategy","Stakeholder engagement","Annual marketing planning","Fractional marketing leadership"] },
   { name:"Brand systems & design", line:"Become easier to recognize—and choose.", items:["Naming and positioning","Brand architecture","Visual identity","Verbal identity and voice","Logo systems","Brand guidelines","Packaging design","Environmental graphics","Signage and wayfinding","Employer brand","Presentations and reports","Brand governance"] },
   { name:"Advertising & campaigns", line:"Make one idea travel everywhere.", items:["Campaign platforms","Creative concepts","Art direction","Copywriting","TV and connected TV","Radio and streaming audio","Print and direct mail","Out-of-home and DOOH","Digital display","Public awareness campaigns","Recruitment campaigns","Creative testing and versioning"] },
   { name:"Content, social & influence", line:"Build a system, not a posting habit.", items:["Channel strategy","Editorial systems","Content calendars","Short-form video","Community management","Executive social","Creator and influencer programs","UGC direction","Social commerce","Social listening","Reputation and moderation","Crisis escalation protocols"] },
@@ -49,7 +49,7 @@ export default function ServicesPage() {
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}><span aria-hidden="true" /> AVALON / OUR CAPABILITIES</p>
           <h1 id="services-title">Every capability.<br /><em>One objective.</em></h1>
-          <p className={styles.heroDescription}>Strategy with a point of view. Creative with something to say. Digital experiences that move your business forward.</p>
+          <p className={styles.heroDescription}>Strategy with a point of view. Creative with something to say. Digital experiences that move your business forward, wherever your audience is.</p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryAction} href="/start">Tell us what must move <ArrowUpRight size={20} /></Link>
             <a className={styles.lightLink} href="#capabilities">Explore our services <ArrowDown size={19} /></a>

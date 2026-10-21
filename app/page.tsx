@@ -130,38 +130,18 @@ export default function Home() {
           <span className="kx5-map-ring ring-one" />
           <span className="kx5-map-ring ring-two" />
           <span className="kx5-map-ring ring-three" />
-          <i className="kx5-map-origin">ST. JOHN&apos;S</i>
-          <b>47.5615° N</b>
+          <i className="kx5-map-origin">CONNECTED WORLDWIDE</i>
+          <b>LOCAL INSIGHT / GLOBAL AMBITION</b>
         </div>
         <div className="kx5-canada-copy">
-          <span className="kx5-overline">Canada, market by market</span>
-          <h2 id="canada-title">
-            Our address is St. John&apos;s.
-            <br />
-            Our market is Canada.
-          </h2>
-          <p>
-            St. John&apos;s is our first office and the place our standard is
-            set. We will add teams market by market as client demand grows—one
-            operating system, with people who know the region, category and
-            customer firsthand.
-          </p>
+          <span className="kx5-overline">A global creative platform</span>
+          <h2 id="canada-title">Many perspectives.<br />One shared ambition.</h2>
+          <p>Avalon Creatives Group connects strategy, brand, film, digital experiences and growth with a global presence across Calgary, St. John&apos;s, Accra in Ghana, Hong Kong and the UK. We shape each brief around its audience, market and goals.</p>
           <ol>
-            <li>
-              <span>Now</span>
-              <b>St. John&apos;s</b>
-              <small>Founding market / full agency</small>
-            </li>
-            <li>
-              <span>Next</span>
-              <b>Atlantic Canada</b>
-              <small>Regional collaborators / local evidence</small>
-            </li>
-            <li>
-              <span>Then</span>
-              <b>Canada, city by city</b>
-              <small>Real presence when the work calls for it</small>
-            </li>
+            <li><span>Canada</span><b>Calgary · St. John&apos;s</b><small>Connected creative perspectives</small></li>
+            <li><span>Ghana</span><b>Accra</b><small>Local context, global ambition</small></li>
+            <li><span>Asia</span><b>Hong Kong</b><small>Ideas across markets</small></li>
+            <li><span>Europe</span><b>United Kingdom</b><small>Shared briefs and creative collaboration</small></li>
           </ol>
           <a href="/industries">
             Explore markets and sectors <ArrowUpRight />

@@ -8,7 +8,7 @@ import { WORKSPACE_ENABLED } from "@/lib/release";
 export const metadata: Metadata = {
   alternates: { canonical: "/start" },
   title: "Start a Project",
-  description: "Prepare your Avalon Creative Group project brief and start a conversation about strategy, creative production, digital experiences or growth.",
+  description: "Prepare your Avalon Creatives Group project brief and start a conversation about strategy, creative production, digital experiences or growth.",
 };
 const serviceScopes: Record<string, string[]> = {
   strategy: ["Strategy and research"],
@@ -38,7 +38,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
           <p>{WORKSPACE_ENABLED ? "Build your brief in four steps. Download a copy, prepare an email to our team, or carry the project into your own campaign workspace." : "Build your brief in four steps. Review the details, download a copy and prepare an email to our team when you are ready."}</p>
           <div className="contact-facts">
             <span><Clock3 />About five minutes to define the essentials</span>
-            <span><MapPin />Canada-wide creative collaboration</span>
+            <span><MapPin />Global collaboration: Calgary, St. John&apos;s, Accra, Hong Kong and the UK</span>
             <span><MessageSquareText /><a href="mailto:avalon@veridanth.com">avalon@veridanth.com</a></span>
             <span><Phone aria-hidden="true" /><a href="tel:+15878374472">+1 (587) 837-4472</a></span>
           </div>

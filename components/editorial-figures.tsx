@@ -158,8 +158,8 @@ export function AboutVisual() {
           52.7126° W
         </strong>
         <p>
-          Built with a Newfoundland point of view. Designed to work across
-          Canada.
+          A Newfoundland perspective within a global creative platform.
+          Connected across markets.
         </p>
       </figcaption>
     </figure>
