@@ -215,7 +215,7 @@ export function ScrollCinema() {
 
         <div className="kx5-address">
           <span>Independent by design. Connected by purpose.</span>
-          <span>Calgary · St. John&apos;s · Accra · Hong Kong · UK</span>
+          <span>Canada · US · UK · Hong Kong · Ghana</span>
           <span>Strategy / Creative / Production / Growth</span>
         </div>
 

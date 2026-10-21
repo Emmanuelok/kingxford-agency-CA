@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/industries" },
   title: "Industries",
   description:
-    "Sector-specialist advertising, production, digital and growth systems across Calgary, St. John’s, Accra in Ghana, Hong Kong and the UK.",
+    "Sector-specialist advertising, production, digital and growth systems across Canada, US, UK, Hong Kong and Ghana.",
 };
 
 const sectors = [
@@ -131,11 +131,11 @@ export default function IndustriesPage() {
           </h2>
         </div>
         <div className="city-path">
-          <span className="active">Calgary, Canada</span>
-          <span>St. John&apos;s, Canada</span>
-          <span>Accra, Ghana</span>
+          <span className="active">Canada</span>
+          <span>US</span>
+          <span>UK</span>
           <span>Hong Kong</span>
-          <span>United Kingdom</span>
+          <span>Ghana</span>
         </div>
       </section>
       <SiteFooter />

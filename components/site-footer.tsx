@@ -22,7 +22,7 @@ export function SiteFooter() {
         <div className={styles.directory}>
           <div className={styles.identity}>
             <BrandLockup footer />
-            <p>Independent thinking. Exceptional craft. Connected delivery. Strategy, brand, film, digital and growth, with a global presence across Calgary, St. John&apos;s, Accra in Ghana, Hong Kong and the UK.</p>
+            <p>Independent thinking. Exceptional craft. Connected delivery. Strategy, brand, film, digital and growth, with a global presence across Canada, US, UK, Hong Kong and Ghana.</p>
             <a className={styles.contact} href="mailto:avalon@veridanth.com">Let&apos;s talk <ArrowUpRight size={19} aria-hidden="true" /></a>
           </div>
           <nav className={styles.column} aria-label="Explore Avalon">
@@ -52,7 +52,7 @@ export function SiteFooter() {
             <b>Our commitments</b>
             <Link href="/privacy">Privacy & data</Link><Link href="/accessibility">Accessibility</Link>
             <Link href="/responsible-advertising">Responsible advertising</Link>
-            <span className={styles.location}>Global presence<br />Calgary · St. John&apos;s<br />Accra, Ghana · Hong Kong · UK</span>
+            <span className={styles.location}>Global presence<br />Canada · US · UK<br />Hong Kong · Ghana</span>
             <a href="mailto:avalon@veridanth.com">avalon@veridanth.com <ArrowUpRight size={16} aria-hidden="true" /></a>
             <a href="tel:+15878374472">+1 (587) 837-4472</a>
           </nav>

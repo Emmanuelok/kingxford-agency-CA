@@ -38,7 +38,7 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
           <p>{WORKSPACE_ENABLED ? "Build your brief in four steps. Download a copy, prepare an email to our team, or carry the project into your own campaign workspace." : "Build your brief in four steps. Review the details, download a copy and prepare an email to our team when you are ready."}</p>
           <div className="contact-facts">
             <span><Clock3 />About five minutes to define the essentials</span>
-            <span><MapPin />Global collaboration: Calgary, St. John&apos;s, Accra, Hong Kong and the UK</span>
+            <span><MapPin />Global collaboration: Canada, US, UK, Hong Kong and Ghana</span>
             <span><MessageSquareText /><a href="mailto:avalon@veridanth.com">avalon@veridanth.com</a></span>
             <span><Phone aria-hidden="true" /><a href="tel:+15878374472">+1 (587) 837-4472</a></span>
           </div>

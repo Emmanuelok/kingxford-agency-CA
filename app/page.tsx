@@ -136,12 +136,13 @@ export default function Home() {
         <div className="kx5-canada-copy">
           <span className="kx5-overline">A global creative platform</span>
           <h2 id="canada-title">Many perspectives.<br />One shared ambition.</h2>
-          <p>Avalon Creatives Group connects strategy, brand, film, digital experiences and growth with a global presence across Calgary, St. John&apos;s, Accra in Ghana, Hong Kong and the UK. We shape each brief around its audience, market and goals.</p>
+          <p>Avalon Creatives Group connects strategy, brand, film, digital experiences and growth with a global presence across Canada, US, UK, Hong Kong and Ghana. We shape each brief around its audience, market and goals.</p>
           <ol>
-            <li><span>Canada</span><b>Calgary · St. John&apos;s</b><small>Connected creative perspectives</small></li>
-            <li><span>Ghana</span><b>Accra</b><small>Local context, global ambition</small></li>
-            <li><span>Asia</span><b>Hong Kong</b><small>Ideas across markets</small></li>
-            <li><span>Europe</span><b>United Kingdom</b><small>Shared briefs and creative collaboration</small></li>
+            <li><span>01</span><b>Canada</b><small>Connected creative perspectives</small></li>
+            <li><span>02</span><b>US</b><small>Ideas across markets</small></li>
+            <li><span>03</span><b>UK</b><small>Shared briefs and creative collaboration</small></li>
+            <li><span>04</span><b>Hong Kong</b><small>Local context, global ambition</small></li>
+            <li><span>05</span><b>Ghana</b><small>One shared ambition</small></li>
           </ol>
           <a href="/industries">
             Explore markets and sectors <ArrowUpRight />
