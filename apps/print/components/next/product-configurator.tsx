@@ -2,6 +2,8 @@ import { lazy, Suspense, useId, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ChevronRight, Download, Image as ImageIcon, Layers, Ruler, SlidersHorizontal } from 'lucide-react';
 import { calculateQuote, finishesFor, money, products, supportsReverse, type Product, type Tier } from '../../lib/presswerk/catalog';
 import ProductVisual from './product-visual';
+import ProductPhotoGallery from './product-photo-gallery';
+import { productPhotos } from '../../lib/next/product-photography';
 import { photoSceneFor } from '../../lib/next/photo-scenes';
 import { makeTemplate } from '../../lib/next/templates';
 import './product-configurator.css';
@@ -60,7 +62,7 @@ function ConfiguredProduct({ product, onBack, onStart, onProduct }: Props) {
   const [finish, setFinish] = useState('Standard');
   const [tier, setTier] = useState<Tier>('Value');
   const [sides, setSides] = useState(1);
-  const [gallery, setGallery] = useState<'product' | 'area'>('product');
+  const [gallery, setGallery] = useState<'product' | 'area' | 'design'>('product');
   const [notice, setNotice] = useState('');
   const id = useId();
   const quantity = Number(quantityInput);
@@ -84,19 +86,20 @@ function ConfiguredProduct({ product, onBack, onStart, onProduct }: Props) {
 
     <div className="pc-product-layout">
       <div className="pc-gallery-column">
-        <div className={`pc-gallery ${gallery === 'area' ? 'is-area' : photoScene ? 'has-photo' : ''}`}>
-          <div className="pc-gallery-heading"><span>{product.category}</span><span>{gallery === 'product' ? photoScene ? 'Design example' : 'Product illustration' : 'Artwork dimensions'}</span></div>
-          {gallery === 'product' ? <div className={`pc-product-stage ${photoScene ? 'pc-photo-stage' : ''}`}>{photoScene ? <Suspense fallback={<ProductVisual product={product}/>}><PhotoPreview design={exampleDesign} scene={photoScene} compact/></Suspense> : <ProductVisual product={product} />}</div> : <div className="pc-area-stage">
+        {gallery === 'product' ? <ProductPhotoGallery key={product.id} name={product.name} photos={productPhotos(product)} /> : <div className={`pc-gallery ${gallery === 'area' ? 'is-area' : photoScene ? 'has-photo' : ''}`}>
+          <div className="pc-gallery-heading"><span>{product.category}</span><span>{gallery === 'design' ? 'Your editable design example' : 'Artwork dimensions'}</span></div>
+          {gallery === 'design' ? <div className={`pc-product-stage ${photoScene ? 'pc-photo-stage' : ''}`}>{photoScene ? <Suspense fallback={<ProductVisual product={product}/>}><PhotoPreview design={exampleDesign} scene={photoScene} compact/></Suspense> : <ProductVisual product={product} />}</div> : <div className="pc-area-stage">
             <div className="pc-artboard" style={{ aspectRatio: areaRatio, width: areaRatio >= 1 ? 'min(76%, 440px)' : `min(${Math.max(18, 64 * areaRatio)}%, 320px)` }}>
               <span className="pc-area-width">{product.width} mm</span><span className="pc-area-height">{product.height} mm</span>
               <div><Layers size={30} /><strong>Your artwork</strong><small>{canPrintReverse && sides === 2 ? 'One canvas for each side' : 'One printable canvas'}</small></div>
             </div>
           </div>}
           <div className="pc-gallery-caption"><span>{product.material}</span><span>{product.method}</span></div>
-        </div>
+        </div>}
         <div className="pc-gallery-controls" role="group" aria-label="Product views">
           <button className={gallery === 'product' ? 'is-active' : ''} aria-pressed={gallery === 'product'} onClick={() => setGallery('product')}><ImageIcon size={17} /> Product</button>
           <button className={gallery === 'area' ? 'is-active' : ''} aria-pressed={gallery === 'area'} onClick={() => setGallery('area')}><Ruler size={17} /> Print area</button>
+          {photoScene && <button className={gallery === 'design' ? 'is-active' : ''} aria-pressed={gallery === 'design'} onClick={() => setGallery('design')}><Layers size={17} /> Artwork preview</button>}
           <span>Personalise it in the next step.</span>
         </div>
         <div className="pc-creative-note"><span className="pc-note-mark">a.</span><div><h2>A format. A possibility. Your design.</h2><p>Upload your artwork, start with a template or build from a blank canvas. Your chosen specifications travel with your project.</p></div></div>

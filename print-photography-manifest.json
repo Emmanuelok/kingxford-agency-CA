@@ -1,0 +1,1720 @@
+{
+  "version": 1,
+  "project": "Avalon Print product photography",
+  "status": "Generated, visually inspected and locally verified; awaiting deployment",
+  "productCount": 51,
+  "plannedAssets": 154,
+  "source": "Built-in image_gen; original generated concept mockups, no external stock or paid service",
+  "disclosure": "Product concept mockups. Final materials, colours and specifications are confirmed with your quote.",
+  "hero": {
+    "file": "home-editorial.png",
+    "source": "exec-136a40a6-4049-4fac-b27b-3b0383da47c0.png",
+    "status": "generated and inspected"
+  },
+  "products": [
+    {
+      "id": "cards",
+      "name": "Business cards",
+      "category": "Paper & stationery",
+      "width": 89,
+      "height": 51,
+      "material": "14pt matte card",
+      "method": "Digital",
+      "prompt": "Photorealistic Business cards, 14pt matte card, Digital, 89 \u00d7 51 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "cards-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "cards-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "cards-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "tee",
+      "name": "Classic T-shirt",
+      "category": "Apparel",
+      "width": 254,
+      "height": 305,
+      "material": "180gsm cotton",
+      "method": "DTG / DTF",
+      "prompt": "Photorealistic Classic T-shirt, 180gsm cotton, DTG / DTF, 254 \u00d7 305 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "tee-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "tee-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "tee-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "box",
+      "name": "Custom mailer box",
+      "category": "Packaging",
+      "width": 203,
+      "height": 152,
+      "material": "E-flute white board",
+      "method": "Digital corrugated",
+      "prompt": "Photorealistic Custom mailer box, E-flute white board, Digital corrugated, 203 \u00d7 152 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "box-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "box-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "box-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "stickers",
+      "name": "Die-cut stickers",
+      "category": "Stickers & labels",
+      "width": 75,
+      "height": 75,
+      "material": "Laminated vinyl",
+      "method": "Eco-solvent",
+      "prompt": "Photorealistic Die-cut stickers, Laminated vinyl, Eco-solvent, 75 \u00d7 75 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "stickers-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "stickers-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "stickers-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "poster",
+      "name": "Art poster",
+      "category": "Photo & art",
+      "width": 457,
+      "height": 610,
+      "material": "200gsm matte paper",
+      "method": "Pigment inkjet",
+      "prompt": "Photorealistic Art poster, 200gsm matte paper, Pigment inkjet, 457 \u00d7 610 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "poster-hero.png",
+          "status": "Generated and visually inspected",
+          "source": "/Users/elkings/Documents/Codex/2026-10-21/task-9/generated_images/exec-cd718256-a166-4f4c-baa1-f25ffeac639f.png",
+          "generationPrompt": "Use case: product-mockup. Asset: Avalon Print product photography. Subject ONLY Art poster, material 200gsm matte paper, print method Pigment inkjet. Listed printable artwork area 457 \u00d7 610 mm (this is a print area, not necessarily whole object size). Faithful plausible Art poster, not an unrelated product. Premium professional commercial studio photograph, striking realistic texture, physically believable geometry and perspective, excellent photographic detail. Palette: tangerine and petrol blue, cool concrete. Tasteful original abstract graphic print, no legible text, no brand names, no watermarks, no human faces. Keep the offered material and manufacturing process; no invented foil, embroidery, special finishes or extra accessories unless the stated product requires them. For quote-only engineered items this is a concept sample only. Product centered with generous crop margins; landscape 3:2, high resolution. No vector art, no illustration, no visibly synthetic 3D rendering. Shot 1 HERO: a beautiful whole-product three-quarter studio view, tangible material and distinctive original abstract print, sculptural daylight. Maintain white ceramic for the white ceramic mug. For documents show clean printed pages with abstract layout and no legible writing; monochrome stays monochrome. This is a concept product photograph, not a promise of actual stock."
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "poster-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "poster-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "mug",
+      "name": "Everyday mug",
+      "category": "Gifts & merchandise",
+      "width": 210,
+      "height": 90,
+      "material": "11oz white ceramic",
+      "method": "Sublimation",
+      "prompt": "Photorealistic Everyday mug, 11oz white ceramic, Sublimation, 210 \u00d7 90 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "mug-hero.png",
+          "status": "Generated and visually inspected",
+          "source": "/Users/elkings/Documents/Codex/2026-10-21/task-9/generated_images/exec-0c693a89-8960-4e8e-b3cd-8d405d87a7bf.png",
+          "generationPrompt": "Use case: product-mockup. Asset: Avalon Print product photography. Subject ONLY Everyday mug, material 11oz white ceramic, print method Sublimation. Listed printable artwork area 210 \u00d7 90 mm (this is a print area, not necessarily whole object size). Faithful plausible Everyday mug, not an unrelated product. Premium professional commercial studio photograph, striking realistic texture, physically believable geometry and perspective, excellent photographic detail. Palette: burgundy and pale sage, warm oak. Tasteful original abstract graphic print, no legible text, no brand names, no watermarks, no human faces. Keep the offered material and manufacturing process; no invented foil, embroidery, special finishes or extra accessories unless the stated product requires them. For quote-only engineered items this is a concept sample only. Product centered with generous crop margins; landscape 3:2, high resolution. No vector art, no illustration, no visibly synthetic 3D rendering. Shot 1 HERO: a beautiful whole-product three-quarter studio view, tangible material and distinctive original abstract print, sculptural daylight. Maintain white ceramic for the white ceramic mug. For documents show clean printed pages with abstract layout and no legible writing; monochrome stays monochrome. This is a concept product photograph, not a promise of actual stock."
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "mug-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "mug-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "brochure",
+      "name": "Tri-fold brochure",
+      "category": "Paper & stationery",
+      "width": 279,
+      "height": 216,
+      "material": "100lb gloss text",
+      "method": "Digital",
+      "prompt": "Photorealistic Tri-fold brochure, 100lb gloss text, Digital, 279 \u00d7 216 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "brochure-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "brochure-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "brochure-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "hoodie",
+      "name": "Essential hoodie",
+      "category": "Apparel",
+      "width": 254,
+      "height": 305,
+      "material": "Cotton blend fleece",
+      "method": "DTG / DTF",
+      "prompt": "Photorealistic Essential hoodie, Cotton blend fleece, DTG / DTF, 254 \u00d7 305 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "hoodie-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "hoodie-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "hoodie-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "banner",
+      "name": "Retractable banner",
+      "category": "Signs & displays",
+      "width": 610,
+      "height": 1829,
+      "material": "Outdoor vinyl + stand",
+      "method": "Wide-format",
+      "prompt": "Photorealistic Retractable banner, Outdoor vinyl + stand, Wide-format, 610 \u00d7 1829 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "banner-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "banner-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "banner-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "canvas",
+      "name": "Stretched canvas",
+      "category": "Photo & art",
+      "width": 406,
+      "height": 508,
+      "material": "Canvas, 1.25-inch wrap",
+      "method": "Pigment inkjet",
+      "prompt": "Photorealistic Stretched canvas, Canvas, 1.25-inch wrap, Pigment inkjet, 406 \u00d7 508 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "canvas-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "canvas-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "canvas-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "bw",
+      "name": "Document printing",
+      "category": "Paper & stationery",
+      "width": 216,
+      "height": 279,
+      "material": "20lb white paper",
+      "method": "Digital monochrome",
+      "prompt": "Photorealistic Document printing, 20lb white paper, Digital monochrome, 216 \u00d7 279 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "bw-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "bw-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "bw-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "colour",
+      "name": "Colour documents",
+      "category": "Paper & stationery",
+      "width": 216,
+      "height": 279,
+      "material": "24lb white paper",
+      "method": "Digital colour",
+      "prompt": "Photorealistic Colour documents, 24lb white paper, Digital colour, 216 \u00d7 279 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "colour-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "colour-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "colour-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "flyer",
+      "name": "Flyers",
+      "category": "Paper & stationery",
+      "width": 216,
+      "height": 279,
+      "material": "100lb gloss text",
+      "method": "Digital / offset",
+      "prompt": "Photorealistic Flyers, 100lb gloss text, Digital / offset, 216 \u00d7 279 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "flyer-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "flyer-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "flyer-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "postcard",
+      "name": "Postcards",
+      "category": "Paper & stationery",
+      "width": 152,
+      "height": 102,
+      "material": "16pt card",
+      "method": "Digital",
+      "prompt": "Photorealistic Postcards, 16pt card, Digital, 152 \u00d7 102 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "postcard-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "postcard-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "postcard-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "letterhead",
+      "name": "Letterheads",
+      "category": "Paper & stationery",
+      "width": 216,
+      "height": 279,
+      "material": "Premium uncoated",
+      "method": "Digital",
+      "prompt": "Photorealistic Letterheads, Premium uncoated, Digital, 216 \u00d7 279 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "letterhead-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "letterhead-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "letterhead-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "envelope",
+      "name": "Envelopes",
+      "category": "Paper & stationery",
+      "width": 241,
+      "height": 105,
+      "material": "White wove",
+      "method": "Digital",
+      "prompt": "Photorealistic Envelopes, White wove, Digital, 241 \u00d7 105 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "envelope-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "envelope-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "envelope-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "invitation",
+      "name": "Invitations",
+      "category": "Paper & stationery",
+      "width": 127,
+      "height": 178,
+      "material": "Textured 350gsm card",
+      "method": "Digital / letterpress",
+      "prompt": "Photorealistic Invitations, Textured 350gsm card, Digital / letterpress, 127 \u00d7 178 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "invitation-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "invitation-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "invitation-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "menu",
+      "name": "Restaurant menus",
+      "category": "Paper & stationery",
+      "width": 216,
+      "height": 279,
+      "material": "Wipe-clean laminated card",
+      "method": "Digital",
+      "prompt": "Photorealistic Restaurant menus, Wipe-clean laminated card, Digital, 216 \u00d7 279 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "menu-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "menu-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "menu-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "tote",
+      "name": "Cotton tote",
+      "category": "Apparel",
+      "width": 280,
+      "height": 300,
+      "material": "Natural cotton canvas",
+      "method": "Screen / DTF",
+      "prompt": "Photorealistic Cotton tote, Natural cotton canvas, Screen / DTF, 280 \u00d7 300 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "tote-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "tote-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "tote-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "cap",
+      "name": "Embroidered cap",
+      "category": "Apparel",
+      "width": 100,
+      "height": 55,
+      "material": "Cotton twill",
+      "method": "Embroidery",
+      "prompt": "Photorealistic Embroidered cap, Cotton twill, Embroidery, 100 \u00d7 55 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "cap-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "cap-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "cap-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "sport",
+      "name": "Teamwear",
+      "category": "Apparel",
+      "width": 300,
+      "height": 400,
+      "material": "Performance polyester",
+      "method": "Dye sublimation",
+      "prompt": "Photorealistic Teamwear, Performance polyester, Dye sublimation, 300 \u00d7 400 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "sport-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "sport-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "sport-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "fabric",
+      "name": "Fabric by the metre",
+      "category": "Apparel",
+      "width": 1400,
+      "height": 1000,
+      "material": "Fabric specified per job",
+      "method": "Reactive / pigment textile",
+      "prompt": "Photorealistic Fabric by the metre, Fabric specified per job, Reactive / pigment textile, 1400 \u00d7 1000 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "fabric-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "fabric-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "fabric-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "roll",
+      "name": "Roll labels",
+      "category": "Stickers & labels",
+      "width": 75,
+      "height": 100,
+      "material": "Paper / BOPP",
+      "method": "Digital label press",
+      "prompt": "Photorealistic Roll labels, Paper / BOPP, Digital label press, 75 \u00d7 100 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "roll-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "roll-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "roll-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "clear",
+      "name": "Clear stickers",
+      "category": "Stickers & labels",
+      "width": 75,
+      "height": 75,
+      "material": "Clear vinyl",
+      "method": "UV + white ink",
+      "prompt": "Photorealistic Clear stickers, Clear vinyl, UV + white ink, 75 \u00d7 75 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "clear-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "clear-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "clear-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security labels",
+      "category": "Specialty",
+      "width": 50,
+      "height": 25,
+      "material": "Destructible stock",
+      "method": "Variable data / security",
+      "prompt": "Photorealistic Security labels, Destructible stock, Variable data / security, 50 \u00d7 25 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "security-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "security-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "security-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "tissue",
+      "name": "Branded tissue",
+      "category": "Packaging",
+      "width": 500,
+      "height": 700,
+      "material": "FSC tissue option",
+      "method": "Flexographic",
+      "prompt": "Photorealistic Branded tissue, FSC tissue option, Flexographic, 500 \u00d7 700 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "tissue-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "tissue-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "tissue-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "tape",
+      "name": "Packaging tape",
+      "category": "Packaging",
+      "width": 71,
+      "height": 1000,
+      "material": "Water-activated kraft",
+      "method": "Flexographic",
+      "prompt": "Photorealistic Packaging tape, Water-activated kraft, Flexographic, 71 \u00d7 1000 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "tape-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "tape-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "tape-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "mailer",
+      "name": "Poly mailers",
+      "category": "Packaging",
+      "width": 191,
+      "height": 267,
+      "material": "Poly mailer",
+      "method": "Flexographic",
+      "prompt": "Photorealistic Poly mailers, Poly mailer, Flexographic, 191 \u00d7 267 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "mailer-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "mailer-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "mailer-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "pouch",
+      "name": "Stand-up pouches",
+      "category": "Packaging",
+      "width": 150,
+      "height": 220,
+      "material": "Barrier film specified",
+      "method": "Digital flexible packaging",
+      "prompt": "Photorealistic Stand-up pouches, Barrier film specified, Digital flexible packaging, 150 \u00d7 220 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "pouch-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "pouch-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "pouch-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "yard",
+      "name": "Yard signs",
+      "category": "Signs & displays",
+      "width": 610,
+      "height": 457,
+      "material": "4mm corrugated plastic",
+      "method": "UV flatbed",
+      "prompt": "Photorealistic Yard signs, 4mm corrugated plastic, UV flatbed, 610 \u00d7 457 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "yard-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "yard-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "yard-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "vinyl",
+      "name": "Outdoor banners",
+      "category": "Signs & displays",
+      "width": 1220,
+      "height": 610,
+      "material": "13oz vinyl, hems + grommets",
+      "method": "Wide-format",
+      "prompt": "Photorealistic Outdoor banners, 13oz vinyl, hems + grommets, Wide-format, 1220 \u00d7 610 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "vinyl-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "vinyl-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "vinyl-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "wrap",
+      "name": "Vehicle wraps",
+      "category": "Signs & displays",
+      "width": 3000,
+      "height": 1500,
+      "material": "Cast vinyl + laminate",
+      "method": "Latex / eco-solvent",
+      "prompt": "Photorealistic Vehicle wraps, Cast vinyl + laminate, Latex / eco-solvent, 3000 \u00d7 1500 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "wrap-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "wrap-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "wrap-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "acrylic",
+      "name": "Acrylic signage",
+      "category": "Signs & displays",
+      "width": 600,
+      "height": 400,
+      "material": "Clear acrylic",
+      "method": "UV direct print",
+      "prompt": "Photorealistic Acrylic signage, Clear acrylic, UV direct print, 600 \u00d7 400 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "acrylic-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "acrylic-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "acrylic-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "booth",
+      "name": "Exhibition displays",
+      "category": "Signs & displays",
+      "width": 3000,
+      "height": 2400,
+      "material": "Tension fabric + frame",
+      "method": "Dye sublimation",
+      "prompt": "Photorealistic Exhibition displays, Tension fabric + frame, Dye sublimation, 3000 \u00d7 2400 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "booth-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "booth-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "booth-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "photos",
+      "name": "Fine art prints",
+      "category": "Photo & art",
+      "width": 203,
+      "height": 254,
+      "material": "Archival cotton rag",
+      "method": "Gicl\u00e9e",
+      "prompt": "Photorealistic Fine art prints, Archival cotton rag, Gicl\u00e9e, 203 \u00d7 254 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "photos-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "photos-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "photos-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "metal",
+      "name": "Metal prints",
+      "category": "Photo & art",
+      "width": 203,
+      "height": 254,
+      "material": "Coated aluminium",
+      "method": "Dye sublimation",
+      "prompt": "Photorealistic Metal prints, Coated aluminium, Dye sublimation, 203 \u00d7 254 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "metal-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "metal-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "metal-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "photobook",
+      "name": "Photo books",
+      "category": "Books & publishing",
+      "width": 279,
+      "height": 216,
+      "material": "Lay-flat photo stock",
+      "method": "Digital photo",
+      "prompt": "Photorealistic Photo books, Lay-flat photo stock, Digital photo, 279 \u00d7 216 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "photobook-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "photobook-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "photobook-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "book",
+      "name": "Perfect-bound books",
+      "category": "Books & publishing",
+      "width": 152,
+      "height": 229,
+      "material": "200-page B&W interior",
+      "method": "Digital / offset",
+      "prompt": "Photorealistic Perfect-bound books, 200-page B&W interior, Digital / offset, 152 \u00d7 229 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "book-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "book-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "book-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "magazine",
+      "name": "Magazines",
+      "category": "Books & publishing",
+      "width": 210,
+      "height": 297,
+      "material": "Saddle stitch",
+      "method": "Offset / digital",
+      "prompt": "Photorealistic Magazines, Saddle stitch, Offset / digital, 210 \u00d7 297 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "magazine-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "magazine-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "magazine-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "notebook",
+      "name": "Notebooks & journals",
+      "category": "Books & publishing",
+      "width": 148,
+      "height": 210,
+      "material": "Uncoated writing paper",
+      "method": "Digital + binding",
+      "prompt": "Photorealistic Notebooks & journals, Uncoated writing paper, Digital + binding, 148 \u00d7 210 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "notebook-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "notebook-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "notebook-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "calendar",
+      "name": "Calendars",
+      "category": "Books & publishing",
+      "width": 297,
+      "height": 210,
+      "material": "Silk coated paper",
+      "method": "Digital + wire binding",
+      "prompt": "Photorealistic Calendars, Silk coated paper, Digital + wire binding, 297 \u00d7 210 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "calendar-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "calendar-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "calendar-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "bottle",
+      "name": "Water bottles",
+      "category": "Gifts & merchandise",
+      "width": 100,
+      "height": 150,
+      "material": "Insulated stainless steel",
+      "method": "UV / sublimation",
+      "prompt": "Photorealistic Water bottles, Insulated stainless steel, UV / sublimation, 100 \u00d7 150 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "bottle-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "bottle-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "bottle-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "award",
+      "name": "Awards & plaques",
+      "category": "Gifts & merchandise",
+      "width": 150,
+      "height": 200,
+      "material": "Acrylic / wood / metal",
+      "method": "UV / engraving",
+      "prompt": "Photorealistic Awards & plaques, Acrylic / wood / metal, UV / engraving, 150 \u00d7 200 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "award-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "award-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "award-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "wall",
+      "name": "Wallcoverings",
+      "category": "Interiors",
+      "width": 1000,
+      "height": 2500,
+      "material": "Wallcovering substrate",
+      "method": "Latex / UV",
+      "prompt": "Photorealistic Wallcoverings, Wallcovering substrate, Latex / UV, 1000 \u00d7 2500 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "wall-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "wall-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "wall-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "floor",
+      "name": "Floor graphics",
+      "category": "Interiors",
+      "width": 1000,
+      "height": 1000,
+      "material": "Anti-slip laminate",
+      "method": "Wide-format",
+      "prompt": "Photorealistic Floor graphics, Anti-slip laminate, Wide-format, 1000 \u00d7 1000 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "floor-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "floor-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "floor-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "plans",
+      "name": "Architectural plans",
+      "category": "Technical & 3D",
+      "width": 841,
+      "height": 594,
+      "material": "Bond paper, A1",
+      "method": "Technical inkjet",
+      "prompt": "Photorealistic Architectural plans, Bond paper, A1, Technical inkjet, 841 \u00d7 594 mm artwork area. Palette lavender and aubergine, soft grey. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "plans-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "plans-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "plans-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "model",
+      "name": "Architectural models",
+      "category": "Technical & 3D",
+      "width": 200,
+      "height": 200,
+      "material": "PLA / resin",
+      "method": "FDM / SLA",
+      "prompt": "Photorealistic Architectural models, PLA / resin, FDM / SLA, 200 \u00d7 200 mm artwork area. Palette tangerine and petrol blue, cool concrete. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "model-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "model-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "model-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "parts",
+      "name": "Functional 3D parts",
+      "category": "Technical & 3D",
+      "width": 100,
+      "height": 100,
+      "material": "Material and tolerance review",
+      "method": "FDM / SLS / metal",
+      "prompt": "Photorealistic Functional 3D parts, Material and tolerance review, FDM / SLS / metal, 100 \u00d7 100 mm artwork area. Palette burgundy and pale sage, warm oak. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "parts-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "parts-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "parts-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "braille",
+      "name": "Tactile & Braille signs",
+      "category": "Specialty",
+      "width": 150,
+      "height": 200,
+      "material": "Application-specific substrate",
+      "method": "Raised UV / fabrication",
+      "prompt": "Photorealistic Tactile & Braille signs, Application-specific substrate, Raised UV / fabrication, 150 \u00d7 200 mm artwork area. Palette deep cobalt and warm ivory, pale limestone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "braille-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "braille-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "braille-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "electronics",
+      "name": "Printed electronics",
+      "category": "Specialty",
+      "width": 100,
+      "height": 100,
+      "material": "Engineering review required",
+      "method": "Conductive ink deposition",
+      "prompt": "Photorealistic Printed electronics, Engineering review required, Conductive ink deposition, 100 \u00d7 100 mm artwork area. Palette terracotta and powder pink, matte plaster. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "electronics-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "electronics-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "electronics-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    },
+    {
+      "id": "edible",
+      "name": "Edible printing",
+      "category": "Specialty",
+      "width": 210,
+      "height": 297,
+      "material": "Food-grade wafer / icing sheet",
+      "method": "Edible inkjet",
+      "prompt": "Photorealistic Edible printing, Food-grade wafer / icing sheet, Edible inkjet, 210 \u00d7 297 mm artwork area. Palette forest green and butter yellow, cream stone. Original abstract print. No real brand, text, extra finishes, customer or inventory claims.",
+      "views": [
+        {
+          "id": "hero",
+          "title": "Studio view",
+          "direction": "Three-quarter view of the whole product on a beautifully art-directed studio surface, sculptural daylight.",
+          "file": "edible-hero.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "angle",
+          "title": "Alternate view",
+          "direction": "Same product identity, materials and palette as hero reference. A genuinely different opposite camera angle or top-down arrangement; show construction, not a crop.",
+          "file": "edible-angle.png",
+          "status": "Generated and visually inspected"
+        },
+        {
+          "id": "detail",
+          "title": "Material detail",
+          "direction": "Same product identity, materials and palette as hero reference. New macro close-up showing offered substrate, print texture, edges, folds, binding or stitching as appropriate. No added finishing options.",
+          "file": "edible-detail.png",
+          "status": "Generated and visually inspected"
+        }
+      ]
+    }
+  ],
+  "generatedAssetCount": 97,
+  "remainingAssetCount": 57,
+  "generatedAssets": 154,
+  "responsiveAssets": 462,
+  "originalDimensions": [
+    1536,
+    1024
+  ],
+  "masterDirectory": "output/print-photography/originals (local high-resolution PNG masters)",
+  "servedFormats": "WebP at 480, 960 and 1536 pixels wide",
+  "validation": {
+    "assetDecode": "462 responsive images verified",
+    "applicationTests": 147,
+    "gallery": "Keyboard, thumbnails, arrows, live announcements, selection and product reset passed",
+    "browser": "Isolated Chrome desktop 1440x1000 and mobile 390x844, homepage/catalogue/product gallery inspected",
+    "rollbackDeployment": "dpl_13NoP99a57wv5zmKwGX88XavFyEX"
+  }
+}

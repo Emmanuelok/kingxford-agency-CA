@@ -43,3 +43,9 @@ next-env.d.ts
 /outputs/
 /work/
 /public/print-app/
+
+# High-resolution generated masters are preserved under output/; ship responsive WebP assets.
+/apps/print/public/images/products-v3/*.png
+
+# Original generated print-photo masters and QA records remain local.
+/output/print-photography/
