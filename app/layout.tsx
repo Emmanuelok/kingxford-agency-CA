@@ -4,6 +4,7 @@ import "./globals.css";
 import "./avalon.css";
 import "./workspace.css";
 import "./performance.css";
+import "./brand.css";
 
 const geistSans = localFont({
   src: "../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
@@ -46,15 +47,23 @@ export const metadata: Metadata = {
     description: "A global creative platform connecting strategy, design, production, digital and growth across Canada, US, UK, Hong Kong and Ghana.",
     type: "website",
     locale: "en_CA",
-    images: [{ url: "/images/hero-research-wall.webp", width: 1600, height: 900, alt: "The opening research wall in AVALON's cinematic agency film" }],
+    siteName: "Avalon Creatives Group",
+    images: [{ url: "/brand/avalon-og-2026.jpg", width: 1200, height: 630, type: "image/jpeg", alt: "Avalon Creatives Group — Ideas with vision. Work with impact. Sculptural coral AV monogram on charcoal." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "AVALON Creatives Group — Ideas with vision. Work with impact.",
     description: "A global creative platform connecting strategy, design, production, digital and growth across Canada, US, UK, Hong Kong and Ghana.",
-    images: ["/images/hero-research-wall.webp"],
+    images: ["/brand/avalon-og-2026.jpg"],
   },
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg?v=20261022", type: "image/svg+xml" },
+      { url: "/brand/favicon-32.png", type: "image/png", sizes: "32x32" },
+    ],
+    shortcut: "/favicon.svg?v=20261022",
+    apple: { url: "/brand/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -67,6 +76,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "@id": `${siteUrl}/#organization`,
           name: "Avalon Creatives Group",
           url: siteUrl,
+          logo: { "@type": "ImageObject", url: `${siteUrl}/brand/avalon-logo-dark.png`, width: 2120, height: 480 },
           description: "A global creative platform for strategy, brand design, film, digital experiences and growth.",
           email: "avalon@veridanth.com",
           telephone: "+1-587-837-4472",

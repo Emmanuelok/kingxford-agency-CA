@@ -4,6 +4,7 @@ import { ArrowUpRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { WORKSPACE_ENABLED } from "@/lib/release";
+import { AvalonLogo } from "@/components/avalon-logo";
 import {
   Sheet,
   SheetClose,
@@ -26,8 +27,7 @@ const links = [
 export function BrandLockup({ footer = false }: { footer?: boolean }) {
   return (
     <Link className={`brand-lockup${footer ? " footer-brand" : ""}`} href="/" aria-label="AVALON Creatives Group home">
-      <span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M7 31 20 7l13 24H7Z" stroke="currentColor" strokeWidth="2.4"/><path d="m13.5 26 6.5-12 6.5 12h-13Z" fill="currentColor"/><path d="M20 27v8" stroke="currentColor" strokeWidth="2.4"/></svg></span>
-      <span>AVALON<small>CREATIVES GROUP</small></span>
+      <AvalonLogo />
     </Link>
   );
 }

@@ -1,0 +1,14 @@
+/* Outlined Avalon identity: one responsive master for the header and footer. */
+.brand-lockup .avalon-brand-logo {
+  display: block;
+  width: 230px;
+  max-width: 100%;
+  height: auto;
+  flex: none;
+}
+.footer-brand .avalon-brand-logo { width: 260px; }
+.mobile-sheet .brand-lockup .avalon-brand-logo { width: 220px; }
+@media (max-width: 600px) {
+  .brand-lockup .avalon-brand-logo { width: 200px; }
+  .footer-brand .avalon-brand-logo { width: 240px; }
+}

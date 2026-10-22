@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "avalon-identity-2026",
+    "name": "Avalon Creatives Group identity and Open Graph",
+    "mode": "brand-mini-system",
+    "objective": "A recognizable logo and legible social-sharing preview for the live Avalon website",
+    "audience": "Prospective clients viewing the website and shared links",
+    "governing_idea": "A connected AV monogram joins strategic direction and creative delivery.",
+    "status": "implemented"
+  },
+  "creative_system": {
+    "visual_thesis": "Architectural AV geometry, outlined typography, coral against ivory and charcoal; a sculptural photographic expression for social sharing.",
+    "anti_goals": [
+      "generic gradient insignia",
+      "decorative clutter",
+      "illegible small social headlines"
+    ],
+    "palette": {
+      "dominant": [
+        "#202523",
+        "#f5f2eb"
+      ],
+      "accent": [
+        "#ed4b35"
+      ],
+      "contrast": "Ivory type on charcoal; coral symbol"
+    },
+    "typography": "Existing custom Avalon outlines plus outlined DejaVu Sans descriptor",
+    "invariants": [
+      "AV silhouette",
+      "AVALON CREATIVES GROUP spelling",
+      "Ideas with vision. Work with impact."
+    ],
+    "permitted_variations": [
+      "Reversed wordmark",
+      "Monochrome marks",
+      "Dimensional social rendering"
+    ]
+  },
+  "assets": [
+    {
+      "id": "ast-logo",
+      "type": "vector",
+      "source": "public/brand/avalon-logo-dark.svg",
+      "role": "identity",
+      "rights_status": "user-project",
+      "description": "Original AV monogram, existing Avalon custom letter outlines, DejaVu Sans descriptor with license in FONT-LICENSE.txt"
+    },
+    {
+      "id": "ast-og",
+      "type": "image",
+      "source": "public/brand/avalon-og-2026.jpg",
+      "role": "social-preview",
+      "rights_status": "generated",
+      "description": "Built-in imagegen using ast-logo as the identity reference; rendered 2026-10-22; generation exec-ee9f88f5-32e4-4365-8f16-5135053d431a"
+    }
+  ],
+  "elements": [],
+  "scenes": [],
+  "shots": [],
+  "screens": [],
+  "deliverables": [
+    {
+      "id": "del-logo",
+      "type": "image",
+      "title": "Outlined horizontal identity",
+      "channel": "web and reusable brand assets",
+      "source_ids": [
+        "ast-logo"
+      ],
+      "dimensions": "1060x240 SVG / 2120x480 PNG",
+      "format": "svg,png",
+      "version": 1,
+      "status": "implemented"
+    },
+    {
+      "id": "del-og",
+      "type": "image",
+      "title": "Open Graph social preview",
+      "channel": "social sharing",
+      "source_ids": [
+        "ast-og"
+      ],
+      "dimensions": "1200x630",
+      "format": "jpg",
+      "version": 1,
+      "status": "implemented"
+    },
+    {
+      "id": "del-icons",
+      "type": "image",
+      "title": "Browser and bookmark icons",
+      "channel": "web",
+      "source_ids": [
+        "ast-logo"
+      ],
+      "dimensions": "64x64 SVG / 32x32 and 180x180 PNG",
+      "format": "svg,png",
+      "version": 1,
+      "status": "implemented"
+    }
+  ],
+  "rights_and_claims": [
+    {
+      "id": "right-brand",
+      "category": "source-media",
+      "description": "User requested a new identity for their connected Avalon site. Existing wordmark geometry comes from that repository. New monogram is original; OG artwork is generated.",
+      "evidence": "Conversation request and connected repository",
+      "status": "documented"
+    }
+  ],
+  "qa": {
+    "required_gates": [],
+    "acceptance_threshold": 85,
+    "critical_failures": [],
+    "review_notes": [
+      "Reviewed logo presentation on light and dark backgrounds. Corrected descriptor clearance before generation.",
+      "Inspected generated OG image for spelling, emblem continuity and readability.",
+      "Verified technical export dimensions and optimized 111772-byte JPEG."
+    ]
+  },
+  "gates": [],
+  "assumptions": [
+    "Use the current site name Avalon Creatives Group, including plural Creatives.",
+    "Update live header, mobile menu, footer lockup, root sharing metadata, favicon and bookmark icon."
+  ],
+  "open_questions": [],
+  "risks": []
+}
