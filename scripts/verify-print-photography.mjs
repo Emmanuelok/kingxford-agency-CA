@@ -7,7 +7,7 @@ const require = createRequire(import.meta.url);
 const sharp = createRequire(require.resolve('next/package.json'))('sharp');
 import { products } from '../apps/print/lib/presswerk/catalog.ts';
 
-const root = path.resolve('apps/print/public/images/products-v3');
+const root = path.resolve('apps/print/public/images/products-v4');
 let checked = 0;
 for (const id of ['home-editorial', ...products.flatMap(product => ['hero', 'angle', 'detail'].map(view => `${product.id}-${view}`))]) {
   const hashes = [];

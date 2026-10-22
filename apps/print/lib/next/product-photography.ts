@@ -6,7 +6,7 @@ export const photoViews = [
   { id: 'detail', label: 'Material detail' },
 ] as const;
 export type PhotoView = typeof photoViews[number]['id'];
-export const photographyRoot = '/print-app/images/products-v3';
+export const photographyRoot = '/print-app/images/products-v4';
 export function photoSource(productId: string, view: PhotoView, width = 1536) {
   return `${photographyRoot}/${productId}-${view}-${width}.webp`;
 }

@@ -49,3 +49,8 @@ next-env.d.ts
 
 # Original generated print-photo masters and QA records remain local.
 /output/print-photography/
+
+/output/print-photography-v4/
+/output/print-photography-v3-backup/
+
+/apps/print/public/images/products-v4/*.png
