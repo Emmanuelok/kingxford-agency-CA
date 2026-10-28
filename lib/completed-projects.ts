@@ -186,7 +186,7 @@ const projectRegistry: readonly CompletedProject[] = [
     tone: "rose",
   },
   {
-    published: true,
+    published: false,
     slug: "christ-for-youth-international",
     name: "Christ for Youth International",
     shortName: "CYI",
@@ -322,7 +322,7 @@ const projectRegistry: readonly CompletedProject[] = [
     tone: "sage",
   },
   {
-    published: true,
+    published: false,
     slug: "frederick-veronica",
     name: "Frederick & Veronica",
     shortName: "Frederick & Veronica",
