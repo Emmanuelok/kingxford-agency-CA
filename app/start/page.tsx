@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { PageHero } from "@/components/page-hero";
 import { ProjectBrief } from "@/components/project-brief";
 import { WORKSPACE_ENABLED } from "@/lib/release";
+import { websiteConcepts } from "@/lib/website-concepts";
 export const metadata: Metadata = {
   alternates: { canonical: "/start" },
   title: "Start a Project",
@@ -24,9 +25,13 @@ const serviceScopes: Record<string, string[]> = {
   data: ["Media and performance"],
   ai: ["CRM and automation"],
 };
-export default async function StartPage({ searchParams }: { searchParams: Promise<{ service?: string | string[] }> }) {
-  const { service } = await searchParams;
-  const initialScopes = typeof service === "string" && Object.hasOwn(serviceScopes, service) ? serviceScopes[service] : [];
+export default async function StartPage({ searchParams }: { searchParams: Promise<{ service?: string | string[]; template?: string | string[] }> }) {
+  const { service, template } = await searchParams;
+  const selectedTemplate = typeof template === "string"
+    ? websiteConcepts.find((item) => item.slug === template || item.url.split("/").filter(Boolean).at(-1) === template)
+    : undefined;
+  const serviceSelection = typeof service === "string" && Object.hasOwn(serviceScopes, service) ? serviceScopes[service] : [];
+  const initialScopes = [...new Set([...serviceSelection, ...(selectedTemplate ? ["Website or digital product"] : [])])];
   return (
     <main className="site-shell">
       <SiteNav />
@@ -44,7 +49,11 @@ export default async function StartPage({ searchParams }: { searchParams: Promis
           </div>
           <p>Your answers stay in this page until you choose an action. Preparing a brief does not book work or send a message.</p>
         </div>
-        <ProjectBrief initialScopes={initialScopes} />
+        <ProjectBrief
+          key={selectedTemplate?.slug ?? (typeof service === "string" ? service : "default")}
+          initialScopes={initialScopes}
+          initialTemplate={selectedTemplate ? { name: selectedTemplate.name, url: selectedTemplate.url } : undefined}
+        />
       </section>
       <SiteFooter />
     </main>

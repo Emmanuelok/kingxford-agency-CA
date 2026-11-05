@@ -1,0 +1,61 @@
+{
+  "project": "relay",
+  "scope": "Fictional Avalon Creative showcase; local review proof. No publication performed.",
+  "media": [
+    {
+      "file": "assets/port-film.mp4",
+      "poster": "assets/port-poster.jpg",
+      "title": "Aerial View of Shipping Containers in Port",
+      "creator": "Toàn BDS",
+      "source": "https://www.pexels.com/video/aerial-view-of-shipping-containers-in-port-29903943/",
+      "original": "https://videos.pexels.com/video-files/29903943/12836159_3840_2160_60fps.mp4",
+      "source_range_seconds": [
+        6,
+        18
+      ],
+      "actual_frames_reviewed_seconds": [
+        6,
+        12,
+        18
+      ],
+      "usage": "Port scale and route context; no implication of real freight operations.",
+      "bytes": 2829232,
+      "sha256": "d6d73c3ab522b85ed8748d4c4c9ac0407a06fd3f5b8e2f9ff3a5b40d6f035f3c",
+      "encoding": "H.264, 1280×720, 24 fps, silent; faststart; GOP 12 for scrubbed footage or GOP 24 for Orbit native-only context film",
+      "license": "Pexels License",
+      "license_url": "https://www.pexels.com/license/",
+      "license_verified": "2026-11-01",
+      "attribution_required": false,
+      "credit_included": true
+    },
+    {
+      "file": "assets/handoff-film.mp4",
+      "poster": "assets/handoff-poster.jpg",
+      "title": "A Man Operating a Forklift",
+      "creator": "Paul Cruz",
+      "source": "https://www.pexels.com/video/a-man-operating-a-forklift-4477603/",
+      "original": "https://videos.pexels.com/video-files/4477603/4477603-hd_1920_1080_30fps.mp4",
+      "source_range_seconds": [
+        1,
+        9
+      ],
+      "actual_frames_reviewed_seconds": [
+        1,
+        4,
+        8
+      ],
+      "usage": "Warehouse handoff context and shipment-state still; no endorsement by worker or facility.",
+      "bytes": 1483573,
+      "sha256": "94505c352c03760d1048822858c94bb89163c9ccee41542ddcb916818d4217b3",
+      "encoding": "H.264, 1280×720, 24 fps, silent; faststart; GOP 12 for scrubbed footage or GOP 24 for Orbit native-only context film",
+      "license": "Pexels License",
+      "license_url": "https://www.pexels.com/license/",
+      "license_verified": "2026-11-01",
+      "attribution_required": false,
+      "credit_included": true
+    }
+  ],
+  "license_summary": "Pexels permits free use and modification in websites. Do not imply endorsement, sell unaltered standalone clips, redistribute as stock, or misuse logos/trademarks. Credit is included despite not being required. Source originals and rejected candidates are not included in the website.",
+  "original_code": "Avalon showcase original interface and cinematic choreography. No external model or teardown code used in these three proofs.",
+  "fonts": "Bundled font license notices, where present, are retained in assets. Orbit uses system Arial/Georgia."
+}

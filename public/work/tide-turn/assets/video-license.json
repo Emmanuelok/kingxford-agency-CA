@@ -1,0 +1,23 @@
+{
+  "site": "tide-turn",
+  "title": "Aerial View of Turquoise Ocean Waves",
+  "creator": "David Pickup | Advertising & Marketing",
+  "source_url": "https://www.pexels.com/video/aerial-view-of-turquoise-ocean-waves-37090205/",
+  "download_url": "https://videos.pexels.com/video-files/37090205/15712474_3840_2160_60fps.mp4",
+  "license_url": "https://www.pexels.com/license/",
+  "license_checked": "2026-10-31",
+  "license": "Pexels License",
+  "website_use": "Permitted under current Pexels License; downloaded and modified for incorporated website design use.",
+  "attribution": "Not required; creator and Pexels credited voluntarily.",
+  "limitations": "Do not imply endorsement; do not sell unaltered copies or redistribute on stock/wallpaper platforms; do not use as a trademark. This is illustrative footage, not a claim of ownership, actual services, customers or scientific evidence.",
+  "asset": "ocean-scroll.mp4",
+  "poster": "ocean-poster.jpg",
+  "bytes": 1753276,
+  "sha256": "48f8ae2c83ac0ef15abda84a39d4c268942f05560ecb58484dd3af0530cfe0a0",
+  "format": "H.264 MP4, 1280x720, yuv420p, no audio, faststart",
+  "duration_seconds": 8.366667,
+  "fps": 30,
+  "keyframe_interval_frames": 15,
+  "processing": "Downscaled and recompressed locally from the linked Pexels download; no third-party purchase or credits.",
+  "viewed": "Decoded and visually inspected frames at 10%, 50%, 90%."
+}

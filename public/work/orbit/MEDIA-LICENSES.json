@@ -1,0 +1,35 @@
+{
+  "project": "orbit",
+  "scope": "Fictional Avalon Creative showcase; local review proof. No publication performed.",
+  "media": [
+    {
+      "file": "assets/work-film.mp4",
+      "poster": "assets/work-poster.jpg",
+      "title": "Person Typing on a Laptop",
+      "creator": "Tima Miroshnichenko",
+      "source": "https://www.pexels.com/video/person-typing-on-a-laptop-4928295/",
+      "original": "https://videos.pexels.com/video-files/4928295/4928295-uhd_3840_2160_25fps.mp4",
+      "source_range_seconds": [
+        2,
+        10
+      ],
+      "actual_frames_reviewed_seconds": [
+        2,
+        6,
+        10
+      ],
+      "usage": "Optional human work context below the functioning product interface; no customer or endorsement claim.",
+      "bytes": 1420096,
+      "sha256": "a8ab933fcb8110865aedd9f732ee848a05931eb8b363474cf24aa42c3d329327",
+      "encoding": "H.264, 1280×720, 24 fps, silent; faststart; GOP 12 for scrubbed footage or GOP 24 for Orbit native-only context film",
+      "license": "Pexels License",
+      "license_url": "https://www.pexels.com/license/",
+      "license_verified": "2026-11-01",
+      "attribution_required": false,
+      "credit_included": true
+    }
+  ],
+  "license_summary": "Pexels permits free use and modification in websites. Do not imply endorsement, sell unaltered standalone clips, redistribute as stock, or misuse logos/trademarks. Credit is included despite not being required. Source originals and rejected candidates are not included in the website.",
+  "original_code": "Avalon showcase original interface and cinematic choreography. No external model or teardown code used in these three proofs.",
+  "fonts": "Bundled font license notices, where present, are retained in assets. Orbit uses system Arial/Georgia."
+}

@@ -1,0 +1,98 @@
+{
+  "retrieved": "2026-10-31",
+  "css_source_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "families": [
+    "DM Sans",
+    "Playfair Display"
+  ],
+  "license_records": [
+    {
+      "family": "DM Sans",
+      "license": "SIL Open Font License 1.1",
+      "license_url": "https://github.com/google/fonts/blob/main/ofl/dmsans/OFL.txt",
+      "download_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/OFL.txt",
+      "file": "dmsans-OFL.txt"
+    },
+    {
+      "family": "Playfair Display",
+      "license": "SIL Open Font License 1.1",
+      "license_url": "https://github.com/google/fonts/blob/main/ofl/playfairdisplay/OFL.txt",
+      "download_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/OFL.txt",
+      "file": "playfairdisplay-OFL.txt"
+    }
+  ],
+  "font_files": [
+    {
+      "file": "54dbf8a8d65ebb49.woff2",
+      "source_url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2",
+      "bytes": 36980,
+      "sha256": "468d56b6b25b05b70190b6c233d773f6f1770e8579827ce022a57f03fa8002fb",
+      "signature": "wOF2"
+    },
+    {
+      "file": "c55bbe7af5d2ae77.woff2",
+      "source_url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu6-K6z9mXgjU0.woff2",
+      "bytes": 18192,
+      "sha256": "219b02c7d8884817d3d6ad4c8771f2c000ce4c5669a67ef4e2e5617ffa25c4cc",
+      "signature": "wOF2"
+    },
+    {
+      "file": "aeb3f5e0bc806596.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTXt7A-X-uE0qEE5Do.woff2",
+      "bytes": 5788,
+      "sha256": "07ebc0237b61aec224bfcf2ceaba3affcba6a76529a2ba7609c52b31d6f8de63",
+      "signature": "wOF2"
+    },
+    {
+      "file": "65d651c83f06a71d.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTXtHA-X-uE0qEEw.woff2",
+      "bytes": 21952,
+      "sha256": "ce3932af6f6a6c7321b6f27462213c432f0be6ef2e242d0adf7f8981562a961f",
+      "signature": "wOF2"
+    },
+    {
+      "file": "53153a39fcb8ea05.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTXtXA-X-uE0qEE5Do.woff2",
+      "bytes": 12580,
+      "sha256": "ff04f888476de897ff83642b4afd7edf76aed79a4e9f0620e63f79ecb43d6549",
+      "signature": "wOF2"
+    },
+    {
+      "file": "09d91900211b3fd9.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTXt_A-X-uE0qEE5Do.woff2",
+      "bytes": 13684,
+      "sha256": "ac9c3bcc1848b07cf06fb1e1ff6159bb81404f9e0ed265ec0b7f1431cb3805f1",
+      "signature": "wOF2"
+    },
+    {
+      "file": "0d765915e5dd3514.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTLYgEM86xRbPQ.woff2",
+      "bytes": 20980,
+      "sha256": "5628567856d60d714e7a35bcac9e3de08b336d63b12138f61b970990a1ee9547",
+      "signature": "wOF2"
+    },
+    {
+      "file": "6a8efa5808ca5e37.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTPYgEM86xRbPQ.woff2",
+      "bytes": 9056,
+      "sha256": "8fa67d5f0ab2a1d0b924729a0411a069b384d7a236edd96a6767ef342a6d048f",
+      "signature": "wOF2"
+    },
+    {
+      "file": "2dc1871151c57409.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTjYgEM86xRbPQ.woff2",
+      "bytes": 21144,
+      "sha256": "d7f9db9b1034978ebebdf7312aa4aee55dff3ef6039e7ff71413780bd4a05558",
+      "signature": "wOF2"
+    },
+    {
+      "file": "adf7264998fb8dfb.woff2",
+      "source_url": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2",
+      "bytes": 38460,
+      "sha256": "5d91eb5d522a03081946c44c8ca17c902230dfed5f0f9b5014262135d47b15b2",
+      "signature": "wOF2"
+    }
+  ],
+  "verification": "Every font downloaded and checked for WOFF2 signature; CSS URLs rewritten to relative local filenames."
+}

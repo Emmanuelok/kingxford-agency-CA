@@ -1,0 +1,17 @@
+{
+  "title": "Close up on Picking Carrots",
+  "creator": "khanhhoangminh",
+  "source_page": "https://www.pexels.com/video/close-up-on-picking-carrots-10787015/",
+  "observed_official_download_redirect": "https://videos.pexels.com/video-files/10787015/10787015-hd_3840_2160_25fps.mp4",
+  "license": "https://www.pexels.com/license/",
+  "license_checked": "2026-11-01",
+  "rights_summary": "Free website incorporation and modification allowed; attribution optional; no false endorsement, unaltered resale, or stock-library redistribution.",
+  "usage": "Silent incorporated film, with no claim of affiliation or actual concept inventory/personnel/location.",
+  "derivative": {
+    "file": "assets/harvest.mp4",
+    "bytes": 3802194,
+    "sha256": "a828977ae844666997abad22a5e2263cb92f2e104f59ea292009b51f96aa2e4f",
+    "modification": "Resized, silent H.264 at24fps, keyframe interval12, faststart. Poster extracted from same film."
+  },
+  "source_sha256": "a4c8cbed501b10b37934102dda7272bf782d54da70a84b6c5839d3ab38cc01a7"
+}

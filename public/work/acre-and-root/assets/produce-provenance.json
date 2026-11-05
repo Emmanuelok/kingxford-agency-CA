@@ -1,0 +1,11 @@
+{
+  "asset": "produce-sprites.png",
+  "created": "2026-11-01",
+  "source": "OpenAI built-in image generation",
+  "type": "original generated fictional produce photography",
+  "source_file": "generated_images/exec-4750d9c4-9aa2-4e97-a8d4-b5147b73b4fd.png",
+  "usage": "CSS sprite sheet, matched catalogue, packing bench and recipe imagery",
+  "rights": "Generated for this Avalon showcase; no third-party source or trademark; disclose illustrative concept inventory",
+  "prompt": "Eight isolated overhead produce groups in a 4 by 2 grid on transparent background: carrot, pumpkin, beet, kale; tomato, pea, radish, apple. Natural editorial food photography and consistent light. No text or branding.",
+  "modifications": "None. Original PNG copied unchanged. CSS displays individual cells."
+}

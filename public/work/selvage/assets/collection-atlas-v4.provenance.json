@@ -1,0 +1,11 @@
+{
+  "asset": "collection-atlas-v4.jpg",
+  "source": "original-generated-assets/exec-4b77c6e2-df9a-4579-b571-2e9c83dcbc60.png",
+  "method": "OpenAI built-in image generation",
+  "date": "2026-11-01",
+  "subject": "Eight original fictional garments on a two-column, four-row contact sheet, matching coat story",
+  "rights": "Original fictional generated imagery, not real stock or client products",
+  "reference": "Original story-atlas-v4 generated in this same task",
+  "processing": "JPEG encoding only, CSS crops the contact sheet",
+  "disclosure": "Original fictional food/garment studies"
+}
