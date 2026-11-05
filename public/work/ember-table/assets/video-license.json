@@ -1,0 +1,17 @@
+{
+  "title": "Chef Flamb\u00e9 Cooking with Fire on Stove",
+  "creator": "Evgenij Mikhailov",
+  "source_page": "https://www.pexels.com/video/chef-flambe-cooking-with-fire-on-stove-34129124/",
+  "observed_official_download_redirect": "https://videos.pexels.com/video-files/34129124/14472127_2160_3840_60fps.mp4",
+  "license": "https://www.pexels.com/license/",
+  "license_checked": "2026-11-01",
+  "rights_summary": "Free website incorporation and modification allowed; attribution optional; no false endorsement, unaltered resale, or stock-library redistribution.",
+  "usage": "Silent incorporated film, with no claim of affiliation or actual concept inventory/personnel/location.",
+  "derivative": {
+    "file": "assets/fire.mp4",
+    "bytes": 7127262,
+    "sha256": "b9696191c359d184fd77268b308b6e813f229733b193c1bc921805b0a7e68a35",
+    "modification": "Resized1280\u00d72276, silent H.264 at24fps/3.5Mbps, keyframe interval12, faststart. Poster from same film."
+  },
+  "source_sha256": "322f8c7f09093e70c37c03b47064cf8f672b00cd499e50c567d83be2bfca7308"
+}

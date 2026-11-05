@@ -1,0 +1,41 @@
+[
+  {
+    "source": "https://www.pexels.com/video/modern-luxury-interior-with-open-design-38675643/",
+    "creator": "Alef Morais",
+    "cdn_observed": "https://videos.pexels.com/video-files/38675643/16428573_3840_2160_30fps.mp4",
+    "license": "https://www.pexels.com/license/",
+    "reviewed": "2026-11-01",
+    "terms": "Free modified website use under Pexels license; no endorsement or actual client/project claim; not distributed as standalone stock.",
+    "runtime_candidate": "space.mp4",
+    "bytes": 2287223,
+    "sha256": "20f4ae17f1fb58e1f5f697d6e3cce205e9e8676ce5314930d2835f8321e80aec",
+    "processing": "Silent1280wide H26424fps GOP12 faststart. Source segment 0\u201310s.",
+    "visual_review": "Actual decoded frames at .4, 2.5 and4seconds viewed by root; architecture depth/daylight and handcraft imagery suitable as illustrative licensed footage. No actual project affiliation."
+  },
+  {
+    "source": "https://www.pexels.com/video/modern-minimalist-living-room-with-high-ceilings-38675644/",
+    "creator": "Alef Morais",
+    "cdn_observed": "https://videos.pexels.com/video-files/38675644/16428568_3840_2160_30fps.mp4",
+    "license": "https://www.pexels.com/license/",
+    "reviewed": "2026-11-01",
+    "terms": "Free modified website use under Pexels license; no endorsement or actual client/project claim; not distributed as standalone stock.",
+    "runtime_candidate": "living.mp4",
+    "bytes": 2292295,
+    "sha256": "380f8828e3a200c4dc43de2f16357f52658cb9c884a3f5095842d88bd71b4b8f",
+    "processing": "Silent1280wide H26424fps GOP12 faststart. Source segment 0\u201310s.",
+    "visual_review": "Actual decoded frames at .4, 2.5 and4seconds viewed by root; architecture depth/daylight and handcraft imagery suitable as illustrative licensed footage. No actual project affiliation."
+  },
+  {
+    "source": "https://www.pexels.com/video/contemporary-minimalist-interior-with-skylight-38675646/",
+    "creator": "Alef Morais",
+    "cdn_observed": "https://videos.pexels.com/video-files/38675646/16428548_3840_2160_30fps.mp4",
+    "license": "https://www.pexels.com/license/",
+    "reviewed": "2026-11-01",
+    "terms": "Free modified website use under Pexels license; no endorsement or actual client/project claim; not distributed as standalone stock.",
+    "runtime_candidate": "light.mp4",
+    "bytes": 1183417,
+    "sha256": "b3a071300bee9b56593442fcbd9672de58e04010fdcf5333ccc70e2fa35e64ba",
+    "processing": "Silent1280wide H26424fps GOP12 faststart. Source segment 0\u20135s.",
+    "visual_review": "Actual decoded frames at .4, 2.5 and4seconds viewed by root; architecture depth/daylight and handcraft imagery suitable as illustrative licensed footage. No actual project affiliation."
+  }
+]

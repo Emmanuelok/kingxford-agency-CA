@@ -56,7 +56,7 @@ const scopesAvailable = [
   "PR or experience",
   "Not sure yet",
 ];
-export function ProjectBrief({ initialScopes = [] }: { initialScopes?: string[] }) {
+export function ProjectBrief({ initialScopes = [], initialTemplate }: { initialScopes?: string[]; initialTemplate?: { name: string; url: string } }) {
   const router = useRouter();
   const [step, setStep] = useState(1),
     [goal, setGoal] = useState<Brief["objective"]>("leads"),
@@ -82,8 +82,8 @@ export function ProjectBrief({ initialScopes = [] }: { initialScopes?: string[] 
   }, [step]);
   const brief = useMemo(
     () =>
-      `AVALON CREATIVES GROUP · PROJECT BRIEF\n\nName: ${name}\nOrganization: ${org}\nEmail: ${email}\nPrimary objective: ${goals.find(([id]) => id === goal)?.[1]}\nCapabilities: ${scopes.join(", ") || "Recommend the right mix"}\nWorking investment: ${budget || "To discuss"} CAD\nTarget launch: ${timing || "To discuss"}\n\nWhat must move:\n${challenge}\n\nMarketing updates consent: ${consent ? "Yes" : "No"}`,
-    [name, org, email, goal, scopes, budget, timing, challenge, consent],
+      `AVALON CREATIVES GROUP · PROJECT BRIEF\n\nName: ${name}\nOrganization: ${org}\nEmail: ${email}\nPrimary objective: ${goals.find(([id]) => id === goal)?.[1]}\nCapabilities: ${scopes.join(", ") || "Recommend the right mix"}${initialTemplate ? `\nSelected website template: ${initialTemplate.name}\nTemplate preview: https://avaloncreative.group${initialTemplate.url}` : ""}\nWorking investment: ${budget || "To discuss"} CAD\nTarget launch: ${timing || "To discuss"}\n\nWhat must move:\n${challenge}\n\nMarketing updates consent: ${consent ? "Yes" : "No"}`,
+    [name, org, email, goal, scopes, budget, timing, challenge, consent, initialTemplate],
   );
   function download() {
     const url = URL.createObjectURL(new Blob([brief], { type: "text/plain" }));
@@ -171,6 +171,11 @@ export function ProjectBrief({ initialScopes = [] }: { initialScopes?: string[] 
         continueStep();
       }}
     >
+      {initialTemplate && <div className="brief-template-selection" role="note">
+        <p>Selected website template <strong>{initialTemplate.name}</strong></p>
+        <span>Avalon will tailor this starting point to your brand and requirements.</span>
+        <div><a href={initialTemplate.url}>Preview template</a><a href="/projects#website-templates-title">Choose a different template</a></div>
+      </div>}
       <div className="brief-progress">
         <span>PROJECT BRIEF</span>
         <div>

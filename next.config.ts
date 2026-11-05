@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        { source: "/work/:slug", destination: "/work/:slug/index.html" },
         {
           source: "/",
           has: [{ type: "host", value: "print.avaloncreative.group" }],

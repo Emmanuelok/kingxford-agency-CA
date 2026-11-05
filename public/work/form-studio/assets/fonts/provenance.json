@@ -1,0 +1,63 @@
+{
+  "retrieved": "2026-10-31",
+  "css_source_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "families": [
+    "DM Sans",
+    "Space Grotesk"
+  ],
+  "license_records": [
+    {
+      "family": "DM Sans",
+      "license": "SIL Open Font License 1.1",
+      "license_url": "https://github.com/google/fonts/blob/main/ofl/dmsans/OFL.txt",
+      "download_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/OFL.txt",
+      "file": "dmsans-OFL.txt"
+    },
+    {
+      "family": "Space Grotesk",
+      "license": "SIL Open Font License 1.1",
+      "license_url": "https://github.com/google/fonts/blob/main/ofl/spacegrotesk/OFL.txt",
+      "download_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/OFL.txt",
+      "file": "spacegrotesk-OFL.txt"
+    }
+  ],
+  "font_files": [
+    {
+      "file": "54dbf8a8d65ebb49.woff2",
+      "source_url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2",
+      "bytes": 36980,
+      "sha256": "468d56b6b25b05b70190b6c233d773f6f1770e8579827ce022a57f03fa8002fb",
+      "signature": "wOF2"
+    },
+    {
+      "file": "c55bbe7af5d2ae77.woff2",
+      "source_url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu6-K6z9mXgjU0.woff2",
+      "bytes": 18192,
+      "sha256": "219b02c7d8884817d3d6ad4c8771f2c000ce4c5669a67ef4e2e5617ffa25c4cc",
+      "signature": "wOF2"
+    },
+    {
+      "file": "7cea2961b9eb7e9a.woff2",
+      "source_url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb54C_k3HqUtEw.woff2",
+      "bytes": 6772,
+      "sha256": "d699664b145bfeeccc66a4cce7fa55e14eb63efd7ec6b0b2ec52e25dd98f3917",
+      "signature": "wOF2"
+    },
+    {
+      "file": "effb405c3de66954.woff2",
+      "source_url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb94C_k3HqUtEw.woff2",
+      "bytes": 18924,
+      "sha256": "054c266fbb441ee059365dba0885d206f67ca05b375de869b88e02ebfccc9b9d",
+      "signature": "wOF2"
+    },
+    {
+      "file": "0e49602d1607f148.woff2",
+      "source_url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2",
+      "bytes": 22320,
+      "sha256": "a0d054c4af557de20afd6ca59f47ab353bcaec49c63ff04b6c9d39d0f8910557",
+      "signature": "wOF2"
+    }
+  ],
+  "verification": "Every font downloaded and checked for WOFF2 signature; CSS URLs rewritten to relative local filenames."
+}
