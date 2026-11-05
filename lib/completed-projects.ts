@@ -158,7 +158,7 @@ const projectRegistry: readonly CompletedProject[] = [
     tone: "sage",
   },
   {
-    published: true,
+    published: false,
     slug: "st-johns-methodist",
     name: "St. John’s Methodist Church",
     shortName: "St. John’s Methodist",

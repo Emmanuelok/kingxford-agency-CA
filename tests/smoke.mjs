@@ -92,6 +92,13 @@ try {
       if (workspaceEnabled) assert.ok(html.includes("/platform?view=workflows"), "Workflow entry is rendered");
       else assert.ok(html.includes('href="/start"'), "Project inquiry remains available");
     }
+    if (route === "/projects") {
+      assert.doesNotMatch(html, /st-johns-methodist|stjohnsmethodist|Methodist Church/, "The church listing is absent from the rendered Work page");
+      for (const slug of ["elkings-developers", "elkings-studio", "trios-services", "grandmaster", "abetifi-bosumpra", "velaire-interiors"]) {
+        assert.ok(html.includes(`id="${slug}"`), `The ${slug} project remains published`);
+      }
+      assert.ok(html.includes('id="website-templates-title"'), "The website template collection remains available");
+    }
     console.log("PASS", route);
   }
   const printHtml = await (await fetch(origin + "/print")).text();
