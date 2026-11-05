@@ -25,10 +25,11 @@ test("filters combine with normalized multi-word searches", () => {
 });
 
 test("concept collection stays within Work, separate from completed projects", async () => {
-  const [work, concepts, completed] = await Promise.all([
+  const [work, concepts, completed, projectsPage] = await Promise.all([
     readFile("components/campaign-studies.tsx", "utf8"),
     readFile("components/website-concepts.tsx", "utf8"),
     readFile("lib/completed-projects.ts", "utf8"),
+    readFile("app/projects/page.tsx", "utf8"),
   ]);
   assert.ok(work.includes('id="work"'));
   assert.ok(work.includes("<WebsiteConcepts />"));
@@ -37,5 +38,7 @@ test("concept collection stays within Work, separate from completed projects", a
   assert.match(concepts, /not commissioned client work/);
   assert.match(concepts, /not intended for real bookings, purchases or enquiries/);
   assert.match(concepts, /role="list"/);
+  assert.match(projectsPage, /href="\/#website-concepts-title"/);
+  assert.match(projectsPage, /Explore 20 fictional website concepts/);
   for (const concept of websiteConcepts) assert.ok(!completed.includes(concept.url));
 });

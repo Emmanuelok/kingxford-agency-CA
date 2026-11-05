@@ -45,6 +45,7 @@ export default function ProjectsPage() {
           <div className={styles.heroCopy}>
             <p>Different ambitions. Distinctive experiences. A selection of websites we’ve brought to life, ready for you to explore.</p>
             <a className={styles.textLink} href="#project-collection">Explore the work <ArrowDown size={20} aria-hidden="true" /></a>
+            <div><Link className={styles.textLink} href="/#website-concepts-title"><span>Explore 20 fictional website concepts</span><ArrowUpRight size={20} aria-hidden="true" /></Link></div>
           </div>
         </div>
         <div className={styles.heroBottom}>

@@ -62,7 +62,7 @@ export function WebsiteConcepts() {
             <div className={styles.cardTop}><span>{String(concept.number).padStart(2, "0")}</span><span>{concept.sector}</span><ArrowUpRight size={23} aria-hidden="true" /></div>
             <h4>{concept.name}</h4>
             <p>{concept.tagline}</p>
-            <span className={styles.cardFoot}>Explore concept <span aria-hidden="true">↗</span></span>
+            <span className={styles.cardFoot}>Explore concept <ArrowUpRight aria-hidden="true" size={18} /></span>
           </a>
         </li>)}
       </ol>
