@@ -129,8 +129,8 @@ const projectRegistry: readonly CompletedProject[] = [
     name: "Trios Snow and Mowing Inc.",
     shortName: "Trios Services",
     sector: "Property care & local services",
-    website: "https://triosservices.vercel.app/",
-    domain: "triosservices.vercel.app",
+    website: "https://triosservices.com/",
+    domain: "triosservices.com",
     description: "A property-care website connecting seasonal services, care planning and quote requests in one clear experience.",
     introduction: "A clearer path to year-round property care.",
     capabilities: ["Website design", "Service discovery", "Care planning"],
@@ -147,7 +147,7 @@ const projectRegistry: readonly CompletedProject[] = [
     },
     detail: {
       label: "Explore the care planner",
-      website: "https://triosservices.vercel.app/planner",
+      website: "https://triosservices.com/planner",
       image: {
         src: "/images/projects/trios-services-planner.webp",
         alt: "Trios care planner showing a guided property-services form and seasonal service categories",
