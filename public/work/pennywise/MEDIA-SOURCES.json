@@ -1,0 +1,13 @@
+{
+  "reviewed": "2026-11-01",
+  "source": "https://www.pexels.com/video/person-using-the-calculator-in-mobile-phone-7681166/",
+  "creator": "Mikhail Nilov",
+  "license": "https://www.pexels.com/license/",
+  "terms": "Pexels permits free website use and modification without required attribution. No endorsement implied; footage not offered as stock or standalone media.",
+  "runtime": "assets/story.mp4",
+  "sha256": "a5d31993255614e9805a396ed54051785368c7310e6e2672d833e7905b8a470a",
+  "bytes": 3040957,
+  "processing": "Silent H.264 1280px wide, 24fps, 12-frame GOP, faststart; up to 16 seconds. Poster extracted from same licensed footage.",
+  "context": "Illustrative hands using a calculator, independent of the demonstration assumptions.",
+  "inspection": "Decoded source frames inspected; current desktop/mobile layout and full journeys verified; motion capture decoded at four positions and played to end."
+}

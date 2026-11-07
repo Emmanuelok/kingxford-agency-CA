@@ -1,0 +1,30 @@
+[
+  {
+    "file": "hero.jpg",
+    "provider": "Unsplash image CDN",
+    "photo_id": "photo-1549490349-8643362247b5",
+    "source_url": "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1600&q=85",
+    "usage": "Illustrative stock photograph for fictional Avalon concept; no affiliation or claimed property ownership.",
+    "retrieved": "2026-10-31",
+    "width": 1600,
+    "height": 2400,
+    "bytes": 946803,
+    "sha256": "a0ae1355f4b55ac7256461b5f5f202170cd351e7717ef118992f32784946a569",
+    "description": "Magenta and purple abstract liquid texture",
+    "verification": "JPEG signature, decoded dimensions and visual inspection passed"
+  },
+  {
+    "file": "detail.jpg",
+    "provider": "Unsplash image CDN",
+    "photo_id": "photo-1579783902614-a3fb3927b6a5",
+    "source_url": "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1400&q=85",
+    "usage": "Illustrative stock photograph for fictional Avalon concept; no affiliation or claimed property ownership.",
+    "retrieved": "2026-10-31",
+    "width": 1400,
+    "height": 1828,
+    "bytes": 676451,
+    "sha256": "90bd207ce8f42f7cdc8d36d5414f42257ae7fa8747ae174becc1a84b9b97b119",
+    "description": "Illustrative classical floral still life artwork",
+    "verification": "JPEG signature, decoded dimensions and visual inspection passed"
+  }
+]

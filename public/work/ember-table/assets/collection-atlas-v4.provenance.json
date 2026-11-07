@@ -1,0 +1,11 @@
+{
+  "asset": "collection-atlas-v4.jpg",
+  "source": "original-generated-assets/exec-af0015cf-63ca-41c7-9bdd-2a6455ed0aa4.png",
+  "method": "OpenAI built-in image generation",
+  "date": "2026-11-01",
+  "subject": "Eight original fictional menu dishes and three drinks in a three-by-three contact sheet, matching kitchen story",
+  "rights": "Original fictional generated imagery, not real stock or client products",
+  "reference": "Original story-atlas-v4 generated in this same task",
+  "processing": "JPEG encoding only, CSS crops the contact sheet",
+  "disclosure": "Original fictional food/garment studies"
+}

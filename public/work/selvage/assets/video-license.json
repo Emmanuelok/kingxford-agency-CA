@@ -1,0 +1,17 @@
+{
+  "title": "A Woman in White Dress",
+  "creator": "cottonbro studio",
+  "source_page": "https://www.pexels.com/video/a-woman-in-white-dress-9511254/",
+  "observed_official_download_redirect": "https://videos.pexels.com/video-files/9511254/9511254-uhd_4096_2160_25fps.mp4",
+  "license": "https://www.pexels.com/license/",
+  "license_checked": "2026-11-01",
+  "rights_summary": "Free website incorporation and modification allowed; attribution optional; no false endorsement, unaltered resale, or stock-library redistribution.",
+  "usage": "Silent incorporated film, with no claim of affiliation or actual concept inventory/personnel/location.",
+  "derivative": {
+    "file": "assets/runway.mp4",
+    "bytes": 2718092,
+    "sha256": "d33fc9869b20523ea7329103869c39cf23c81f0eb12d8a18390a345eb8e5fe0f",
+    "modification": "Resized, silent H.264 at24fps, keyframe interval12, faststart. Poster extracted from same film."
+  },
+  "source_sha256": "33dd0b1f009603e7602c2c853c8f1750de49c17769ba11b38846ba0b2f92e64f"
+}

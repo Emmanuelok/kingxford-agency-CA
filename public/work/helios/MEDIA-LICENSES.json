@@ -1,0 +1,35 @@
+{
+  "project": "helios",
+  "scope": "Fictional Avalon Creative showcase; local review proof. No publication performed.",
+  "media": [
+    {
+      "file": "assets/roof-film.mp4",
+      "poster": "assets/roof-poster.jpg",
+      "title": "Solar Panels on a Roof",
+      "creator": "Kindel Media",
+      "source": "https://www.pexels.com/video/solar-panels-on-a-roof-9790189/",
+      "original": "https://videos.pexels.com/video-files/9790189/9790189-uhd_3840_2160_30fps.mp4",
+      "source_range_seconds": [
+        2,
+        14
+      ],
+      "actual_frames_reviewed_seconds": [
+        2,
+        7,
+        12
+      ],
+      "usage": "Rooftop field-journal context; the model does not analyze this building and this is not a Helios installation.",
+      "bytes": 2807442,
+      "sha256": "91b126c80de76993bec27c3c4df43ce8dea209004accfbcfea86a552cb35b4f2",
+      "encoding": "H.264, 1280×720, 24 fps, silent; faststart; GOP 12 for scrubbed footage or GOP 24 for Orbit native-only context film",
+      "license": "Pexels License",
+      "license_url": "https://www.pexels.com/license/",
+      "license_verified": "2026-11-01",
+      "attribution_required": false,
+      "credit_included": true
+    }
+  ],
+  "license_summary": "Pexels permits free use and modification in websites. Do not imply endorsement, sell unaltered standalone clips, redistribute as stock, or misuse logos/trademarks. Credit is included despite not being required. Source originals and rejected candidates are not included in the website.",
+  "original_code": "Avalon showcase original interface and cinematic choreography. No external model or teardown code used in these three proofs.",
+  "fonts": "Bundled font license notices, where present, are retained in assets. Orbit uses system Arial/Georgia."
+}

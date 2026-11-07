@@ -1,0 +1,30 @@
+[
+  {
+    "file": "hero.jpg",
+    "provider": "Unsplash image CDN",
+    "photo_id": "photo-1487958449943-2429e8be8625",
+    "source_url": "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1600&q=85",
+    "usage": "Illustrative stock photograph for fictional Avalon concept; no affiliation or claimed property ownership.",
+    "retrieved": "2026-10-31",
+    "width": 1600,
+    "height": 1067,
+    "bytes": 237739,
+    "sha256": "60806ccadf9911430bfd5f89f4ebfb67b223bd36009f186071ba0150b84eb235",
+    "description": "Sculptural angular glass and metal building against pale sky",
+    "verification": "JPEG signature, decoded dimensions and visual inspection passed"
+  },
+  {
+    "file": "detail.jpg",
+    "provider": "Unsplash image CDN",
+    "photo_id": "photo-1600607687939-ce8a6c25118c",
+    "source_url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85",
+    "usage": "Illustrative stock photograph for fictional Avalon concept; no affiliation or claimed property ownership.",
+    "retrieved": "2026-10-31",
+    "width": 1400,
+    "height": 952,
+    "bytes": 256973,
+    "sha256": "752b9d9480aea1065c1529e4242d52348a812629d7375c8001b8717ee613ac80",
+    "description": "Contemporary living space with warm wood and pale concrete finishes",
+    "verification": "JPEG signature, decoded dimensions and visual inspection passed"
+  }
+]

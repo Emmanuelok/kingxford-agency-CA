@@ -1,0 +1,47 @@
+[
+  {
+    "source": "https://www.pexels.com/video/a-carpenter-using-a-hand-saw-5973239/",
+    "creator": "Ono Kosuki",
+    "cdn_observed": "https://videos.pexels.com/video-files/5973239/5973239-uhd_3840_2160_25fps.mp4",
+    "license": "https://www.pexels.com/license/",
+    "reviewed": "2026-11-01",
+    "terms": "Free modified website use under Pexels license; no endorsement or actual client/project claim; not distributed as standalone stock.",
+    "runtime_candidate": "craft.mp4",
+    "bytes": 1842303,
+    "sha256": "eda48ae38ab71715350302eeaa824b85086584e56aecd71a596349225170b10b",
+    "processing": "Silent1280wide H26424fps GOP12 faststart. Source segment 0\u20138s.",
+    "visual_review": "Actual decoded frames at .4, 2.5 and4seconds viewed by root; architecture depth/daylight and handcraft imagery suitable as illustrative licensed footage. No actual project affiliation.",
+    "runtime_file": "craft.mp4",
+    "poster": "craft-poster.jpg"
+  },
+  {
+    "source": "https://www.pexels.com/video/carpenter-working-on-a-wood-piece-6789897/",
+    "creator": "Tima Miroshnichenko",
+    "cdn_observed": "https://videos.pexels.com/video-files/6789897/6789897-uhd_3840_2160_25fps.mp4",
+    "license": "https://www.pexels.com/license/",
+    "reviewed": "2026-11-01",
+    "terms": "Free modified website use under Pexels license; no endorsement or actual client/project claim; not distributed as standalone stock.",
+    "runtime_candidate": "finish.mp4",
+    "bytes": 2074788,
+    "sha256": "ea90e0f76fd48c32326fc5994cd3da2a0cefcd1e5d9872220875ea2e72f46668",
+    "processing": "Silent1280wide H26424fps GOP12 faststart. Source segment 6\u201315s.",
+    "visual_review": "Actual decoded frames at .4, 2.5 and4seconds viewed by root; architecture depth/daylight and handcraft imagery suitable as illustrative licensed footage. No actual project affiliation.",
+    "runtime_file": "finish.mp4",
+    "poster": "finish-poster.jpg"
+  },
+  {
+    "source": "https://www.pexels.com/video/aerial-view-of-building-construction-site-38028941/",
+    "creator": "TR Studio",
+    "cdn_observed": "https://videos.pexels.com/video-files/38028941/16146878_1920_1080_50fps.mp4",
+    "license": "https://www.pexels.com/license/",
+    "reviewed": "2026-11-01",
+    "terms": "Free modified website use; no endorsement or actual project claim. No standalone stock redistribution.",
+    "runtime_candidate": "site.mp4",
+    "bytes": 2339562,
+    "sha256": "c904210f97d7ef377fd9f6f1259b5a3c76355a0ebaaedf11c2b47b69b1d09ce9",
+    "processing": "Silent 1280\u00d7720 H26424fps GOP12 faststart. First10seconds.",
+    "visual_review": "Decoded .4,2.5,4secondframes exported; root viewed2.5s. Wide real active building site with crane and structure. Suitable only illustrative sector context, not a claimed project.",
+    "runtime_file": "site.mp4",
+    "poster": "site-poster.jpg"
+  }
+]

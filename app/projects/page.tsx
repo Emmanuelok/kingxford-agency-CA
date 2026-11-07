@@ -4,10 +4,11 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight, Plus } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { WebsiteConcepts } from "@/components/website-concepts";
 import { completedProjects } from "@/lib/completed-projects";
 import styles from "./projects.module.css";
 
-const description = "Explore a selection of completed websites by Avalon Creatives Group. Visit the live projects and discover the details behind the work.";
+const description = "Explore completed websites and twenty website templates by Avalon Creatives Group. Visit the work, choose a template and make it your own.";
 const shareImage = completedProjects[0]?.image ?? {
   src: "/images/hero-research-wall.webp",
   width: 1600,
@@ -16,11 +17,11 @@ const shareImage = completedProjects[0]?.image ?? {
 };
 
 export const metadata: Metadata = {
-  title: "Completed projects",
+  title: "Our work",
   description,
   alternates: { canonical: "/projects" },
   openGraph: {
-    title: "Completed projects | AVALON Creatives Group",
+    title: "Our work | AVALON Creatives Group",
     description,
     url: "/projects",
     type: "website",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Completed projects | AVALON Creatives Group",
+    title: "Our work | AVALON Creatives Group",
     description,
     images: [shareImage.src],
   },
@@ -39,12 +40,13 @@ export default function ProjectsPage() {
     <main className={`site-shell ${styles.page}`}>
       <SiteNav />
       <section className={styles.hero} id="main-content" aria-labelledby="projects-title">
-        <p className={styles.eyebrow}><span aria-hidden="true" /> AVALON / COMPLETED PROJECTS</p>
+        <p className={styles.eyebrow}><span aria-hidden="true" /> AVALON / WORK</p>
         <div className={styles.heroGrid}>
           <h1 id="projects-title">Good ideas.<br /><em>Out in the world.</em></h1>
           <div className={styles.heroCopy}>
-            <p>Different ambitions. Distinctive experiences. A selection of websites we’ve brought to life, ready for you to explore.</p>
+            <p>Different ambitions. Distinctive experiences. Explore the websites we’ve brought to life, then find a template for what you have in mind.</p>
             <a className={styles.textLink} href="#project-collection">Explore the work <ArrowDown size={20} aria-hidden="true" /></a>
+            <div><Link className={styles.textLink} href="#website-templates-title"><span>Explore 20 website templates</span><ArrowUpRight size={20} aria-hidden="true" /></Link></div>
           </div>
         </div>
         <div className={styles.heroBottom}>
@@ -92,6 +94,8 @@ export default function ProjectsPage() {
           </article>
         ))}
       </section>
+
+      <WebsiteConcepts headingLevel={2} standalone />
 
       <section className={styles.nextProject} aria-labelledby="next-project-title">
         <div><p className={styles.eyebrow}>THE NEXT CHAPTER</p><h2 id="next-project-title">Your ambition.<br /><em>Our next project.</em></h2></div>

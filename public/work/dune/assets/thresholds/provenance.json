@@ -1,0 +1,55 @@
+{
+  "title": "Dune House Thresholds",
+  "method": "Four original generated images, encoded to JPEG without content edits for website delivery. Three interiors use the facade as an architectural visual reference.",
+  "visual_contract": "Pale limestone, sand limewash, dark oak, travertine, olive linen, late-afternoon light from right; human eye-level camera; no people, logos or claims of actual accommodation.",
+  "assets": [
+    {
+      "id": "arrival",
+      "file": "arrival.jpg",
+      "source_generated_file": "exec-2e54887d-674b-41f9-8ce2-bea6dc27ceb0.png",
+      "kind": "Original AI-generated fictional architectural visualisation",
+      "generator": "Built-in image_gen tool",
+      "created": "2026-10-31",
+      "usage": "Integrated fictional Avalon website imagery; not an actual property or client",
+      "reference": "Original generated facade; no reference image",
+      "sha256": "7d03abf61d4cc80bf2bc075194fe938a5356f01f75b110c20d0275cc1ed1922f",
+      "bytes": 522583
+    },
+    {
+      "id": "suite",
+      "file": "suite.jpg",
+      "source_generated_file": "exec-fb89b952-0946-4f4a-bf89-c003c0a04a04.png",
+      "kind": "Original AI-generated fictional architectural visualisation",
+      "generator": "Built-in image_gen tool",
+      "created": "2026-10-31",
+      "usage": "Integrated fictional Avalon website imagery; not an actual property or client",
+      "reference": "arrival generation used as architectural palette/light reference for three new interior views",
+      "sha256": "8153c173868d5505716e05598fec28f37fbcfb586fd7f62e08234c5c8e677f20",
+      "bytes": 495544
+    },
+    {
+      "id": "studio",
+      "file": "studio.jpg",
+      "source_generated_file": "exec-bf7e797b-cf6b-4548-b811-b491dbad3196.png",
+      "kind": "Original AI-generated fictional architectural visualisation",
+      "generator": "Built-in image_gen tool",
+      "created": "2026-10-31",
+      "usage": "Integrated fictional Avalon website imagery; not an actual property or client",
+      "reference": "arrival generation used as architectural palette/light reference for three new interior views",
+      "sha256": "a25a597bbae4c876749aea92aa2fa8195a63df16faee63f836e945d16a22420c",
+      "bytes": 548853
+    },
+    {
+      "id": "house",
+      "file": "house.jpg",
+      "source_generated_file": "exec-8da34dd6-7a3a-485e-b274-73315c5b85ed.png",
+      "kind": "Original AI-generated fictional architectural visualisation",
+      "generator": "Built-in image_gen tool",
+      "created": "2026-10-31",
+      "usage": "Integrated fictional Avalon website imagery; not an actual property or client",
+      "reference": "arrival generation used as architectural palette/light reference for three new interior views",
+      "sha256": "9f4d2f3da455b7e5fcdd519e758ba7e0996cb0ced6c48a654274228022a17b64",
+      "bytes": 491769
+    }
+  ]
+}

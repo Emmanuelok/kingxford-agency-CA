@@ -1,0 +1,38 @@
+[
+  {
+    "asset": "waterline-crossing.mp4",
+    "poster": "crossing-poster.jpg",
+    "title": "Underwater Footage Of Rising Bubbles",
+    "creator": "James Cheney",
+    "source_url": "https://www.pexels.com/video/underwater-footage-of-rising-bubbles-2632737/",
+    "download_url": "https://videos.pexels.com/video-files/2632737/2632737-hd_1920_1080_24fps.mp4",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "checked_at": "2026-10-31",
+    "website_use": "Free use and modification permitted; attribution optional, credited voluntarily. No endorsement implied; illustrative concept footage, no real project location or outcomes claimed.",
+    "processing": "Resized and compressed H.264 MP4, silent, faststart, 12-frame keyframe interval",
+    "format": "1280 \u00d7 720, 24 fps",
+    "duration": 13.875,
+    "bytes": 2065170,
+    "sha256": "4294aaec5441b5ebf4b81971d5a0a4f8684c5f547a31f7264f9e2d0d7cdbbbfa",
+    "visual_verification": "Actual decoded frames inspected at 10%, 50% and 85%; no identifiable people or branding visible."
+  },
+  {
+    "asset": "underwater-glide.mp4",
+    "poster": "underwater-poster.jpg",
+    "title": "Mesmerizing Underwater Ocean Scene with Sunrays",
+    "creator": "JUN HO LEE",
+    "source_url": "https://www.pexels.com/video/mesmerizing-underwater-ocean-scene-with-sunrays-34319167/",
+    "download_url": "https://videos.pexels.com/video-files/34319167/14539046_3840_2160_60fps.mp4",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "checked_at": "2026-10-31",
+    "website_use": "Free use and modification permitted; attribution optional, credited voluntarily. No endorsement implied; illustrative concept footage, no real project location or outcomes claimed.",
+    "processing": "Resized and compressed H.264 MP4, silent, faststart, 12-frame keyframe interval",
+    "format": "1600 \u00d7 900, 30 fps",
+    "duration": 10.066667,
+    "bytes": 2831255,
+    "sha256": "8686e61c68580d0eb22d3b14a76f99f686fc8eaf7dc20d252c6139395c3caf5d",
+    "visual_verification": "Actual decoded frames inspected at 10%, 50% and 85%; no identifiable people or branding visible."
+  }
+]

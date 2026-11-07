@@ -1,0 +1,13 @@
+{
+  "reviewed": "2026-11-01",
+  "source": "https://www.pexels.com/video/arts-inside-a-gallery-5824200/",
+  "creator": "Charlotte May",
+  "license": "https://www.pexels.com/license/",
+  "terms": "Pexels permits free website use and modification without required attribution. No endorsement implied; footage not offered as stock or standalone media.",
+  "runtime": "assets/story.mp4",
+  "sha256": "1858051748ce432f14b75a404f364ab002980278545465baa8fa6d9c19bf6755",
+  "bytes": 1890123,
+  "processing": "Silent H.264 1280px wide, 24fps, 12-frame GOP, faststart; up to 16 seconds. Poster extracted from same licensed footage.",
+  "context": "Illustrative historic museum interior. No affiliation, actual programme or reproduction rights claim.",
+  "inspection": "Decoded source frames inspected; current desktop/mobile layout and full journeys verified; motion capture decoded at four positions and played to end."
+}
